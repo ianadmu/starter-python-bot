@@ -22,7 +22,8 @@ class Messenger(object):
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll respond with a randomized greeting mentioning your user. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
-            "> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:")
+            #"> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:",
+            "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Sexy Winnipeg. :rainbow:")
         self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
