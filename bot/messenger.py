@@ -64,6 +64,7 @@ class Messenger(object):
         }
         self.clients.web.chat.post_message(channel_id,"", attachments=[attachment], as_user='true')
         txt = "I'm crying into my tea. :joy:"
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
 
