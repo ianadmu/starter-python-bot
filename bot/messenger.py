@@ -60,3 +60,10 @@ class Messenger(object):
             "color": "#7CD197",
         }
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
+    
+    def write_weather(self, channel_ids`):
+        defaultCity = "Winnipeg"
+        apiKey = process.env.HUBOT_WWO_API_KEY
+            unless apiKey?
+        console.warn "Missing HUBOT_WWO_API_KEY in environment"
+
