@@ -61,8 +61,10 @@ class Messenger(object):
         }
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
     
-    def write_weather(self, channel_ids`):
+    def write_weather(self, channel_ids):
         defaultCity = "Winnipeg"
-        response =  "I don't know the weather in " + defaultCity
+        apiKey = process.env.HUBOT_WWO_API_KEY
+            unless apiKey?
+        response =  "I don't know the weather in" + Winnipeg
         self.send_message(channel_id, response)
 
