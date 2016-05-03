@@ -47,17 +47,24 @@ class Messenger(object):
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
 
-    def write_sad(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        question = "http://giphy.com/gifs/friday-rebecca-black-hurrr-13FsSYo3fzfT2g"
-        self.send_message(channel_id, question)
-        self.clients.send_user_typing_pause(channel_id)
-        answer = "I'm crying in my tea! :laughing:"
-        self.send_message(channel_id, answer)
-
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)
+
+    def write_sad(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = "This always cracks me up. :wink:"
+        attachment = {
+            "pretext": "I'm crying in my tea. :wink:",
+            "title": "/giphy bloopin",
+            "title_link": "http://giphy.com/gifs/friday-rebecca-black-hurrr-13FsSYo3fzfT2g",
+            "text": txt,
+            "fallback": txt,
+            "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
+            "color": "#7CD197",
+        }
+        self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
+
 
     def demo_attachment(self, channel_id):
         txt = "Beep Beep Boop is a ridiculously simple hosting platform for your Slackbots."
