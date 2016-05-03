@@ -90,5 +90,5 @@ class Messenger(object):
         response =  "I don't know the weather in " + defaultCity
         self.send_message(channel_id, response)
 
-    def write_loud(channel_id,origMessage):
+    def write_loud(self,channel_id,origMessage):
         self.send_message(channel_id, "THIS IS A TEST LOUD MESSAGE!!!")
