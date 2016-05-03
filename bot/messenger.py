@@ -25,6 +25,8 @@ class Messenger(object):
             #"> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Sexy Winnipeg. :rainbow:",
             "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:")
+        self.clients.send_user_typing_pause(channel_id)
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
