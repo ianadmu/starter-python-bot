@@ -53,15 +53,19 @@ class Messenger(object):
 
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        txt = "This always cracks me up. :joy:"
+        txt = "This always cracks me up. :wink:"
+        elf.send_message(channel_id, txt)
+        self.clients.send_user_typing_pause(channel_id)
         attachment = {
-            "pretext": "I'm crying in my tea. :joy:",
             "title": "/giphy bloopin",
             "title_link": "http://giphy.com/gifs/friday-rebecca-black-hurrr-13FsSYo3fzfT2g",
             "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
             "color": "#7CD197",
         }
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
+        txt = "I'm crying into my tea. :joy:"
+        self.send_message(channel_id, txt)
+
 
 
     def demo_attachment(self, channel_id):
