@@ -65,5 +65,6 @@ class Messenger(object):
         defaultCity = "Winnipeg"
         apiKey = process.env.HUBOT_WWO_API_KEY
             unless apiKey?
-        console.warn "Missing HUBOT_WWO_API_KEY in environment"
+        response =  "Missing HUBOT_WWO_API_KEY in environment"
+        self.send_message(channel_id, response)
 
