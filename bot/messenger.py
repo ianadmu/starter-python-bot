@@ -64,7 +64,6 @@ class Messenger(object):
     def write_weather(self, channel_ids):
         defaultCity = "Winnipeg"
         apiKey = process.env.HUBOT_WWO_API_KEY
-            unless apiKey?
-        response =  "I don't know the weather in" + Winnipeg
+        response =  "I don't know the weather in" + Winnipeg + "apikey: "+apiKey
         self.send_message(channel_id, response)
 
