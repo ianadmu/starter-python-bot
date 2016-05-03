@@ -28,16 +28,19 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
+        self.clients.send_user_typing_pause(channel_id)
         greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
         txt = '{}, <@{}>!'.format(random.choice(greetings), user_id)
         self.send_message(channel_id, txt)
 
     def write_prompt(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
         bot_uid = self.clients.bot_user_id()
         txt = "I'm sorry, I didn't quite understand... Can I help you? (e.g. `<@" + bot_uid + "> help`)"
         self.send_message(channel_id, txt)
 
     def write_joke(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
         question = "Why did the python cross the road?"
         self.send_message(channel_id, question)
         self.clients.send_user_typing_pause(channel_id)
@@ -45,7 +48,8 @@ class Messenger(object):
         self.send_message(channel_id, answer)
 
     def write_sad(self, channel_id):
-        question = "/giphy bloopin"
+        self.clients.send_user_typing_pause(channel_id)
+        question = "http://giphy.com/gifs/friday-rebecca-black-hurrr-13FsSYo3fzfT2g"
         self.send_message(channel_id, question)
         self.clients.send_user_typing_pause(channel_id)
         answer = "I'm crying in my tea! :laughing:"
@@ -68,7 +72,8 @@ class Messenger(object):
         }
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
     
-    def write_weather(self, channel_ids):
+    def write_weather(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
         defaultCity = "Winnipeg"
         response =  "I don't know the weather in" + defaultCity
         self.send_message(channel_id, response)
