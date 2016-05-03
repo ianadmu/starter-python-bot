@@ -62,7 +62,7 @@ class Messenger(object):
             "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
             "color": "#7CD197",
         }
-        self.clients.web.chat.post_message(channel_id, attachments=[attachment], as_user='true')
+        self.clients.web.chat.post_message(channel_id,"", attachments=[attachment], as_user='true')
         txt = "I'm crying into my tea. :joy:"
         self.send_message(channel_id, txt)
 
