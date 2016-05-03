@@ -23,7 +23,8 @@ class Messenger(object):
             "> `hi <@" + bot_uid + ">` - I'll respond with a randomized greeting mentioning your user. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
             #"> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:",
-            "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Sexy Winnipeg. :rainbow:")
+            "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Sexy Winnipeg. :rainbow:",
+            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:")
         self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
@@ -43,6 +44,12 @@ class Messenger(object):
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
 
+    def write_sad(self, channel_id):
+        question = "/giphy bloopin"
+        self.send_message(channel_id, question)
+        self.clients.send_user_typing_pause(channel_id)
+        answer = "I'm crying in my tea! :laughing:"
+        self.send_message(channel_id, answer)
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
@@ -63,6 +70,6 @@ class Messenger(object):
     
     def write_weather(self, channel_ids):
         defaultCity = "Winnipeg"
-        response =  "I don't know the weather in" + Winnipeg + "apikey: "+apiKey
+        response =  "I don't know the weather in" + defaultCity
         self.send_message(channel_id, response)
 
