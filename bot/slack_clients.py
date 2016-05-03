@@ -36,3 +36,7 @@ class SlackClients(object):
         user_typing_json = {"type": "typing", "channel": channel_id}
         self.rtm.server.send_to_websocket(user_typing_json)
         time.sleep(sleep_time)
+
+    def pin_loud(origMessage):
+        # create a channel if we need to
+        #add to the pined item in the channel

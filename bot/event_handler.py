@@ -37,6 +37,8 @@ class RtmEventHandler(object):
         if not self.clients.is_message_from_me(event['user']):
 
             msg_txt = event['text']
+            if msg_txt.isupper()
+                self.msg_writer.write_loud(event['channel'])
 
             if self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"

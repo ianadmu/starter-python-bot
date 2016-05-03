@@ -24,7 +24,8 @@ class Messenger(object):
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
             #"> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
-            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:")
+            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink: ",
+            "> Don't mind this message! :camel:")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
@@ -89,3 +90,6 @@ class Messenger(object):
         response =  "I don't know the weather in " + defaultCity
         self.send_message(channel_id, response)
 
+    def write_loud(channel_id,origMessage):
+        #self.client.pin_loud(origMessage)
+        self.send_message(channel_id, "THIS IS A TEST LOUD MESSAGE!!!")
