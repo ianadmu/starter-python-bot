@@ -91,5 +91,4 @@ class Messenger(object):
         self.send_message(channel_id, response)
 
     def write_loud(channel_id,origMessage):
-        #self.client.pin_loud(origMessage)
         self.send_message(channel_id, "THIS IS A TEST LOUD MESSAGE!!!")
