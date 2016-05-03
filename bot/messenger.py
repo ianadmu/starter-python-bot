@@ -54,7 +54,7 @@ class Messenger(object):
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         txt = "This always cracks me up. :wink:"
-        elf.send_message(channel_id, txt)
+        self.send_message(channel_id, txt)
         self.clients.send_user_typing_pause(channel_id)
         attachment = {
             "title": "/giphy bloopin",
