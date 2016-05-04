@@ -57,7 +57,7 @@ class RtmEventHandler(object):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
-                elif re.search('hi|hey|hello|howdy|Hi|Hello|up', msg_txt):
+                elif re.search('hi|hey|hello|howdy|Hi|Hello|sup', msg_txt):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
                 elif 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
@@ -67,5 +67,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_weather(event['channel'])
                 elif 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
+                elif 'sort me' in msg_txt:
+                    self.msg_writer.write_hogwarts_house(event['channel'])
                 else:
                     self.msg_writer.write_prompt(event['channel'])

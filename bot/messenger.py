@@ -1,6 +1,7 @@
 import logging
 import random
 from loud_manager import LoudManager
+from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 
@@ -95,3 +96,8 @@ class Messenger(object):
     def write_loud(self,channel_id,origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
         self.send_message(channel_id, self.loud_manager.get_random_loud())
+
+    def write_hogwarts_house(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        response = HogwartsHouseSorter.get_random_house(origMessage)
+        self.send_message(channel_id, )
