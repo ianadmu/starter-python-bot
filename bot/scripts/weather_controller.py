@@ -4,6 +4,7 @@ import time
 import optparse
 import json 
 import urllib
+import time
 
 from xml.etree.ElementTree import XML
 
@@ -11,6 +12,9 @@ API="43ff7b292dd04d4dacd230358160305"
 URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
  
 CITY="Winnipeg"
+SUNSET_HOUR = 21
+SUNRISE_HOUR = 5
+
 
 class WeatherController:
 
@@ -29,8 +33,14 @@ class WeatherController:
             return ":foggy:"
         if "cloud" in conds or "overcast" in conds:
             return ":cloud:"
-        if "sunny" in conds or "clear" in conds:
+        if "sunny" in conds:
             return ":sunny:"
+        if "clear" in conds:
+            curr_time = int(time.strftime('%H'))
+            if curr_time >= SUNSET_HOUR or curr_time < SUNRISE_HOUR:
+                return ":night_with_stars:"
+            else:
+                return ":sunny:"
         if "drizzle" in conds or "sleet" in conds:
             return ":umbrella:"
         if "tsunami" in conds:

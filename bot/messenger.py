@@ -90,8 +90,6 @@ class Messenger(object):
     def write_weather(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         response = WeatherController.get_weather();
-        #defaultCity = "Winnipeg"
-        #response =  "I don't know the weather in " + defaultCity
         self.send_message(channel_id, response)
 
     def write_loud(self,channel_id,origMessage):
