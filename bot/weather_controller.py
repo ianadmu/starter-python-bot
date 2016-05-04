@@ -4,7 +4,7 @@ import time
 import optparse
 import json
  
-import urllib.request
+#import urllib.request
 from xml.etree.ElementTree import XML
 
 API="43ff7b292dd04d4dacd230358160305"
