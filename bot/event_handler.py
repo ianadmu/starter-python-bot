@@ -68,6 +68,6 @@ class RtmEventHandler(object):
                 elif 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
                 elif 'sort' in msg_txt:
-                    self.msg_writer.write_hogwarts_house(event['channel'])
+                    self.msg_writer.write_hogwarts_house(event['channel'], event['user'])
                 else:
                     self.msg_writer.write_prompt(event['channel'])

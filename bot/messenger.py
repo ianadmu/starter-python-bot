@@ -74,8 +74,6 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
-
-
     def demo_attachment(self, channel_id):
         txt = "Beep Beep Boop is a ridiculously simple hosting platform for your Slackbots."
         attachment = {
@@ -98,7 +96,8 @@ class Messenger(object):
         self.loud_manager.write_loud_to_file(origMessage)
         self.send_message(channel_id, self.loud_manager.get_random_loud())
 
-    def write_hogwarts_house(self, channel_id):
+    def write_hogwarts_house(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
         response = self.hogwarts_house_sorter.get_random_house()
-        self.send_message(channel_id, response)
+        txt = '<@{}>: {}'.format(user_id, response)
+        self.send_message(channel_id, txt)
