@@ -13,7 +13,7 @@ URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
 CITY="Winnipeg"
 
 class WeatherController:
-
+    @staticmethod
     def get_icon(conds):
         if "tornado" in conds or "hurricane" in conds or "cyclone" in conds:
             return ":cyclone:"
