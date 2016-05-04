@@ -32,13 +32,26 @@ class RtmEventHandler(object):
         else:
             pass
 
+    def is_loud(self,message):
+        emoji_pattern = re.compile(":.*:")
+        tokens = message.split()
+
+        if len(tokens) < 2: 
+            return False
+
+         for token in message.split():
+            if not (token.isupper() or emoji_pattern.match(token)):
+                return False
+     
+        return True
+
     def _handle_message(self, event):
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
 
             msg_txt = event['text']
 
-            if msg_txt.isupper():
+            if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
 
             if self.clients.is_bot_mention(msg_txt):

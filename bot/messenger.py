@@ -1,14 +1,15 @@
 import logging
 import random
+from loud_manager import LoudManager
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 
 logger = logging.getLogger(__name__)
 
-
 class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
+        self.loud_manager = LoudManager()
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
@@ -92,4 +93,5 @@ class Messenger(object):
         self.send_message(channel_id, response)
 
     def write_loud(self,channel_id,origMessage):
-        self.send_message(channel_id, "THIS IS A TEST LOUD MESSAGE!!!")
+        self.loud_manager.write_loud_to_file(origMessage)
+        self.send_message(channel_id, self.loud_manager.get_random_loud())
