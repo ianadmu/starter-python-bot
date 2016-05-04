@@ -45,7 +45,8 @@ class WeatherController:
             return ":new_moon_with_face:"
         else:
             return ":zacefron:"
-
+            
+    @staticmethod
     def get_weather():
         req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
         try:
