@@ -1,6 +1,6 @@
 import json
 import logging
-import re
+#import re
 
 logger = logging.getLogger(__name__)
 
@@ -33,17 +33,18 @@ class RtmEventHandler(object):
             pass
 
     def is_loud(self,message):
-        emoji_pattern = re.compile(":.*:")
-        tokens = message.split()
+        # emoji_pattern = re.compile(":.*:")
+        # tokens = message.split()
 
-        if len(tokens) < 2: 
-            return False
+        # if len(tokens) < 2: 
+        #     return False
 
-         for token in message.split():
-            if not (token.isupper() or emoji_pattern.match(token)):
-                return False
+        #  for token in message.split():
+        #     if not (token.isupper() or emoji_pattern.match(token)):
+        #         return False
      
-        return True
+        # return True
+        return False
 
     def _handle_message(self, event):
         # Filter out messages from the bot itself
