@@ -2,9 +2,9 @@ import sys
 import os
 import time
 import optparse
-import json
- 
-#import urllib.request
+import json 
+import urllib
+
 from xml.etree.ElementTree import XML
 
 API="43ff7b292dd04d4dacd230358160305"
@@ -45,7 +45,7 @@ class WeatherController:
             return ":new_moon_with_face:"
         else:
             return ":zacefron:"
-            
+
     @staticmethod
     def get_weather():
         req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
