@@ -3,6 +3,7 @@ import random
 
 logger = logging.getLogger(__name__)
 
+import weather_controller
 
 class Messenger(object):
     def __init__(self, slack_clients):
