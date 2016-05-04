@@ -42,8 +42,7 @@ class RtmEventHandler(object):
             if not (token.isupper() or emoji_pattern.match(token)):
                 return False
      
-        # return True
-        return False
+        return True
 
     def _handle_message(self, event):
         # Filter out messages from the bot itself
