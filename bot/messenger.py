@@ -2,6 +2,8 @@ import logging
 import random
 import weather_controller
 
+from weather_controller import WeatherController
+
 logger = logging.getLogger(__name__)
 
 
