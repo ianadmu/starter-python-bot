@@ -61,4 +61,4 @@ class WeatherController:
             conditions= XML(data).find("current_condition").find("weatherDesc").text
             icon = WeatherController.get_icon(str.lower(conditions))
             return "Winnipeg is currently :zacefron: "+temp+"C but feels like "+icon+" "+feels_like+"C and conditions are "+conditions+" :theotherzacefron:"
-    get_weather = staticmethod(staticmethod)
+    get_weather = staticmethod(get_weather)
