@@ -1,8 +1,7 @@
 import logging
 import random
-import weather_controller
-
-from weather_controller import WeatherController
+import scripts.weather_controller
+from scripts.weather_controller import WeatherController
 
 logger = logging.getLogger(__name__)
 
