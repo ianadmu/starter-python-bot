@@ -11,6 +11,7 @@ class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
+        self.hogwarts_house_sorter = HogwartsHouseSorter()
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
@@ -99,5 +100,5 @@ class Messenger(object):
 
     def write_hogwarts_house(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        response = HogwartsHouseSorter.get_random_house()
+        response = self.hogwarts_house_sorter.get_random_house()
         self.send_message(channel_id, )
