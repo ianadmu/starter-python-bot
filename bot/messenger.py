@@ -99,5 +99,5 @@ class Messenger(object):
 
     def write_hogwarts_house(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        response = HogwartsHouseSorter.get_random_house(origMessage)
+        response = HogwartsHouseSorter.get_random_house()
         self.send_message(channel_id, )
