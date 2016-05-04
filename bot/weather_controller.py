@@ -13,7 +13,7 @@ URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
 CITY="Winnipeg"
 
 class WeatherController:
-    @staticmethod
+
     def get_icon(conds):
         if "tornado" in conds or "hurricane" in conds or "cyclone" in conds:
             return ":cyclone:"
@@ -45,8 +45,8 @@ class WeatherController:
             return ":new_moon_with_face:"
         else:
             return ":zacefron:"
+    get_icon = staticmethod(get_icon)
 
-    @staticmethod
     def get_weather():
         
         try:
@@ -61,4 +61,4 @@ class WeatherController:
             conditions= XML(data).find("current_condition").find("weatherDesc").text
             icon = WeatherController.get_icon(str.lower(conditions))
             return "Winnipeg is currently :zacefron: "+temp+"C but feels like "+icon+" "+feels_like+"C and conditions are "+conditions+" :theotherzacefron:"
-
+    get_weather = staticmethod(staticmethod)
