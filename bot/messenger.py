@@ -7,7 +7,6 @@ from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
 
 logger = logging.getLogger(__name__)
-
 class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients

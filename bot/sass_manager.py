@@ -6,7 +6,7 @@ class SassManager(object):
     def __init__(self):
         self.sass_file = open('sass.txt', 'r')
         self.sass_cache = list()
-        self.cache_loaded = False
+        #self.cache_loaded = False
 
     def load_sass_cache(self):
         self.sass_cache = self.sass_file.read().splitlines()
@@ -20,9 +20,10 @@ class SassManager(object):
         return "Hey, " + target+ "! " + sass
 
     def get_random_sass(self):
-        if not self.cache_loaded:
-            self.load_sass_cache()
-            self.cache_loaded = True
+        #if not self.cache_loaded:
+        self.load_sass_cache()
+        #self.cache_loaded = True
+        print self.sass_cache[1]
         return random.choice(self.sass_cache)
 
     def get_target(self, msg):
