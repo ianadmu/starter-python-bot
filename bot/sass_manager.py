@@ -12,7 +12,7 @@ class SassManager(object):
         for line in self.sass_file.read().splitlines():
             self.sass_cache.append(line)
 
-    def get_sass(msg):
+    def get_sass(self, msg):
         return format_sass(msg)
 
     def format_sass(msg):
