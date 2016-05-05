@@ -22,7 +22,7 @@ class SassManager(object):
 
     def get_random_sass():
         if not self.cache_loaded:
-            oad_sass_cache()
+            load_sass_cache()
             self.cache_loaded = True
 
     def get_target(msg):
