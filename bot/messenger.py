@@ -56,8 +56,8 @@ class Messenger(object):
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel,"945 :sunny:")
-        self.send_message(channel,"/digg editions")
+        self.send_message(channel_id,"945 :sunny: time now is " + time)
+        self.send_message(channel_id,"/digg editions")
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
