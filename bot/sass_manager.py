@@ -30,9 +30,9 @@ class SassManager(object):
         target = self.format_target(token.lower().encode('ascii','ignore'))
 
     def format_target(self, target):
-        if target.search(' me '):
+        if ' me ' in target:
             return "you"
-        elif target.search(' yourself '):
+        elif 'yourself' in target:
             return "Zac Efron"
         else:
             return target
