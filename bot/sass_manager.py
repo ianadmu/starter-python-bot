@@ -9,7 +9,7 @@ class SassManager(object):
         self.cache_loaded = False
 
     def load_sass_cache(self):
-        for line in self.sass_file.read().splitlines()
+        for line in self.sass_file.read().splitlines():
             self.sass_cache.append(line)
 
     def get_sass(self, msg):
@@ -18,9 +18,10 @@ class SassManager(object):
     def format_sass(self, msg):
         target = get_target(msg)
         sass = get_random_sass(self)
+        return "Hey, " + target + "! " + sass
 
     def get_random_sass(self):
-        if not self.cache_loaded
+        if not self.cache_loaded:
             self.load_sass_cache()
             self.cache_loaded = True
 
@@ -29,9 +30,9 @@ class SassManager(object):
         target = format_target(target.lower())
 
     def format_target(target):
-        if target is "me"
+        if target is "me":
             return "you"
-        elif target is "yourself"
+        elif target is "yourself":
             return "Zac Efron"
-        else
+        else:
             return target
