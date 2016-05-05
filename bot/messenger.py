@@ -13,7 +13,8 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-		self.sass_manager = SassManager()
+        self.sass_manager = SassManager()
+    
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
@@ -102,6 +103,5 @@ class Messenger(object):
         response = self.hogwarts_house_sorter.get_random_house()
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
-
-	def write_sass(self.channel_id, msg)
-		self.send_message(channel_id, self.sass_manager.get_sass(msg))
+    def write_sass(self.channel_id, msg)
+        self.send_message(channel_id, self.sass_manager.get_sass(msg))
