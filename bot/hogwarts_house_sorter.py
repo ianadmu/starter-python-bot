@@ -1,24 +1,16 @@
 import random
+import xml.etree.ElementTree as ET   
 
-HOUSES = ['GRYFFINDOR','RAVENCLAW','SlYTHERIN','HUFFLEPUFF']
-HUFFLEPUFF = ['1','2','3']
-RAVENCLAW = ['1','2','3']
-SLYTHERIN = ['1','2','3']
-GRYFFINDOR = ['1','2','3']
+HOUSES = ['GRYFFINDOR','RAVENCLAW','SLYTHERIN','HUFFLEPUFF']
 
 class HogwartsHouseSorter(object):
 	def get_house_description(self, house):
-		if house == 'GRYFFINDOR':
-			return random.choice(GRYFFINDOR)
-		elif house == 'RAVENCLAW':
-			return random.choice(RAVENCLAW)
-		elif house == 'SLYTHERIN':
-			return random.choice(SlYTHERIN)
-		else:
-			return random.choice(HUFFLEPUFF)
+		tree = ET.parse('house_descriptions.xml')
+		root = tree.getroot()
+		random_Number = int(random.random()*6) #num of descriptions in the xml file
+		return root[HOUSES.index(house)][random_Number].text
 
 	def get_random_house(self):
-		house = random.choice(HOUSES)
+		house = random.choice(HOUSES)		
 		description = self.get_house_description(house)
 		return "You have been sorted into: " + house + "!\n" + description
-
