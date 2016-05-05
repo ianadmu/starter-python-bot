@@ -105,5 +105,6 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_sass(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
         txt = self.sass_manager.get_sass(msg)
         self.send_message(channel_id, txt)
