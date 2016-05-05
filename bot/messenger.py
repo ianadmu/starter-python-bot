@@ -57,10 +57,10 @@ class Messenger(object):
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        time1 = datetime.now().strftime('%H:%M')
-        time2 = "9:45"
+        time1 = datetime.time.now()
+        time2 = datetime.time(9,45,0)
         time3 = time1 - time2
-        self.send_message(channel_id, time1 +" "+ time2 + " "+ time3)
+        self.send_message(channel_id, time1.__str__() +" "+ time2.__str__() + " "+ time3.__str__())
         self.send_message(channel_id,"945 :sunny: time now is " + datetime.now().strftime('%H:%M'))
         self.send_message(channel_id,"/digg editions")
 
