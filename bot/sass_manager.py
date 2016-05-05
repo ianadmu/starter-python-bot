@@ -18,7 +18,7 @@ class SassManager(object):
     def format_sass(self, msg):
         target = self.get_target(msg)
         sass = self.get_random_sass()
-        return "Hey, " + target + "! " + sass
+        return "Hey, " + target.encode('ascii','ignore') + "! " + sass.encode('ascii','ignore')
 
     def get_random_sass(self):
         if not self.cache_loaded:
