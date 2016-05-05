@@ -13,11 +13,11 @@ class SassManager(object):
             self.sass_cache.append(line)
 
     def get_sass(self, msg):
-        return format_sass(self, msg)
+        return self.format_sass(self, msg)
 
     def format_sass(self, msg):
-        target = get_target(msg)
-        sass = get_random_sass(self)
+        target = self.get_target(msg)
+        sass = self.get_random_sass(self)
         return "Hey, " + target + "! " + sass
 
     def get_random_sass(self):
