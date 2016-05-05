@@ -4,7 +4,7 @@ import random
 class SassManager(object)
 	
     def __init__(self)
-        self.sass_file = open("sass.txt", 'a+')
+        self.sass_file = open("sass.txt", 'r')
         self.sass_cache = list()
         self.cache_loaded = False
 
@@ -31,7 +31,7 @@ class SassManager(object)
     def format_target(target)
         if target is "me"
             return "you"
-            elif target is "yourself"
-                return "Zac Efron"
+        elif target is "yourself"
+            return "Zac Efron"
         else
             return target
