@@ -16,7 +16,9 @@ class SassManager(object):
 
     def format_sass(self, msg):
         target = self.get_target(msg)
-        sass = self.get_random_sass()
+        sass = random.choice(self.sass_file)
+        if sass is None:
+            sass = " :( "
         return "Hey, " + target+ "! " + sass
 
     def get_random_sass(self):
