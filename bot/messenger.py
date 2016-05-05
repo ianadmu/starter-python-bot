@@ -105,4 +105,4 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_sass(self, channel_id, msg):
-        self.send_message(channel_id, sass_manager.get_sass(msg))
+        self.send_message(channel_id, self.sass_manager.get_sass(msg))
