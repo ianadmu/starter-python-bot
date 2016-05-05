@@ -22,7 +22,7 @@ class SassManager(object):
         return target
 
     def format_target(self, target):
-        if re.search('me|Me', target):
+        if 'me' or 'Me' in target:
             return "you"
         elif 'yourself' in target:
             return "Zac Efron"
