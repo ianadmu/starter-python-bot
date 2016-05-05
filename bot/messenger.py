@@ -1,5 +1,6 @@
 import logging
 import random
+import time
 from loud_manager import LoudManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
