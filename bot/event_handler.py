@@ -4,7 +4,6 @@ import re
 
 logger = logging.getLogger(__name__)
 
-
 class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
@@ -69,5 +68,8 @@ class RtmEventHandler(object):
                     self.msg_writer.write_sad(event['channel'])
                 elif 'sort' in msg_txt:
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'])
-                else:
                     self.msg_writer.write_prompt(event['channel'])
+                elif 'sass' in msg_txt:
+                    self.msg_writer.write_sass(event['channel'], msg_txt)	
+                else:
+                    pass

@@ -4,6 +4,7 @@ from loud_manager import LoudManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
+from sass_manager import SassManager
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +13,8 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-
+        self.sass_manager = SassManager()
+    
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
@@ -89,7 +91,7 @@ class Messenger(object):
     
     def write_weather(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        response = WeatherController.get_weather();
+        response = WeatherController.get_weather()
         self.send_message(channel_id, response)
 
     def write_loud(self,channel_id,origMessage):
@@ -101,3 +103,6 @@ class Messenger(object):
         response = self.hogwarts_house_sorter.get_random_house()
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
+
+    def write_sass(self, channel_id, msg):
+        self.send_message(channel_id, self.sass_manager.get_sass(msg))
