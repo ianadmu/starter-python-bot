@@ -1,7 +1,7 @@
 import os.path
 import random
 
-class SassManager(object)
+class SassManager(object):
 	
     def __init__(self):
         self.sass_file = open("sass.txt", 'r')
