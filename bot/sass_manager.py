@@ -4,8 +4,8 @@ import random
 class SassManager(object):
 	
     def __init__(self):
-        self.sass_file = open('sass.txt', 'r').readlines()
-        #self.sass_cache = list()
+        self.sass_file = open('sass.txt', 'r')
+        self.sass_cache = self.sass_file.readlines()
         #self.cache_loaded = False
 
     def load_sass_cache(self):
@@ -16,9 +16,9 @@ class SassManager(object):
 
     def format_sass(self, msg):
         target = self.get_target(msg)
-        sass = random.choice(self.sass_file)
+        sass = random.choice(self.sass_cache)
         if sass is None:
-            sass = " :( "
+            sass = " :( " 
         return "Hey, " + target+ "! " + sass
 
     def get_random_sass(self):
@@ -31,6 +31,7 @@ class SassManager(object):
     def get_target(self, msg):
         token = msg.split("sass ", 1)[1]
         target = self.format_target(token.lower().encode('ascii','ignore'))
+        return target
 
     def format_target(self, target):
         if ' me ' in target:
