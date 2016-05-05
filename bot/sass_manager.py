@@ -27,7 +27,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         token = msg.split("sass ", 1)[1]
-        target = self.format_target(token.lower())
+        target = self.format_target(token.lower().encode('ascii','ignore'))
 
     def format_target(self, target):
         if target.search(' me '):
