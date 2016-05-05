@@ -1,6 +1,6 @@
 import logging
 import random
-import time
+from datetime import datetime
 from loud_manager import LoudManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
@@ -57,6 +57,9 @@ class Messenger(object):
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
+        time1 = datetime.now().strftime('%H:%M')
+        time2 = "9:45"
+        self.send_message(channel_id, time1 +" "+ time2 + " "+ (time1 - time2))
         self.send_message(channel_id,"945 :sunny: time now is " + time)
         self.send_message(channel_id,"/digg editions")
 
