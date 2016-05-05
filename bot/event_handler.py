@@ -70,5 +70,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'])
                 elif 'sass' in msg_txt:
                     self.msg_writer.write_sass(event['channel'], msg_txt)	
+                elif ('945' in msg_txt) and ('?' in msg_txt):
+                    self.msg_writer.announce_945(event['channel'])
                 else:
                     pass

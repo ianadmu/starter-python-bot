@@ -28,7 +28,6 @@ class Messenger(object):
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
-            #"> `<@" + bot_uid + "> attachment` - I'll demo a post with an attachment using the Web API. :paperclip:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
             "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink: ",
             "> Don't mind this message! :camel:")
@@ -54,6 +53,11 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
+
+    def announce_945(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel,"945 :sunny:")
+        self.send_message(channel,"/digg editions")
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
