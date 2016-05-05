@@ -4,7 +4,7 @@ import random
 class SassManager(object):
 	
     def __init__(self):
-        self.sass_file = open('sass.txt', 'r')
+        self.sass_file = open('sass.txt', 'r').readlines()
         #self.sass_cache = list()
         #self.cache_loaded = False
 
@@ -23,8 +23,8 @@ class SassManager(object):
         #if not self.cache_loaded:
         #self.load_sass_cache()
         #self.cache_loaded = True
-        self.sass_cache = self.sass_file.splitlines()
-        return random.choice(self.sass_cache)
+        #self.sass_cache = self.sass_file.read.splitlines()
+        return random.choice(self.sass_file)
 
     def get_target(self, msg):
         token = msg.split("sass ", 1)[1]
