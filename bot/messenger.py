@@ -59,7 +59,8 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         time1 = datetime.now().strftime('%H:%M')
         time2 = "9:45"
-        self.send_message(channel_id, time1 +" "+ time2 + " "+ (time1 - time2))
+        time3 = time1 - time2
+        self.send_message(channel_id, time1 +" "+ time2 + " "+ time3)
         self.send_message(channel_id,"945 :sunny: time now is " + datetime.now().strftime('%H:%M'))
         self.send_message(channel_id,"/digg editions")
 
