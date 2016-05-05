@@ -27,7 +27,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         tokens = msg.split("sass ")
-        target = self.format_target(target.lower())
+        target = self.format_target(tokens.lower())
 
     def format_target(self, target):
         if target is "me":
