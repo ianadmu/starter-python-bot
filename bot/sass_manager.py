@@ -22,7 +22,7 @@ class SassManager(object):
         return target
 
     def format_target(self, target):
-        if 'me' or 'Me' is target:
+        if 'me' is target:
             return "you"
         elif 'yourself' is target:
             return "Zac Efron"
