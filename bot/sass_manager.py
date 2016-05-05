@@ -13,23 +13,23 @@ class SassManager(object):
             self.sass_cache.append(line)
 
     def get_sass(msg):
-        return self.format_sass(msg)
+        return format_sass(msg)
 
     def format_sass(msg):
-        target = self.get_target(msg)
-        sass = self.get_random_sass()
+        target = get_target(msg)
+        sass = get_random_sass()
         return "Hey, " + target + "! " + sass
 
     def get_random_sass():
         if not self.cache_loaded:
-            self.load_sass_cache()
+            oad_sass_cache()
             self.cache_loaded = True
 
-    def get_target(self, msg):
+    def get_target(msg):
         tokens = msg.split("sass ")
-        target = self.format_target(target.lower())
+        target = format_target(target.lower())
 
-    def format_target(self, target):
+    def format_target(target):
         if target is "me":
             return "you"
         elif target is "yourself":
