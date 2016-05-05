@@ -19,6 +19,6 @@ class HogwartsHouseSorter(object):
 
 	def get_random_house(self):
 		house = random.choice(HOUSES)
-		description = get_house_description(house)
+		description = HogwartsHouseSorter.get_house_description(house)
 		return "You have been sorted into: " + house + "!\n" + description
 
