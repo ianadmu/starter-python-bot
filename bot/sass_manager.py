@@ -8,19 +8,15 @@ class SassManager(object):
         self.sass_cache = list()
         self.cache_loaded = False
 
-    def load_sass_cache(self):
+    def load_sass_cache():
         for line in self.sass_file.read().splitlines():
             self.sass_cache.append(line)
 
-    def get_sass(self, msg):
         return self.format_sass(msg)
-
-    def format_sass(self, msg):
         target = self.get_target(msg)
-        sass = self.get_random_sass()
-        return "Hey, " + target + "! " + sass
+        sass = self.get_random_sass()        return "Hey, " + target + "! " + sass
 
-    def get_random_sass(self):
+    def get_random_sass():
         if not self.cache_loaded:
             self.load_sass_cache()
             self.cache_loaded = True
