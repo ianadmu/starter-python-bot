@@ -25,11 +25,11 @@ class SassManager(object):
             self.load_sass_cache()
             self.cache_loaded = True
 
-    def get_target(msg):
+    def get_target(self, msg):
         tokens = msg.split("sass ")
         target = self.format_target(target.lower())
 
-    def format_target(target):
+    def format_target(self, target):
         if target is "me":
             return "you"
         elif target is "yourself":
