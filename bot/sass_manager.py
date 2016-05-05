@@ -27,4 +27,4 @@ class SassManager(object):
         elif 'yourself' in target:
             return "Zac Efron"
         else:
-            return titlecase(target)
+            return target.title()
