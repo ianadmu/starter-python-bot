@@ -27,12 +27,12 @@ class SassManager(object):
 
     def get_target(self, msg):
         tokens = msg.split("sass ")
-        target = self.format_target(tokens.lower())
+        target = self.format_target(tokens.lower)
 
     def format_target(self, target):
-        if target is "me":
+        if target.search(" me "):
             return "you"
-        elif target is "yourself":
+        elif target.search(" yourself "):
             return "Zac Efron"
         else:
             return target
