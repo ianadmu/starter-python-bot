@@ -26,8 +26,8 @@ class SassManager(object):
             self.cache_loaded = True
 
     def get_target(self, msg):
-        tokens = msg.split("sass ")
-        target = self.format_target(tokens.lower)
+        token = msg.split("sass ", 1)[1]
+        target = self.format_target(token.lower())
 
     def format_target(self, target):
         if target.search(" me "):
