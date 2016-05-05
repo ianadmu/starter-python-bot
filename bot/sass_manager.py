@@ -1,5 +1,8 @@
 import os.path
 import random
+import re
+
+sass_flag = re.compile('sass[a-z]* ')
 
 class SassManager(object):
 	
@@ -17,7 +20,7 @@ class SassManager(object):
         return "Hey, " + target+ "! " + sass
 
     def get_target(self, msg):
-        token = msg.split("sass ", 1)[1]
+        token = msg.split(sass_flag, 1)[1]
         target = self.format_target(token.lower().encode('ascii','ignore'))
         return target
 
@@ -26,5 +29,7 @@ class SassManager(object):
             return "you"
         elif 'yourself' in target:
             return "Zac Efron"
+        elif target.startswith('@'):
+            return target
         else:
             return target.title()
