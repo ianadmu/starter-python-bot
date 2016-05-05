@@ -20,8 +20,8 @@ class SassManager(object):
         return "Hey, " + target+ "! " + sass
 
     def get_target(self, msg):
-        token = msg.split(sass_flag, 1)[1]
-        target = self.format_target(token.lower().encode('ascii','ignore'))
+        token = re.split(sass_flag, msg)
+        target = self.format_target(token[1].lower().encode('ascii','ignore'))
         return target
 
     def format_target(self, target):
