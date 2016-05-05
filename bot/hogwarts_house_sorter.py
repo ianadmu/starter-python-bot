@@ -7,7 +7,7 @@ SLYTHERIN = ['1','2','3']
 GRYFFINDOR = ['1','2','3']
 
 class HogwartsHouseSorter(object):
-	def get_house_description(house):
+	def get_house_description(self, house):
 		if house == 'GRYFFINDOR':
 			return random.choice(GRYFFINDOR)
 		elif house == 'RAVENCLAW':
