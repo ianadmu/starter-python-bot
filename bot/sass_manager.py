@@ -4,7 +4,7 @@ import random
 class SassManager(object):
 	
     def __init__(self):
-        self.sass_file = open("sass.txt", 'r')
+        self.sass_file = open('sass.txt', 'r')
         self.sass_cache = list()
         self.cache_loaded = False
 
