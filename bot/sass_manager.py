@@ -9,8 +9,7 @@ class SassManager(object):
         self.cache_loaded = False
 
     def load_sass_cache(self):
-        for line in self.sass_file.read().splitlines():
-            self.sass_cache.append(line)
+        self.sass_cache = self.sass_file.read().splitlines()
 
     def get_sass(self, msg):
         return self.format_sass(msg)
