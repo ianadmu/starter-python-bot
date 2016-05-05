@@ -18,12 +18,13 @@ class SassManager(object):
     def format_sass(self, msg):
         target = self.get_target(msg)
         sass = self.get_random_sass()
-        return "Hey, " + target.encode('ascii','ignore') + "! " + sass.encode('ascii','ignore')
+        return "Hey, " + target+ "! " + sass
 
     def get_random_sass(self):
         if not self.cache_loaded:
             self.load_sass_cache()
             self.cache_loaded = True
+        return random.choice(self.sass_cache)
 
     def get_target(self, msg):
         token = msg.split("sass ", 1)[1]
