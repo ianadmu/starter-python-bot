@@ -20,7 +20,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         token = re.split(sass_flag, msg)
-        target = self.format_target(token[1].lower().encode('ascii','ignore'))
+        target = self.format_target(token[1]) #lower().encode('ascii','ignore') is causing tags to not work
         return target
 
     def format_target(self, target):
