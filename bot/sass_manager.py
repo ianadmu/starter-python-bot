@@ -20,7 +20,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         token = re.split(sass_flag, msg)
-        target = self.format_target(token[1].lower().encode('ascii','ignore'))
+        target = self.format_target(token[1]) #token[1].lower().encode('ascii','ignore')
         return target
 
     def format_target(self, target):
@@ -29,6 +29,6 @@ class SassManager(object):
         elif 'yourself' in target:
             return "Zac Efron"
         elif target.startswith('@'):
-            return '<{}>'.format(target)
+            return target
         else:
             return target.title()
