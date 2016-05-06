@@ -32,4 +32,4 @@ class SassManager(object):
         elif target.startswith('@'):
             return '<@{}>'.format(self.clients.get_user_name(target[1:]))
         else:
-            return target.title()
+            return 'for debugging purposes'#target.title()
