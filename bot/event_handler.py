@@ -57,7 +57,7 @@ class RtmEventHandler(object):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
-                elif re.search('hi|hey|hello|howdy|Hi|Hello|sup', msg_txt):
+                elif re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
                 elif re.search('thanks|thank you|thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
