@@ -7,9 +7,9 @@ sass_flag = re.compile('sass[a-z]* ')
 class SassManager(object):
 	
     def __init__(self, slack_clients):
+        self.clients = slack_clients
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sass_cache = self.sass_file.readlines()
-        self.clients = slack_clients
 
     def get_sass(self, msg):
         return self.format_sass(msg)

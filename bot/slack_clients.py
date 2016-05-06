@@ -32,7 +32,7 @@ class SlackClients(object):
         else:
             return False
 
-     def get_user_name(self, user_id):
+    def get_user_name(self, user_id):
      	return self.rtm.server.get_username['self'][user_id]
 
     def send_user_typing_pause(self, channel_id, sleep_time=3.0):
