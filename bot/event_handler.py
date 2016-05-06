@@ -34,7 +34,7 @@ class RtmEventHandler(object):
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
-        tag_pattern = re.compile("<@.*>.*")
+        tag_pattern = re.compile("<@.*>:")
         tokens = message.split()
 
         if len(tokens) < 2: 
