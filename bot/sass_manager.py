@@ -11,7 +11,7 @@ class SassManager(object):
         self.sass_cache = self.sass_file.readlines()
 
     def get_sass(self, msg):
-        return self.format_sass(user_id, msg)
+        return self.format_sass(msg)
 
     def format_sass(self, msg):
         target = self.get_target(msg)
