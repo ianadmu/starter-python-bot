@@ -13,22 +13,22 @@ class SassManager(object):
     def get_sass(self, msg):
         return self.format_sass(msg)
 
-    def format_sass(self, msg):
-        target = self.get_target(msg)
+    def format_sass(self, user_id, msg):
+        target = self.get_target(user_id, msg)
         sass = random.choice(self.sass_cache)
         return "Hey, " + target+ "! " + sass
 
-    def get_target(self, msg):
+    def get_target(self, user_id, msg):
         token = re.split(sass_flag, msg)
-        target = self.format_target(token[1].lower().encode('ascii','ignore'))
+        target = self.format_target(token[1].lower().encode('ascii','ignore'), user_id)
         return target
 
-    def format_target(self, target):
+    def format_target(self, target, user_id):
         if 'me' in target:
             return "you"
         elif 'yourself' in target:
             return "Zac Efron"
         elif target.startswith('@'):
-            return target
+            return '<@{}>'.format(user_id)
         else:
             return target.title()

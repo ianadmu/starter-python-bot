@@ -120,9 +120,9 @@ class Messenger(object):
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
 
-    def write_sass(self, channel_id, msg):
+    def write_sass(self, channel_id, user_id, msg):
         self.clients.send_user_typing_pause(channel_id)
-        txt = self.sass_manager.get_sass(msg)
+        txt = self.sass_manager.get_sass(user_id, msg)
         self.send_message(channel_id, txt)
         
     def write_apology(self, channel_id):
