@@ -29,6 +29,6 @@ class SassManager(object):
         elif 'yourself' in target:
             return "Zac Efron"
         elif target.startswith('@'):
-            return target
+            return '<{}>'.format(target)
         else:
             return target.title()
