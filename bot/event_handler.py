@@ -34,14 +34,13 @@ class RtmEventHandler(object):
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
-        tag_pattern = re.compile("<@.*>")
-        tag_pattern2 = re.compile("@.*")
+        tag_pattern = re.compile("<@.*")
         tokens = message.split()
 
         if len(tokens) < 2: 
             return False
         for token in message.split():
-            if not (token.isupper() or emoji_pattern.match(token)) or (tag_pattern.match(token) or tag_pattern2.match(token)):
+            if not (token.isupper() or emoji_pattern.match(token)) or tag_pattern.match(token):
                 return False
      
         return True
@@ -59,7 +58,7 @@ class RtmEventHandler(object):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
-                elif re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt):
+                elif re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt) or msg_txt.endswith(' hi') or msg_txt.endswith(' Hi') or msg_txt.endswith(' sup'):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
                 elif re.search('thanks|thank you|thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
