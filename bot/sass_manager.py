@@ -9,7 +9,6 @@ class SassManager(object):
     def __init__(self):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sass_cache = self.sass_file.readlines()
-        #self.cache_loaded = False
 
     def get_sass(self, msg):
         return self.format_sass(msg)

@@ -76,5 +76,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_sass(event['channel'], msg_txt)	
                 elif ('945' in msg_txt) and ('?' in msg_txt):
                     self.msg_writer.announce_945(event['channel'])
+                elif 'apologize' in msg_txt:
+                    self.msg_writer.write_apology(event['channel'])
                 else:
                     pass

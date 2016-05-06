@@ -1,0 +1,12 @@
+import os.path
+import random
+import re
+
+class ApologyManager(object):
+    
+    def __init__(self)
+        self.apologies = open(os.path.join('./resources', 'apologies.txt'), 'r')
+        self.apology_cache = self.sass_file.readlines()
+    
+    def get_random_apology(self):
+        return random.choice(self.sass_cache)
