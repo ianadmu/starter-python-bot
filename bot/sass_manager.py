@@ -29,7 +29,7 @@ class SassManager(object):
             return "you"
         elif 'yourself' in target:
             return "Zac Efron"
-        elif target.startswith('@'):
+        elif target.startswith('<@'):
             return '<@{}>'.format(self.clients.get_user_name(target[1:]))
         else:
             return 'for debugging purposes'#target.title()
