@@ -41,7 +41,7 @@ class RtmEventHandler(object):
         if len(tokens) < 2: 
             return False
         for token in message.split():
-            if not (token.isupper() or emoji_pattern.match(token) or tag_pattern.match(token) or tag_pattern2.match(token)):
+            if not (token.isupper() or emoji_pattern.match(token)) or (tag_pattern.match(token) or tag_pattern2.match(token)):
                 return False
      
         return True
