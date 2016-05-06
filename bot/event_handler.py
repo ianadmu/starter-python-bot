@@ -56,7 +56,7 @@ class RtmEventHandler(object):
             if re.search('thanks|thank you|thank-you', msg_txt) and (re.search('zac', msg_txt) or self.clients.is_bot_mention(msg_txt)):
                 self.msg_writer.write_your_welcome(event['channel'], event['user'])
             
-            if msg_txt.startswith('zac '):
+            if msg_txt.startswith('zac ') or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
