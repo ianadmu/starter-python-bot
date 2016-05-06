@@ -55,7 +55,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
             
-            if msg_txt.startswith('zac ') or msg_txt.startswith('Zac ') or ' Zac' in msg.txt or ' zac' in msg.txt or self.clients.is_bot_mention(msg_txt):
+            if msg_txt.startswith('zac ') or msg_txt.startswith('Zac ') or ' Zac' in msg_txt or ' zac' in msg_txt or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
