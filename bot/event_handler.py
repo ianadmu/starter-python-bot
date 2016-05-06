@@ -66,8 +66,8 @@ class RtmEventHandler(object):
                     self.msg_writer.write_weather(event['channel'])
                 elif 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
-                elif 'sort' in msg_txt:
-                    self.msg_writer.write_hogwarts_house(event['channel'], event['user'])
+                elif 'sort me' in msg_txt:
+                    self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
                 elif 'sass' in msg_txt:
                     self.msg_writer.write_sass(event['channel'], msg_txt)	
                 elif ('945' in msg_txt) and ('?' in msg_txt):

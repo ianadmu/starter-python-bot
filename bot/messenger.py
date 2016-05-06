@@ -106,9 +106,9 @@ class Messenger(object):
         self.loud_manager.write_loud_to_file(origMessage)
         self.send_message(channel_id, self.loud_manager.get_random_loud())
 
-    def write_hogwarts_house(self, channel_id, user_id):
+    def write_hogwarts_house(self, channel_id, user_id, msg):
         self.clients.send_user_typing_pause(channel_id)
-        response = self.hogwarts_house_sorter.get_random_house()
+        response = self.hogwarts_house_sorter.sort_into_house(msg)
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
 
