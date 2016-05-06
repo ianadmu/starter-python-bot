@@ -16,7 +16,7 @@ class SassManager(object):
     def format_sass(self, user_id, msg):
         target = self.get_target(user_id, msg)
         sass = random.choice(self.sass_cache)
-        return 'Hey, @{}>! {}'.format(user_id, sass)
+        return 'Hey, <@{}>! {}'.format(user_id, sass)
 
     def get_target(self, user_id, msg):
         token = re.split(sass_flag, msg)
