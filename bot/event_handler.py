@@ -34,13 +34,14 @@ class RtmEventHandler(object):
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
-        tag_pattern = re.compile("<@.*>:")
+        tag_pattern = re.compile("<@.*>")
+        tag_pattern2 = re.compile("@.*")
         tokens = message.split()
 
         if len(tokens) < 2: 
             return False
         for token in message.split():
-            if not (token.isupper() or emoji_pattern.match(token) or tag_pattern.match(token)):
+            if not (token.isupper() or emoji_pattern.match(token) or tag_pattern.match(token) or tag_pattern2.match(token)):
                 return False
      
         return True
@@ -54,7 +55,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
             
-            if msg_txt.startswith('zac ') or msg_txt.startswith('Zac ') or self.clients.is_bot_mention(msg_txt):
+            if msg_txt.startswith('zac ') or msg_txt.startswith('Zac ') or ' Zac' in msg.txt or ' zac' in msg.txt or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
