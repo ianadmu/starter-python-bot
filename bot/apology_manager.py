@@ -4,7 +4,7 @@ import re
 
 class ApologyManager(object):
     
-    def __init__(self)
+    def __init__(self):
         self.apologies = open(os.path.join('./resources', 'apologies.txt'), 'r')
         self.apology_cache = self.apologies.readlines()
     
