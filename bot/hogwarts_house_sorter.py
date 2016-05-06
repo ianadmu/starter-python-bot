@@ -1,4 +1,5 @@
 import random
+import os.path
 import xml.etree.ElementTree as ET   
 
 HOUSES = ['GRYFFINDOR','RAVENCLAW','SLYTHERIN','HUFFLEPUFF']
@@ -17,7 +18,7 @@ class HogwartsHouseSorter(object):
 		return random.choice(HOUSES)
 
 	def get_house_description(self, house):
-		tree = ET.parse('house_descriptions.xml')
+		tree = ET.parse(os.path.join('./resources', 'house_descriptions.xml'))
 		root = tree.getroot()
 		random_Number = int(random.random()*NUM_DESCRIPTIONS)
 		return root[HOUSES.index(house)][random_Number].text
