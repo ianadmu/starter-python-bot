@@ -6,8 +6,7 @@ sass_flag = re.compile('sass[a-z]* ')
 
 class SassManager(object):
 	
-    def __init__(self, slack_clients):
-        self.clients = slack_clients
+    def __init__(self):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sass_cache = self.sass_file.readlines()
 
@@ -21,7 +20,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         token = re.split(sass_flag, msg)
-        target = self.format_target(token[1]) #token[1].lower().encode('ascii','ignore')
+        target = self.format_target(token[1].lower().encode('ascii','ignore'))
         return target
 
     def format_target(self, target):

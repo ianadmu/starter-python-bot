@@ -14,7 +14,7 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-        self.sass_manager = SassManager(self.clients)
+        self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
     
     def send_message(self, channel_id, msg):
