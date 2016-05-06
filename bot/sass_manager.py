@@ -10,8 +10,8 @@ class SassManager(object):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sass_cache = self.sass_file.readlines()
 
-    def get_sass(self, msg):
-        return self.format_sass(msg)
+    def get_sass(self, user_id, msg):
+        return self.format_sass(user_id, msg)
 
     def format_sass(self, user_id, msg):
         target = self.get_target(user_id, msg)

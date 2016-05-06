@@ -73,7 +73,7 @@ class RtmEventHandler(object):
                 elif 'sort me' in msg_txt:
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
                 elif 'sass' in msg_txt:
-                    self.msg_writer.write_sass(event['channel'], msg_txt)	
+                    self.msg_writer.write_sass(event['channel'], event['user'], msg_txt)	
                 elif ('945' in msg_txt) and ('?' in msg_txt):
                     self.msg_writer.announce_945(event['channel'])
                 elif re.search('apologize|apologise', msg_txt):
