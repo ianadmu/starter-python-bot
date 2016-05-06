@@ -53,7 +53,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
             
-            if re.search('thanks|thank you|thank-you', msg_txt) and (re.search(' zac', msg_txt) or self.clients.is_bot_mention(msg_txt)):
+            if re.search('thanks|thank you|thank-you', msg_txt) and (re.search('zac', msg_txt) or self.clients.is_bot_mention(msg_txt)):
                 self.msg_writer.write_your_welcome(event['channel'], event['user'])
             
             if msg_txt.startswith('zac '):
