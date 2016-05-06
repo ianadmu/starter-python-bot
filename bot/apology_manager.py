@@ -9,4 +9,4 @@ class ApologyManager(object):
         self.apology_cache = self.sass_file.readlines()
     
     def get_random_apology(self):
-        return random.choice(self.sass_cache)
+        return random.choice(self.apology_cache)
