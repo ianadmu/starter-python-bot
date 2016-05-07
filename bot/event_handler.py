@@ -4,7 +4,6 @@ import re
 
 logger = logging.getLogger(__name__)
 
-
 class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
@@ -54,7 +53,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
             
-            if msg_txt.startswith('zac ') or msg_txt.startswith('Zac ') or ' Zac' in msg_txt or ' zac' in msg_txt or self.clients.is_bot_mention(msg_txt):
+            if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
@@ -64,6 +63,12 @@ class RtmEventHandler(object):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
                 elif 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
+                elif re.search('who\'?s that pokemon'):
+                    self.msg_writer.write_pokemon(event['channel'])
+                elif re.search(' ?(Z|z)ac>? it\'?s'):
+                    self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
+                elif re.search('( ?(Z|z)ac>? (don\'?t know|dunno|give up|tell |who is it'):
+                    self.msg_writer.write_pokemon_quit_response(event['channel'], event['user'])
                 elif 'attachment' in msg_txt:
                     self.msg_writer.demo_attachment(event['channel'])
                 elif 'weather' in msg_txt:
