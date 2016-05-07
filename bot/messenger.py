@@ -29,7 +29,7 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}'.format(
+        txt = '{}\n{}\n{}\n{}\n{}'.format(
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
