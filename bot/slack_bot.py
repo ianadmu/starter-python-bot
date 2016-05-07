@@ -77,8 +77,7 @@ class SlackBot(object):
         minute = int(time.strftime('%M'))
         second = int(time.strftime('%S'))
         if(second > 20 and second < 30):
-            msg_writer2 = Messenger(self.clients)
-            RtmEventHandler(self.clients, msg_writer2).trigger_event()
+            self.clients.rtm.server.channels.find("#boardgames").send_message("{}".format(("test trigger").encode('ascii', 'ignore')))
 
     def stop(self, resource):
         """Stop any polling loops on clients, clean up any resources,
