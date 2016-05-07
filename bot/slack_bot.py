@@ -45,12 +45,12 @@ class SlackBot(object):
                 self.clients.rtm.server.domain))
 
             msg_writer = Messenger(self.clients)
-            event_handler = RtmEventHandler(self.clients, msg_writer)
+            self.event_handler = RtmEventHandler(self.clients, msg_writer)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():
                     try:
-                        event_handler.handle(event)
+                        self.event_handler.handle(event)
                     except:
                         err_msg = traceback.format_exc()
                         logging.error('Unexpected error: {}'.format(err_msg))
@@ -77,7 +77,7 @@ class SlackBot(object):
         minute = int(time.strftime('%M'))
         second = int(time.strftime('%S'))
         if(second > 20 and second < 30):
-            event_handler.trigger_event()
+            self.event_handler.trigger_event()
 
     def stop(self, resource):
         """Stop any polling loops on clients, clean up any resources,
