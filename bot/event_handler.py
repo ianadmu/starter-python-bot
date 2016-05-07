@@ -41,7 +41,7 @@ class RtmEventHandler(object):
         for token in message.split():
             if not (token.isupper() or emoji_pattern.match(token)) or tag_pattern.match(token):
                 return False
-     
+
         return True
 
     def _handle_message(self, event):
@@ -52,7 +52,7 @@ class RtmEventHandler(object):
 
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
-            
+
             if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
