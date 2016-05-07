@@ -63,11 +63,11 @@ class RtmEventHandler(object):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
                 elif 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
-                elif re.search('who\'?s that pokemon'):
+                elif re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_pokemon(event['channel'])
-                elif re.search(' ?(Z|z)ac it\'?s'):
+                elif re.search(' ?(Z|z)ac it\'?s', msg_txt):
                     self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
-                elif re.search(' ?(Z|z)ac who is it'):
+                elif re.search(' ?(Z|z)ac who is it', msg_txt):
                     self.msg_writer.write_pokemon_quit_response(event['channel'])
                 elif 'attachment' in msg_txt:
                     self.msg_writer.demo_attachment(event['channel'])
