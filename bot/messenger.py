@@ -75,7 +75,7 @@ class Messenger(object):
         self.send_message(channel_id, self.whos_that_pokemon_manager.get_random_pokemon())
 
     def write_pokemon_guessed_response(self, channel_id, user_id, msg):
-        self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(channel_id, user_id, msg))
+        self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(user_id, msg))
         
     def write_pokemon_quit_response(self):
         self.send_message(channel_id, self.whos_that_pokemon_manager.gave_up())
