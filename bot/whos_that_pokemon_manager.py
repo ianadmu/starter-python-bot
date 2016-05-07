@@ -14,18 +14,19 @@ class WhosThatPokemonManager(object):
         self.neg_responses = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
 
     def get_random_pokemon(self):
-        num = random.randint(1, 721)
-        link = url
-        target = link.format(num)
-        try:
-            response = requests.get(target)
-        except requests.exceptions.RequestException as e:
-            return 'Sorry, today is a day of Digimon. No Pokemons for you.'
-        else:
-            pokemon = response.json()
-            sprite = pokemon['sprites']['front_default']
-            self.correct_answer = pokemon['name']
-            return sprite
+#        num = random.randint(1, 721)
+#        link = url
+#        target = link.format(num)
+#        try:
+#            response = requests.get(target)
+#        except requests.exceptions.RequestException as e:
+#            return 'Sorry, today is a day of Digimon. No Pokemons for you.'
+#        else:
+#            pokemon = response.json()
+#            sprite = pokemon['sprites']['front_default']
+#            self.correct_answer = pokemon['name']
+#            return sprite
+         return 'this is a test - look it worked!'
     
     def check_response(self, user_id, msg):
         if self.correct_answer is None:
