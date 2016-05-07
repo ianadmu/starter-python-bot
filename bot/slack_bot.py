@@ -77,8 +77,8 @@ class SlackBot(object):
         minute = int(time.strftime('%M'))
         second = int(time.strftime('%S'))
         if(second > 20 and second < 30):
-            msg_writer = Messenger(self.clients)
-            event_handler = RtmEventHandler(self.clients, msg_writer).trigger_event()
+            msg_writer2 = Messenger(self.clients)
+            RtmEventHandler(self.clients, msg_writer2).trigger_event()
 
     def stop(self, resource):
         """Stop any polling loops on clients, clean up any resources,
