@@ -36,3 +36,6 @@ class SlackClients(object):
         user_typing_json = {"type": "typing", "channel": channel_id}
         self.rtm.server.send_to_websocket(user_typing_json)
         time.sleep(sleep_time)
+
+    def send_test(self):
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
