@@ -40,7 +40,7 @@ class WhosThatPokemonManager(object):
         return random_response + "You go " + user_id + revealed_name + "!"
     
     def gave_up(self):
-        if self.correct_answer is None
+        if self.correct_answer is None:
             sys.exit()
         else:
             return self.reveal_answer()   
