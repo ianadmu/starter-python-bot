@@ -31,7 +31,8 @@ class WhosThatPokemonManager(object):
         if self.correct_answer is None:
             sys.exit()
         else:
-            if re.search(self.correct_answer, msg):
+            tokens = msg.split()
+            if self.correct_answer in tokens:
                 return self.guessed_correctly(user_id)
             else:
                 return '{} {}'.format(user_id, random.choice(self.neg_responses))
