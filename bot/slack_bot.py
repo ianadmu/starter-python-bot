@@ -76,7 +76,7 @@ class SlackBot(object):
         hour = int(time.strftime('%H'))
         minute = int(time.strftime('%M'))
         second = int(time.strftime('%S'))
-        if(hour == 10 and minute == 32 and second > 0 and second < 10):
+        if(hour == 22 and minute == 34 and second > 0 and second < 10):
             self.clients.send_test()
             #self.clients.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
             #self.clients.rtm.server.channels.find("#boardgames").send_message("this is a message")
