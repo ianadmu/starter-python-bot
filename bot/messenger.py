@@ -29,13 +29,17 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}\n{}'.format(
+        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
-            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink: ",
-            "> Don't mind this message! :camel:")
+            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:",
+            "> `<@" + bot_uid + "> sort me` - I'll sort you into one of the four Hogwarts houses! Better hope you don't get :slytherin:",
+            "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize.",
+            "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :3c",
+            "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help!",
+            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out.")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
