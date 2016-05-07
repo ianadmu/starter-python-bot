@@ -76,7 +76,7 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
-        
+
     def write_pokemon(self, channel_id):
         self.send_message(channel_id, self.whos_that_pokemon_manager.get_random_pokemon())
 
@@ -124,7 +124,7 @@ class Messenger(object):
             "color": "#7CD197",
         }
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
-    
+
     def write_weather(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         response = WeatherController.get_weather()
@@ -144,11 +144,11 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         txt = self.sass_manager.get_sass(msg)
         self.send_message(channel_id, txt)
-        
+
     def write_apology(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
     def write_solution(self,channel_id, msg):
         self.send_message(channel_id, self.equation_manager.solve(msg))
-        
+
