@@ -13,6 +13,12 @@ class WhosThatPokemonManager(object):
         self.pos_responses = open(os.path.join('./resources', 'pokemon_correct.txt'), 'r')
         self.neg_responses = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
 
+    def whos_that_pkmn(self):
+        if self.correct_answer is None:
+            return self.get_random_pokemon()
+        else:
+            return self.reveal_answer()
+
     def get_random_pokemon(self):
         num = random.randint(1, 721)
         link = URL
@@ -42,15 +48,8 @@ class WhosThatPokemonManager(object):
         random_response = random.choice(self.pos_responses)
         revealed_name = self.reveal_answer()
         return '{} {} You go <@{}>!'.format(random_response, revealed_name, user_id)
-    
-    def gave_up(self):
-        if self.correct_answer is None:
-            sys.exit()
-            return None
-        else:
-            return self.reveal_answer()   
                 
     def reveal_answer(self):
         answer = self.correct_answer
         self.correct_answer = None
-        return ' It was {}.'.format(self.correct_answer)
+        return ' It was {}.'.format(answer)
