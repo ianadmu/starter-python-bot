@@ -2,6 +2,7 @@ import logging
 import random
 from datetime import datetime
 from loud_manager import LoudManager
+from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
@@ -14,6 +15,7 @@ class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
+        self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
@@ -68,6 +70,12 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
+        
+    def write_pokemon_query(self):
+        self.send_message(channel_id, self.whos_that_pokemon_manager.get_random_pokemon())
+
+    def write_pokemon_response(self, channel_id, user_id, msg):
+        self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(channel_id, user_id, msg))
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)

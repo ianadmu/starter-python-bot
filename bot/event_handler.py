@@ -64,6 +64,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
                 elif 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
+                elif re.search('who\'?s that pokemon'):
+                    self.msg_writer.write_pokemon_query(event['channel'])
+                elif re.search('it\'?s'):
+                    self.msg_writer.write_pokemon_response(event['channel'], event['user'], msg_txt)
                 elif 'attachment' in msg_txt:
                     self.msg_writer.demo_attachment(event['channel'])
                 elif 'weather' in msg_txt:
