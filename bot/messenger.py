@@ -78,7 +78,7 @@ class Messenger(object):
         self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(channel_id, user_id, msg))
         
     def write_pokemon_quit_response(self):
-        self.send_message(channel_id, self.whos_that_pokemon_manager.reveal_answer())
+        self.send_message(channel_id, self.whos_that_pokemon_manager.gave_up())
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
