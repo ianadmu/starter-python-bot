@@ -24,10 +24,10 @@ class SassManager(object):
         return target
 
     def format_target(self, target):
-        if 'me' in target:
-            return "you"
-        elif 'yourself' in target:
-            return "Zac Efron"
+        if target == 'me':
+            return 'you'
+        elif target == 'yourself':
+            return 'Zac Efron'
         elif target.startswith('<@'):
             return target
         else:
