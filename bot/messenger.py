@@ -18,7 +18,7 @@ class Messenger(object):
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
         self.equation_manager = EquationManager()
-        
+
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
@@ -132,5 +132,5 @@ class Messenger(object):
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
     def write_solution(self,channel_id, msg):
-        self.equation_manager.solve(msg)
+        self.send_message(channel_id, self.equation_manager.solve(msg))
         
