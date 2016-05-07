@@ -4,7 +4,7 @@ import json
 import requests
 import re
 
-URL =  http://pokeapi.co/api/v2/pokemon/{0}/
+URL =  http://pokeapi.co/api/v2/pokemon/{}/
 
 class WhosThatPokemonManager(object):
     def __init__:
