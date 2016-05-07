@@ -16,7 +16,7 @@ class Messenger(object):
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
-        seld.equation_manager = EquationManager()
+        self.equation_manager = EquationManager()
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
