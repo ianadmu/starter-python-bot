@@ -30,6 +30,7 @@ class WhosThatPokemonManager(object):
     def check_response(self, user_id, msg):
         if self.correct_answer is None:
             sys.exit()
+            return None
         else:
             tokens = msg.split()
             if self.correct_answer in tokens:
@@ -40,11 +41,12 @@ class WhosThatPokemonManager(object):
     def guessed_correctly(self, user_id):
         random_response = random.choice(self.pos_responses)
         revealed_name = self.reveal_answer()
-        return '{} {} You go {}!'.format(random_response, revealed_name, user_id)
+        return '{} {} You go <@{}>!'.format(random_response, revealed_name, user_id)
     
     def gave_up(self):
         if self.correct_answer is None:
             sys.exit()
+            return None
         else:
             return self.reveal_answer()   
                 
