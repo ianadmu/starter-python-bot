@@ -8,7 +8,7 @@ import re
 URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 
 class WhosThatPokemonManager(object):
-    def __init__():
+    def __init__(self):
         self.correct_answer = None
         self.pos_responses = open(os.path.join('./resources', 'pokemon_correct.txt'), 'r')
         self.neg_responses = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
@@ -20,12 +20,13 @@ class WhosThatPokemonManager(object):
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
-            return "Sorry, today is a day of Digimon. No Pokemons for you." 
+<<<<<<< Updated upstream
+            return 'Sorry, today is a day of Digimon. No Pokemons for you.'
         else:
             pokemon = response.json()
             sprite = pokemon['sprites']['front_default']
             self.correct_answer = pokemon['name']
-            return sprite
+            return 'Who\'s that Pokemon? {}'.format(sprite)
     
     def check_response(self, user_id, msg):
         if self.correct_answer is None:
