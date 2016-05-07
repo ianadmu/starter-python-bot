@@ -36,10 +36,10 @@ class Messenger(object):
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
             "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:",
             "> `<@" + bot_uid + "> sort me` - I'll sort you into one of the four Hogwarts houses! Better hope you don't get :slytherin:",
-            "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize.",
-            "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :3c",
-            "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help!",
-            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out.")
+            "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize. :bow:",
+            "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :innocent:",
+            "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help! :nerd_face:",
+            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
