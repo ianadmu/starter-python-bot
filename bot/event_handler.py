@@ -11,7 +11,7 @@ class RtmEventHandler(object):
         self.msg_writer = msg_writer
 
     def trigger_event(self):
-        self.msg_writer.write_weather(event['channel'])
+        self.msg_writer.write_test()
 
     def handle(self, event):
 
