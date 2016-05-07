@@ -77,7 +77,7 @@ class Messenger(object):
     def write_pokemon_guessed_response(self, channel_id, user_id, msg):
         self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(user_id, msg))
         
-    def write_pokemon_quit_response(self):
+    def write_pokemon_quit_response(self, channel_id):
         self.send_message(channel_id, self.whos_that_pokemon_manager.gave_up())
 
     def announce_945(self, channel_id):
