@@ -7,6 +7,7 @@ import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
 from apology_manager import ApologyManager
+from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
 class Messenger(object):
@@ -17,6 +18,7 @@ class Messenger(object):
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
         self.equation_manager = EquationManager()
+        
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
