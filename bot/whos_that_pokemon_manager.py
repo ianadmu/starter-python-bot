@@ -20,7 +20,6 @@ class WhosThatPokemonManager(object):
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
-<<<<<<< Updated upstream
             return 'Sorry, today is a day of Digimon. No Pokemons for you.'
         else:
             pokemon = response.json()
