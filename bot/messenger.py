@@ -71,11 +71,14 @@ class Messenger(object):
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
         
-    def write_pokemon_query(self):
+    def write_pokemon(self, channel_id):
         self.send_message(channel_id, self.whos_that_pokemon_manager.get_random_pokemon())
 
-    def write_pokemon_response(self, channel_id, user_id, msg):
+    def write_pokemon_guessed_response(self, channel_id, user_id, msg):
         self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(channel_id, user_id, msg))
+        
+    def write_pokemon_quit_response(self):
+        self.send_message(channel_id, self.whos_that_pokemon_manager.reveal_answer())
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
