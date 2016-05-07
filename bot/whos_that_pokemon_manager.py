@@ -14,7 +14,7 @@ class WhosThatPokemonManager(object):
         self.neg_responses = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
 
     def whos_that_pkmn(self):
-        if self.correct_answer is None
+        if self.correct_answer is None:
             return self.get_random_pokemon()
         else:
             return self.reveal_answer()
