@@ -14,7 +14,8 @@ class WhosThatPokemonManager(object):
 
     def get_random_pokemon(self):
         num = random.randint(1, 721)
-        target = URL.format(num)
+        link = url
+        target = link.format(num)
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
@@ -29,7 +30,7 @@ class WhosThatPokemonManager(object):
         if self.correct_answer is None:
             sys.exit()
         else:
-            if re.search(self.cached_correct_response, msg):
+            if re.search(self.correct_answer, msg):
                 return self.guessed_correctly(user_id)
             else:
                 return user_id + random.choice(self.neg_responses)
