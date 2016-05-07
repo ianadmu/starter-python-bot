@@ -131,15 +131,6 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
-    def write_test(self):
-        #self.send_message('zacefron-dev', 'This is a test time triggered event')
-        #self.clients.send_user_typing_pause('#zacefron-dev')
-        self.clients.rtm.server.channels.find("#boardgames").send_message("{}".format(("test trigger").encode('ascii', 'ignore')))
-        #SlackClient.server.channels.find([identifier]).send_message([text])
-        #self.send_message('#zacefron-dev', 'This is a test time triggered event')
-        #self.clients.api_call('chat.postMessage', as_user='true:', channel='#zacefron-dev', text='helloooooooooooo')
-        #self.send_message(channel_id, 'This is a test time triggered event')
-
     def write_solution(self,channel_id, msg):
         self.send_message(channel_id, self.equation_manager.solve(msg))
         

@@ -38,4 +38,4 @@ class SlackClients(object):
         time.sleep(sleep_time)
 
     def send_test(self):
-    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='this is a test not 9 but 10atnight45 message')
