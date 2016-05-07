@@ -5,7 +5,7 @@ import json
 import requests
 import re
 
-URL =  http://pokeapi.co/api/v2/pokemon/{}/
+URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 
 class WhosThatPokemonManager(object):
     def __init__:
@@ -20,7 +20,7 @@ class WhosThatPokemonManager(object):
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
-            return "Sorry, today is a day of Digimon. No Pokemons for you."
+            return 'Sorry, today is a day of Digimon. No Pokemons for you.'
         else:
             pokemon = response.json()
             sprite = pokemon['sprites']['front_default']
