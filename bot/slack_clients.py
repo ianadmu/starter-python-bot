@@ -37,6 +37,5 @@ class SlackClients(object):
         self.rtm.server.send_to_websocket(user_typing_json)
         time.sleep(sleep_time)
 
-    def send_test(self, hour):
-    	txt = 'this is a test not 9 but 10atnight45 message at hour: ' + str(hour) 
-    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text=txt)
+    def send_time_triggered_msg(self, channel_name, msg):
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text=msg)
