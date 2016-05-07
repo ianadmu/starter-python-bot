@@ -132,7 +132,7 @@ class Messenger(object):
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
     def write_test(self):
-        self.send_message('zacefron-dev', 'This is a test time triggered event')
+       #self.send_message('zacefron-dev', 'This is a test time triggered event')
         self.clients.api_call('chat.postMessage', as_user='true:', channel='zacefron-dev', text='helloooooooooooo')
         #self.clients.send_user_typing_pause(channel_id)
         #self.send_message(channel_id, 'This is a test time triggered event')
