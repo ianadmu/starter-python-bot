@@ -7,6 +7,7 @@ import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
 from apology_manager import ApologyManager
+from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
 class Messenger(object):
@@ -16,7 +17,8 @@ class Messenger(object):
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
-    
+        self.equation_manager = EquationManager()
+
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
@@ -132,3 +134,7 @@ class Messenger(object):
     def write_test(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, 'This is a test time triggered event')
+
+    def write_solution(self,channel_id, msg):
+        self.send_message(channel_id, self.equation_manager.solve(msg))
+        
