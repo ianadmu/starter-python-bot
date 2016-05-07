@@ -79,6 +79,6 @@ class RtmEventHandler(object):
                 elif re.search('apologize|apologise', msg_txt):
                     self.msg_writer.write_apology(event['channel'])
                 elif 'solve' in msg_txt:
-                    self.msg_writer.write_solution(event['channel',msg_txt])
+                    self.msg_writer.write_solution(event['channel'],msg_txt])
                 else:
                     pass
