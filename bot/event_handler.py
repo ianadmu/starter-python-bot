@@ -68,7 +68,7 @@ class RtmEventHandler(object):
                 elif re.search(' ?(Z|z)ac>? it\'?s'):
                     self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
                 elif re.search('( ?(Z|z)ac>? (don\'?t know|dunno|give up|tell |who is it'):
-                    self.msg_writer.write_pokemon_quit_response(event['channel'], event['user'])
+                    self.msg_writer.write_pokemon_quit_response(event['channel'])
                 elif 'attachment' in msg_txt:
                     self.msg_writer.demo_attachment(event['channel'])
                 elif 'weather' in msg_txt:
