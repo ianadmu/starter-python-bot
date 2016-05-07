@@ -33,7 +33,7 @@ class WhosThatPokemonManager(object):
             if re.search(self.correct_answer, msg):
                 return self.guessed_correctly(user_id)
             else:
-                return user_id + random.choice(self.neg_responses)
+                return '{} {}'.format(user_id, random.choice(self.neg_responses))
             
     def guessed_correctly(self, user_id):
         random_response = random.choice(self.pos_responses)
