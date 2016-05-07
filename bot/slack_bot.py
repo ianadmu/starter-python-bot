@@ -1,8 +1,6 @@
 import time
 import logging
 import traceback
-import datetime
-import pytz
 
 from slack_clients import SlackClients
 from messenger import Messenger
@@ -74,12 +72,11 @@ class SlackBot(object):
             self.trigger_timed_event()
 
     def trigger_timed_event(self):
-        timezone = pytz.timezone('America/Winnipeg')
-        day = datetime.astimezone(timezone).strftime('%A')
-        hour = int(datetime.astimezone(timezone).strftime('%H'))
-        minute = int(datetime.astimezone(timezone).strftime('%M'))
-        second = int(datetime.astimezone(timezone).strftime('%S'))
-        if(second >= 5 and second < 15): #zac auto pings every 10 seconds 
+        day = time.strftime('%A')
+        hour = int(time.strftime('%H'))
+        minute = int(time.strftime('%M'))
+        second = int(time.strftime('%S'))
+        if(second > 5 and second < 15):
             msg = 'this is a test message at hour: ' + str(hour)  + ' and minute: ' + str(minute) + ' and second: ' + str(second)
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #self.clients.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
