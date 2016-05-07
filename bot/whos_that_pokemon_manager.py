@@ -21,7 +21,7 @@ class WhosThatPokemonManager(object):
         except requests.exceptions.RequestException as e:
             return "Sorry, today is a day of Digimon. No Pokemons for you."
         else:
-            pokemon = json.loads(response)
+            pokemon = response.json()
             sprite = pokemon['sprites']['front_default']
             self.correct_answer = pokemon['name']
             return sprite
@@ -38,7 +38,7 @@ class WhosThatPokemonManager(object):
     def guessed_correctly(self, user_id):
         random_response = random.choice(self.pos_responses)
         revealed_name = self.reveal_answer()
-        return random_response + "You go " + user_id + revealed_name + "!"
+        return '{} {} You go {}!'.format(random_response, revealed_name, user_id)
     
     def gave_up(self):
         if self.correct_answer is None:
@@ -49,4 +49,4 @@ class WhosThatPokemonManager(object):
     def reveal_answer(self):
         answer = self.correct_answer
         self.correct_answer = None
-        return " It was " + self.correct_answer
+        return ' It was {}.'.format(self.correct_answer)
