@@ -74,12 +74,12 @@ class SlackBot(object):
             self.trigger_timed_event()
 
     def trigger_timed_event(self):
-        curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS)
+        curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS) #change here when daylight savings ends
         day = curr_datetime.strftime('%A')
         hour = int(curr_datetime.strftime('%H'))
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
-        if(second >= 5 and second < 15):
+        if(second >= 5 and second =< 15):
             msg = 'this is a test message at hour: ' + str(hour)  + ' and minute: ' + str(minute) + ' and second: ' + str(second) + ' and day: ' + day
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #self.clients.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
