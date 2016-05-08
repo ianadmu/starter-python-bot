@@ -2,6 +2,8 @@
 import logging
 import re
 import time
+import requests
+import json
 
 from slacker import Slacker
 from slackclient import SlackClient
