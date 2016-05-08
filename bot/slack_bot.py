@@ -79,7 +79,7 @@ class SlackBot(object):
         hour = int(curr_datetime.strftime('%H'))
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
-        if(second >= 5 and second =< 15):
+        if(second >= 5 and second <= 15):
             msg = 'this is a test message at hour: ' + str(hour)  + ' and minute: ' + str(minute) + ' and second: ' + str(second) + ' and day: ' + day
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #self.clients.rtm.api_call('chat.postMessage', as_user='true:', channel='#random', text='helloooooooooooo')
