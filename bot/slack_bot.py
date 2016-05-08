@@ -5,13 +5,15 @@ import traceback
 from slack_clients import SlackClients
 from messenger import Messenger
 from event_handler import RtmEventHandler
+from datetime import datetime, timedelta
 
 logger = logging.getLogger(__name__)
 
+HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
+HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6 #for Winnipeg
 
 def spawn_bot():
     return SlackBot()
-
 
 class SlackBot(object):
     def __init__(self, token=None):
@@ -72,10 +74,11 @@ class SlackBot(object):
             self.trigger_timed_event()
 
     def trigger_timed_event(self):
-        day = time.strftime('%A')
-        hour = int(time.strftime('%H'))
-        minute = int(time.strftime('%M'))
-        second = int(time.strftime('%S'))
+        curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS)
+        day = curr_datetime.strftime('%A')
+        hour = int(curr_datetime.strftime('%H'))
+        minute = int(curr_datetime.strftime('%M'))
+        second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second < 15):
             msg = 'this is a test message at hour: ' + str(hour)  + ' and minute: ' + str(minute) + ' and second: ' + str(second) + ' and day: ' + day
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
