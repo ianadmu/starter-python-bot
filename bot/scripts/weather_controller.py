@@ -15,7 +15,6 @@ CITY="Winnipeg"
 SUNSET_HOUR = 21
 SUNRISE_HOUR = 5
 
-
 class WeatherController:
 
     def get_icon(conds):
