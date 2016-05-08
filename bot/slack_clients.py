@@ -43,6 +43,6 @@ class SlackClients(object):
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text=msg)
 
     def get_random_emoji(self):
-    	resp = requests.get(self.rtm.api_call('emoji.list'))
+    	resp = self.rtm.api_call('emoji.list')
     	data = resp.json()
     	return data['emoji']['heart']
