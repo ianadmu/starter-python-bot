@@ -10,7 +10,7 @@ class TimeTriggeredEventManager(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
 
-    def trigger_ping(self):
+    def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
@@ -28,7 +28,7 @@ class TimeTriggeredEventManager(object):
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
-            self.trigger_ping()
+            self.trigger_ping(day, hour, minute, second)
             #if(hour == 9 and minute == 45):
             self.trigger_945()
 
