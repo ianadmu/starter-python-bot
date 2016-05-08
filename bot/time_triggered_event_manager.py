@@ -17,8 +17,8 @@ class TimeTriggeredEventManager(object):
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
-            emoji = self.clients.get_random_emoji()
-            msg = 'Ping on ' + day + '(day):' + str(hour)  + '(hour):' + str(minute) + '(minute):' + str(second) + '(seconds) :' + str(emoji) + ':' 
+            random_custom_emoji = self.clients.get_random_emoji()
+            msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #if(hour == 9 and minute == 45):
                 #tag_users = ['channel', 'here']
