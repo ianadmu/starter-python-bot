@@ -53,10 +53,9 @@ class Messenger(object):
 
     def write_good_morning(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
-        good_mornings = ['Good morning', 'Morning', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos días', ':sunny: Good morning']
+        good_mornings = ['Good morning', 'Morning', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
         txt = '{}, <@{}>!'.format(random.choice(good_mornings), user_id)
         self.send_message(channel_id, txt)
-        
 
     def write_your_welcome(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
