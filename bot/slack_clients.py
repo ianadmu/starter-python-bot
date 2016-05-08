@@ -39,3 +39,7 @@ class SlackClients(object):
 
     def send_time_triggered_msg(self, channel_name, msg):
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text=msg)
+
+    def get_random_emoji(self):
+    	data = json.loads(self.rtm.api_call('emoji.list'))
+    	return data['emoji']['heart']
