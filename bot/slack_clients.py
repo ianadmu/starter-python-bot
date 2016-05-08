@@ -55,7 +55,7 @@ class SlackClients(object):
         	return input
 
     def get_random_emoji(self):
-    	response =  byteify(json.loads(self.rtm.api_call('emoji.list')))
+    	response = self.rtm.api_call('emoji.list')
     	#data = json.loads(resp)
     	#data = resp.json()
-    	return response
+    	return response['emoji']
