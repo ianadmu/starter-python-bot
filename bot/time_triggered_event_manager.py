@@ -9,16 +9,26 @@ class TimeTriggeredEventManager(object):
 
     def __init__(self, slack_clients):
         self.clients = slack_clients
+        self.last_random = 0
+        self.random_interval = 0
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
+    def trigger_random(self):
+        random_custom_emoji = self.clients.get_random_emoji()
+        channels = ['zacefron-testing', 'zacefron-testing']
+        kip_msgs = ['this is a random message', 'this is random message number 2', 'random message number 3']
+        channel = '#{}'.format(random.choice(channels)) 
+        self.clients.send_time_triggered_msg(channel, random.choice(kips_msgs))
+
     def trigger_945(self):
+        random_custom_emoji = self.clients.get_random_emoji()
         tag_users = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
-        txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), self.clients.get_random_emoji()) #<!channel> instead of using @
+        txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji) #<!channel> instead of using @
         self.clients.send_time_triggered_msg('#random', txt)
 
     def trigger_timed_event(self):
@@ -28,7 +38,11 @@ class TimeTriggeredEventManager(object):
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
-            #self.trigger_ping(day, hour, minute, second)
-            if(hour == 9 and minute == 45):
+            self.trigger_ping(day, hour, minute, second)
+            if minute > ((self.last_random + self.random_interval)%60):
+                self.trigger_random()
+                self.last_random = minute
+                self.random_interval = int(random.random()*5)
+            if hour == 9 and minute == 45:
                 self.trigger_945()
 
