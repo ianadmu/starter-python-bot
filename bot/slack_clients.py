@@ -38,4 +38,5 @@ class SlackClients(object):
         time.sleep(sleep_time)
 
     def send_time_triggered_msg(self, channel_name, msg):
+    	self.send_user_typing_pause(channel_name)
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text=msg)
