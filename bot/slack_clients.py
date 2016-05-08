@@ -56,4 +56,4 @@ class SlackClients(object):
     def get_random_emoji(self): #this method only gets custom emojis not all slack emojis
     	response = self.rtm.api_call('emoji.list')
     	emojis = response['emoji'].items()
-    	return emojis[0][int(random.random()*len(emojis[0]))]
+    	return emojis[0][int(random.random()*len(emojis))]
