@@ -1,7 +1,7 @@
 import re
 
 class EquationManager(object):
-	
+
 	def solve(self,equation):
 
 		tokens = equation.split()
@@ -12,4 +12,3 @@ class EquationManager(object):
 			return "The answer is "+str(eval(tokens[2]))+"!"
 		except:
 			return "I coulden't solve that equation :confounded:"
-		

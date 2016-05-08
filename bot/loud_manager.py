@@ -11,7 +11,6 @@ class LoudManager(object):
 		self.loud_file.write(loudMessage.replace("\n"," ")+"\n")
 		self.loud_cache.append(loudMessage)
 
-
 	def load_loud_cache(self):
 		for line in self.loud_file.read().splitlines():
 			self.loud_cache.append(line)
@@ -22,7 +21,3 @@ class LoudManager(object):
 			self.cache_loaded = True
 
 		return random.choice(self.loud_cache)
-
-
-
-

@@ -5,7 +5,7 @@ import re
 sass_flag = re.compile('sass[a-z]* ')
 
 class SassManager(object):
-	
+
     def __init__(self):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sass_cache = self.sass_file.readlines()
