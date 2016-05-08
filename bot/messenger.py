@@ -56,6 +56,12 @@ class Messenger(object):
         good_mornings = ['Good morning', 'Morning', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
         txt = '{}, <@{}>!'.format(random.choice(good_mornings), user_id)
         self.send_message(channel_id, txt)
+  
+    def write_good_night(self, channel_id, user_id):
+        self.clients.send_user_typing_pause(channel_id)
+        good_nights = ['Goodnight', ':crescent_moon: Good night', 'Goodnight, my dear', 'Sweet dreams', 'Don\'t let the bed bugs bite', 'Pleasant dreams', 'Sleep well', 'Until tomorrow then,']
+        txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
+        self.send_message(channel_id, txt)
 
     def write_your_welcome(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
