@@ -2,9 +2,7 @@
 import logging
 import re
 import time
-import requests
 import json
-import yaml
 
 from slacker import Slacker
 from slackclient import SlackClient
@@ -56,6 +54,4 @@ class SlackClients(object):
 
     def get_random_emoji(self):
     	response = self.rtm.api_call('emoji.list')
-    	#data = json.loads(resp)
-    	#data = resp.json()
-    	return response['emoji']
+    	return response['emoji'][int(random.random()*58)]
