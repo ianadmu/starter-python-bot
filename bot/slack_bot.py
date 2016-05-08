@@ -22,7 +22,7 @@ class SlackBot(object):
         self.keep_running = True
         if token is not None:
             self.clients = SlackClients(token)
-            self.time_triggered_event_manager = TimeTriggeredEventManager(self.clients)
+        self.time_triggered_event_manager = TimeTriggeredEventManager(self.clients)
 
     def start(self, resource):
         """Creates Slack Web and RTM clients for the given Resource
