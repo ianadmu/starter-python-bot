@@ -31,7 +31,7 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
+        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
@@ -41,7 +41,9 @@ class Messenger(object):
             "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize. :bow:",
             "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :innocent:",
             "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help! :nerd_face:",
-            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:")
+            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:",
+            "> `<@" + bot_uid + "> good morning` - I shall wish you a good morning as well! :sunny:",
+            "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
@@ -55,6 +57,13 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         good_mornings = ['Good morning', 'Morning', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
         txt = '{}, <@{}>!'.format(random.choice(good_mornings), user_id)
+        self.send_message(channel_id, txt)
+  
+    def write_good_night(self, channel_id, user_id):
+        self.clients.send_user_typing_pause(channel_id)
+        good_nights = ['Goodnight', ':crescent_moon: Good night', 'Goodnight, my dear', 'Sweet dreams', 'Don\'t let the bed bugs bite', 
+        'Pleasant dreams', 'Sleep well', 'Until tomorrow then', 'May your dreams be filled with my beautiful face :zacefron:']
+        txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
         self.send_message(channel_id, txt)
 
     def write_your_welcome(self, channel_id, user_id):

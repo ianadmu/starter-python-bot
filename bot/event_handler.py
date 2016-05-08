@@ -59,8 +59,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_help_message(event['channel'])
                 elif re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt) or msg_txt.endswith(' hi') or msg_txt.endswith(' Hi') or msg_txt.endswith(' sup'):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
-                elif re.search('good morning|morning', msg_txt):
-                    self.msg_writer.write_good_morning(event['channel'], event['user'])                    
+                elif re.search('good morning|morning|Morning|Good Morning|Good morning', msg_txt):
+                    self.msg_writer.write_good_morning(event['channel'], event['user'])
+                elif re.search('good night|night|goodnight|Goodnight|Good night|Good Night|Night', msg_txt):
+                    self.msg_writer.write_good_night(event['channel'], event['user'])
                 elif re.search('thanks|thank you|thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
                 elif 'joke' in msg_txt:
