@@ -22,7 +22,7 @@ class TimeTriggeredEventManager(object):
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #if(hour == 9 and minute == 45):
             tag_users = ['nicole', 'here']
-            kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :siren:', '945! :boom:', ':eggplant: 945.', '945 :coffee:']
+            kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
             txt = '<@{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), self.clients.get_random_emoji())
             self.clients.send_time_triggered_msg('#zacefron-testing', txt)
 
