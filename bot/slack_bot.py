@@ -22,7 +22,6 @@ class SlackBot(object):
         self.keep_running = True
         if token is not None:
             self.clients = SlackClients(token)
-        self.time_triggered_event_manager = TimeTriggeredEventManager(self.clients)
 
     def start(self, resource):
         """Creates Slack Web and RTM clients for the given Resource
@@ -45,6 +44,7 @@ class SlackBot(object):
 
             msg_writer = Messenger(self.clients)
             event_handler = RtmEventHandler(self.clients, msg_writer)
+            time_event_handler = TimeTriggeredEventManager(self.clients)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():
@@ -56,19 +56,19 @@ class SlackBot(object):
                         msg_writer.write_error(event['channel'], err_msg)
                         continue
 
-                self._auto_ping()
+                self._auto_ping(time_event_handler)
                 time.sleep(.1)
 
         else:
             logger.error('Failed to connect to RTM client with token: {}'.format(self.clients.token))
 
-    def _auto_ping(self):
+    def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds
         now = int(time.time())
         if now > self.last_ping + 10:
             self.clients.rtm.server.ping()
             self.last_ping = now
-            self.time_triggered_event_manager.trigger_timed_event()
+            time_event_handler.trigger_timed_event()
 
     def stop(self, resource):
         """Stop any polling loops on clients, clean up any resources,
