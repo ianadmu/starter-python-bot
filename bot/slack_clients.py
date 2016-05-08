@@ -46,4 +46,4 @@ class SlackClients(object):
     	response = json.loads(self.rtm.api_call('emoji.list').decode("utf-8"))
     	#data = json.loads(resp)
     	#data = resp.json()
-    	return response['emoji']['nicole']
+    	return response['emoji']
