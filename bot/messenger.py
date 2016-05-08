@@ -151,4 +151,3 @@ class Messenger(object):
 
     def write_solution(self,channel_id, msg):
         self.send_message(channel_id, self.equation_manager.solve(msg))
-

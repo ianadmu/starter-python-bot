@@ -19,5 +19,10 @@ class TimeTriggeredEventManager(object):
             msg = 'this is a test message at hour: ' + str(hour)  + ' and minute: ' + str(minute) + ' and second: ' + str(second) + ' and day: ' + day
             self.clients.send_time_triggered_msg('#zacefron-testing', msg)
             #if(hour == 9 and minute == 45)
+<<<<<<< HEAD
+                #kip_msgs = ['@945', '945!', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
+                #txt = '<@channel> {}'.format(random.choice(good_mornings), user_id)dle
+=======
             #kip_msgs = ['@945', '945!', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
             #txt = '<@channel> {}'.format(random.choice(good_mornings), user_id)dle
+>>>>>>> origin/master

@@ -57,7 +57,7 @@ class WeatherController:
     get_icon = staticmethod(get_icon)
 
     def get_weather():
-        
+
         try:
              response = urllib.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
              #req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")

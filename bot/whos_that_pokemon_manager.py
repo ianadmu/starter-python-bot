@@ -32,7 +32,7 @@ class WhosThatPokemonManager(object):
             sprite = pokemon['sprites']['front_default']
             self.correct_answer = pokemon['name']
             return 'Who\'s that Pokemon? {}'.format(sprite)
-    
+
     def check_response(self, user_id, msg):
         if self.correct_answer is None:
             sys.exit()
@@ -43,12 +43,12 @@ class WhosThatPokemonManager(object):
                 return self.guessed_correctly(user_id)
             else:
                 return '{} {}'.format(user_id, random.choice(self.neg_responses))
-            
+
     def guessed_correctly(self, user_id):
         random_response = random.choice(self.pos_responses)
         revealed_name = self.reveal_answer()
         return '{} {} You go <@{}>!'.format(random_response, revealed_name, user_id)
-                
+
     def reveal_answer(self):
         answer = self.correct_answer
         self.correct_answer = None
