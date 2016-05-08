@@ -43,8 +43,19 @@ class SlackClients(object):
     def send_time_triggered_msg(self, channel_name, msg):
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text=msg)
 
+    def byteify(input):
+    	if isinstance(input, dict):
+        	return {byteify(key): byteify(value)
+        			for key, value in input.iteritems()}
+    	elif isinstance(input, list):
+        	return [byteify(element) for element in input]
+    	elif isinstance(input, unicode):
+        	return input.encode('utf-8')
+    	else:
+        	return input
+
     def get_random_emoji(self):
-    	response =  yaml.safe_load(self.rtm.api_call('emoji.list'))
+    	response =  byteify(json.loads(self.rtm.api_call('emoji.list')))
     	#data = json.loads(resp)
     	#data = resp.json()
     	return response
