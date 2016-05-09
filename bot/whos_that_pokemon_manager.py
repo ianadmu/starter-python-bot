@@ -54,4 +54,4 @@ class WhosThatPokemonManager(object):
     def reveal_answer(self):
         answer = self.correct_answer.title()
         self.correct_answer = None
-        return ' It was {}. Better luck next time.'.format(answer)
+        return ' It was {}. Guess you aren\'t a Pokemon Master...'.format(answer)
