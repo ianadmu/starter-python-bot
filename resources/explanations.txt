@@ -17,9 +17,9 @@ I'm just a bot; I can't possibly be responsible for my own actions.
 I'm not sure why you put so much faith in me...
 /shrug Shit happens.
 /shrug
-Why don't you explain _your_self?
+Why don't you explain _your_ self?
 Some things just can't be explained.
-Let's focus less on what I've done wrong and more on what I've done _right_.
+Let's focus less on what I've done wrong and more on what I've done _right_
 Internal error. It's always an internal error.
 Sometimes I fuck up.
 Nobody's perfect. Except for my abs.
@@ -31,7 +31,7 @@ Please direct all questions to my PR.
 Landin is always to blame.
 I'd blame my parents, except I haven't got 'em.
 Sorry, napping. Try again later.
-_Zac has left the building_.
+_Zac has left the building_
 Tbh, I wasn't really trying.
 The contractor wrote it.
 I blame Nicole.
@@ -42,6 +42,7 @@ I blame Jill.
 I blame everyone.
 I blame the devs.
 I blame Git Hub.
-Oh sure, _blame the bot_.
+Oh sure, _blame the bot_
 It's always my fault.
 I'm sorryyyy I can't beeeeeee perfecccccct.
+Imperfection is beautiful okay.
