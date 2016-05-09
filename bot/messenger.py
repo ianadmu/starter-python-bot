@@ -74,6 +74,11 @@ class Messenger(object):
         txt = '{}, <@{}>!'.format(random.choice(your_welcomes), user_id)
         self.send_message(channel_id, txt)
 
+    def write_wiener(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = 'I AM A WIENER!!! :eggplant: ...jk that\'s Steven'
+        self.send_message(channel_id, txt)
+
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         bot_uid = self.clients.bot_user_id()

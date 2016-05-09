@@ -63,8 +63,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_morning(event['channel'], event['user'])
                 elif re.search('good night|night|goodnight|Goodnight|Good night|Good Night|Night', msg_txt):
                     self.msg_writer.write_good_night(event['channel'], event['user'])
-                elif re.search('thanks|thank you|thank-you', msg_txt):
+                elif re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
+                elif 'wiener' in msg_txt:
+                    self.msg_writer.write_wiener(event['channel'])
                 elif 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
                 elif re.search('who\'?s that pokemon', msg_txt):
