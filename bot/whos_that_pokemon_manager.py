@@ -52,6 +52,6 @@ class WhosThatPokemonManager(object):
         return '{} {} You go <@{}>!'.format(random_response, revealed_name, user_id)
 
     def reveal_answer(self):
-        answer = self.correct_answer
+        answer = self.correct_answer.title()
         self.correct_answer = None
-        return ' It was {}.'.format(answer)
+        return ' It was {}. Better luck next time.'.format(answer)
