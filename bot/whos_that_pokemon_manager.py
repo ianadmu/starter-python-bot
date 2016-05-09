@@ -10,8 +10,10 @@ URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 class WhosThatPokemonManager(object):
     def __init__(self):
         self.correct_answer = None
-        self.pos_responses = open(os.path.join('./resources', 'pokemon_correct.txt'), 'r')
-        self.neg_responses = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
+        self.pos_responses_file = open(os.path.join('./resources', 'pokemon_correct.txt'), 'r')
+        self.pos_responses = self.pos_responses_file.readlines()
+        self.neg_responses_file = open(os.path.join('./resources', 'pokemon_incorrect.txt'), 'r')
+        self.neg_responses = self.neg_responses_file.readlines()
 
     def whos_that_pkmn(self):
         if self.correct_answer is None:
@@ -42,7 +44,7 @@ class WhosThatPokemonManager(object):
             if self.correct_answer in tokens:
                 return self.guessed_correctly(user_id)
             else:
-                return '{} {}'.format(user_id, random.choice(self.neg_responses))
+                return '<@{}> {}'.format(user_id, random.choice(self.neg_responses))
 
     def guessed_correctly(self, user_id):
         random_response = random.choice(self.pos_responses)
