@@ -90,7 +90,9 @@ class Messenger(object):
         self.send_message(channel_id, self.whos_that_pokemon_manager.whos_that_pkmn())
 
     def write_pokemon_guessed_response(self, channel_id, user_id, msg):
-        self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(user_id, msg))
+        result = self.whos_that_pokemon_manager.check_response(user_id, msg)
+        if result is not None:
+            self.send_message(channel_id, result)
 
     def announce_945(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
