@@ -28,8 +28,8 @@ class TimeTriggeredEventManager(object):
         hour = int(curr_datetime.strftime('%H'))
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
-        if(hour > 11 and hour < 18 and second >= 5 and second <= 15):
-            self.trigger_ping(day, hour, minute, second)
+        if(second >= 5 and second <= 15):
+            #self.trigger_ping(day, hour, minute, second)
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
