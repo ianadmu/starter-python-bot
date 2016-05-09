@@ -7,5 +7,5 @@ class ExplanationManager(object):
         self.explanation_file = open(os.path.join('./resources', 'explanations.txt'), 'r')
         self.explanations = self.explanation_file.readlines()
         
-    def get_explanation(self)
+    def get_explanation(self):
         return random.choice(self.explanations)
