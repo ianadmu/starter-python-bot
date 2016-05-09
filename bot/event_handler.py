@@ -75,6 +75,8 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(event['channel'])
                 elif 'weather' in msg_txt:
                     self.msg_writer.write_weather(event['channel'])
+                elif 'explain yourself' in msg_txt:
+                    self.msg_writer.write_explanation(event['channel'])    
                 elif 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
                 elif 'sort me' in msg_txt:

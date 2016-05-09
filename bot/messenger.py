@@ -7,6 +7,7 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
+from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
 
@@ -150,7 +151,11 @@ class Messenger(object):
         response = self.hogwarts_house_sorter.sort_into_house(msg)
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
-
+    
+    def write_explanation(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, self.explanation_manager.get_explanation())
+        
     def write_sass(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
         txt = self.sass_manager.get_sass(msg)

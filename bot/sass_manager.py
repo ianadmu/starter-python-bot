@@ -8,11 +8,11 @@ class SassManager(object):
 
     def __init__(self):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
-        self.sass_cache = self.sass_file.readlines()
+        self.sasy_remarks = self.sass_file.readlines()
 
     def get_sass(self, msg):
         target = self.get_target(msg)
-        sass = random.choice(self.sass_cache)
+        sass = random.choice(self.sasy_remarks)
         return 'Hey, {}! {}'.format(target, sass)
 
     def get_target(self, msg):
