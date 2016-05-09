@@ -1,6 +1,5 @@
 import os.path
 import random
-import re
 
 class ApologyManager(object):
 
