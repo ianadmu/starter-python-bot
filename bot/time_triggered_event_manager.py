@@ -22,7 +22,7 @@ class TimeTriggeredEventManager(object):
         kip_msgs = ['this is a random message', 'this is random message number 2', 'random message number 3']
         msg = 'Last random minute: {} and last random interval: {} and new random interval: {} and Message: {}'.format(last_random, random_interval, new_random, random.choice(kip_msgs))
         #channel = '#{}'.format(random.choice(channels)) 
-        self.clients.send_time_triggered_msg('#zacefron-testing', 'testing')
+        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
