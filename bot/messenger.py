@@ -20,6 +20,7 @@ class Messenger(object):
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
+        self.explanation_manager = ExplanalationManager()
         self.equation_manager = EquationManager()
 
     def send_message(self, channel_id, msg):

@@ -9,3 +9,4 @@ class ExplanationManager(object):
         
     def get_explanation(self):
         return random.choice(self.explanations)
+        
