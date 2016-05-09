@@ -37,7 +37,6 @@ class WhosThatPokemonManager(object):
 
     def check_response(self, user_id, msg):
         if self.correct_answer is None:
-            sys.exit()
             return None
         else:
             tokens = msg.split()
