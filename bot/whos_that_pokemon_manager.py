@@ -19,7 +19,8 @@ class WhosThatPokemonManager(object):
         if self.correct_answer is None:
             return self.get_random_pokemon()
         else:
-            return self.reveal_answer()
+            answer = self.reveal_answer()
+            return '{} Guess you aren\'t a Pokemon Master.'.format(answer)
 
     def get_random_pokemon(self):
         num = random.randint(1, 721)
@@ -53,4 +54,4 @@ class WhosThatPokemonManager(object):
     def reveal_answer(self):
         answer = self.correct_answer.title()
         self.correct_answer = None
-        return ' It was {}. Guess you aren\'t a Pokemon Master...'.format(answer)
+        return 'It was {}.'.format(answer)
