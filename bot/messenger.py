@@ -87,7 +87,7 @@ class Messenger(object):
         self.send_message(channel_id, answer)
 
     def write_pokemon(self, channel_id):
-        self.send_message(channel_id, self.whos_that_pokemon_manager.get_random_pokemon())
+        self.send_message(channel_id, self.whos_that_pokemon_manager.whos_that_pkmn())
 
     def write_pokemon_guessed_response(self, channel_id, user_id, msg):
         self.send_message(channel_id, self.whos_that_pokemon_manager.check_response(user_id, msg))
