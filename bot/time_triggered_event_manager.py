@@ -44,6 +44,7 @@ class TimeTriggeredEventManager(object):
             self.last_random_minutes = minute
             self.last_random_hour = hour
             if self.random_hasnt_fired:
+                self.clients.upload_file_to_slack() #test file upload
                 self.random_hasnt_fired = False
 
     def trigger_945(self):
