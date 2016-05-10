@@ -48,7 +48,7 @@ class TimeTriggeredEventManager(object):
                 #if hour > 8 and hour < 22: #ping and random event fire for testing
                 self.trigger_ping(day, hour, minute, second)
                 self.trigger_random(self.last_random_minutes, self.random_interval_minutes, new_random, hr, min)
-                self.random_interval = new_random
+                self.random_interval_minutes = new_random
                 self.last_random_minutes = minute
                 self.last_random_hour = hour
                 if self.random_hasnt_fired:
