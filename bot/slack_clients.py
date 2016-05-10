@@ -49,5 +49,5 @@ class SlackClients(object):
     	return emojis[int(random.random()*len(emojis))][0]
 
     def upload_file_to_slack(self): 
-    	my_file = open(os.path.join('./resources', 'pokemon_correct.txt'))
-    	response = self.rtm.api_call('files.upload', filename='testfile.txt', file=my_file, channels=['#zacefron-testing'])
+    	my_file = open(os.path.join('./resources', 'pokemon_correct.txt')) 
+    	response = self.rtm.api_call('files.upload', filename='testfile.txt', file={'testfile.txt': open(os.path.join('./resources', 'pokemon_correct.txt'), 'rb')}, channels=['#zacefron-testing'])
