@@ -28,7 +28,7 @@ class TimeTriggeredEventManager(object):
         msg = 'New random interval in minutes: {} with message: {} '.format(new_random_minutes, random.choice(random_msgs))
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
-    def check_trigger_random(self):
+    def check_trigger_random(self, day, hour, minute, second):
         random_should_fire_hr = self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR)%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min): 
@@ -57,7 +57,7 @@ class TimeTriggeredEventManager(object):
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15): #leave a bit over 10 seconds to trigger, method is called every 10-ish s and we only want it to trigger once per min
             #self.trigger_ping(day, hour, minute, second)
-            self.check_trigger_random() #in own method because math
+            self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
