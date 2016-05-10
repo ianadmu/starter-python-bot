@@ -45,7 +45,7 @@ class TimeTriggeredEventManager(object):
                 new_random = int(random.random()*5) + 1 #fire at least every 5 minutes
                 #if hour > 8 and hour < 22: #ping and random event fire for testing
                 self.trigger_ping(day, hour, minute, second)
-                self.trigger_random(self.last_random, self.random_interval, new_random)
+                self.trigger_random(self.last_random_minutes, self.random_interval_minutes, new_random)
                 self.random_interval = new_random
                 self.last_random_minutes = minute
                 self.last_random_hour = hour
