@@ -18,10 +18,10 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_random(self, last_random, random_interval, new_random):
-        #channels = ['zacefron-testing', 'zacefron-testing']
-        kip_msgs = ['this is a random message', 'this is random message number 2', 'random message number 3']
-        msg = 'Last random minute: {} and last random interval: {} and new random interval: {} and Message: {}'.format(last_random, random_interval, new_random, random.choice(kip_msgs))
+        #channels = ['heliwolves', 'spamalot']
         #channel = '#{}'.format(random.choice(channels)) 
+        random_msgs = ['Steven is a wiener :eggplant:', 'this is a random message', 'this is random message number 2', 'random message number 3']
+        msg = 'Last random minute: {} and last random interval: {} and new random interval: {} and Message: {}'.format(last_random, random_interval, new_random, random.choice(random_msgs))
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_945(self):
@@ -39,11 +39,12 @@ class TimeTriggeredEventManager(object):
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
             self.trigger_ping(day, hour, minute, second)
-            if minute >= ((self.last_random + self.random_interval)%60):
+            if hour > 8 and hour < 22 and minute == ((self.last_random + self.random_interval)%60): #hour >= (self.last_random_hour + self.random_interval/60) and
                 new_random = int(random.random()*5) + 1
                 self.trigger_random(self.last_random, self.random_interval, new_random)
                 self.random_interval = new_random
                 self.last_random = minute
+                self.last_random_hour
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
