@@ -33,7 +33,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def check_trigger_random(self, day, hour, minute, second):
-        random_should_fire_hr = self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR)%HR_PER_DAY
+        random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min): 
             new_random_minutes = int(random.random()*174) + 1 #fire at least every 5 minutes
