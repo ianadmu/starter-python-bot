@@ -1,5 +1,7 @@
 import random
 import json
+import os.path
+import xml.etree.ElementTree as ET 
 from datetime import datetime, timedelta
 
 HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
@@ -24,8 +26,10 @@ class TimeTriggeredEventManager(object):
     def trigger_random(self, new_random_minutes):
         #channels = ['heliwolves', 'spamalot']
         #channel = '#{}'.format(random.choice(channels)) 
-        random_msgs = ['Steven is a wiener :eggplant:', 'this is a random message', 'this is random message number 2', 'random message number 3']
-        msg = 'New random interval in minutes: {} with message: {} '.format(new_random_minutes, random.choice(random_msgs))
+        tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
+        root = tree.getroot()
+        txt = root[int(random.random()*len(root))].text
+        msg = 'New random interval in minutes: {} with message: {} '.format(new_random_minutes, txt)
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def check_trigger_random(self, day, hour, minute, second):
@@ -60,4 +64,3 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
-
