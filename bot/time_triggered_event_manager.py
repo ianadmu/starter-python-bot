@@ -41,7 +41,7 @@ class TimeTriggeredEventManager(object):
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second)
-            if self.random_hasnt_fired or ((hour == (self.last_random_hour + self.random_interval_minutes/60 + int((self.last_random_minutes + self.random_interval_minutes%60)/60))%24) and (minute == (self.last_random_minutes + self.random_interval_minutes%60)%60)): 
+            if self.random_hasnt_fired or ((hour == (self.last_random_hour + int(self.random_interval_minutes/60) + int((self.last_random_minutes + self.random_interval_minutes%60)/60))%24) and (minute == (self.last_random_minutes + self.random_interval_minutes%60)%60)): 
                 new_random = int(random.random()*5) + 1 #fire at least every 5 minutes
                 #if hour > 8 and hour < 22: #ping and random event fire for testing
                 self.trigger_ping(day, hour, minute, second)
