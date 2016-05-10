@@ -12,7 +12,7 @@ class TimeTriggeredEventManager(object):
         self.last_random_hour = 0
         self.last_random_minutes = 0
         self.random_interval_minutes = 0
-        self.random_hasnt_fired = False
+        self.random_hasnt_fired = True
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -49,8 +49,8 @@ class TimeTriggeredEventManager(object):
                 self.random_interval = new_random
                 self.last_random_minutes = minute
                 self.last_random_hour = hour
-                if self.random_hasnt_fired == False:
-                    self.random_hasnt_fired = True
+                if self.random_hasnt_fired:
+                    self.random_hasnt_fired = False
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
