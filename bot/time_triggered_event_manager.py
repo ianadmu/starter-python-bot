@@ -9,8 +9,10 @@ class TimeTriggeredEventManager(object):
 
     def __init__(self, slack_clients):
         self.clients = slack_clients
-        self.last_random = 0
-        self.random_interval = 0
+        self.last_random_hour = 0
+        self.last_random_minutes = 0
+        self.random_interval_minutes = 0
+        self.random_hasnt_fired = False
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -38,13 +40,17 @@ class TimeTriggeredEventManager(object):
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
         if(second >= 5 and second <= 15):
-            self.trigger_ping(day, hour, minute, second)
-            if hour > 8 and hour < 22 and minute == ((self.last_random + self.random_interval)%60): #hour >= (self.last_random_hour + self.random_interval/60) and
-                new_random = int(random.random()*5) + 1
+            #self.trigger_ping(day, hour, minute, second)
+            if self.random_hasnt_fired or ((hour == (self.last_random_hour + self.random_interval_minutes/60 + (self.last_random_minutes + self.random_interval_minutes%60)/60)%24) and (minute == (self.last_random_minutes + self.random_interval_minutes%60)%60)): 
+                new_random = int(random.random()*5) + 1 #fire at least every 5 minutes
+                #if hour > 8 and hour < 22: #ping and random event fire for testing
+                self.trigger_ping(day, hour, minute, second)
                 self.trigger_random(self.last_random, self.random_interval, new_random)
                 self.random_interval = new_random
-                self.last_random = minute
-                self.last_random_hour
+                self.last_random_minutes = minute
+                self.last_random_hour = hour
+                if self.random_hasnt_fired == False:
+                    self.random_hasnt_fired = True
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
