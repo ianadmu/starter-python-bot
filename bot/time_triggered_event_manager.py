@@ -36,7 +36,7 @@ class TimeTriggeredEventManager(object):
         random_should_fire_hr = self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR)%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min): 
-            new_random_minutes = int(random.random()*5) + 1 #fire at least every 5 minutes
+            new_random_minutes = int(random.random()*174) + 1 #fire at least every 5 minutes
             #if hour > 8 and hour < 22: #ping and random event fire for testing #when done testing uncomment and indent the next 2 lines when you uncomment!!!!
             self.trigger_ping(day, hour, minute, second)
             self.trigger_random(new_random_minutes)
@@ -44,7 +44,7 @@ class TimeTriggeredEventManager(object):
             self.last_random_minutes = minute
             self.last_random_hour = hour
             if self.random_hasnt_fired:
-                self.clients.upload_file_to_slack() #test file upload
+                #self.clients.upload_file_to_slack() #test file upload
                 self.random_hasnt_fired = False
 
     def trigger_945(self):
