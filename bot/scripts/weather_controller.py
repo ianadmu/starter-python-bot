@@ -7,6 +7,7 @@ import urllib
 import time
 
 from xml.etree.ElementTree import XML
+from datetime import datetime, timedelta
 
 API="43ff7b292dd04d4dacd230358160305"
 URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
@@ -14,6 +15,8 @@ URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
 CITY="Winnipeg"
 SUNSET_HOUR = 21
 SUNRISE_HOUR = 5
+HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
+HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6 #for Winnipeg
 
 class WeatherController:
 
@@ -35,7 +38,8 @@ class WeatherController:
         if "sunny" in conds:
             return ":sunny:"
         if "clear" in conds:
-            curr_time = int(time.strftime('%H'))
+            curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS) #change here when daylight savings ends
+            curr_time = int(curr_datetime.strftime('%H'))
             if curr_time >= SUNSET_HOUR or curr_time < SUNRISE_HOUR:
                 return ":night_with_stars:"
             else:
