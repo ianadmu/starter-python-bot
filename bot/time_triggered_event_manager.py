@@ -28,6 +28,20 @@ class TimeTriggeredEventManager(object):
         msg = 'New random interval in minutes: {} with message: {} '.format(new_random_minutes, random.choice(random_msgs))
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
+    def check_trigger_random(self):
+        random_should_fire_hr = self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR)%HR_PER_DAY
+        random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
+        if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min): 
+            new_random_minutes = int(random.random()*5) + 1 #fire at least every 5 minutes
+            #if hour > 8 and hour < 22: #ping and random event fire for testing #when done testing uncomment and indent the next 2 lines when you uncomment!!!!
+            self.trigger_ping(day, hour, minute, second)
+            self.trigger_random(new_random_minutes)
+            self.random_interval_minutes = new_random_minutes
+            self.last_random_minutes = minute
+            self.last_random_hour = hour
+            if self.random_hasnt_fired:
+                self.random_hasnt_fired = False
+
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
         tag_users = ['channel', 'here']
@@ -41,20 +55,9 @@ class TimeTriggeredEventManager(object):
         hour = int(curr_datetime.strftime('%H'))
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
-        if(second >= 5 and second <= 15): #leave a bit over 10 seconds to trigger, method is called every 10 secs approx and we only want it to trigger once per min
+        if(second >= 5 and second <= 15): #leave a bit over 10 seconds to trigger, method is called every 10-ish s and we only want it to trigger once per min
             #self.trigger_ping(day, hour, minute, second)
-            random_should_fire_hr = self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR)%HR_PER_DAY
-            random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
-            if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min): 
-                new_random_minutes = int(random.random()*5) + 1 #fire at least every 5 minutes
-                #if hour > 8 and hour < 22: #ping and random event fire for testing
-                self.trigger_ping(day, hour, minute, second)
-                self.trigger_random(new_random_minutes)
-                self.random_interval_minutes = new_random_minutes
-                self.last_random_minutes = minute
-                self.last_random_hour = hour
-                if self.random_hasnt_fired:
-                    self.random_hasnt_fired = False
+            self.check_trigger_random() #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
 
