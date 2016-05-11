@@ -35,7 +35,7 @@ class TimeTriggeredEventManager(object):
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
-        self.clients.send_time_triggered_msg('zaceefron-testing', txt)
+        self.clients.send_time_triggered_msg('zacefron-testing', txt)
 
     def check_trigger_random(self, hour, minute):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
