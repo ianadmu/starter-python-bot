@@ -81,7 +81,7 @@ class TimeTriggeredEventManager(object):
         msgs = ['The mochaccino tastes _amazing_ this morning!', 'Eh, mochaccino ain\'t so great today...', 'HELP! MOCHACCINO EVERYWHERE!',
         'The mochaccino machine won\'t stop dripping help I need an adult', 'WHAT! wHY is my mochaccino _decaf_??!', 'I haven\'t had my mochaccino yet don\'t talk to me',
         'WHERE\'S MY MUG I NEED MOCHACCINO!!', 'Mochaccino mochaccino mochaccino', 'Mochaccino is SO GOOD TODAY HOLY HELL', 
-        'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmmmmm~', 'Mochaccino status: passable',
+        'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmm~', 'Mochaccino status: passable',
         'MOCHACCINO MOCHACCINO MOCHACCINO!!!', 'Who\'s ready for a nice cup o\' mochaccino?', '_le mochaccino_']
         txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
         self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
