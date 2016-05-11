@@ -58,7 +58,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg) 
-        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
+        self.clients.send_time_triggered_msg('#zacefron-testing', txt)
 
     def trigger_drunk_phrase(self):
         channels = ['heliwolves', 'spamalot', 'random']
@@ -104,7 +104,7 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
-            if hour == 23 and minute == 3:
+            if hour == 23:
                 self.trigger_mochaccino()
             if day == 'Friday':
                 if hour == 16 and minute == 30:
