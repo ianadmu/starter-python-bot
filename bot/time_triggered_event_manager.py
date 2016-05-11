@@ -84,6 +84,15 @@ class TimeTriggeredEventManager(object):
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
 
+    def trigger_mochaccino(self):
+        tag_users = ['channel', 'here']
+        msgs = ['The mochaccino tastes _amazing_ this morning!', 'Eh, mochaccino ain\'t so great today...', 'HELP! MOCHACCINO EVERYWHERE!',
+        'The mochaccino machine won\'t stop dripping help I need an adult', 'WHAT! wHY is my mochaccino _decaf_??!', 'I haven\'t had my mochaccino yet don\'t talk to me',
+        'WHERE\'S MY MUG I NEED MOCHACCINO!!', 'Mochaccino mochaccino mochaccino', 'Mochaccino is SO GOOD TODAY HOLY HELL', 
+        'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmmmmm~', 'Mochaccino status: passable']
+        txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
+        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
+        
         #trigger startup log to testing channel
         if(self.is_just_starting_up):
             self.trigger_startup_log(day, hour, minute, second)
@@ -95,6 +104,8 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
+            if hour == 23 and minute == 0;
+                self.trigger_mochaccino
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
