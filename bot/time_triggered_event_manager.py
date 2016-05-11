@@ -97,5 +97,5 @@ class TimeTriggeredEventManager(object):
                 self.trigger_945()
             if day == 'Friday' and hour == 4 and minute == 30:
                 self.trigger_wine_club()
-            self.trigger_drunk_phrase()
+            #self.trigger_drunk_phrase()
 
