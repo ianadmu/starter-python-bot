@@ -61,11 +61,13 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
 
     def trigger_drunk_phrase(self):
+        channels = ['heliwolves', 'spamalot', 'random']
+        channel = '#{}'.format(random.choice(channels)) 
         random_custom_emoji = self.clients.get_random_emoji()
         drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
         drunk_comments = drunk_comments_file.read().splitlines()
         txt = '{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji) 
-        self.clients.send_time_triggered_msg('#zacefron-testing', txt)
+        self.clients.send_time_triggered_msg(channel, txt)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
