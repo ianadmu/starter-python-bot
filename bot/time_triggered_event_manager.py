@@ -58,7 +58,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg) 
-        self.clients.send_time_triggered_msg('#zacefron-testing', txt) #change to heliwolves
+        self.clients.send_time_triggered_msg('#heliwolves-announce', txt) #change to heliwolves
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -87,5 +87,5 @@ class TimeTriggeredEventManager(object):
             if hour == 9 and minute == 45:
                 self.trigger_945()
             #if day == 'Friday' and hour == 4 and minute == 30:
-            #self.trigger_wine_club()
+            self.trigger_wine_club()
 
