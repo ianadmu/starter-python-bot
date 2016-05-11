@@ -42,7 +42,7 @@ class TimeTriggeredEventManager(object):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
-            max_minutes_between_random_events = 74
+            max_minutes_between_random_events = 10
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
             #if hour > 8 and hour < 22: #ping and random event fire for testing #when done testing uncomment and indent the next 2 lines when you uncomment!!!!
             self.trigger_ping(day, hour, minute, second)
