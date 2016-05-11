@@ -83,7 +83,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_explanation(event['channel'])    
                 elif 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
-                elif 'fuck this' in msg_txt:
+                elif re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
                     self.msg_writer.write_fuck_this(event['channel'])
                 elif 'sort me' in msg_txt:
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
