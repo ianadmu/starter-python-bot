@@ -119,6 +119,16 @@ class Messenger(object):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)
 
+    def write_fuck_this(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        attachment = {
+            "title": "Fuck this shit I'm out",
+            "title_link": "https://www.youtube.com/watch?v=5FjWe31S_0g",
+            "image_url": "https://www.youtube.com/watch?v=5FjWe31S_0g",
+            "color": "#7CD197"
+        }
+        self.clients.web.chat.post_message(channel_id,"", attachments=[attachment], as_user='true')
+
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         txt = "This always cracks me up. :wink:"
