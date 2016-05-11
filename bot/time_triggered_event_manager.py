@@ -58,7 +58,14 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg) 
-        self.clients.send_time_triggered_msg('#heliwolves-announce', txt) #change to heliwolves
+        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
+
+    def trigger_drunk_phrase(self):
+        random_custom_emoji = self.clients.get_random_emoji()
+        drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
+        drunk_comments = drunk_comments_file.readlines()
+        txt = '<{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji) 
+        self.clients.send_time_triggered_msg('#zacefron-testing', txt)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -86,6 +93,7 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
-            #if day == 'Friday' and hour == 4 and minute == 30:
-            #self.trigger_wine_club()
+            if day == 'Friday' and hour == 4 and minute == 30:
+                self.trigger_wine_club()
+            self.trigger_drunk_phrase()
 
