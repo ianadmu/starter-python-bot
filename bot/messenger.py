@@ -124,7 +124,7 @@ class Messenger(object):
         attachment = {
             "title": "Fuck this shit I'm out",
             "title_link": "https://www.youtube.com/watch?v=5FjWe31S_0g",
-            "video_url": "http://youtu.be/5FjWe31S_0g",
+            "url": "https://www.youtube.com/watch?v=5FjWe31S_0g",
             "color": "#7CD197"
         }
         self.clients.web.chat.post_message(channel_id,"", attachments=[attachment], as_user='true')
