@@ -29,24 +29,20 @@ class TimeTriggeredEventManager(object):
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
-    def trigger_random(self, new_random_minutes):
-        #channels = ['heliwolves', 'spamalot', 'random']
-        #channel = '#{}'.format(random.choice(channels)) 
+    def trigger_random(self):
+        channels = ['heliwolves', 'spamalot', 'random']
+        channel = '#{}'.format(random.choice(channels)) 
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
-        msg = 'New random interval in minutes: {} with message: {} '.format(new_random_minutes, txt)
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg(channel, txt)
 
-    def check_trigger_random(self, day, hour, minute, second):
+    def check_trigger_random(self):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
             max_minutes_between_random_events = 10
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
-            #if hour > 8 and hour < 22: #ping and random event fire for testing #when done testing uncomment and indent the next 2 lines when you uncomment!!!!
-            self.trigger_ping(day, hour, minute, second)
-            self.trigger_random(new_random_minutes)
             self.random_interval_minutes = new_random_minutes
             self.last_random_minutes = minute
             self.last_random_hour = hour
@@ -99,10 +95,10 @@ class TimeTriggeredEventManager(object):
             self.trigger_startup_log(day, hour, minute, second)
             self.is_just_starting_up = False
 
-        #trigger timed or random events leave a bit over 10 seconds to trigger, method is called every 10-ish s and we only want it to trigger once per min
+        #leaves 10-ish seconds to trigger since method is called every 10-ish seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            #self.trigger_ping(day, hour, minute, second)
-            self.check_trigger_random(day, hour, minute, second) #in own method because math
+            #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
+            self.check_trigger_random()
             if hour == 9 and minute == 45:
                 self.trigger_945()
             elif hour == 9 and minute == 0:
