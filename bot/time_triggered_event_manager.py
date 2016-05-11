@@ -35,7 +35,7 @@ class TimeTriggeredEventManager(object):
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
-        self.clients.send_time_triggered_msg(channel, txt)
+        self.clients.send_time_triggered_msg('zaceefron-testing', txt)
 
     def check_trigger_random(self, hour, minute):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
@@ -100,10 +100,10 @@ class TimeTriggeredEventManager(object):
         #leaves 10-ish seconds to trigger since method is called every 10-ish seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
-            #self.check_trigger_random(hour, minute)
+            self.check_trigger_random(hour, minute)
             if hour == 9 and minute == 45:
                 self.trigger_945()
-            elif hour == 9 and minute == 0:
+            if hour == 9 and minute == 0:
                 self.trigger_mochaccino()
             if day == 'Friday':
                 if hour == 16 and minute == 30:
