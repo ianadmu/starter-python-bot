@@ -104,7 +104,7 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
-            if hour == 23:
+            elif hour == 23:
                 self.trigger_mochaccino()
             if day == 'Friday':
                 if hour == 16 and minute == 30:
