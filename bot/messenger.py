@@ -122,7 +122,7 @@ class Messenger(object):
     def write_fuck_this(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         attachment = "https://www.youtube.com/watch?v=5FjWe31S_0g"
-        self.clients.web.chat.post_message(channel_id, attachment)
+        self.send_message(channel_id, attachment)
 
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
