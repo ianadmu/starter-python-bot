@@ -95,7 +95,9 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(day, hour, minute, second) #in own method because math
             if hour == 9 and minute == 45:
                 self.trigger_945()
-            if day == 'Friday' and hour == 4 and minute == 30:
-                self.trigger_wine_club()
-            #self.trigger_drunk_phrase()
+            if day == 'Friday':
+                if hour == 16 and minute == 30:
+                    self.trigger_wine_club()
+                if (hour == 16 and minute == 31) or (hour == 17 and minute == 0) or (hour == 17 and minute == 30) or (hour == 18 and minute == 0): 
+                    self.trigger_drunk_phrase()
 
