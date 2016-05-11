@@ -43,6 +43,8 @@ class TimeTriggeredEventManager(object):
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
             max_minutes_between_random_events = 10
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
+            #if hour >= 8 and hour < 22: 
+            self.trigger_random()
             self.random_interval_minutes = new_random_minutes
             self.last_random_minutes = minute
             self.last_random_hour = hour
