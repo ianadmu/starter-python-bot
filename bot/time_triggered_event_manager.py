@@ -87,5 +87,5 @@ class TimeTriggeredEventManager(object):
             if hour == 9 and minute == 45:
                 self.trigger_945()
             #if day == 'Friday' and hour == 4 and minute == 30:
-            self.trigger_wine_club()
+            #self.trigger_wine_club()
 
