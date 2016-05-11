@@ -34,7 +34,44 @@
 	<comment>Dear maintainer: Once you are done trying to &apos;optimize&apos; this routine, and have realized what a terrible mistake that was, please increment the following counter as a warning to the next guy: total_hours_wasted_here = 42</comment>
 	<comment>When I wrote this, only God and I understood what I was doing. Now, God only knows</comment>
 	<comment>I dedicate all this code, all my work, to my wife, Darlene, who will have to support me and our three children and the dog once it gets released into the public.</comment>
-	<comment>#define TRUE FALSE #Happy debugging suckers</comment>
-	<comment>return 1; # returns 1</comment>
+	<comment>#define TRUE FALSE //Happy debugging suckers</comment>
+	<comment>return 1; #returns 1</comment>
 	<comment>This is O(scary), but seems quick enough in practice.</comment>
+	<comment>Some people, when confronted with a problem, think &quot;I know, I&apos;ll use regular expressions.&quot; Now they have two problems.</comment>
+	<comment>In theory, there is no difference between theory and practice. But, in practice, there is.</comment>
+	<comment>Measuring programming progress by lines of code is like measuring aircraft building progress by weight.</comment>
+	<comment>There are 2 hard problems in computer science: cache invalidation, naming things, and off-by-1 errors.</comment>
+	<comment>Debuggers don&apos;t remove bugs. They only show them in slow motion.</comment>
+	<comment>If Java had true garbage collection, most programs would delete themselves upon execution.</comment>
+	<comment>Computer Science is no more about computers than astronomy is about telescopes</comment>
+	<comment>If debugging is the process of removing software bugs, then programming must be the process of putting them in.</comment>
+	<comment>There are only two kinds of languages: the ones people complain about and the ones nobody uses</comment>
+	<comment>The best thing about a boolean is even if you are wrong, you are only off by a bit.</comment>
+	<comment>I have always wished for my computer to be as easy to use as my telephone; my wish has come true because I can no longer figure out how to use my telephone</comment>
+	<comment>It&apos;s all talk until the code runs.</comment>
+	<comment>Unicode support is not a “feature”. It is expected behaviour.</comment>
+	<comment>Commenting your code is like cleaning your bathroom - you never want to do it, but it really does create a more pleasant experience for you and your guests.</comment>
+	<comment>The fool wonders, the wise man asks.</comment>
+	<comment>Programming is like sex: one mistake and you have to support it for the rest of your life.</comment>
+	<comment>Java is to JavaScript as car is to carpet. </comment>
+	<comment>Programmer - an organism that turns coffee into software.</comment>
+	<comment>Few companies that installed computers to reduce the employment of clerks have realized their expectations.... They now need more, and more expensive clerks even though they call them &quot;operators&quot; or &quot;programmers.&quot;</comment>
+	<comment>All programmers are playwrights and all computers are lousy actors. </comment>
+	<comment>Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.</comment>
+	<comment>[A]nd then it occurred to me that a computer is a stupid machine with the ability to do incredibly smart things, while computer programmers are smart people with the ability to do incredibly stupid things. They are, in short, a perfect match. </comment>
+	<comment>Any sufficiently advanced bug is indistinguishable from a feature.</comment>
+	<comment>Beta. Software undergoes beta testing shortly before it&apos;s released. Beta is Latin for &quot;still doesn&apos;t work.&quot;</comment>
+	<comment>From a programmer&apos;s point of view, the user is a peripheral that types when you issue a read request. </comment>
+	<comment>At Group L, Stoffel oversees six first-rate programmers, a managerial challenge roughly equivalent to herding cats. </comment>
+	<comment>One man&apos;s crappy software is another man&apos;s full time job.</comment>
+	<comment>He who hasn&apos;t hacked assembly language as a youth has no heart. He who does so as an adult has no brain.</comment>
+	<comment>If you cannot grok the overall structure of a program while taking a shower, e.g., with no external memory aids, you are not ready to code it.</comment>
+	<comment>The only way for errors to occur in a program is by being put there by the author. No other mechanisms are known. Programs can&apos;t acquire bugs by sitting around with other buggy programs.</comment>
+	<comment>You cannot teach beginners top-down programming, because they don&apos;t know which end is up. </comment>
+	<comment>In programming, as in everything else, to be in error is to be reborn.</comment>
+	<comment>There are two ways of constructing a software design: One way is to make it so simple that there are obviously no deficiencies and the other way is to make it so complicated that there are no obvious deficiencies.</comment>
+	<comment>Deleted code is debugged code.</comment>
+	<comment>XML is like violence: if it doesn’t solve your problem, you aren’t using enough of it.</comment>
+	<comment>Unix is simple. It just takes a genius to understand its simplicity.</comment>
+	<comment>Mostly, when you see programmers, they aren’t doing anything. One of the attractive things about programmers is that you cannot tell whether or not they are working simply by looking at them. Very often they’re sitting there seemingly drinking coffee and gossiping, or just staring into space. What the programmer is trying to do is get a handle on all the individual and unrelated ideas that are scampering around in his head.</comment>
 </random>
