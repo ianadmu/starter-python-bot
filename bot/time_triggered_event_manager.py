@@ -30,7 +30,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_random(self, new_random_minutes):
-        #channels = ['heliwolves', 'spamalot']
+        #channels = ['heliwolves', 'spamalot', 'random']
         #channel = '#{}'.format(random.choice(channels)) 
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
@@ -63,8 +63,8 @@ class TimeTriggeredEventManager(object):
     def trigger_drunk_phrase(self):
         random_custom_emoji = self.clients.get_random_emoji()
         drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
-        drunk_comments = drunk_comments_file.readlines()
-        txt = '<{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji) 
+        drunk_comments = drunk_comments_file.read().splitlines()
+        txt = '{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji) 
         self.clients.send_time_triggered_msg('#zacefron-testing', txt)
 
     def trigger_945(self):
