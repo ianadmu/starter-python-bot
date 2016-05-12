@@ -24,6 +24,10 @@ class TimeTriggeredEventManager(object):
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
+    def trigger_method_log(self, method_name):
+        msg = 'Entered {}'.format(method_name)
+        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+
     def trigger_startup_log(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
@@ -36,12 +40,13 @@ class TimeTriggeredEventManager(object):
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
         self.clients.send_time_triggered_msg(channel, txt)
+        self.trigger_method_log('tigger_random')
 
     def check_trigger_random(self, hour, minute):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
-            max_minutes_between_random_events = 360
+            max_minutes_between_random_events = 720 #12 hours max
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
             if hour >= 8 and hour < 22: 
                 self.trigger_random()
