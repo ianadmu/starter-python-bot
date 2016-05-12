@@ -57,43 +57,43 @@ class RtmEventHandler(object):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt:
                     self.msg_writer.write_help_message(event['channel'])
-                elif re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt) or msg_txt.endswith(' hi') or msg_txt.endswith(' Hi') or msg_txt.endswith(' sup'):
+                if re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt) or msg_txt.endswith(' hi') or msg_txt.endswith(' Hi') or msg_txt.endswith(' sup'):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
-                elif re.search('good morning|morning|Morning|Good Morning|Good morning', msg_txt):
+                if re.search('good morning|morning|Morning|Good Morning|Good morning', msg_txt):
                     self.msg_writer.write_good_morning(event['channel'], event['user'])
-                elif re.search('good night|night|goodnight|Goodnight|Good night|Good Night|Night', msg_txt):
+                if re.search('good night|night|goodnight|Goodnight|Good night|Good Night|Night', msg_txt):
                     self.msg_writer.write_good_night(event['channel'], event['user'])
-                elif re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt):
+                if re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
-                elif re.search('cry|Cry|CRY|crying|Crying|CRYING|tea|Tea|TEA', msg_txt):
+                if re.search('cry|Cry|CRY|crying|Crying|CRYING|tea|Tea|TEA', msg_txt):
                     self.msg_writer.write_crying_into_my_tea(event['channel'])
-                elif 'wiener' in msg_txt:
+                if 'wiener' in msg_txt:
                     self.msg_writer.write_wiener(event['channel'])
-                elif 'joke' in msg_txt:
+                if 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
-                elif re.search('who\'?s that pokemon', msg_txt):
+                if re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_pokemon(event['channel'])
-                elif re.search(' ?(Z|z)ac it\'?s', msg_txt):
+                if re.search(' ?(Z|z)ac it\'?s', msg_txt):
                     self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
-                elif 'attachment' in msg_txt:
+                if 'attachment' in msg_txt:
                     self.msg_writer.demo_attachment(event['channel'])
-                elif 'weather' in msg_txt:
+                if re.search('weather|Weather', msg_txt):
                     self.msg_writer.write_weather(event['channel'])
-                elif 'explain yourself' in msg_txt:
+                if 'explain yourself' in msg_txt:
                     self.msg_writer.write_explanation(event['channel'])    
-                elif 'sad' in msg_txt:
+                if 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
-                elif re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
+                if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
                     self.msg_writer.write_fuck_this(event['channel'])
-                elif 'sort me' in msg_txt:
+                if 'sort me' in msg_txt:
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
-                elif 'sass' in msg_txt:
+                if 'sass' in msg_txt:
                     self.msg_writer.write_sass(event['channel'], msg_txt)	
-                elif ('945' in msg_txt) and ('?' in msg_txt):
+                if ('945' in msg_txt) and ('?' in msg_txt):
                     self.msg_writer.announce_945(event['channel'])
-                elif re.search('apologize|apologise', msg_txt):
+                if re.search('apologize|apologise', msg_txt):
                     self.msg_writer.write_apology(event['channel'])
-                elif 'solve' in msg_txt:
+                if 'solve' in msg_txt:
                     self.msg_writer.write_solution(event['channel'],msg_txt)
                 else:
                     pass

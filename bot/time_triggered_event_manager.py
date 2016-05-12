@@ -25,7 +25,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_method_log(self, method_name):
-        msg = 'Entered {}'.format(method_name)
+        msg = 'Called: {}'.format(method_name)
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_startup_log(self, day, hour, minute, second):
