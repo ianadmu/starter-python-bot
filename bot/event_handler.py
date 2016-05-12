@@ -65,7 +65,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_night(event['channel'], event['user'])
                 if re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
-                if re.search('cry|Cry|CRY|crying|Crying|CRYING|tea|Tea|TEA', msg_txt):
+                if re.search('cry|Cry|CRY|crying|Crying|CRYING| tea|tea |Tea|TEA', msg_txt):
                     self.msg_writer.write_crying_into_my_tea(event['channel'])
                 if 'wiener' in msg_txt:
                     self.msg_writer.write_wiener(event['channel'])
