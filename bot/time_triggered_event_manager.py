@@ -61,7 +61,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg) 
-        self.clients.send_time_triggered_msg('#zacefron-testing', txt)
+        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
 
     def trigger_drunk_phrase(self):
         channels = ['heliwolves', 'spamalot', 'random']
