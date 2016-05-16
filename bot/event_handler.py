@@ -59,7 +59,7 @@ class RtmEventHandler(object):
             if re.search('cry|Cry|CRY|crying|Crying|CRYING|dying', msg_txt):
                 self.msg_writer.write_crying_into_my_tea(event['channel'])
 
-            if 'wiener' in lower(msg_txt):
+            if 'wiener' in msg_txt.lower():
                 self.msg_writer.write_wiener(event['channel'])
 
             if re.search('boyer|Boyer', msg_txt):
@@ -87,7 +87,7 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(event['channel'])
                 if re.search('weather|Weather', msg_txt):
                     self.msg_writer.write_weather(event['channel'])
-                if 'explain yourself' in msg_txt:
+                if 'explain' in msg_txt:
                     self.msg_writer.write_explanation(event['channel'])    
                 if 'sad' in msg_txt:
                     self.msg_writer.write_sad(event['channel'])
