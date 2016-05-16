@@ -83,7 +83,7 @@ class Messenger(object):
         'Sorry I\'m late', 'Sorry the example wasn\'t working last class, it should be working now', 
         '........so that\'s basically what you\'ll need to do for assignment one', '[After 5 minutes of lecturing] Okay let\'s take a 10-minute break',
         '*Shows up 15 minutes late']
-        txt = '\"{}\" - Boyer'.format(random.choice(boyer_responses))
+        txt = '_{}_'.format(random.choice(boyer_responses))
         self.send_message(channel_id, txt)
 
     def write_crying_into_my_tea(self, channel_id):
