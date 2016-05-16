@@ -76,9 +76,14 @@ class Messenger(object):
         txt = '{}, <@{}>!'.format(random.choice(your_welcomes), user_id)
         self.send_message(channel_id, txt)
     
-    def write_boyer_bot(self, channel_id, user_id):
+    def write_boyer_bot(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        txt = 'Ugh <@{}> I know, right?! Such boyer. :expressionless:'.format(user_id)
+        boyer_responses = ['It was working upstairs--', 'Idk why it\'s not working now', 'Last time I taught this course it was working',
+        'Last time I taught this course I didn\'t have to do this', 'I\'ll have to update my notes', 'This was working earlier',
+        'Sorry I\'m late', 'Sorry the example wasn\'t working last class, it should be working now', 
+        '........so that\'s basically what you\'ll need to do for assignment one', '[After 5 minutes of lecturing] Okay let\'s take a 10-minute break',
+        '*Shows up 15 minutes late']
+        txt = '\"{}\" - Boyer'.format(random.choice(boyer_responses))
         self.send_message(channel_id, txt)
 
     def write_crying_into_my_tea(self, channel_id):
