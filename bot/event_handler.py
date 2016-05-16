@@ -53,7 +53,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
                 
-            if re.search(' (I|i) choose you,? ', msg_txt):
+            if re.search('(I|i) choose you,? ', msg_txt):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
 
             if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
