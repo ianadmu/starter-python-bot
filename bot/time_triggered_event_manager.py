@@ -40,7 +40,7 @@ class TimeTriggeredEventManager(object):
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
         self.clients.send_time_triggered_msg(channel, txt)
-        self.trigger_method_log('tigger_random')
+        self.trigger_method_log('random')
 
     def check_trigger_random(self, hour, minute):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
@@ -48,7 +48,7 @@ class TimeTriggeredEventManager(object):
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
             max_minutes_between_random_events = 720 #12 hours max
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
-            if hour >= 8 and hour < 22: 
+            if hour >= 8 and hour < 22 and !self.random_hasnt_fired: 
                 self.trigger_random()
             self.last_random_hour = hour
             self.last_random_minutes = minute
@@ -106,9 +106,9 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
-            if hour == 9 and minute == 45:
+            if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
                 self.trigger_945()
-            if hour == 9 and minute == 0:
+            if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 0:
                 self.trigger_mochaccino()
             if day == 'Friday':
                 if hour == 16 and minute == 30:
