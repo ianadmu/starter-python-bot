@@ -71,8 +71,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_wiener(event['channel'])
                 if 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
+                if re.search('(I|i) choose you,? ', msg_txt):
+                    self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
                 if re.search('who\'?s that pokemon', msg_txt):
-                    self.msg_writer.write_pokemon(event['channel'])
+                    self.msg_writer.write_whos_that_pokemon(event['channel'])
                 if re.search(' ?(Z|z)ac it\'?s', msg_txt):
                     self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
                 if 'attachment' in msg_txt:
