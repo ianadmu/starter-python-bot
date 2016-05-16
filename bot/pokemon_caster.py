@@ -2,12 +2,13 @@ import json
 import requests
 import re
 
+pkmn_flag = re.compile('choose you ')
 URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 
 class PokemonCaster(object):
                  
     def i_choose_you(self, msg):
-        token = re.split('choose you ', msg)
+        token = re.split(pkmn_flag, msg)
         link = URL
         target = link.format(token[1])
         try:
