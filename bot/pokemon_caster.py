@@ -2,7 +2,7 @@ import json
 import requests
 import re
 
-pkmn_flag = re.compile('(I|i) choose you ')
+pkmn_flag = re.compile('choose you ')
 URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 
 class PokemonCaster(object):
