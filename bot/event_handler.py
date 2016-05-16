@@ -56,10 +56,10 @@ class RtmEventHandler(object):
             if re.search('(I|i) choose you', msg_txt):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
 
-            if re.search('cry|Cry|CRY|crying|Crying|CRYING', msg_txt):
+            if re.search('cry|Cry|CRY|crying|Crying|CRYING|dying', msg_txt):
                 self.msg_writer.write_crying_into_my_tea(event['channel'])
 
-            if 'wiener' in msg_txt:
+            if 'wiener' in lower(msg_txt):
                 self.msg_writer.write_wiener(event['channel'])
 
             if re.search('boyer|Boyer', msg_txt):
