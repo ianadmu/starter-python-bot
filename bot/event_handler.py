@@ -62,7 +62,7 @@ class RtmEventHandler(object):
             if 'wiener' in msg_txt:
                 self.msg_writer.write_wiener(event['channel'])
 
-            if 'boyer' in msg_txt:
+            if re.search('boyer|Boyer', msg_txt):
                 self.msg_writer.write_boyer_bot(event['channel'])
 
             if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
