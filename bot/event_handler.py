@@ -52,9 +52,15 @@ class RtmEventHandler(object):
 
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
-                
+
             if re.search('(I|i) choose you,? ', msg_txt):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
+
+            if re.search('cry|Cry|CRY|crying|Crying|CRYING', msg_txt):
+                self.msg_writer.write_crying_into_my_tea(event['channel'])
+
+            if 'wiener' in msg_txt:
+                self.msg_writer.write_wiener(event['channel'])
 
             if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
@@ -68,10 +74,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_night(event['channel'], event['user'])
                 if re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt):
                     self.msg_writer.write_your_welcome(event['channel'], event['user'])
-                if re.search('cry|Cry|CRY|crying|Crying|CRYING| tea|tea |Tea|TEA', msg_txt):
-                    self.msg_writer.write_crying_into_my_tea(event['channel'])
-                if 'wiener' in msg_txt:
-                    self.msg_writer.write_wiener(event['channel'])
                 if 'joke' in msg_txt:
                     self.msg_writer.write_joke(event['channel'])
                 if re.search('who\'?s that pokemon', msg_txt):
