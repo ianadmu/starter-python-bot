@@ -13,7 +13,7 @@ class PokemonCaster(object):
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
-            return None
+            return 'nope, something went wrong there pal'
         else:
             pokemon = response.json()
             return pokemon['sprites']['front_default']
