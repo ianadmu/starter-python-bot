@@ -56,20 +56,20 @@ class RtmEventHandler(object):
             if re.search('(I|i) choose you', msg_txt):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
 
-            if re.search('cry|Cry|CRY|crying|Crying|CRYING|dying', msg_txt):
+            if re.search('cry|Cry|CRY|crying|Crying|CRYING|dying', msg_txt.lower()):
                 self.msg_writer.write_crying_into_my_tea(event['channel'])
 
             if 'wiener' in msg_txt.lower():
                 self.msg_writer.write_wiener(event['channel'])
 
-            if re.search('boyer|Boyer', msg_txt):
+            if re.search('boyer|Boyer', msg_txt.lower()):
                 self.msg_writer.write_boyer_bot(event['channel'])
 
             if re.search(' ?(Z|z)ac', msg_txt) or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
-                if 'help' in msg_txt:
+                if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(event['channel'])
-                if re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt) or msg_txt.endswith(' hi') or msg_txt.endswith(' Hi') or msg_txt.endswith(' sup'):
+                if re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt.lower()) or msg_txt.lower().endswith(' hi') or msg_txt.lower().endswith(' sup'):
                     self.msg_writer.write_greeting(event['channel'], event['user'])
                 if re.search('good morning|morning|Morning|Good Morning|Good morning', msg_txt):
                     self.msg_writer.write_good_morning(event['channel'], event['user'])
