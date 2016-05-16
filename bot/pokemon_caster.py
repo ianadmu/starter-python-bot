@@ -7,7 +7,7 @@ URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 class PokemonCaster(object):
                  
     def i_choose_you(self, msg):
-        token = re.split(pkmn_flag, msg)
+        token = msg.split()
         link = URL
         target = link.format(token[0])
         try:
