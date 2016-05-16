@@ -77,7 +77,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
         txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji) 
-        self.clients.send_time_triggered_msg('#random', txt)
+        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
 
     def trigger_mochaccino(self):
         tag_users = ['channel', 'here']
