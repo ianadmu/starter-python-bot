@@ -13,7 +13,7 @@ class PokemonCaster(object):
         try:
             response = requests.get(target)
         except requests.exceptions.RequestException as e:
-            return None
+            return 'token[1] failed'
         else:
             pokemon = response.json()
             return pokemon['sprites']['front_default']
