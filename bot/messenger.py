@@ -78,8 +78,8 @@ class Messenger(object):
     
     def write_boyer_bot(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
-        txt = 'Ugh <@{}> I know, right?! Such boyer. :expressionless:'
-        self.send_message(channel, txt)
+        txt = 'Ugh <@{}> I know, right?! Such boyer. :expressionless:'.format(user_id)
+        self.send_message(channel_id, txt)
 
     def write_crying_into_my_tea(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
