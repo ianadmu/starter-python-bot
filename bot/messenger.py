@@ -55,7 +55,7 @@ class Messenger(object):
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
             "> `Explain` - I'll explain what's going on. :reginageorge:",
-            "> I'll prepend my help response with how many calls I can respond to! Try me :sunglasses:")
+            "I'll prepend my help response with how many calls I can respond to! Try me :sunglasses:")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
