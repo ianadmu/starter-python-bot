@@ -35,7 +35,7 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
+        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
@@ -45,8 +45,7 @@ class Messenger(object):
             "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize. :bow:",
             "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :innocent:",
             "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help! :nerd_face:",
-            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:",
-            "> `<@" + bot_uid + "> hi` - Please say hi to me! I'm a very lonely Efron :slightly_frowning_face:"
+            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:"
             "> `<@" + bot_uid + "> good morning` - I shall wish you a good morning as well! :sunny:",
             "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:")
         self.clients.send_user_typing_pause(channel_id)
