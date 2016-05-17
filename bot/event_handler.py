@@ -50,6 +50,9 @@ class RtmEventHandler(object):
 
             msg_txt = event['text']
 
+            if re.seach('qbot', msg_txt.lower()):
+                self.msg_writer.write_no_qbot(event['channel'])
+
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
 
@@ -71,7 +74,7 @@ class RtmEventHandler(object):
             if 'explain' in msg_txt.lower():
                     self.msg_writer.write_explanation(event['channel'])    
 
-            if re.search(' ?(Z|z)ac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt):
+            if re.search(' ?(Z|z)ac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 # e.g. user typed: "@pybot tell me a joke!"
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(event['channel'])

@@ -136,6 +136,11 @@ class Messenger(object):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)
 
+    def write_no_qbot(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = 'I\'m no Qbot but...'
+        self.send_message(channel_id, txt)
+
     def write_fuck_this(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         attachment = "https://www.youtube.com/watch?v=5FjWe31S_0g"
