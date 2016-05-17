@@ -69,7 +69,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_weather(event['channel'])
 
             if 'explain' in msg_txt.lower():
-                    self.msg_writer.write_explanation(event['channel'])    
+                    self.msg_writer.write_explanation(event['channel'])
+
+             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
+                    self.msg_writer.write_fuck_this(event['channel'])
 
             if re.search(' ?(Z|z)ac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt):
                 # e.g. user typed: "@pybot tell me a joke!"
@@ -93,8 +96,6 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(event['channel'])
                 if 'sad' in msg_txt.lower():
                     self.msg_writer.write_sad(event['channel'])
-                if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
-                    self.msg_writer.write_fuck_this(event['channel'])
                 if 'sort me' in msg_txt.lower():
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
                 if 'sass' in msg_txt.lower():
