@@ -77,9 +77,9 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
         txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji) 
-        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
+        #self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
-        digg_msg = '/digg {}'.format(random.choice(digg_options))
+        digg_msg = '//digg {}'.format(random.choice(digg_options))
         self.clients.send_time_triggered_msg('#random', digg_msg)
 
     def trigger_mochaccino(self):
@@ -109,8 +109,8 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
-            if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
-                self.trigger_945()
+            #if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
+            self.trigger_945()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 0:
                 self.trigger_mochaccino()
             if day == 'Friday':
