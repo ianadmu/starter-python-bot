@@ -71,9 +71,6 @@ class RtmEventHandler(object):
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(event['channel'])
 
-            if  re.search('explain|why', msg_txt.lower()):
-                self.msg_writer.write_explanation(event['channel'])
-
             if '*' in msg_txt:
                 self.msg_writer.write_spelling_mistake(event['channel'])
 
@@ -112,5 +109,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_apology(event['channel'])
                 if 'solve' in msg_txt.lower():
                     self.msg_writer.write_solution(event['channel'],msg_txt)
+                if  re.search('explain|why', msg_txt.lower()):
+                    self.msg_writer.write_explanation(event['channel'])
                 else:
                     pass
