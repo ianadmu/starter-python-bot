@@ -43,6 +43,9 @@ class SlackClients(object):
     def send_time_triggered_msg(self, channel_name, msg):
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, text="{}".format(msg.encode('ascii', 'ignore')))
 
+    def send_time_triggered_msg2(self, channel_name, msg):
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel=channel_name, command='/shrug', text="{}".format(msg.encode('ascii', 'ignore')))
+
     def get_random_emoji(self): #this method only gets custom emojis not all slack emojis
     	response = self.rtm.api_call('emoji.list')
     	emojis = response['emoji'].items()
