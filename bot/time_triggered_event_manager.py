@@ -80,7 +80,7 @@ class TimeTriggeredEventManager(object):
         #self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
-        self.clients.send_time_triggered_msg2('#random', digg_msg)
+        self.clients.send_time_triggered_msg2('#zacefron-tesing', digg_msg)
 
     def trigger_mochaccino(self):
         tag_users = ['channel', 'here']
