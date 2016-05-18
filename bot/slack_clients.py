@@ -50,10 +50,11 @@ class SlackClients(object):
 
     def upload_file_to_slack(self): 
     	my_file = os.path.join('./resources', 'pokemon_correct.txt')  #files = {'file': open('test.png', 'rb')}
-    	self.web.files.upload(my_file, channels='#zacefron-testing')
+    	response = self.web.files.upload(my_file, channels='#zacefron-testing')
+    	self.send_time_triggered_msg('#zacefron-testing', response)
     	#self.rtm.api_call('files.upload', filename='pokemon_correct.txt', file=open(os.path.join('./resources', 'pokemon_correct.txt'), 'rb'), channels='#zacefron-testing')
 
     def list_files_on_slack(self): 
-    	response = self.web.files.list()
-    	files = response['files'].items()
-    	self.send_time_triggered_msg('#zacefron-testing', files[0])
+    	#response = self.web.files.list()
+    	#files = response['files'].items()
+    	self.send_time_triggered_msg('#zacefron-testing', 'ok')
