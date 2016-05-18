@@ -1,5 +1,6 @@
 import logging
 import random
+import re
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
