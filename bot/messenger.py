@@ -50,14 +50,14 @@ class Messenger(object):
             "> `<@" + bot_uid + "> good morning` - I shall wish you a good morning as well! :sunny:",
             "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:",
             "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
-            "> `<@" + bot_uid + "> Explain` - I'll explain what's going on. :reginageorge:",
+            "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
             "> `<@" + bot_uid + "> translate <phrase> to French` - I know flawless French! I'll translate for you :bombardier:",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> 'encourage' - Let me help you get back on track."
-            "> 'hungry | feed' - Have some food courtesy of moi"
+            "> `encourage` - Let me help you get back on track."
+            "> `hungry | feed` - Have some food courtesy of moi"
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
