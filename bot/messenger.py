@@ -69,8 +69,8 @@ class Messenger(object):
     def write_to_french(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
         tokens = msg.split()
-        tokens.remove(tokens[len(tokens)])
-        tokens.remove(tokens[len(tokens)])
+        tokens.remove(tokens[len(tokens-1)])
+        tokens.remove(tokens[len(tokens-1)])
         tokens.remove(tokens[0])
         tokens.remove(tokens[0])
         response = ''.join(tokens)
