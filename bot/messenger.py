@@ -65,6 +65,17 @@ class Messenger(object):
         
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
+    
+    def write_to_french(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
+        tokens = msg.split()
+        tokens.remove(tokens[tokens.len])
+        tokens.remove(tokens[tokens.len])
+        tokens.remove(tokens[0])
+        tokens.remove(tokens[0])
+        response = ''.join(tokens)
+        txt = '_{}_'.format(response)
+        self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)

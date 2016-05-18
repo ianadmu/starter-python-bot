@@ -76,6 +76,9 @@ class RtmEventHandler(object):
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
                 self.msg_writer.write_fuck_this(event['channel'])
+                
+            if msg_txt.lower().startswith('zac translate') and msg_txt.lower().endswith(' to french'):
+                self.msg_writer.write_to_french(event['channel'], msg_txt)
 
             if re.search(' ?(Z|z)ac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 # e.g. user typed: "@pybot tell me a joke!"
