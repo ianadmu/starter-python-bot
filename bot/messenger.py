@@ -132,7 +132,7 @@ class Messenger(object):
     def write_encouragement(self, channel_id, msg):
         target = msg.split('encourage ')
         self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, 'Get your shit together {0}'.format(target[0])
+        self.send_message(channel_id, 'Get your shit together {0}'.format(target[0]))
         
     def write_food(self, channel_id):
         food = self.food_getter.get_random_food()
