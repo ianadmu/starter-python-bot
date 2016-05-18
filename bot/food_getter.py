@@ -3,8 +3,7 @@ import random
 class FoodGetter(object):
 
     def __init__(self):
-        self.edibles = [
-            :apple:, :banana:, :pear:, :peach:, :pineapple:, :lemon:, :watermelon:, 
+        self.edibles = [:apple:, :banana:, :pear:, :peach:, :pineapple:, :lemon:, :watermelon:, 
             :grapes:, :strawberry:, :melon:, :cherry:, :tomato:, :eggplant:, 
             :hot_pepper:, :corn:, :sweet_potato:, :fries:, :hamburger:, :egg:,
             :fried_shrimp:, :meat_on_bone:, :poultry_leg:, :cheese_wedge:, :bread:,
