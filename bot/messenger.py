@@ -56,8 +56,8 @@ class Messenger(object):
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> `encourage` - Let me help you get back on track."
-            "> `hungry | feed` - Have some food courtesy of moi"
+            "> `encourage` - Let me help you get back on track.",
+            "> `hungry | feed` - Have some food courtesy of moi",
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
