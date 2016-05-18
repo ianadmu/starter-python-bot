@@ -62,7 +62,7 @@ class Messenger(object):
         ]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
-            txt += help[val]
+            txt += help_txt[val]
             txt += '\n'
         
         self.clients.send_user_typing_pause(channel_id)
