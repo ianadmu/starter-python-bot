@@ -130,7 +130,7 @@ class Messenger(object):
         self.send_message(channel_id, answer)
         
     def write_encouragement(self, channel_id, msg):
-        target = msg.split('encourage ')
+        target = re.split('encourage ', msg.lower())
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, 'Get your shit together {0}'.format(target[0]))
         
@@ -140,7 +140,7 @@ class Messenger(object):
         self.send_message(channel_id, food)
         
     def write_bang(self, channel_id, user_id):
-        bang = 'BANG you\'re dead {0} :gun:'.format(user_id)
+        bang = 'BANG you\'re dead <@{0} :gun:'.format(user_id)
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, bang)
 
