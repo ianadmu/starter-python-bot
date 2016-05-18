@@ -99,6 +99,8 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(event['channel'])
                 if 'sad' in msg_txt.lower():
                     self.msg_writer.write_sad(event['channel'])
+                if 'kill me' in msg_txt.lower():
+                    self.msg_writer.write_bang(event['channel'], event['user'])
                 if re.search('(feed)|(hungry)', msg_txt.lower()):
                     self.msg_writer.write_food(event['channel'])
                 if re.search('encourage', msg_txt.lower()):

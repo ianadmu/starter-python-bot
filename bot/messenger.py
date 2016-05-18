@@ -138,6 +138,11 @@ class Messenger(object):
         food = self.food_getter.get_random_food()
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, food)
+        
+    def write_bang(self, channel_id, user_id):
+        bang = 'BANG you\'re dead {0} :gun:'.format(user_id)
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, bang)
 
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = self.pokemon_caster.i_choose_you(msg)
