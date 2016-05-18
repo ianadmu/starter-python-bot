@@ -8,6 +8,7 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
+from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
@@ -22,6 +23,7 @@ class Messenger(object):
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
+        self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
 
@@ -35,8 +37,8 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
-            "I'm Zac Efron.  I'll *_respond_* to the following commands:",
+        help_txt = 
+        [
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
@@ -54,7 +56,15 @@ class Messenger(object):
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:")
+            "> 'encourage' - Let me help you get back on track."
+            "> 'hungry | feed' - Have some food courtesy of moi"
+            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"
+        ]
+        txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
+        for val in range(len(help_txt)):
+            txt += help[val]
+            txt += '\n'
+        
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
@@ -121,6 +131,16 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
+        
+    def write_encouragement(self, channel_id, msg):
+        target = msg.split('encourage ')
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, 'Get your shit together {0}'.format(target[0])
+        
+    def write_food(self, channel_id):
+        food = self.food_getter.get_random_food()
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, 'Here, have this: {0}'.format(food))
 
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = self.pokemon_caster.i_choose_you(msg)
