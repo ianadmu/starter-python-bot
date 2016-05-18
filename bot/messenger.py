@@ -51,6 +51,7 @@ class Messenger(object):
             "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:",
             "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
             "> `<@" + bot_uid + "> Explain` - I'll explain what's going on. :reginageorge:",
+            "> `<@" + bot_uid + "> translate <phrase> to French` - I know flawless French! I'll translate for you :bombardier:",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
