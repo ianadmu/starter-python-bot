@@ -99,10 +99,10 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(event['channel'])
                 if 'sad' in msg_txt.lower():
                     self.msg_writer.write_sad(event['channel'])
-                if re.search('feed|hungry', msg_txt.lower()):
+                if re.search('(feed)|(hungry)', msg_txt.lower()):
                     self.msg_writer.write_food(event['channel'])
                 if re.search('encourage', msg_txt.lower()):
-                    self.msg_writer.write_encouragement(event['channel'])
+                    self.msg_writer.write_encouragement(event['channel'], msg_txt.lower)
                 if 'sort me' in msg_txt.lower():
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
                 if 'sass' in msg_txt.lower():

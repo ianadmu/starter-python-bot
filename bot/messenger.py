@@ -137,7 +137,7 @@ class Messenger(object):
     def write_food(self, channel_id):
         food = self.food_getter.get_random_food()
         self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, 'Here, have this: {0}'.format(food))
+        self.send_message(channel_id, food)
 
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = self.pokemon_caster.i_choose_you(msg)
