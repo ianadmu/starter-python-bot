@@ -74,7 +74,7 @@ class Messenger(object):
         tokens.remove(tokens[0])
         tokens.remove(tokens[0])
         response = ' '.join(tokens)
-        txt = '_{}_'.format(response)
+        txt = '_le {}_'.format(response)
         self.send_message(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
