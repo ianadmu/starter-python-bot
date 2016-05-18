@@ -37,9 +37,7 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        help_txt = 
-        [
-            "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
+        help_txt = [ "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
             "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
             "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:",
@@ -58,8 +56,7 @@ class Messenger(object):
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
             "> 'encourage' - Let me help you get back on track."
             "> 'hungry | feed' - Have some food courtesy of moi"
-            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"
-        ]
+            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
