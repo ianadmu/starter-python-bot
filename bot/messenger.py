@@ -73,7 +73,7 @@ class Messenger(object):
         tokens.remove(tokens[len(tokens) - 1])
         tokens.remove(tokens[0])
         tokens.remove(tokens[0])
-        response = ''.join(tokens)
+        response = ' '.join(tokens)
         txt = '_{}_'.format(response)
         self.send_message(channel_id, txt)
 
