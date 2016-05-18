@@ -55,4 +55,5 @@ class SlackClients(object):
 
     def list_files_on_slack(self): 
     	response = self.web.files.list(channel='#zacefron-testing')
-    	self.send_time_triggered_msg('#zacefron-testing', response)
+    	files = response['files'].items()
+    	self.send_time_triggered_msg('#zacefron-testing', files[0])
