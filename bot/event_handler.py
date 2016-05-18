@@ -71,7 +71,7 @@ class RtmEventHandler(object):
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(event['channel'])
 
-            if '*' in msg_txt and (' *' in msg_txt == False):
+            if '*' in msg_txt and ' *' not in msg_txt:
                 self.msg_writer.write_spelling_mistake(event['channel'])
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
