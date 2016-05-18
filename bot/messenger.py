@@ -70,7 +70,7 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         tokens = msg.split()
         tokens.remove(tokens[len(tokens)])
-        tokens.remove(tokens[len(tokens))
+        tokens.remove(tokens[len(tokens)])
         tokens.remove(tokens[0])
         tokens.remove(tokens[0])
         response = ''.join(tokens)
