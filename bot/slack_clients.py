@@ -58,5 +58,5 @@ class SlackClients(object):
     def list_files_on_slack(self): 
     	response = self.rtm.api_call('files.info', file='F19NX4WJD')
     	#response = self.web.files.list()
-    	files = response['file'].items()
+    	files = response['file']
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=files)
