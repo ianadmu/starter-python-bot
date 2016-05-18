@@ -74,7 +74,7 @@ class RtmEventHandler(object):
             if  re.search('explain|why', msg_txt.lower()):
                 self.msg_writer.write_explanation(event['channel'])
 
-            if '*' in msg_txt:
+            if '*' in msg_txt and (' *' in msg_txt == False):
                 self.msg_writer.write_spelling_mistake(event['channel'])
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
