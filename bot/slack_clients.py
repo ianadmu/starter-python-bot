@@ -59,4 +59,4 @@ class SlackClients(object):
     	response = self.rtm.api_call('files.info', file='F19NX4WJD')
     	#response = self.web.files.list()
     	#files = response['files'].items()
-    	self.send_time_triggered_msg('#zacefron-testing', response)
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=response)
