@@ -54,8 +54,8 @@ class TimeTriggeredEventManager(object):
             self.last_random_minutes = minute
             self.random_interval_minutes = new_random_minutes
             if self.random_hasnt_fired:
-                self.clients.upload_file_to_slack() #test file upload
-                self.clients.list_files_on_slack()
+                #self.clients.upload_file_to_slack() #test file upload
+                #self.clients.list_files_on_slack()
                 self.random_hasnt_fired = False
 
     def trigger_wine_club(self):
