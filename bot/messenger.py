@@ -35,7 +35,7 @@ class Messenger(object):
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
+        txt = '{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}'.format(
             "I'm Zac Efron.  I'll *_respond_* to the following commands:",
             "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
             "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
@@ -49,13 +49,12 @@ class Messenger(object):
             "> `<@" + bot_uid + "> good morning` - I shall wish you a good morning as well! :sunny:",
             "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:",
             "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
+            "> `<@" + bot_uid + "> Explain` - I'll explain what's going on. :reginageorge:",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
-            "> `Explain` - I'll explain what's going on. :reginageorge:",
-            "I'll prepend my help response with how many calls I can respond to! Try me :sunglasses:")
+            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:")
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
