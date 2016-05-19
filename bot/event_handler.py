@@ -103,7 +103,7 @@ class RtmEventHandler(object):
                 if 'sad' in msg_txt.lower():
                     self.msg_writer.write_sad(event['channel'])
                 if 'kill me' in msg_txt.lower():
-                    user_name = self.clients.get_user_name(self, event['user'])
+                    user_name = self.clients.get_user_name(event['user'])
                     self.msg_writer.write_bang(event['channel'], event['user'], user_name)
                 if re.search('(feed)|(hungry)', msg_txt.lower()):
                     self.msg_writer.write_food(event['channel'])
