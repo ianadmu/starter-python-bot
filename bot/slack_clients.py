@@ -30,7 +30,7 @@ class SlackClients(object):
     #     return self.rtm.login_data['self']['name']
 
     def is_message_from_me(self, user):
-        return user == self.rtm.server.api_call()
+        return user == self.rtm.server.login_data['self']['id']
 
     def is_bot_mention(self, message):
         bot_user_name = self.rtm.server.login_data['self']['id']
