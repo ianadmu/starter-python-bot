@@ -153,7 +153,8 @@ class Messenger(object):
         self.send_message(channel_id, food)
         
     def write_bang(self, channel_id, user_id):
-        bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id, user_id)
+        user_name = user_id.name
+        bang = 'BANG you\'re dead <@{}> :{}::gun:'.format(user_id, user_id, user_name)
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, bang)
 
