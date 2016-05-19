@@ -143,7 +143,7 @@ class Messenger(object):
         self.send_message(channel_id, answer)
         
     def write_encouragement(self, channel_id, msg):
-        target = re.split('encourage ', msg.lower())
+        target = re.split('encourage ', msg)
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, 'Get your shit together {0}'.format(target[0]))
         
