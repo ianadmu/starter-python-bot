@@ -259,7 +259,7 @@ class Messenger(object):
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
         self.send_message(channel_id, txt)
         
-    def write_marry_me(self, channel):
+    def write_marry_me(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         responses = ['OKAY! :ring:', 'Ummm, how \'bout no.', 'Shoot I would...if you were :kiera:', '_shrug_ \'k.',
                 'R-Really? Okay, I shall be your ~bride~ husband from now on!!', 'Sorry but I\'m already married to my job.',
