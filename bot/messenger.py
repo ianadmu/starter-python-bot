@@ -261,7 +261,7 @@ class Messenger(object):
         
     def write_marry_me(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        responses = ['OKAY! :ring:', 'Ummm, how \'bout no.', 'Shoot I would...if you were :kiera:', '_shrug_ \'k.',
+        responses = ['OKAY! :ring:', 'Ummm, how \'bout no.', 'Shoot I would...if you were :kiera:', '_le shrug_ \'k.',
                 'R-Really? Okay, I shall be your ~bride~ husband from now on!!', 'Sorry but I\'m already married to my job.',
                 'Sorry, but I\'m already married to :nicole:', 'HOW DO I KNOW YOU WON\'T CHEAT ON ME WITH QBOT?!??',
                 '_le HELLS YES!_', 'Sorry, but you are human, and I am a mere bot. It could never work out between us...',
