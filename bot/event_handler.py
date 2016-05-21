@@ -120,5 +120,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_solution(event['channel'],msg_txt)
                 if  re.search('explain|why', msg_txt.lower()):
                     self.msg_writer.write_explanation(event['channel'])
+                if re.search('sweetpotato me', msg_txt.lower()):
+                    self.msg_writer.write_sweetpotato_me(event['channel'], event['user'])
                 else:
                     pass

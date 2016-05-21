@@ -250,5 +250,9 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
-    def write_solution(self,channel_id, msg):
+    def write_solution(self, channel_id, msg):
         self.send_message(channel_id, self.equation_manager.solve(msg))
+        
+    def write_sweetpotato_me(self, channel_id, user_id):
+        txt = 'Here, <@{}>! :sweetpotato:'.format(user_id)
+        self.send_message(channel_id, txt)
