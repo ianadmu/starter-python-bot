@@ -254,5 +254,5 @@ class Messenger(object):
         self.send_message(channel_id, self.equation_manager.solve(msg))
         
     def write_sweetpotato_me(self, channel_id, user_id):
-        txt = 'Here, <@{}>! :sweetpotato:'.format(user_id)
+        txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
         self.send_message(channel_id, txt)
