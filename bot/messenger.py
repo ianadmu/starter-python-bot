@@ -143,18 +143,18 @@ class Messenger(object):
         self.send_message(channel_id, answer)
         
     def write_encouragement(self, channel_id, msg):
-        target = re.split('encourage ', msg)
         self.clients.send_user_typing_pause(channel_id)
+        target = re.split('encourage ', msg)
         self.send_message(channel_id, 'Get your shit together {0}'.format(target[0]))
         
     def write_food(self, channel_id):
-        food = self.food_getter.get_random_food()
         self.clients.send_user_typing_pause(channel_id)
+        food = self.food_getter.get_random_food()
         self.send_message(channel_id, food)
         
     def write_bang(self, channel_id, user_id):
-        bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
         self.clients.send_user_typing_pause(channel_id)
+        bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
         self.send_message(channel_id, bang)
 
     def write_cast_pokemon(self, channel_id, msg):
@@ -251,8 +251,10 @@ class Messenger(object):
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
     def write_solution(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.equation_manager.solve(msg))
         
     def write_sweetpotato_me(self, channel_id, user_id):
+        self.clients.send_user_typing_pause(channel_id)
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
         self.send_message(channel_id, txt)
