@@ -3,7 +3,6 @@ import json
 import os.path
 import xml.etree.ElementTree as ET 
 from datetime import datetime, timedelta
-
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 
@@ -78,7 +77,7 @@ class TimeTriggeredEventManager(object):
 
     def trigger_weather(self):
         response = WeatherController.get_weather()
-        self.send_message("#zacefron-testing", response)
+        self.clients.send_time_triggered_msg('#zacefron-testing', response)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
