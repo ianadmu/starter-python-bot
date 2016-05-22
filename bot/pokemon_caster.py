@@ -9,7 +9,7 @@ teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
 class PokemonCaster(object):
                  
     def i_choose_you(self, msg):
-        if msg in teammates:
+        if msg.split()[0] in teammates:
             return ":msg:"
         else:
             token = msg.split()
