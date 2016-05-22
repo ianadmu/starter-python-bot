@@ -77,6 +77,9 @@ class RtmEventHandler(object):
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
                 self.msg_writer.write_fuck_this(event['channel'])
                 
+            if re.search('do it', msg_txt.lower()):
+                self.msg_writer.write_do_it(event['channel'])
+                
             if msg_txt.lower().startswith('zac translate') and msg_txt.lower().endswith(' to french'):
                 self.msg_writer.write_to_french(event['channel'], msg_txt)
 

@@ -53,13 +53,16 @@ class Messenger(object):
             "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
             "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
             "> `<@" + bot_uid + "> translate <phrase> to French` - I know flawless French! I'll translate for you :bombardier:",
+            "> `<@" + bot_uid + "> marry me` - ...Are you going to propose to me?? _Le gasp_ :le gasp:",
+            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
             "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> `encourage` - Let me help you get back on track.",
-            "> `hungry | feed` - Have some food courtesy of moi",
-            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:"]
+            "> `encourage` - Let me help you get back on track. :grinning:",
+            "> `hungry | feed` - Have some food courtesy of moi :banana:",
+            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
+            "> `Do it` - Need some motivation? This vid should do the trick :sunglasses:"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
@@ -191,6 +194,11 @@ class Messenger(object):
     def write_fuck_this(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         attachment = "https://www.youtube.com/watch?v=5FjWe31S_0g"
+        self.send_message(channel_id, attachment)
+        
+    def write_do_it(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        attachment = "https://www.youtube.com/watch?v=ZXsQAXx_ao0"
         self.send_message(channel_id, attachment)
 
     def write_sad(self, channel_id):
