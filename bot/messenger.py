@@ -276,3 +276,11 @@ class Messenger(object):
         urls = file.read().splitlines()
         txt = '{}'.format(random.choice(urls))
         self.send_message(channel_id, txt)
+
+    def write_forever(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = '{}'.format('I love the sun for days, the moon for nights and you forever.')
+        self.send_message(channel_id, txt)
+        self.clients.send_user_typing_pause(channel_id)
+        answer = '{}'.format('Just kidding! :laughing:')
+        self.send_message(channel_id, answer)

@@ -126,5 +126,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_marry_me(event['channel'])
                 if re.search('draw me', msg_txt.lower()):
                     self.msg_writer.write_draw_me(event['channel'])
+                if re.search('forever', msg_txt.lower()):
+                    self.msg_writer.write_forever(event['channel'])
                 else:
                     pass
