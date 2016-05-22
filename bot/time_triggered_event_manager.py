@@ -116,7 +116,8 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
-            self.trigger_weather()
+            if hour % 3 == 0 and minute == 0:
+            	self.trigger_weather()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
                 self.trigger_945()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 0:
