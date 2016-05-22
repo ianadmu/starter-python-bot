@@ -107,7 +107,7 @@ class RtmEventHandler(object):
                 if re.search('(feed)|(hungry)', msg_txt.lower()):
                     self.msg_writer.write_food(event['channel'])
                 if re.search('encourage', msg_txt.lower()):
-                    self.msg_writer.write_encouragement(event['channel'], msg_txt.lower)
+                    self.msg_writer.write_encouragement(event['channel'], event['user'])
                 if 'sort me' in msg_txt.lower():
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
                 if 'sass' in msg_txt.lower():

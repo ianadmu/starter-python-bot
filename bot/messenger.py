@@ -142,10 +142,9 @@ class Messenger(object):
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
         
-    def write_encouragement(self, channel_id, msg):
+    def write_encouragement(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
-        target = re.split("encourage ", msg)
-        self.send_message(channel_id, 'Get your shit together {0}'.format(target[0]))
+        self.send_message(channel_id, 'Get your shit together <@{0}>'.format(user_id))
         
     def write_food(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
