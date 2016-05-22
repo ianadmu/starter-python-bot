@@ -4,6 +4,9 @@ import os.path
 import xml.etree.ElementTree as ET 
 from datetime import datetime, timedelta
 
+import scripts.weather_controller
+from scripts.weather_controller import WeatherController
+
 HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
 HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6 #for Winnipeg
 MIN_PER_HOUR = 60
@@ -73,6 +76,10 @@ class TimeTriggeredEventManager(object):
         txt = '{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji) 
         self.clients.send_time_triggered_msg(channel, txt)
 
+    def trigger_weather(self):
+        response = WeatherController.get_weather()
+        self.send_message("#zacefron-testing", response)
+
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
         tag_users = ['channel', 'here']
@@ -110,6 +117,7 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
+            self.trigger_weather()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
                 self.trigger_945()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 0:
