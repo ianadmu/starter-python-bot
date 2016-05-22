@@ -2,7 +2,7 @@ import json
 import requests
 import re
 
-URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
+URL = 'http://pokeapi.co/api/v2/pokemon/{}/'
 
 teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
 
@@ -20,6 +20,6 @@ class PokemonCaster(object):
             pokemon = response.json()
             if 'sprites' in pokemon:
                 return pokemon['sprites']['front_default']
-             elif msg in teammates:
+            elif msg in teammates:
                 return ":msg:"
                 
