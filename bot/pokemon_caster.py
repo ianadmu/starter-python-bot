@@ -11,7 +11,7 @@ class PokemonCaster(object):
     def i_choose_you(self, msg):
         target = msg.split()[0]
         if target in teammates:
-            return "Go! {}! :{}:".format(target.title(), target)
+            return "Go! {}!\n:{}:".format(target.title(), target)
         else:
             link = URL
             pkmn = link.format(target)
