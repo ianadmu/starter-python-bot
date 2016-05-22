@@ -267,3 +267,11 @@ class Messenger(object):
                 ':musical_note: _IF YOU LIKE IT THEN YOU SHOULDA PUT A RING ON IT_ :musical_note:', 'No. Never. Nope. Nu-uh.']
         txt = '{}'.format(random.choice(responses))
         self.send_message(channel_id, txt)
+
+
+    def write_draw_me(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        file = open(os.path.join('./resources', 'draw_me.txt'), 'r')
+        urls = file.read().splitlines()
+        txt = '{}'.format(random.choice(urls))
+        self.send_message(channel_id, txt)
