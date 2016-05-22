@@ -9,14 +9,14 @@ teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
 class PokemonCaster(object):
                  
     def i_choose_you(self, msg):
-        if msg.split()[0] in teammates:
-            return ":msg:"
+        target = msg.split()[0]
+        if target in teammates:
+            return ":{}:".format(target)
         else:
-            token = msg.split()
             link = URL
-            target = link.format(token[0])
+            pkmn = link.format(target)
             try:
-                response = requests.get(target)
+                response = requests.get(pkmn)
             except requests.exceptions.RequestException as e:
                 return None
             else:
