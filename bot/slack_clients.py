@@ -52,7 +52,7 @@ class SlackClients(object):
     	emojis = response['emoji'].items()
     	return emojis[int(random.random()*len(emojis))][0]
 
-    def get_user_name(self, user_id):
+    def get_user_name(self, user_id): #method not working yet
     	response = self.rtm.api_call('users.info', user=user_id)
     	user_info = response['user'].items()
     	return user_info[1][1]
@@ -67,7 +67,7 @@ class SlackClients(object):
     def get_file_info(self): 
     	response = self.rtm.api_call('files.info', file='F19NX4WJD')
     	files = response['file'].items()
-    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=files[14][0])
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=files[14][1])
     	response2 = self.rtm.api_call('users.info', user='U15FDSK5M')
-    	user_info = response2['user'].items()
+    	user_info = response2[1]#['user'].items()
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=user_info[2])
