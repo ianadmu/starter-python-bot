@@ -279,8 +279,13 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        txt = '{}'.format('I love the sun for days, the moon for nights and you forever.')
+        file = open(os.path.join('./resources', 'forever.txt'), 'r')
+        comments = file.read().splitlines()
+        txt = '{}'.format(random.choice(comments))
         self.send_message(channel_id, txt)
         self.clients.send_user_typing_pause(channel_id)
         answer = '{}'.format('Just kidding! :laughing:')
         self.send_message(channel_id, answer)
+        self.clients.send_user_typing_pause(channel_id)
+        random_custom_emoji = self.clients.get_random_emoji()
+        self.send_message(channel_id, random_custom_emoji)
