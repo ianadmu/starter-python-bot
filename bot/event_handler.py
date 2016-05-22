@@ -57,7 +57,7 @@ class RtmEventHandler(object):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
 
             if re.search('(I|i) choose you', msg_txt):
-                self.msg_writer.write_cast_pokemon(event['channel'], msg_txt)
+                self.msg_writer.write_cast_pokemon(event['channel'], msg_txt.lower())
 
             if re.search('cry|Cry|CRY|crying|Crying|CRYING|dying', msg_txt.lower()):
                 self.msg_writer.write_crying_into_my_tea(event['channel'])
