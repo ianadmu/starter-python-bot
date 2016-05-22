@@ -4,7 +4,7 @@ import re
 
 URL =  'http://pokeapi.co/api/v2/pokemon/{}/'
 
-teammates = { kiera, nicole, jill, malcolm, ian}
+teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
 
 class PokemonCaster(object):
                  
