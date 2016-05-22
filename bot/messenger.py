@@ -288,4 +288,5 @@ class Messenger(object):
         self.send_message(channel_id, answer)
         self.clients.send_user_typing_pause(channel_id)
         random_custom_emoji = self.clients.get_random_emoji()
-        self.send_message(channel_id, random_custom_emoji)
+        emoji =':{}:'.format(random_custom_emoji)
+        self.send_message(channel_id, emoji)
