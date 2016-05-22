@@ -287,6 +287,7 @@ class Messenger(object):
         answer = '{}'.format('Just kidding! :laughing:')
         self.send_message(channel_id, answer)
         self.clients.send_user_typing_pause(channel_id)
-        random_custom_emoji = self.clients.get_random_emoji()
+        #random_custom_emoji = self.clients.get_random_emoji()
+        random_custom_emoji = 'trollface'
         emoji =':{}:'.format(random_custom_emoji)
         self.send_message(channel_id, emoji)
