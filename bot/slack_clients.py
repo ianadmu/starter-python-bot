@@ -52,6 +52,11 @@ class SlackClients(object):
     	emojis = response['emoji'].items()
     	return emojis[int(random.random()*len(emojis))][0]
 
+    def get_user_name(self, user_id):
+    	response = self.rtm.api_call('users.info', user=user_id)
+    	user_info = response['user'].items()
+    	return user_info[1][1]
+
     def upload_file_to_slack(self): 
     	my_file = os.path.join('./resources', 'pokemon_correct.txt')  #files = {'file': open('test.png', 'rb')}
     	self.web.files.upload(my_file, channels='#zacefron-testing')
@@ -62,4 +67,7 @@ class SlackClients(object):
     def get_file_info(self): 
     	response = self.rtm.api_call('files.info', file='F19NX4WJD')
     	files = response['file'].items()
-    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=files[7][0])
+    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=files[8][0])
+    	response2 = self.rtm.api_call('users.info', user='U15FDSK5M')
+    	user_info = response2['user'].items()
+    	return user_info[1][1]
