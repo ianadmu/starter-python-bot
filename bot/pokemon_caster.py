@@ -21,5 +21,5 @@ class PokemonCaster(object):
             if 'sprites' in pokemon:
                 return pokemon['sprites']['front_default']
              elif msg in teammates:
-                return :msg:
+                return ":msg:"
                 
