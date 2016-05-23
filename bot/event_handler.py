@@ -113,7 +113,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_encouragement(event['channel'], event['user'])
                 if 'sort me' in msg_txt.lower():
                     self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
-                if 'sass' in msg_txt.lower():
+                if 'sass ' in msg_txt.lower():
                     self.msg_writer.write_sass(event['channel'], msg_txt)	
                 if ('945' in msg_txt) and ('?' in msg_txt):
                     self.msg_writer.announce_945(event['channel'])
