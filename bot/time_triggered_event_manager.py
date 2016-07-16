@@ -27,7 +27,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_method_log(self, method_name):
-        msg = 'Called: {}'.format(method_name)
+        msg = 'Event: {}'.format(method_name)
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_startup_log(self, day, hour, minute, second):
@@ -36,8 +36,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#zacefron-testing', msg)
 
     def trigger_random(self):
-        channels = ['heliwolves', 'spamalot', 'random']
-        channel = '#{}'.format(random.choice(channels)) 
+        channel = '#{}'.format('random') 
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
@@ -48,7 +47,7 @@ class TimeTriggeredEventManager(object):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
-            max_minutes_between_random_events = 720 #12 hours max
+            max_minutes_between_random_events = 1440 #24 hours max
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
             if hour >= 8 and hour < 22 and self.random_hasnt_fired == False: 
                 self.trigger_random()
@@ -67,8 +66,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#general', txt)
 
     def trigger_drunk_phrase(self):
-        channels = ['heliwolves', 'spamalot', 'random']
-        channel = '#{}'.format(random.choice(channels)) 
+        channel = '#{}'.format('random') 
         random_custom_emoji = self.clients.get_random_emoji()
         drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
         drunk_comments = drunk_comments_file.read().splitlines()
@@ -85,6 +83,7 @@ class TimeTriggeredEventManager(object):
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
         txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji) 
         self.clients.send_time_triggered_msg('#general', txt)
+
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
         self.clients.send_time_triggered_msg('#zacefron-testing', digg_msg)
@@ -97,7 +96,7 @@ class TimeTriggeredEventManager(object):
         'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmm~', 'Mochaccino status: passable',
         'MOCHACCINO MOCHACCINO MOCHACCINO!!!', 'Who\'s ready for a nice cup o\' mochaccino?', '_le mochaccino_']
         txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
-        self.clients.send_time_triggered_msg('#heliwolves-announce', txt)
+        self.clients.send_time_triggered_msg('#heliwolves', txt)
 
     def trigger_timed_event(self):
         #get date and time
@@ -125,6 +124,6 @@ class TimeTriggeredEventManager(object):
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if (hour == 16 and minute == 31) or (hour == 17 and minute == 0) or (hour == 17 and minute == 30) or (hour == 18 and minute == 0): 
+                if (hour == 16 and minute == 35) or (hour == 17 and minute == 0) or (hour == 17 and minute == 30) or (hour == 18 and minute == 0): 
                     self.trigger_drunk_phrase()
 
