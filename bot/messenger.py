@@ -114,7 +114,7 @@ class Messenger(object):
     
     def write_boyer_bot(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        boyer_responses = ['It was working upstairs--', 'Idk why it\'s not working now', 'Last time I taught this course it was working',
+        boyer_responses = ['It was working upstairs--', 'Idk why it\'s not working now', 'Last time I taught this course it was working', 'We do take these seriously.... at least my boss does', 
         'Last time I taught this course I didn\'t have to do this', 'I\'ll have to update my notes', 'This was working earlier',
         'Sorry I\'m late', 'Sorry the example wasn\'t working last class, it should be working now', 
         '........so that\'s basically what you\'ll need to do for assignment one', '[After 5 minutes of lecturing] Okay let\'s take a 10-minute break',
