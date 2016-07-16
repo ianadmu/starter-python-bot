@@ -9,7 +9,7 @@ import time
 from xml.etree.ElementTree import XML
 from datetime import datetime, timedelta
 
-API="43ff7b292dd04d4dacd230358160305"
+API="954b5bfc706747b6aff23600161607"
 URL="http://api.worldweatheronline.com/free/v2/weather.ashx"
  
 CITY="Winnipeg"
