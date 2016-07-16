@@ -24,16 +24,16 @@ class TimeTriggeredEventManager(object):
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_method_log(self, method_name):
         msg = 'Event: {}'.format(method_name)
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_startup_log(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_random(self):
         channel = '#{}'.format('random') 
@@ -75,7 +75,7 @@ class TimeTriggeredEventManager(object):
 
     def trigger_weather(self):
         response = WeatherController.get_weather()
-        self.clients.send_time_triggered_msg('#zacefron-testing', response)
+        self.clients.send_time_triggered_msg('#zac-testing', response)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -86,7 +86,7 @@ class TimeTriggeredEventManager(object):
 
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
-        self.clients.send_time_triggered_msg('#zacefron-testing', digg_msg)
+        self.clients.send_time_triggered_msg('#zac-testing', digg_msg)
 
     def trigger_mochaccino(self):
         tag_users = ['channel', 'here']
