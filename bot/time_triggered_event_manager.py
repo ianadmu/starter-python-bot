@@ -63,7 +63,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg) 
-        self.clients.send_time_triggered_msg('#general', txt)
+        self.clients.send_time_triggered_msg('#random', txt)
 
     def trigger_drunk_phrase(self):
         channel = '#{}'.format('random') 
@@ -82,7 +82,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
         txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji) 
-        self.clients.send_time_triggered_msg('#general', txt)
+        self.clients.send_time_triggered_msg('#random', txt)
 
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
@@ -96,7 +96,7 @@ class TimeTriggeredEventManager(object):
         'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmm~', 'Mochaccino status: passable',
         'MOCHACCINO MOCHACCINO MOCHACCINO!!!', 'Who\'s ready for a nice cup o\' mochaccino?', '_le mochaccino_']
         txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
-        self.clients.send_time_triggered_msg('#heliwolves', txt)
+        self.clients.send_time_triggered_msg('#random', txt)
 
     def trigger_timed_event(self):
         #get date and time
