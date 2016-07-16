@@ -24,16 +24,16 @@ class TimeTriggeredEventManager(object):
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_method_log(self, method_name):
         msg = 'Event: {}'.format(method_name)
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_startup_log(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':' 
-        self.clients.send_time_triggered_msg('#zacefron-testing', msg)
+        self.clients.send_time_triggered_msg('#zac-testing', msg)
 
     def trigger_random(self):
         channel = '#{}'.format('random') 
@@ -75,7 +75,7 @@ class TimeTriggeredEventManager(object):
 
     def trigger_weather(self):
         response = WeatherController.get_weather()
-        self.clients.send_time_triggered_msg('#zacefron-testing', response)
+        self.clients.send_time_triggered_msg('#zac-testing', response)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -85,7 +85,7 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg('#announcements', txt)
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
-        self.clients.send_time_triggered_msg('#zacefron-testing', digg_msg)
+        self.clients.send_time_triggered_msg('#heliwolves', digg_msg)
 
     def trigger_mochaccino(self):
         tag_users = ['channel', 'here']
@@ -95,7 +95,7 @@ class TimeTriggeredEventManager(object):
         'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmm~', 'Mochaccino status: passable',
         'MOCHACCINO MOCHACCINO MOCHACCINO!!!', 'Who\'s ready for a nice cup o\' mochaccino?', '_le mochaccino_']
         txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
-        self.clients.send_time_triggered_msg('#heliwolves', txt)
+        self.clients.send_time_triggered_msg('#announcements', txt)
 
     def trigger_timed_event(self):
         #get date and time
