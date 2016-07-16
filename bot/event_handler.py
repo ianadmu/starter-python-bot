@@ -56,7 +56,7 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
 
-            if re.search('(I|i) choose you', msg_txt):
+            if re.search('(I|i) choose you', msg_txt.lower()):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt.lower())
 
             if re.search('cry|Cry|CRY|crying|Crying|CRYING', msg_txt.lower()):
@@ -129,7 +129,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_marry_me(event['channel'])
                 if re.search('draw me', msg_txt.lower()):
                     self.msg_writer.write_draw_me(event['channel'])
-                if re.search('forever', msg_txt.lower()):
+                if re.search('love|forever', msg_txt.lower()):
                     self.msg_writer.write_forever(event['channel'])
                 else:
                     pass

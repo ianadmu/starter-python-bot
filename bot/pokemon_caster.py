@@ -12,6 +12,8 @@ class PokemonCaster(object):
         target = msg.split()[0]
         if target in teammates:
             return "Go! {}!\n:{}:".format(target.title(), target)
+        elif target.lower() == "sleep":
+            return "Go! {}!\n:{}:".format(target.title(), 'bed')
         else:
             link = URL
             pkmn = link.format(target)
