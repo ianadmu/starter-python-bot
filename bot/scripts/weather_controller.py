@@ -10,7 +10,7 @@ from xml.etree.ElementTree import XML
 from datetime import datetime, timedelta
 
 API="954b5bfc706747b6aff23600161607"
-URL="http://api.worldweatheronline.com/free/v2/weather.ashx"
+URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
  
 CITY="Winnipeg"
 SUNSET_HOUR = 21
