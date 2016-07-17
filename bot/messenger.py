@@ -41,6 +41,10 @@ class Messenger(object):
         txt = 'I SAW THAT'
         self.send_message(channel_id, txt)
 
+    def write_left_channel(self, channel_id):
+        txt = '...well THAT was something'
+        self.send_message(channel_id, txt)
+
     def write_joined_channel(self, channel_id, user_id):
         if channel_id == 'C171ASJJK' or channel_id == 'C1SDALDG9':
             txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
@@ -85,11 +89,10 @@ class Messenger(object):
     
     def write_to_french(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
+        msg = msg.lower()
+        msg = msg.replace('zac', '')
+        msg = msg.replace('french', '')
         tokens = msg.split()
-        tokens.remove(tokens[len(tokens) - 1])
-        tokens.remove(tokens[len(tokens) - 1])
-        tokens.remove(tokens[0])
-        tokens.remove(tokens[0])
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
         self.send_message(channel_id, txt)

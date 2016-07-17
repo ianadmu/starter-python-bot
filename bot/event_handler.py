@@ -53,6 +53,8 @@ class RtmEventHandler(object):
                 self.msg_writer.write_joined_channel(event['channel'], event['user'])
             elif event['subtype'] == 'message_deleted':
                 self.msg_writer.write_message_deleted(event['channel'])
+            elif event['subtype'] == 'channel_leave':
+                self.msg_writer.write_left_channel(event['channel'])
 
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
