@@ -39,7 +39,7 @@ class Messenger(object):
 
     def write_joined_channel(self, channel_id, user_id):
         if channel_id == 'C171ASJJK' or channel_id == 'C1SDALDG9':
-            txt = 'Hey <@{}>! Welcome to the testing *cough the weather *cough channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
+            txt = 'Hey <@{}>! Welcome to the testing *cough* the weather channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
         else:
