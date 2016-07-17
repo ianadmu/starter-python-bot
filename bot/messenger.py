@@ -320,7 +320,7 @@ class Messenger(object):
         dialougue = ["Is it really?", "Absolutely. I'm awfully sorry about the odor though. That must bother you.", "Don't! Please don't.", "But _look_ at them!", "I'm only talking", "It's much easier if I talk. But I don't want to bother you.", 
                     "You know it doesn't bother me", "Please tell me what I can do. There must be something I can do.", "You might think about some one else.", "I don't mean that.", "You do it. I'm tired."]
         for i in range(8):
-            txt = random.choice(dialouge)
+            txt = random.choice(dialougue)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
         self.clients.send_user_typing_pause(channel_id)        
