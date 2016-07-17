@@ -10,8 +10,8 @@ class HogwartsHouseSorter(object):
 	def get_house(self, msg):
 		msg = msg.upper();
 		index = int(random.random()*len(HOUSES))
-		for num in range(len(HOUSES)):
-			if HOUSES[index] in msg.upper():
+		for num in range(len(HOUSES)):	
+			if HOUSES[index] in msg.upper() and 'not' not in msg.lower():
 				return HOUSES[index]
 			else:
 				index = (index+1)%len(HOUSES)
