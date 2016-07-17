@@ -12,7 +12,7 @@ Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop
 
 ## Usage
 asd
-### Run locally
+### Run locallyy
 Install dependencies ([virtualenv](http://virtualenv.readthedocs.org/en/latest/) is recommended.)
 
 	pip install -r requirements.txt
