@@ -38,9 +38,12 @@ class Messenger(object):
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
     def write_joined_channel(self, channel_id, user_id):
-        txt = 'Hey <@{}>! chaneel id:{}'.format(user_id, channel_id)
-        self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, txt)
+        if channel_id == 'C171ASJJK' or channel_id == 'C1SDALDG9':
+            txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
+            self.clients.send_user_typing_pause(channel_id)
+            self.send_message(channel_id, txt)
+        else:
+            self.write_greeting(channel_id, user_id)
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
