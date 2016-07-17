@@ -134,5 +134,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_draw_me(event['channel'])
                 if re.search('love|forever', msg_txt.lower()):
                     self.msg_writer.write_forever(event['channel'])
+                if re.search('story', msg_txt.lower()):
+                    self.msg_writer.write_story(event['channel'])
                 else:
                     pass

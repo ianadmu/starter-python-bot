@@ -307,3 +307,24 @@ class Messenger(object):
         random_custom_emoji = 'trollface'
         emoji =':{}:'.format(random_custom_emoji)
         self.send_message(channel_id, emoji)
+
+    def write_story(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        starts = ['Once upon a time', 'In the beginning', 'A long time ago']
+        protagonists = ['boys', 'girls', 'dragons', 'helicopter wolves', 'programmers']
+        locations = ['heights of the mountain', 'depghts of the ocean', 'sandiest beach of all time', 'most amazing wizard convention that has ever existed']
+        start_txt = '{} there were two {} located in the {}...'.format(random.choice(starts), random.choice(protagonists))
+        self.send_message(channel_id, start_txt)
+        dialougue = ["Is it really?", "Absolutely. I'm awfully sorry about the odor though. That must bother you.", "Don't! Please don't.", "But _look_ at them!", "I'm only talking", "It's much easier if I talk. But I don't want to bother you.", 
+                    "You know it doesn't bother me", "Please tell me what I can do. There must be something I can do.", "You might think about some one else.", "I don't mean that.", "You do it. I'm tired."]
+        for i in range(8):
+            txt = random.choice(dialouge)
+            self.clients.send_user_typing_pause(channel_id)
+            self.send_message(channel_id, txt)
+        self.clients.send_user_typing_pause(channel_id)        
+        self.send_message(channel_id, "THE END")
+
+
+
+
+
