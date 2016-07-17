@@ -142,5 +142,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_forever(channel)
                 if re.search('story|stories', msg_txt.lower()):
                     self.msg_writer.write_story(channel)
+                if re.search('flip|rageflip',msg_txt.lower()):
+                    self.msg_writer.write_flip(channel)
                 else:
                     pass
