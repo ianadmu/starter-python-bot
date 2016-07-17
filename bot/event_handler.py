@@ -87,7 +87,7 @@ class RtmEventHandler(object):
             if msg_txt.endswith('*'):
                 self.msg_writer.write_spelling_mistake(channel)
 
-            if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
+            if re.search('fuck this', msg_txt.lower()):
                 self.msg_writer.write_fuck_this(channel)
                 
             if re.search('just do it', msg_txt.lower()):
