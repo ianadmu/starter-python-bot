@@ -24,7 +24,7 @@ class RtmEventHandler(object):
             self.msg_writer.write_joined_channel(event['channel'], event['user'])
         elif 'subtype' in event and event_type == 'message' and event['subtype'] == 'message_deleted': 
             # someone joined a channel
-            self.msg_writer.write_message_deleted(event['channel'], event['user'])
+            self.msg_writer.write_message_deleted(event['channel'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
@@ -51,6 +51,9 @@ class RtmEventHandler(object):
         return True
 
     def _handle_message(self, event):
+        if ('subtype' in event and event['subtype'] == 'message_changed'):
+            self.msg_writer.write_spelling_mistake(event['channel'])
+
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
 
@@ -77,7 +80,7 @@ class RtmEventHandler(object):
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(event['channel'])
 
-            if ('subtype' in event and event['subtype'] == 'message_changed') or ('*' in msg_txt and ' *' not in msg_txt and not msg_txt.startswith('*')):
+            if '*' in msg_txt and ' *' not in msg_txt and not msg_txt.startswith('*'):
                 self.msg_writer.write_spelling_mistake(event['channel'])
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
