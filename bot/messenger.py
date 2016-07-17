@@ -37,6 +37,11 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
+    def write_joined_channel(self, channel_id, user_id):
+        txt = 'Hey <@{}>! chaneel id:{}'.format(user_id, channel_id)
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, txt)
+
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
         help_txt = [ "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
