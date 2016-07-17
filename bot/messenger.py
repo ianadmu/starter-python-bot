@@ -37,6 +37,14 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
+    def write_message_deleted(self, channel_id):
+        txt = 'I SAW THAT'
+        self.send_message(channel_id, txt)
+
+    def write_left_channel(self, channel_id):
+        txt = '...well THAT was something'
+        self.send_message(channel_id, txt)
+
     def write_joined_channel(self, channel_id, user_id):
         if channel_id == 'C171ASJJK' or channel_id == 'C1SDALDG9':
             txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
@@ -60,7 +68,7 @@ class Messenger(object):
             "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:",
             "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
             "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
-            "> `<@" + bot_uid + "> translate <phrase> to French` - I know flawless French! I'll translate for you :bombardier:",
+            "> `<@" + bot_uid + "> french <phrase>` - I know flawless French! I'll translate for you :bombardier:",
             "> `<@" + bot_uid + "> marry me` - ...Are you going to propose to me?? _Le gasp_ :le gasp:",
             "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
@@ -70,7 +78,7 @@ class Messenger(object):
             "> `encourage` - Let me help you get back on track. :grinning:",
             "> `hungry | feed` - Have some food courtesy of moi :banana:",
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
-            "> `Do it` - Need some motivation? This vid should do the trick :sunglasses:"]
+            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
@@ -81,11 +89,10 @@ class Messenger(object):
     
     def write_to_french(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
+        msg = msg.lower()
+        msg = msg.replace('zac', '')
+        msg = msg.replace('french', '')
         tokens = msg.split()
-        tokens.remove(tokens[len(tokens) - 1])
-        tokens.remove(tokens[len(tokens) - 1])
-        tokens.remove(tokens[0])
-        tokens.remove(tokens[0])
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
         self.send_message(channel_id, txt)
@@ -180,15 +187,6 @@ class Messenger(object):
         result = self.whos_that_pokemon_manager.check_response(user_id, msg)
         if result is not None:
             self.send_message(channel_id, result)
-
-    def announce_945(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        time1 = datetime.now()
-        time2 = datetime.time(9,45,0)
-        time3 = time1 - time2
-        self.send_message(channel_id, time1.__str__() +" "+ time2.__str__() + " "+ time3.__str__())
-        self.send_message(channel_id,"945 :sunny: time now is " + datetime.now().strftime('%H:%M'))
-        self.send_message(channel_id,"/digg editions")
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
@@ -307,3 +305,32 @@ class Messenger(object):
         random_custom_emoji = 'trollface'
         emoji =':{}:'.format(random_custom_emoji)
         self.send_message(channel_id, emoji)
+
+    def write_story(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)        
+        self.send_message(channel_id, "STORY TIME")
+        self.clients.send_user_typing_pause(channel_id)
+        starts = ['Once upon a time', 'In the beginning', 'A long time ago']
+        protagonists = ['boys', 'girls', 'dragons', 'helicopter wolves', 'programmers', 'birds', 'humans', 'human-beings', 'relatives', 'friends', 'doctors']
+        locations = ['heights of a mountain', 'depghts of the ocean', 'sandiest beach of all time', 'most amazing wizard convention that has ever existed', 'smoky cauldron next door', 'alphabet']
+        start_txt = '{} there were two {} located in the {}...'.format(random.choice(starts), random.choice(protagonists), random.choice(locations))
+        self.send_message(channel_id, start_txt)
+        dialougue = ["\"Is it really?\"", "\"Absolutely. I'm awfully sorry about the odor though. That must bother you.\"", "\"Don't! Please don't.\"", "\"But _look_ at them!\"", "\"I'm only talking\"", "\"It's much easier if I talk. But I don't want to bother you.\"", 
+                    "\"You know it doesn't bother me\"", "\"Please tell me what I can do. There must be something I can do.\"", "\"You might think about some one else.\"", "\"I don't mean that.\"", "\"You do it. I'm too tired.\"", "\"Anything you do too bloody long.\"", 
+                    "\"Do you feel anything strange?\"", "\"No. Just a little sleepy.\"", "\"You know the only thing I've never lost is curiosity.\"", "\"Tell it to go away.\"",  "\"What's the matter?\"", "\"I don't really care about it, you know.\"", "\"What about the tea?\"",  
+                    "\"Why nothing.\"", "\"Why what, dear?\"", "\"You tell them why\"", "\"It's not good for you.\"", "\"I never learned.\"", "\"That's all right.\""]
+        for i in range(8):
+            txt = random.choice(dialougue)
+            self.clients.send_user_typing_pause(channel_id)
+            self.send_message(channel_id, txt)
+        conclusions = ["Then they went home.", "Then they went home and lived happily ever after.", "Then a witch swooped down and killed them.", "Then a truck ran over them", 'Then they lived happily ever after']
+        end_txt = random.choice(conclusions)
+        self.clients.send_user_typing_pause(channel_id)        
+        self.send_message(channel_id, end_txt)
+        self.clients.send_user_typing_pause(channel_id)        
+        self.send_message(channel_id, "THE END")
+
+
+
+
+
