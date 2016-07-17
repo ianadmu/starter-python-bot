@@ -326,6 +326,7 @@ class Messenger(object):
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
         conclusions = ["Then they went home.", "Then they went home and lived happily ever after.", "Then a witch swooped down and killed them.", "Then a truck ran over them", 'Then they lived happily ever after']
+        end_txt = random.choice(conclusions)
         self.clients.send_user_typing_pause(channel_id)        
         self.send_message(channel_id, "THE END")
 
