@@ -185,15 +185,6 @@ class Messenger(object):
         if result is not None:
             self.send_message(channel_id, result)
 
-    def announce_945(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        time1 = datetime.now()
-        time2 = datetime.time(9,45,0)
-        time3 = time1 - time2
-        self.send_message(channel_id, time1.__str__() +" "+ time2.__str__() + " "+ time3.__str__())
-        self.send_message(channel_id,"945 :sunny: time now is " + datetime.now().strftime('%H:%M'))
-        self.send_message(channel_id,"/digg editions")
-
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)

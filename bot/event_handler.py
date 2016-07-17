@@ -58,89 +58,88 @@ class RtmEventHandler(object):
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
 
             msg_txt = event['text']
+            channel = event['channel']
+            user = event['user']
 
             if re.search('qbot', msg_txt.lower()):
-                self.msg_writer.write_no_qbot(event['channel'])
+                self.msg_writer.write_no_qbot(channel)
 
             if self.is_loud(msg_txt):
-                self.msg_writer.write_loud(event['channel'],msg_txt)
+                self.msg_writer.write_loud(channel, msg_txt)
 
             if re.search('i choose you', msg_txt.lower()):
-                self.msg_writer.write_cast_pokemon(event['channel'], msg_txt.lower())
+                self.msg_writer.write_cast_pokemon(channel, msg_txt.lower())
 
             if re.search('cry|crying', msg_txt.lower()):
-                self.msg_writer.write_crying_into_my_tea(event['channel'])
+                self.msg_writer.write_crying_into_my_tea(channel)
 
             if 'wiener' in msg_txt.lower():
-                self.msg_writer.write_wiener(event['channel'])
+                self.msg_writer.write_wiener(channel)
 
             if re.search('boyer', msg_txt.lower()):
-                self.msg_writer.write_boyer_bot(event['channel'])
+                self.msg_writer.write_boyer_bot(channel)
 
             if re.search('weather', msg_txt.lower()):
-                self.msg_writer.write_weather(event['channel'])
+                self.msg_writer.write_weather(channel)
 
-            if msg_txt.endwith('*'):
-                self.msg_writer.write_spelling_mistake(event['channel'])
+            if msg_txt.endswith('*'):
+                self.msg_writer.write_spelling_mistake(channel)
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
-                self.msg_writer.write_fuck_this(event['channel'])
+                self.msg_writer.write_fuck_this(channel)
                 
             if re.search('do it', msg_txt.lower()):
-                self.msg_writer.write_do_it(event['channel'])
+                self.msg_writer.write_do_it(channel)
                 
             if msg_txt.lower().startswith('zac translate') and msg_txt.lower().endswith(' to french'):
-                self.msg_writer.write_to_french(event['channel'], msg_txt)
+                self.msg_writer.write_to_french(channel, msg_txt)
 
-            if re.search(' ?(Z|z)ac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
-                # e.g. user typed: "@pybot tell me a joke!"
+            if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
-                    self.msg_writer.write_help_message(event['channel'])
-                if re.search('hi |hey|Hey|hello|howdy|Hi |Hello|sup ', msg_txt.lower()) or msg_txt.lower().endswith(' hi') or msg_txt.lower().endswith(' sup'):
-                    self.msg_writer.write_greeting(event['channel'], event['user'])
-                if re.search('good morning|morning|Morning|Good Morning|Good morning', msg_txt.lower()):
-                    self.msg_writer.write_good_morning(event['channel'], event['user'])
-                if re.search('good night|night|goodnight|Goodnight|Good night|Good Night|Night', msg_txt.lower()):
-                    self.msg_writer.write_good_night(event['channel'], event['user'])
-                if re.search('thanks|thank you|thank-you|Thanks|Thank you|Thank-you', msg_txt.lower()):
-                    self.msg_writer.write_your_welcome(event['channel'], event['user'])
+                    self.msg_writer.write_help_message(channel)
+                if re.search('hi |hey|hello|howdy|sup ', msg_txt.lower()) or msg_txt.lower().endswith(' hi') or msg_txt.lower().endswith(' sup'):
+                    self.msg_writer.write_greeting(channel, user)
+                if re.search('morning', msg_txt.lower()):
+                    self.msg_writer.write_good_morning(channel, user)
+                if re.search('night', msg_txt.lower()):
+                    self.msg_writer.write_good_night(channel, user)
+                if re.search('thanks|thank you|thank-you', msg_txt.lower()):
+                    self.msg_writer.write_your_welcome(channel, user)
                 if 'joke' in msg_txt.lower():
-                    self.msg_writer.write_joke(event['channel'])
+                    self.msg_writer.write_joke(channel)
                 if re.search('who\'?s that pokemon', msg_txt):
-                    self.msg_writer.write_whos_that_pokemon(event['channel'])
-                if re.search(' ?(Z|z)ac it\'?s', msg_txt):
-                    self.msg_writer.write_pokemon_guessed_response(event['channel'], event['user'], msg_txt)
+                    self.msg_writer.write_whos_that_pokemon(channel)
+                if re.search(' ?zac it\'?s', msg_txt.lower()):
+                    self.msg_writer.write_pokemon_guessed_response(channel, user, msg_txt)
                 if 'attachment' in msg_txt:
-                    self.msg_writer.demo_attachment(event['channel'])
+                    self.msg_writer.demo_attachment(channel)
                 if 'sad' in msg_txt.lower():
-                    self.msg_writer.write_sad(event['channel'])
+                    self.msg_writer.write_sad(channel)
                 if 'kill me' in msg_txt.lower():
-                    self.msg_writer.write_bang(event['channel'], event['user'])
+                    self.msg_writer.write_bang(channel, user)
                 if re.search('(feed)|(hungry)', msg_txt.lower()):
-                    self.msg_writer.write_food(event['channel'])
+                    self.msg_writer.write_food(channel)
                 if re.search('encourage me', msg_txt.lower()):
-                    self.msg_writer.write_encouragement(event['channel'], event['user'])
+                    self.msg_writer.write_encouragement(channel, user)
                 if 'sort me' in msg_txt.lower():
-                    self.msg_writer.write_hogwarts_house(event['channel'], event['user'],  msg_txt)
+                    self.msg_writer.write_hogwarts_house(channel, user,  msg_txt)
                 if 'sass ' in msg_txt.lower():
-                    self.msg_writer.write_sass(event['channel'], msg_txt)	
-                if ('945' in msg_txt) and ('?' in msg_txt):
-                    self.msg_writer.announce_945(event['channel'])
+                    self.msg_writer.write_sass(channel, msg_txt)	
                 if re.search('apologize|apologise', msg_txt.lower()):
-                    self.msg_writer.write_apology(event['channel'])
+                    self.msg_writer.write_apology(channel)
                 if 'solve' in msg_txt.lower():
-                    self.msg_writer.write_solution(event['channel'],msg_txt)
+                    self.msg_writer.write_solution(channel, msg_txt)
                 if  re.search('explain|why', msg_txt.lower()):
-                    self.msg_writer.write_explanation(event['channel'])
+                    self.msg_writer.write_explanation(channel)
                 if re.search('sweetpotato me|sweet potato me', msg_txt.lower()):
-                    self.msg_writer.write_sweetpotato_me(event['channel'], event['user'])
+                    self.msg_writer.write_sweetpotato_me(channel, user)
                 if re.search('marry me', msg_txt.lower()):
-                    self.msg_writer.write_marry_me(event['channel'])
+                    self.msg_writer.write_marry_me(channel)
                 if re.search('draw me', msg_txt.lower()):
-                    self.msg_writer.write_draw_me(event['channel'])
-                if re.search('love|forever', msg_txt.lower()):
-                    self.msg_writer.write_forever(event['channel'])
-                if re.search('story', msg_txt.lower()):
-                    self.msg_writer.write_story(event['channel'])
+                    self.msg_writer.write_draw_me(channel)
+                if re.search('love|forever|relationship|commitment', msg_txt.lower()):
+                    self.msg_writer.write_forever(channel)
+                if re.search('story|stories', msg_txt.lower()):
+                    self.msg_writer.write_story(channel)
                 else:
                     pass
