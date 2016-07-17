@@ -22,6 +22,9 @@ class RtmEventHandler(object):
         elif 'subtype' in event and event_type == 'message' and event['subtype'] == 'channel_join': 
             # someone joined a channel
             self.msg_writer.write_joined_channel(event['channel'], event['user'])
+        elif 'subtype' in event and event_type == 'message' and event['subtype'] == 'message_deleted': 
+            # someone joined a channel
+            self.msg_writer.write_message_deleted(event['channel'], event['user'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
