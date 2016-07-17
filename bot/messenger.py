@@ -39,7 +39,6 @@ class Messenger(object):
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
-        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
 
     def write_joined_channel(self, channel_id, user_id):

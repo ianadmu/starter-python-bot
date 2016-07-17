@@ -19,12 +19,6 @@ class RtmEventHandler(object):
         if event_type == 'error':
             # error
             self.msg_writer.write_error(event['channel'], json.dumps(event))
-        elif 'subtype' in event and event_type == 'message' and event['subtype'] == 'channel_join': 
-            # someone joined a channel
-            self.msg_writer.write_joined_channel(event['channel'], event['user'])
-        elif 'subtype' in event and event_type == 'message' and event['subtype'] == 'message_deleted': 
-            # someone joined a channel
-            self.msg_writer.write_message_deleted(event['channel'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
@@ -51,8 +45,14 @@ class RtmEventHandler(object):
         return True
 
     def _handle_message(self, event):
-        if ('subtype' in event and event['subtype'] == 'message_changed'):
-            self.msg_writer.write_spelling_mistake(event['channel'])
+        if 'subtype' in event:
+            if event['subtype'] == 'message_changed':
+                self.msg_writer.write_spelling_mistake(event['channel'])
+            elif event['subtype'] == 'channel_join':
+                # someone joined a channel
+                self.msg_writer.write_joined_channel(event['channel'], event['user'])
+            elif event['subtype'] == 'message_deleted':
+                self.msg_writer.write_message_deleted(event['channel'])
 
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
@@ -65,10 +65,10 @@ class RtmEventHandler(object):
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(event['channel'],msg_txt)
 
-            if re.search('(I|i) choose you', msg_txt.lower()):
+            if re.search('i choose you', msg_txt.lower()):
                 self.msg_writer.write_cast_pokemon(event['channel'], msg_txt.lower())
 
-            if re.search('cry|Cry|CRY|crying|Crying|CRYING', msg_txt.lower()):
+            if re.search('cry|crying', msg_txt.lower()):
                 self.msg_writer.write_crying_into_my_tea(event['channel'])
 
             if 'wiener' in msg_txt.lower():
@@ -80,7 +80,7 @@ class RtmEventHandler(object):
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(event['channel'])
 
-            if '*' in msg_txt and ' *' not in msg_txt and not msg_txt.startswith('*'):
+            if msg_txt.endwith('*'):
                 self.msg_writer.write_spelling_mistake(event['channel'])
 
             if re.search('fuck this|Fuck this|FUCK THIS', msg_txt):
