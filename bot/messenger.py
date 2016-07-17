@@ -37,7 +37,7 @@ class Messenger(object):
             channel_id = channel_id['id']
         logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
         channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message("{}".format(msg.encode('UTF-8', 'ignore')))
+        channel.send_message("{}".format(msg))
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
