@@ -93,9 +93,6 @@ class RtmEventHandler(object):
             if re.search('do it', msg_txt.lower()):
                 self.msg_writer.write_do_it(channel)
                 
-            if msg_txt.lower().startswith('zac translate') and msg_txt.lower().endswith(' to french'):
-                self.msg_writer.write_to_french(channel, msg_txt)
-
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(channel)
@@ -109,6 +106,8 @@ class RtmEventHandler(object):
                     self.msg_writer.write_your_welcome(channel, user)
                 if 'joke' in msg_txt.lower():
                     self.msg_writer.write_joke(channel)
+                if 'french' in msg_txt.lower():
+                    self.msg_writer.write_to_french(channel, msg_txt)
                 if re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_whos_that_pokemon(channel)
                 if re.search(' ?zac it\'?s', msg_txt.lower()):
