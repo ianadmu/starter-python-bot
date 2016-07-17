@@ -333,7 +333,7 @@ class Messenger(object):
         self.send_message(channel_id, "THE END")
 
     def write_flip(self,channel_id):
-        self.send_message(channel_id,"(╯°□°）╯︵ ┻━┻")
+        self.send_message(channel_id,u"(╯°□°）╯︵ ┻━┻")
 
 
 
