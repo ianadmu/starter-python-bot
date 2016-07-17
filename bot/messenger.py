@@ -310,19 +310,22 @@ class Messenger(object):
 
     def write_story(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)        
-        self.send_message(channel_id, "STORY TIME!")
+        self.send_message(channel_id, "STORY TIME")
         self.clients.send_user_typing_pause(channel_id)
         starts = ['Once upon a time', 'In the beginning', 'A long time ago']
-        protagonists = ['boys', 'girls', 'dragons', 'helicopter wolves', 'programmers']
-        locations = ['heights of a mountain', 'depghts of the ocean', 'sandiest beach of all time', 'most amazing wizard convention that has ever existed']
+        protagonists = ['boys', 'girls', 'dragons', 'helicopter wolves', 'programmers', 'birds', 'humans', 'human-beings', 'relatives', 'friends', 'doctors']
+        locations = ['heights of a mountain', 'depghts of the ocean', 'sandiest beach of all time', 'most amazing wizard convention that has ever existed', 'smoky cauldron next door', 'alphabet']
         start_txt = '{} there were two {} located in the {}...'.format(random.choice(starts), random.choice(protagonists), random.choice(locations))
         self.send_message(channel_id, start_txt)
         dialougue = ["\"Is it really?\"", "\"Absolutely. I'm awfully sorry about the odor though. That must bother you.\"", "\"Don't! Please don't.\"", "\"But _look_ at them!\"", "\"I'm only talking\"", "\"It's much easier if I talk. But I don't want to bother you.\"", 
-                    "\"You know it doesn't bother me\"", "\"Please tell me what I can do. There must be something I can do.\"", "\"You might think about some one else.\"", "\"I don't mean that.\"", "\"You do it. I'm too tired.\""]
-        for i in range(5):
+                    "\"You know it doesn't bother me\"", "\"Please tell me what I can do. There must be something I can do.\"", "\"You might think about some one else.\"", "\"I don't mean that.\"", "\"You do it. I'm too tired.\"", "\"Anything you do too bloody long.\"", 
+                    "\"Do you feel anything strange?\"", "\"No. Just a little sleepy.\"", "\"You know the only thing I've never lost is curiosity.\"", "\"Tell it to go away.\"",  "\"What's the matter?\"", "\"I don't really care about it, you know.\"", "\"What about the tea?\"",  
+                    "\"Why nothing.\"", "\"Why what, dear?\"", "\"You tell them why\"", "\"It's not good for you.\"", "\"I never learned.\"", "\"That's all right.\""]
+        for i in range(8):
             txt = random.choice(dialougue)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
+        conclusions = ["Then they went home.", "Then they went home and lived happily ever after.", "Then a witch swooped down and killed them.", "Then a truck ran over them", 'Then they lived happily ever after']
         self.clients.send_user_typing_pause(channel_id)        
         self.send_message(channel_id, "THE END")
 
