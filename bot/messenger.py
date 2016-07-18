@@ -39,7 +39,7 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
-    def write_message_deleted(self, channel_id):
+    def write_dont_talk(self, channel_id):
         txt = 'I SAW THAT'
         self.send_message(channel_id,channel_id)
 
