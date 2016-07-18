@@ -47,9 +47,9 @@ class TimeTriggeredEventManager(object):
         random_should_fire_hr = (self.last_random_hour + int(self.random_interval_minutes/MIN_PER_HOUR) + int((self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)/MIN_PER_HOUR))%HR_PER_DAY
         random_should_fire_min = (self.last_random_minutes + self.random_interval_minutes%MIN_PER_HOUR)%MIN_PER_HOUR #math
         if self.random_hasnt_fired or (hour == random_should_fire_hr and minute == random_should_fire_min):
-            max_minutes_between_random_events = 1440 #24 hours max
+            max_minutes_between_random_events = 720 #24 hours max
             new_random_minutes = int(random.random()*max_minutes_between_random_events) + 1
-            if hour >= 8 and hour < 22 and self.random_hasnt_fired == False: 
+            if hour >= 14 and hour < 18 and self.random_hasnt_fired == False: 
                 self.trigger_random()
             self.last_random_hour = hour
             self.last_random_minutes = minute
