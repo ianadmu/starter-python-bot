@@ -146,7 +146,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_unflip(channel)
                 elif re.search('flip|rageflip',msg_txt.lower()):
                     self.msg_writer.write_flip(channel)
-                if re.search("sup son",msg_txt.lower()):
+                if re.search('sup son',msg_txt.lower()):
                     self.msg_writer.write_sup_son(channel)
                 else:
                     pass
