@@ -56,7 +56,7 @@ class RtmEventHandler(object):
             elif event['subtype'] == 'channel_leave':
                 self.msg_writer.write_left_channel(event['channel'])
 
-        if TRUE:
+        if 1:
             self.msg_writer.write_dont_talk(event['channel'])
 
         # Filter out messages from the bot itself
