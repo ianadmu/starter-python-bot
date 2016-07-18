@@ -9,6 +9,9 @@ class EquationManager(object):
 			return "Ask me to solve an equation by saying 'zac solve <equation>'"
 
 		try:
-			return "The answer is "+str(eval(tokens[2]))+"!"
+			if "__import__" in tokens[2]:
+				return "stop messing around taylor :camel:"
+			else:
+				return "The answer is "+str(eval(tokens[2]))+"!"
 		except:
 			return "I coulden't solve that equation :confounded:"
