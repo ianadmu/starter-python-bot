@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import logging
 import random
 import re
@@ -33,9 +35,9 @@ class Messenger(object):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
-        logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
+        #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
         channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
+        channel.send_message(msg)
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
@@ -329,6 +331,15 @@ class Messenger(object):
         self.send_message(channel_id, end_txt)
         self.clients.send_user_typing_pause(channel_id)        
         self.send_message(channel_id, "THE END")
+
+    def write_flip(self,channel_id):
+        self.send_message(channel_id,u"(╯°□°）╯︵ ┻━┻")
+
+    def write_unflip(self,channel_id):
+        self.send_message(channel_id,u"┬─┬ノ( º _ ºノ)")
+
+    def write_sup_son(self,channel_id):
+        self.send_message(channel_id,u"¯\_(ツ)_/¯")
 
 
 
