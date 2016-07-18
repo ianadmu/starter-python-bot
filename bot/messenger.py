@@ -20,8 +20,6 @@ from equation_manager import EquationManager
 logger = logging.getLogger(__name__)
 
 class Messenger(object):
-    user_dict = {}
-
     def __init__(self, slack_clients):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
@@ -33,6 +31,7 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
+        self.user_dict = {}
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
@@ -43,7 +42,7 @@ class Messenger(object):
         channel.send_message(msg)
 
     def write_dont_talk(self, channel_id, user_id, timestamp):
-        if user_id in user_dict:
+        if user_id in self.user_dict:
             if user_dict[user_id] + 600 >= timestamp:
                 txt = 'PSSST... no talking in the announcements channel!'
                 self.send_message(channel_id,txt)
