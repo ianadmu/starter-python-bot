@@ -35,9 +35,9 @@ class Messenger(object):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
-        logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
+        #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
         channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message("{}".format(msg))
+        channel.send_message(msg)
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
