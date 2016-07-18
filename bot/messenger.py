@@ -43,7 +43,7 @@ class Messenger(object):
 
     def write_dont_talk(self, channel_id, user_id, timestamp):
         if user_id in self.user_dict:
-            if self.user_dict[user_id] + 600 >= timestamp:
+            if float(self.user_dict[user_id]) + 600 >= float(timestamp):
                 txt = 'PSSST... no talking in the announcements channel!'
                 self.send_message(channel_id,txt)
         self.user_dict[user_id] = timestamp
