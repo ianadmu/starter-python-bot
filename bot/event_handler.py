@@ -56,15 +56,15 @@ class RtmEventHandler(object):
             elif event['subtype'] == 'channel_leave':
                 self.msg_writer.write_left_channel(event['channel'])
 
-        if 1:
-            self.msg_writer.write_dont_talk(event['channel'])
-
         # Filter out messages from the bot itself
-        elif 'user' in event and not self.clients.is_message_from_me(event['user']):
+        if 'user' in event and not self.clients.is_message_from_me(event['user']):
 
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
+
+            if channel == 'C17QBAY2X':
+                self.msg_writer.write_dont_talk(channel, user, event['ts'])
 
             if re.search('qbot', msg_txt.lower()):
                 self.msg_writer.write_no_qbot(channel)

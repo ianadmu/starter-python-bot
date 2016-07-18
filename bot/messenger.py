@@ -18,7 +18,10 @@ from apology_manager import ApologyManager
 from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
+
 class Messenger(object):
+    user_dict = {}
+
     def __init__(self, slack_clients):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
@@ -39,9 +42,12 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
-    def write_dont_talk(self, channel_id):
-        txt = 'I SAW THAT'
-        self.send_message(channel_id,channel_id)
+    def write_dont_talk(self, channel_id, user_id, timestamp):
+        if user_id in user_dict:
+            if user_dict[user_id] + 600 >= timestamp:
+                txt = 'PSSST... no talking in the announcements channel!'
+                self.send_message(channel_id,txt)
+        user_dict[user_id] = timestamp
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
