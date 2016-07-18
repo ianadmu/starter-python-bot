@@ -335,6 +335,12 @@ class Messenger(object):
     def write_flip(self,channel_id):
         self.send_message(channel_id,u"(╯°□°）╯︵ ┻━┻")
 
+    def write_unflip(self,channel_id):
+        self.send_message(channel_id,u"┬─┬ノ( º _ ºノ)")
+
+    def write_sup_son(self,channel_id):
+        self.send_message(channel_id,u"¯\_(ツ)_/¯")
+
 
 
 
