@@ -4,7 +4,6 @@ import logging
 import random
 import re
 import os.path
-import upsidedown
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -341,9 +340,6 @@ class Messenger(object):
 
     def write_sup_son(self,channel_id):
         self.send_message(channel_id,u"¯\_(ツ)_/¯")
-
-    def write_flipped_text(self,channel_id,text):
-        self.send_message(channel_id,upsidedown.transform(text))
 
 
 

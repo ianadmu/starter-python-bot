@@ -145,10 +145,7 @@ class RtmEventHandler(object):
                 if re.search('unflip',msg_txt.lower()):
                     self.msg_writer.write_unflip(channel)
                 elif re.search('flip|rageflip',msg_txt.lower()):
-                    if len(msg_txt.split()) == 3:
-                        self.msg_writer.write_flipped_text(msg_txt.split()[2])
-                    else:
-                        self.msg_writer.write_flip(channel)
+                    self.msg_writer.write_flip(channel)
                 if re.search('sup son',msg_txt.lower()):
                     self.msg_writer.write_sup_son(channel)
                 else:
