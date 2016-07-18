@@ -43,10 +43,10 @@ class Messenger(object):
 
     def write_dont_talk(self, channel_id, user_id, timestamp):
         if user_id in self.user_dict:
-            if user_dict[user_id] + 600 >= timestamp:
+            if self.user_dict[user_id] + 600 >= timestamp:
                 txt = 'PSSST... no talking in the announcements channel!'
                 self.send_message(channel_id,txt)
-        user_dict[user_id] = timestamp
+        self.user_dict[user_id] = timestamp
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
