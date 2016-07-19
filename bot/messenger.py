@@ -41,6 +41,11 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
+    def write_closing(self,):
+        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
+        txt = random.choise(closing_msgs)
+        self.send_message('#zac-testing',txt)
+
     def write_dont_talk(self, channel_id, user_id, timestamp):
         if user_id in self.user_dict:
             if float(self.user_dict[user_id]) + 600 >= float(timestamp):
