@@ -66,7 +66,7 @@ class SlackClients(object):
 
     def get_file_info(self): 
     	response = self.rtm.api_call('files.info', file='F19NX4WJD')
-    	files = response['file'].items()
+    	files = response['file']#.items()
     	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zac-testing', text=files)
     	#response2 = self.rtm.api_call('users.info', user='U15FDSK5M')
     	#user_info = response2['user'].items()
