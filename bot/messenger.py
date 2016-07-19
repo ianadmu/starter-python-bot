@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import logging
 import random
 import re
@@ -16,6 +18,7 @@ from apology_manager import ApologyManager
 from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
+
 class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
@@ -28,14 +31,27 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
+        self.user_dict = {}
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
-        logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
+        #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
         channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
+        channel.send_message(msg)
+
+    def write_closing(self,):
+        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
+        txt = random.choise(closing_msgs)
+        self.send_message('C171ASJJK',txt)
+
+    def write_dont_talk(self, channel_id, user_id, timestamp):
+        if user_id in self.user_dict:
+            if float(self.user_dict[user_id]) + 600 >= float(timestamp):
+                txt = 'PSSST... no talking in the announcements channel!'
+                self.send_message(channel_id,txt)
+        self.user_dict[user_id] = timestamp
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
@@ -329,6 +345,15 @@ class Messenger(object):
         self.send_message(channel_id, end_txt)
         self.clients.send_user_typing_pause(channel_id)        
         self.send_message(channel_id, "THE END")
+
+    def write_flip(self,channel_id):
+        self.send_message(channel_id,u"(╯°□°）╯︵ ┻━┻")
+
+    def write_unflip(self,channel_id):
+        self.send_message(channel_id,u"┬─┬ノ( º _ ºノ)")
+
+    def write_sup_son(self,channel_id):
+        self.send_message(channel_id,u"¯\_(ツ)_/¯")
 
 
 

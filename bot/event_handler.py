@@ -63,6 +63,9 @@ class RtmEventHandler(object):
             channel = event['channel']
             user = event['user']
 
+            if channel == 'C17QBAY2X':
+                self.msg_writer.write_dont_talk(channel, user, event['ts'])
+
             if re.search('qbot', msg_txt.lower()):
                 self.msg_writer.write_no_qbot(channel)
 
@@ -142,5 +145,13 @@ class RtmEventHandler(object):
                     self.msg_writer.write_forever(channel)
                 if re.search('story|stories', msg_txt.lower()):
                     self.msg_writer.write_story(channel)
+                if re.search('unflip',msg_txt.lower()):
+                    self.msg_writer.write_unflip(channel)
+                elif re.search('flip|rageflip',msg_txt.lower()):
+                    self.msg_writer.write_flip(channel)
+                if re.search('sup son',msg_txt.lower()):
+                    self.msg_writer.write_sup_son(channel)
+                if msg_txt.lower().count("zac") >= 2:
+                    self.msg_writer.write_prompt(channel)
                 else:
                     pass
