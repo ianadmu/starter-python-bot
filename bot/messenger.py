@@ -358,7 +358,7 @@ class Messenger(object):
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
         token = re.split(riri_flag, msg.lower())
-        target = self.format_target(token[1])
+        target = token[1]
         target = target.upper()
         txt = ' '.join(target * 5)
         self.clients.send_user_typing_pause(channel_id) 
