@@ -356,7 +356,7 @@ class Messenger(object):
         self.send_message(channel_id,u"¯\_(ツ)_/¯")
 
     def write_riri_me(self, channel_id, msg):
-        riri_flag = re.compile('riri me[a-z]* ')
+        riri_flag = re.compile('riri[a-z]* ')
         token = re.split(riri_flag, msg.lower())
         target = self.format_target(token[1])
         target = target.upper()
