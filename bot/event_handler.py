@@ -95,6 +95,9 @@ class RtmEventHandler(object):
                 
             if re.search('just do it', msg_txt.lower()):
                 self.msg_writer.write_do_it(channel)
+
+            if re.search('riri', msg_txt.lower()):
+                self.msg_writer.write_riri_me(channel, msg_txt)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():

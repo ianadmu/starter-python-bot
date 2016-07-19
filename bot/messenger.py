@@ -355,6 +355,16 @@ class Messenger(object):
     def write_sup_son(self,channel_id):
         self.send_message(channel_id,u"¯\_(ツ)_/¯")
 
+    def write_riri_me(self, channel_id, msg):
+        riri_flag = re.compile('riri[a-z]* ')
+        token = re.split(riri_flag, msg.lower())
+        target = token[1]
+        target = target.upper()
+        txt = ' '.join(target for num in range(5))
+        self.clients.send_user_typing_pause(channel_id) 
+        self.send_message(channel_id, txt)
+
+
 
 
 
