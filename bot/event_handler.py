@@ -151,6 +151,8 @@ class RtmEventHandler(object):
                     self.msg_writer.write_flip(channel)
                 if re.search('sup son',msg_txt.lower()):
                     self.msg_writer.write_sup_son(channel)
+                if re.search('riri me', msg_txt.lower()):
+                    self.msg_writer.write_riri_me(chaneel, msg_txt)
                 if msg_txt.lower().count("zac") >= 2:
                     self.msg_writer.write_prompt(channel)
                 else:
