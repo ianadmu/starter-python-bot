@@ -360,7 +360,7 @@ class Messenger(object):
         token = re.split(riri_flag, msg.lower())
         target = token[1]
         target = target.upper()
-        txt = ' '.join(target * 5)
+        txt = ' '.join(target[:len(target)] * 5)
         self.clients.send_user_typing_pause(channel_id) 
         self.send_message(channel_id, txt)
 
