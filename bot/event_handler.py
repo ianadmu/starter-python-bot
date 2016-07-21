@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+import threading
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,20 @@ class RtmEventHandler(object):
         self.msg_writer = msg_writer
 
     def handle(self, event):
+        #currently it's just shitty threading
+        if 'type' in event:
+            thread = workerThread(self.clients, self.msg_writer)
+            thread.start()
+            thread.handle(event)
 
+
+class workerThread(threading.Thread):
+    def __init__(self, slack_clients, msg_writer):
+        threading.Thread.__init__(self)
+        self.clients = slack_clients
+        self.msg_writer = msg_writer
+
+    def handle(self, event):
         if 'type' in event:
             self._handle_by_type(event['type'], event)
 
