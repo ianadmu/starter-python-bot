@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
-        self.msg_writer = msg_writer
+        #self.msg_writer = msg_writer
         self.msg_writer.send_message('C1SDALDG9', "init")
         self.threads = []
         self.addNewThread()
@@ -46,7 +46,7 @@ class threadWrapper():
         self.working = False
         self.event = None
         self.workAvailable = threading.Condition()
-        msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
         self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvailable)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
