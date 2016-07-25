@@ -44,9 +44,9 @@ class threadWrapper():
         msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.working = False
         self.event = None
-        self.workAvaiable = threading.Condition()
+        self.workAvailable = threading.Condition()
         msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
-        self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvaiable)
+        self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvailable)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
@@ -57,37 +57,37 @@ class threadWrapper():
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
         self.event = event
         self.thread.working = True
-        self.workAvaiable.notify()
+        self.workAvailable.notify()
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventnotify")
-        self.workAvaiable.release()
+        self.workAvailable.release()
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventrelease")
 
 class workerThread(threading.Thread):
-    def __init__(self, slack_clients, msg_writer, event, workAvaiable):
+    def __init__(self, slack_clients, msg_writer, event, workAvailable):
         #the arguments are passed in by reference and can be modified by the threadWrapper
-        msg_writer.send_message('C1SDALDG9', "workerinitstart")
         threading.Thread.__init__(self)
+        msg_writer.send_message('C1SDALDG9', "workerinitstart")
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.event = event
-        self.workAvaiable = workAvaiable
+        self.workAvailable = workAvailable
         self.msg_writer.send_message('C1SDALDG9', "workerinitend")
 
     def run(self):
         while(True):
             self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
-            self.workAvaiable.acquire()
+            self.workAvailable.acquire()
             self.msg_writer.send_message('C1SDALDG9', "workeracquire")
             while(self.working == False):
                 self.msg_writer.send_message('C1SDALDG9', "workerwait")
-                self.workAvaiable.wait()
+                self.workAvailable.wait()
             self.msg_writer.send_message('C1SDALDG9', "workerhaswork")
             if 'type' in self.event:
                 self.msg_writer.send_message('C1SDALDG9', "workerevent")
                 self._handle_by_type(self.event['type'], self.event)
             self.msg_writer.send_message('C1SDALDG9', "workover")
             self.working = False
-            self.workAvaiable.release()
+            self.workAvailable.release()
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
