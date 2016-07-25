@@ -45,6 +45,7 @@ class threadWrapper():
         self.working = False
         self.event = None
         self.workAvaiable = threading.Condition()
+        msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
         self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvaiable)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
