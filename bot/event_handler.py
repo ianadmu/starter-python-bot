@@ -43,7 +43,7 @@ class workerThread(threading.Thread):
             while(self.working == False):
                 self.msg_writer.send_message('C1SDALDG9', "workerwait")
                 self.workAvailable.wait()
-            self.msg_writer.send_message('C1SDALDG9', "workerhaswork")
+            self.msg_writer.send_message('C1SDALDG9', "workerhaswork" + str(self.event != None))
             if 'type' in self.event:
                 self.msg_writer.send_message('C1SDALDG9', "workerevent" + str(self.event != None))
                 self._handle_by_type(self.event['type'], self.event)
