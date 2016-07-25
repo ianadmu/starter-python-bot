@@ -219,7 +219,7 @@ class RtmEventHandler(object):
         currentAvaiableThread = next((t for t in self.threads if t.working() == False), None)
         self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
         if currentAvaiableThread == None:
-            currentAvaiableThread = addNewThread
+            currentAvaiableThread = addNewThread()
             self.msg_writer.send_message('C1SDALDG9', "madenewthread")
         self.msg_writer.send_message('C1SDALDG9', "getthreadend")
         return currentAvaiableThread
