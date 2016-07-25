@@ -9,42 +9,37 @@ class threadWrapper():
     def __init__(self,slack_clients, msg_writer):
         self.msg_writer = msg_writer
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
-        self.event = None
-        self.workAvailable = threading.Event()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappereventinitialized")
-        self.workAvailable.clear()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappereventclear")
-        self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvailable)
+        self.thread = workerThread(slack_clients, self.msg_writer)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
 
     def giveEvent(self, event):
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
-        self.event = event
+        self.thread.event = event
         self.thread.working = True
-        self.workAvailable.set()
+        self.thread.workAvailable.set()
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventset")
 
     def working(self):
         return self.thread.working
 
 class workerThread(threading.Thread):
-    def __init__(self, slack_clients, msg_writer, event, workAvailable):
+    def __init__(self, slack_clients, msg_writer):
         #the arguments are passed in by reference and can be modified by the threadWrapper
         threading.Thread.__init__(self)
         msg_writer.send_message('C1SDALDG9', "workerinitstart")
         self.clients = slack_clients
         self.working = False
         self.msg_writer = msg_writer
-        self.event = event
-        self.workAvailable = workAvailable
+        self.event = None
+        self.workAvailable = threading.Event()
+        self.workAvailable.clear()
         self.msg_writer.send_message('C1SDALDG9', "workerinitend")
 
     def run(self):
         while(True):
             self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
-            self.msg_writer.send_message('C1SDALDG9', "workeracquire")
             while(self.working == False):
                 self.msg_writer.send_message('C1SDALDG9', "workerwait")
                 self.workAvailable.wait()
