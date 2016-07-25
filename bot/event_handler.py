@@ -34,7 +34,7 @@ class RtmEventHandler(object):
 
     def addNewThread(self):
         self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
-        newThread = threadWrapper(self.slack_clients, self.msg_writer)
+        newThread = threadWrapper(self.clients, self.msg_writer)
         self.threads.append(newThread)
         self.msg_writer.send_message('C1SDALDG9', "newthreadend")
         return newThread
@@ -44,6 +44,7 @@ class threadWrapper():
         msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.working = False
         self.event = None
+        self.workAvaiable = threading.Condition()
         self.thread = workerThread(self.clients, self.msg_writer, self.event, self.workAvaiable)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
