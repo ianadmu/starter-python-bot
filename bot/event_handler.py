@@ -9,24 +9,58 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.threads = []
+        self.addNewThread()
 
     def handle(self, event):
-        #currently it's just shitty threading
         if 'type' in event:
-            thread = workerThread(self.clients, self.msg_writer)
-            thread.start()
-            thread.handle(event)
+            thread = self.getAvailableThread()
+            thread.giveEvent(event)
 
+    def getAvailableThread(self):
+        #this finds a thread that is avilable, or makes a new one that is and return it
+        currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
+        if currentAvaiableThread = None:
+            currentAvaiableThread = addNewThread
+        return currentAvaiableThread
+
+    def addNewThread(self):
+        newThread = threadWrapper(self.slack_clients, self.msg_writer)
+        self.threads.append(newThread)
+        return newThread
+
+class threadWrapper():
+    def __init__(self,slack_clients, msg_writer):
+        self.working = False
+        self.event = None
+        self.thread = workerThread(self.clients, self.msg_writer, self.event, self.workAvaiable)
+        self.thread.start()
+        self.thread.run()
+
+    def giveEvent(self, event):
+        self.event = event
+        self.thread.working = True
+        self.workAvaiable.notify()
+        self.workAvaiable.release()
 
 class workerThread(threading.Thread):
-    def __init__(self, slack_clients, msg_writer):
+    def __init__(self, slack_clients, msg_writer, event, workAvaiable):
+        #the arguments are passed in by reference and can be modified by the threadWrapper
         threading.Thread.__init__(self)
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.event = event
+        self.workAvaiable = workAvaiable
 
-    def handle(self, event):
-        if 'type' in event:
-            self._handle_by_type(event['type'], event)
+    def run(self):
+        while(True):
+            self.workAvaiable.acquire()
+            while(self.working == False):
+                self.workAvaiable.wait()
+            if 'type' in self.event:
+                self._handle_by_type(self.event['type'], self.event)
+            self.working = False
+            self.workAvaiable.release()
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
