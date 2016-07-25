@@ -11,14 +11,11 @@ class threadWrapper():
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.thread = workerThread(slack_clients, self.msg_writer)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
-        self.thread.workAvailable.set()
         self.thread.start()
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
 
     def giveEvent(self, event):
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
-        self.workAvailable.wait()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventdonewaiting")
         self.thread.event = event
         self.thread.working = True
         self.thread.workAvailable.set()
