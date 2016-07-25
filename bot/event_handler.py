@@ -66,7 +66,7 @@ class workerThread(threading.Thread):
                 self.workAvailable.wait()
             self.msg_writer.send_message('C1SDALDG9', "workerhaswork\n" + str(self.event))
             if 'type' in self.event:
-                self.msg_writer.send_message('C1SDALDG9', "workerevent")# + str(self.event['type']))
+                self.msg_writer.send_message('C1SDALDG9', "workerevent" + str(type(self.event['type'])))
                 self._handle_by_type(self.event['type'], self.event)
             self.msg_writer.send_message('C1SDALDG9', "workover")
             self.working = False
