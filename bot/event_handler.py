@@ -37,20 +37,6 @@ class workerThread(threading.Thread):
         self.workAvailable.clear()
         self.msg_writer.send_message('C1SDALDG9', "workerinitend")
 
-    def run(self):
-        while(True):
-            self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
-            while(self.working == False):
-                self.msg_writer.send_message('C1SDALDG9', "workerwait")
-                self.workAvailable.wait()
-            self.msg_writer.send_message('C1SDALDG9', "workerhaswork\n" + str(self.event))
-            if 'type' in self.event:
-                self.msg_writer.send_message('C1SDALDG9', "workerevent" + str(self.event != None))
-                self._handle_by_type(self.event['type'], self.event)
-            self.msg_writer.send_message('C1SDALDG9', "workover")
-            self.working = False
-            self.workAvailable.clear()
-
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
         if event_type == 'error':
@@ -71,6 +57,20 @@ class workerThread(threading.Thread):
             self.msg_writer.send_message('C1SDALDG9', "Hello event received")
         else:
             pass
+
+    def run(self):
+        while(True):
+            self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
+            while(self.working == False):
+                self.msg_writer.send_message('C1SDALDG9', "workerwait")
+                self.workAvailable.wait()
+            self.msg_writer.send_message('C1SDALDG9', "workerhaswork\n" + str(self.event))
+            if 'type' in self.event:
+                self.msg_writer.send_message('C1SDALDG9', "workerevent" + self.event['type'])
+                self._handle_by_type(self.event['type'], self.event)
+            self.msg_writer.send_message('C1SDALDG9', "workover")
+            self.working = False
+            self.workAvailable.clear()
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
