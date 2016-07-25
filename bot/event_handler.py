@@ -5,40 +5,6 @@ import threading
 
 logger = logging.getLogger(__name__)
 
-class RtmEventHandler(object):
-    def __init__(self, slack_clients, msg_writer):
-        self.clients = slack_clients
-        #self.msg_writer = msg_writer
-        self.msg_writer.send_message('C1SDALDG9', "init")
-        self.threads = []
-        self.addNewThread()
-
-    def handle(self, event):
-        self.msg_writer.send_message('C1SDALDG9', "handlestart")
-        if 'type' in event:
-            thread = self.getAvailableThread()
-            self.msg_writer.send_message('C1SDALDG9', "handlegetthread")
-            thread.giveEvent(event)
-        self.msg_writer.send_message('C1SDALDG9', "handleend")
-
-    def getAvailableThread(self):
-        #this finds a thread that is avilable, or makes a new one that is and return it
-        self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
-        currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
-        self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
-        if currentAvaiableThread == None:
-            currentAvaiableThread = addNewThread
-            self.msg_writer.send_message('C1SDALDG9', "madenewthread")
-        self.msg_writer.send_message('C1SDALDG9', "getthreadend")
-        return currentAvaiableThread
-
-    def addNewThread(self):
-        self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
-        newThread = threadWrapper(self.clients, self.msg_writer)
-        self.threads.append(newThread)
-        self.msg_writer.send_message('C1SDALDG9', "newthreadend")
-        return newThread
-
 class threadWrapper():
     def __init__(self,slack_clients, msg_writer):
         self.msg_writer = msg_writer
@@ -234,3 +200,37 @@ class workerThread(threading.Thread):
                     self.msg_writer.write_prompt(channel)
                 else:
                     pass
+
+class RtmEventHandler(object):
+    def __init__(self, slack_clients, msg_writer):
+        self.clients = slack_clients
+        #self.msg_writer = msg_writer
+        self.msg_writer.send_message('C1SDALDG9', "init")
+        self.threads = []
+        self.addNewThread()
+
+    def handle(self, event):
+        self.msg_writer.send_message('C1SDALDG9', "handlestart")
+        if 'type' in event:
+            thread = self.getAvailableThread()
+            self.msg_writer.send_message('C1SDALDG9', "handlegetthread")
+            thread.giveEvent(event)
+        self.msg_writer.send_message('C1SDALDG9', "handleend")
+
+    def getAvailableThread(self):
+        #this finds a thread that is avilable, or makes a new one that is and return it
+        self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
+        currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
+        self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
+        if currentAvaiableThread == None:
+            currentAvaiableThread = addNewThread
+            self.msg_writer.send_message('C1SDALDG9', "madenewthread")
+        self.msg_writer.send_message('C1SDALDG9', "getthreadend")
+        return currentAvaiableThread
+
+    def addNewThread(self):
+        self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
+        newThread = threadWrapper(self.clients, self.msg_writer)
+        self.threads.append(newThread)
+        self.msg_writer.send_message('C1SDALDG9', "newthreadend")
+        return newThread
