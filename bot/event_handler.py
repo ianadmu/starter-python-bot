@@ -231,7 +231,7 @@ class RtmEventHandler(object):
         newThread = threadWrapper(self.clients, self.msg_writer)
         self.threads.append(newThread)
         self.msg_writer.send_message('C1SDALDG9', "newthreadend")
-        self.msg_writer.send_message('C1SDALDG9', "Current number of threads: " + len(self.threads))
+        self.msg_writer.send_message('C1SDALDG9', "Current number of threads: " + str(len(self.threads)))
         return newThread
 
     def __init__(self, slack_clients, msg_writer):
