@@ -22,7 +22,7 @@ class RtmEventHandler(object):
     def getAvailableThread(self):
         #this finds a thread that is avilable, or makes a new one that is and return it
         currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
-        if currentAvaiableThread = None:
+        if currentAvaiableThread == None:
             currentAvaiableThread = addNewThread
         return currentAvaiableThread
 
