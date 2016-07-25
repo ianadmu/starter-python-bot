@@ -65,6 +65,10 @@ class workerThread(threading.Thread):
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
+        elif event_type == 'hello':
+            #no idea what this does
+            #garrettsuss
+            self.msg_writer.send_message('C1SDALDG9', "Hello event received")
         else:
             pass
 
