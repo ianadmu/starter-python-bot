@@ -10,8 +10,10 @@ class threadWrapper():
         self.msg_writer = msg_writer
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.event = None
-        self.workAvailable = threading.Condition()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
+        self.workAvailable = threading.Event()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappereventinitialized")
+        self.workAvailable.clear()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappereventclear")
         self.thread = workerThread(slack_clients, self.msg_writer, self.event, self.workAvailable)
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
@@ -19,14 +21,10 @@ class threadWrapper():
 
     def giveEvent(self, event):
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
-        self.workAvailable.acquire()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventacquire")
         self.event = event
         self.thread.working = True
-        self.workAvailable.notify()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventnotify")
-        self.workAvailable.release()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventrelease")
+        self.workAvailable.set()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventset")
 
     def working(self):
         return self.thread.working
@@ -46,7 +44,6 @@ class workerThread(threading.Thread):
     def run(self):
         while(True):
             self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
-            self.workAvailable.acquire()
             self.msg_writer.send_message('C1SDALDG9', "workeracquire")
             while(self.working == False):
                 self.msg_writer.send_message('C1SDALDG9', "workerwait")
@@ -57,7 +54,7 @@ class workerThread(threading.Thread):
                 self._handle_by_type(self.event['type'], self.event)
             self.msg_writer.send_message('C1SDALDG9', "workover")
             self.working = False
-            self.workAvailable.release()
+            self.workAvailable.clear()
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
