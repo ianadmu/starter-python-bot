@@ -21,6 +21,8 @@ class threadWrapper():
 
     def giveEvent(self, event):
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
+        self.workAvailable.acquire()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventacquire")
         self.event = event
         self.thread.working = True
         self.workAvailable.release()
