@@ -9,60 +9,81 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
-        self.msg_writer.send_message('C1SDALDG9', "0")
+        self.msg_writer.send_message('C1SDALDG9', "init")
         self.threads = []
         self.addNewThread()
 
     def handle(self, event):
+        self.msg_writer.send_message('C1SDALDG9', "handlestart")
         if 'type' in event:
             thread = self.getAvailableThread()
-            self.msg_writer.send_message('C1SDALDG9', "1")
+            self.msg_writer.send_message('C1SDALDG9', "handlegetthread")
             thread.giveEvent(event)
+        self.msg_writer.send_message('C1SDALDG9', "handleend")
 
     def getAvailableThread(self):
         #this finds a thread that is avilable, or makes a new one that is and return it
+        self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
         currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
+        self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
         if currentAvaiableThread == None:
             currentAvaiableThread = addNewThread
+            self.msg_writer.send_message('C1SDALDG9', "madenewthread")
+        self.msg_writer.send_message('C1SDALDG9', "getthreadend")
         return currentAvaiableThread
 
     def addNewThread(self):
+        self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
         newThread = threadWrapper(self.slack_clients, self.msg_writer)
         self.threads.append(newThread)
+        self.msg_writer.send_message('C1SDALDG9', "newthreadend")
         return newThread
 
 class threadWrapper():
     def __init__(self,slack_clients, msg_writer):
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.working = False
         self.event = None
         self.thread = workerThread(self.clients, self.msg_writer, self.event, self.workAvaiable)
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
         self.thread.run()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerrun")
 
     def giveEvent(self, event):
-        self.msg_writer.send_message('C1SDALDG9', "2")
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
         self.event = event
         self.thread.working = True
         self.workAvaiable.notify()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventnotify")
         self.workAvaiable.release()
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventrelease")
 
 class workerThread(threading.Thread):
     def __init__(self, slack_clients, msg_writer, event, workAvaiable):
         #the arguments are passed in by reference and can be modified by the threadWrapper
+        self.msg_writer.send_message('C1SDALDG9', "workerinitstart")
         threading.Thread.__init__(self)
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.event = event
         self.workAvaiable = workAvaiable
+        self.msg_writer.send_message('C1SDALDG9', "workerinitend")
 
     def run(self):
         while(True):
+            self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
             self.workAvaiable.acquire()
+            self.msg_writer.send_message('C1SDALDG9', "workeracquire")
             while(self.working == False):
+                self.msg_writer.send_message('C1SDALDG9', "workerwait")
                 self.workAvaiable.wait()
-            self.msg_writer.send_message('C1SDALDG9', "3")
+            self.msg_writer.send_message('C1SDALDG9', "workerhaswork")
             if 'type' in self.event:
+                self.msg_writer.send_message('C1SDALDG9', "workerevent")
                 self._handle_by_type(self.event['type'], self.event)
+            self.msg_writer.send_message('C1SDALDG9', "workover")
             self.working = False
             self.workAvaiable.release()
 
