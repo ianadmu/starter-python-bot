@@ -41,7 +41,8 @@ class RtmEventHandler(object):
 
 class threadWrapper():
     def __init__(self,slack_clients, msg_writer):
-        msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
+        self.msg_writer = msg_writer
+        self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
         self.working = False
         self.event = None
         self.workAvailable = threading.Condition()
