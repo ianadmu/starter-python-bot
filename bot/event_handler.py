@@ -9,13 +9,14 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.msg_writer.send_message('C1SDALDG9', "0")
         self.threads = []
         self.addNewThread()
 
     def handle(self, event):
         if 'type' in event:
             thread = self.getAvailableThread()
-            self.msg_writer.send_message('zac-testing', "1")
+            self.msg_writer.send_message('C1SDALDG9', "1")
             thread.giveEvent(event)
 
     def getAvailableThread(self):
@@ -39,7 +40,7 @@ class threadWrapper():
         self.thread.run()
 
     def giveEvent(self, event):
-        self.msg_writer.send_message('zac-testing', "2")
+        self.msg_writer.send_message('C1SDALDG9', "2")
         self.event = event
         self.thread.working = True
         self.workAvaiable.notify()
@@ -59,7 +60,7 @@ class workerThread(threading.Thread):
             self.workAvaiable.acquire()
             while(self.working == False):
                 self.workAvaiable.wait()
-            self.msg_writer.send_message('zac-testing', "3")
+            self.msg_writer.send_message('C1SDALDG9', "3")
             if 'type' in self.event:
                 self._handle_by_type(self.event['type'], self.event)
             self.working = False
