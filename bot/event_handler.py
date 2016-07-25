@@ -15,6 +15,7 @@ class RtmEventHandler(object):
     def handle(self, event):
         if 'type' in event:
             thread = self.getAvailableThread()
+            self.msg_writer.write_greeting(event['channel'], event['user'])
             thread.giveEvent(event)
 
     def getAvailableThread(self):
@@ -38,6 +39,7 @@ class threadWrapper():
         self.thread.run()
 
     def giveEvent(self, event):
+        self.msg_writer.write_greeting(event['channel'], event['user'])
         self.event = event
         self.thread.working = True
         self.workAvaiable.notify()
@@ -57,6 +59,7 @@ class workerThread(threading.Thread):
             self.workAvaiable.acquire()
             while(self.working == False):
                 self.workAvaiable.wait()
+            self.msg_writer.write_greeting(self.event['channel'], self.event['user'])
             if 'type' in self.event:
                 self._handle_by_type(self.event['type'], self.event)
             self.working = False
