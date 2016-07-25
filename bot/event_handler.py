@@ -207,13 +207,6 @@ class workerThread(threading.Thread):
                     pass
 
 class RtmEventHandler(object):
-    def __init__(self, slack_clients, msg_writer):
-        self.clients = slack_clients
-        self.msg_writer = msg_writer
-        self.msg_writer.send_message('C1SDALDG9', "init")
-        self.threads = []
-        self.addNewThread()
-
     def handle(self, event):
         self.msg_writer.send_message('C1SDALDG9', "handlestart")
         if 'type' in event:
@@ -239,3 +232,10 @@ class RtmEventHandler(object):
         self.threads.append(newThread)
         self.msg_writer.send_message('C1SDALDG9', "newthreadend")
         return newThread
+
+    def __init__(self, slack_clients, msg_writer):
+        self.clients = slack_clients
+        self.msg_writer = msg_writer
+        self.msg_writer.send_message('C1SDALDG9', "init")
+        self.threads = []
+        self.addNewThread()
