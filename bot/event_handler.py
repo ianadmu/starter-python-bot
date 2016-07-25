@@ -16,11 +16,11 @@ class threadWrapper():
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
         self.thread.start()
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
-        #self.thread.run()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerrun")
 
     def giveEvent(self, event):
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
+        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart\n" + 
+            str(workAvailable))
         self.workAvailable.acquire()
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventacquire")
         self.event = event
