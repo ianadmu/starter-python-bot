@@ -9,7 +9,6 @@ class threadWrapper():
     def __init__(self,slack_clients, msg_writer):
         self.msg_writer = msg_writer
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
-        self.working = False
         self.event = None
         self.workAvailable = threading.Condition()
         self.msg_writer.send_message('C1SDALDG9', "threadwrapperconditioninitialized")
@@ -29,12 +28,16 @@ class threadWrapper():
         self.workAvailable.release()
         self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventrelease")
 
+    def working(self):
+        return self.thread.working
+
 class workerThread(threading.Thread):
     def __init__(self, slack_clients, msg_writer, event, workAvailable):
         #the arguments are passed in by reference and can be modified by the threadWrapper
         threading.Thread.__init__(self)
         msg_writer.send_message('C1SDALDG9', "workerinitstart")
         self.clients = slack_clients
+        self.working = False
         self.msg_writer = msg_writer
         self.event = event
         self.workAvailable = workAvailable
@@ -220,7 +223,7 @@ class RtmEventHandler(object):
     def getAvailableThread(self):
         #this finds a thread that is avilable, or makes a new one that is and return it
         self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
-        currentAvaiableThread = next((t for t in self.threads if t.working == False), None)
+        currentAvaiableThread = next((t for t in self.threads if t.working() == False), None)
         self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
         if currentAvaiableThread == None:
             currentAvaiableThread = addNewThread
