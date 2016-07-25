@@ -205,7 +205,7 @@ class RtmEventHandler(object):
         self.msg_writer.send_message('C1SDALDG9', "handlestart")
         if 'type' in event:
             thread = self.getAvailableThread()
-            self.msg_writer.send_message('C1SDALDG9', "handlegetthread")
+            self.msg_writer.send_message('C1SDALDG9', "handlegetthread > " + str(event))
             thread.giveEvent(event)
         self.msg_writer.send_message('C1SDALDG9', "handleend")
 
