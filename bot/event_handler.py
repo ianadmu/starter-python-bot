@@ -200,6 +200,7 @@ class workerThread(threading.Thread):
                 else:
                     pass
 
+
 class RtmEventHandler(object):
     def handle(self, event):
         self.msg_writer.send_message('C1SDALDG9', "handlestart")
