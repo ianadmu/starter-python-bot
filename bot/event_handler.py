@@ -62,7 +62,7 @@ class workerThread(threading.Thread):
                 self.workAvailable.wait()
             self.msg_writer.send_message('C1SDALDG9', "workerhaswork > " + str(self.event))
             if 'type' in self.event and 'channel' in self.event:
-                self.msg_writer.send_message('C1SDALDG9', "workerevent")# + str(type(self.event['type'])))
+                self.msg_writer.send_message('C1SDALDG9', "workerevent")
                 self._handle_by_type(self.event['type'], self.event)
             self.msg_writer.send_message('C1SDALDG9', "workover")
             self.working = False
@@ -209,6 +209,8 @@ class RtmEventHandler(object):
     def getAvailableThread(self):
         #this finds a thread that is avilable, or makes a new one that is and return it
         self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
+        for t in self.threads:
+            self.msg_writer.send_message('C1SDALDG9', str(t.working() == False))
         currentAvaiableThread = next((t for t in self.threads if t.working() == False), None)
         self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
         if currentAvaiableThread == None:
