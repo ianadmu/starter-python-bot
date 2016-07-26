@@ -51,10 +51,6 @@ class workerThread(threading.Thread):
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
-        elif event_type == 'hello':
-            #no idea what this does
-            #garrettsuss
-            self.msg_writer.send_message('C1SDALDG9', "Got no blues, Got no blues today")
         else:
             pass
 
@@ -65,7 +61,7 @@ class workerThread(threading.Thread):
                 self.msg_writer.send_message('C1SDALDG9', "workerwait")
                 self.workAvailable.wait()
             self.msg_writer.send_message('C1SDALDG9', "workerhaswork > " + str(self.event))
-            if 'type' in self.event:
+            if 'type' in self.event and 'channel' in self.event:
                 self.msg_writer.send_message('C1SDALDG9', "workerevent")# + str(type(self.event['type'])))
                 self._handle_by_type(self.event['type'], self.event)
             self.msg_writer.send_message('C1SDALDG9', "workover")
