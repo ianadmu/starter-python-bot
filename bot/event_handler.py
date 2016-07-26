@@ -222,8 +222,8 @@ class RtmEventHandler(object):
     def addNewThread(self):
         self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
         newThread = threadWrapper(self.clients, self.msg_writer)
+        self.msg_writer.send_message('C1SDALDG9', "newthreadmiddle")
         self.threads.append(newThread)
-        self.msg_writer.send_message('C1SDALDG9', "newthreadend")
         self.msg_writer.send_message('C1SDALDG9', "Current number of threads: " + str(len(self.threads)))
         return newThread
 
