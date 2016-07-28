@@ -5,37 +5,28 @@ import threading
 
 logger = logging.getLogger(__name__)
 
-class threadWrapper():
-    def __init__(self,slack_clients, msg_writer):
+class RtmEventHandler(object):
+    def __init__(self, slack_clients, msg_writer):
+        self.clients = slack_clients
         self.msg_writer = msg_writer
-        self.msg_writer.send_message('C1SDALDG9', "threadwrapperstart")
-        self.thread = workerThread(slack_clients, self.msg_writer)
-        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkermade")
-        self.thread.start()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrapperworkerstarted")
 
-    def giveEvent(self, event):
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventstart")
-        self.thread.event = event
-        self.thread.working = True
-        self.thread.workAvailable.set()
-        self.msg_writer.send_message('C1SDALDG9', "threadwrappergiveeventset")
+    def handle(self, event):
+        #currently it's just shitty threading
+        if 'type' in event:
+            thread = workerThread(self.clients, self.msg_writer)
+            thread.start()
+            thread.handle(event)
 
-    def working(self):
-        return self.thread.working
 
 class workerThread(threading.Thread):
     def __init__(self, slack_clients, msg_writer):
-        #the arguments are passed in by reference and can be modified by the threadWrapper
         threading.Thread.__init__(self)
-        msg_writer.send_message('C1SDALDG9', "workerinitstart")
         self.clients = slack_clients
-        self.working = False
         self.msg_writer = msg_writer
-        self.event = None
-        self.workAvailable = threading.Event()
-        self.workAvailable.clear()
-        self.msg_writer.send_message('C1SDALDG9', "workerinitend")
+
+    def handle(self, event):
+        if 'type' in event:
+            self._handle_by_type(event['type'], event)
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
@@ -53,20 +44,6 @@ class workerThread(threading.Thread):
             self.msg_writer.write_help_message(event['channel'])
         else:
             pass
-
-    def run(self):
-        while(True):
-            self.msg_writer.send_message('C1SDALDG9', "workerenterloop")
-            while(self.working == False):
-                self.msg_writer.send_message('C1SDALDG9', "workerwait")
-                self.workAvailable.wait()
-            self.msg_writer.send_message('C1SDALDG9', "workerhaswork > " + str(self.event))
-            if 'type' in self.event and 'channel' in self.event:
-                self.msg_writer.send_message('C1SDALDG9', "workerevent")
-                self._handle_by_type(self.event['type'], self.event)
-            self.msg_writer.send_message('C1SDALDG9', "workover")
-            self.working = False
-            self.workAvailable.clear()
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
@@ -195,41 +172,3 @@ class workerThread(threading.Thread):
                     self.msg_writer.write_prompt(channel)
                 else:
                     pass
-
-
-class RtmEventHandler(object):
-    def handle(self, event):
-        self.msg_writer.send_message('C1SDALDG9', "handlestart")
-        if 'type' in event:
-            thread = self.getAvailableThread()
-            self.msg_writer.send_message('C1SDALDG9', "handlegetthread > " + str(event))
-            thread.giveEvent(event)
-        self.msg_writer.send_message('C1SDALDG9', "handleend")
-
-    def getAvailableThread(self):
-        #this finds a thread that is avilable, or makes a new one that is and return it
-        self.msg_writer.send_message('C1SDALDG9', "getthreadstart")
-        for t in self.threads:
-            self.msg_writer.send_message('C1SDALDG9', str(t.working() == False))
-        currentAvaiableThread = next((t for t in self.threads if t.working() == False), None)
-        self.msg_writer.send_message('C1SDALDG9', "getthreadsearch")
-        if currentAvaiableThread == None:
-            currentAvaiableThread = self.addNewThread()
-            self.msg_writer.send_message('C1SDALDG9', "madenewthread")
-        self.msg_writer.send_message('C1SDALDG9', "getthreadend")
-        return currentAvaiableThread
-
-    def addNewThread(self):
-        self.msg_writer.send_message('C1SDALDG9', "newthreadstart")
-        newThread = threadWrapper(self.clients, self.msg_writer)
-        self.msg_writer.send_message('C1SDALDG9', "newthreadmiddle")
-        self.threads.append(newThread)
-        self.msg_writer.send_message('C1SDALDG9', "Current number of threads: " + str(len(self.threads)))
-        return newThread
-
-    def __init__(self, slack_clients, msg_writer):
-        self.clients = slack_clients
-        self.msg_writer = msg_writer
-        self.msg_writer.send_message('C1SDALDG9', "init")
-        self.threads = []
-        self.addNewThread()
