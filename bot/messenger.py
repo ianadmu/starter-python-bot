@@ -4,6 +4,7 @@ import logging
 import random
 import re
 import os.path
+import time
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -35,6 +36,7 @@ class Messenger(object):
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
+        time.sleep(0.2)
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
         #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
