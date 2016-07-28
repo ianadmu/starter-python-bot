@@ -173,7 +173,7 @@ class Messenger(object):
 
     def write_pigeon_noise(self, channel_id, message_text):
         self.clients.send_user_typing_pause(channel_id)
-        txt = self.pigeon.pigeonate(text)
+        txt = self.pigeon.pigeonate(message_text)
         self.send_message(channel_id, txt)
 
     def write_joke(self, channel_id):
