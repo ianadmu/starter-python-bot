@@ -21,4 +21,4 @@ class Pigeon(object):
     	for character in text:
     		hashValue *= 47
     		hashValue += ord(character)
-        return pigeon_noises[hashValue % len(pigeon_noises)]
+        return self.pigeon_noises[hashValue % len(self.pigeon_noises)]
