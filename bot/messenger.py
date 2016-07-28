@@ -96,7 +96,8 @@ class Messenger(object):
             "> `encourage` - Let me help you get back on track. :grinning:",
             "> `hungry | feed` - Have some food courtesy of moi :banana:",
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
-            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:"]
+            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:",
+            "> 'Pigeon Mode' - Want a pigeon sound? Type a sentence with 'coo ' in it."]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
