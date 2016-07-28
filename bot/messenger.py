@@ -4,7 +4,7 @@ import logging
 import random
 import re
 import os.path
-import time
+import threading
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -33,15 +33,17 @@ class Messenger(object):
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
         self.user_dict = {}
+        self.writeLock = threading.Lock()
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
-        time.sleep(0.2)
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
         #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
         channel = self.clients.rtm.server.channels.find(channel_id)
+        self.writeLock.acquire()
         channel.send_message(msg)
+        self.writeLock.release()
 
     def write_closing(self,):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
