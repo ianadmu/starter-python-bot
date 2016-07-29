@@ -62,6 +62,7 @@ class RtmEventHandler(object):
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
+            lower_txt = msg_txt.lower()
 
             if channel == 'C17QBAY2X':
                 self.msg_writer.write_dont_talk(channel, user, event['ts'])
@@ -99,11 +100,12 @@ class RtmEventHandler(object):
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
 
-            if 'coo ' in msg_txt.lower():
+            if 'coo ' in lower_txt:
                 self.msg_writer.write_pigeon_noise(channel, msg_txt) 
 
-            if 'xkcd' in msg_txt.lower():
-                self.msg_writer.write_xkcd(channel, msg_txt)
+            if 'xkcd' in lower_txt:
+                requestedComic = lower_txt[lower_txt.find('xkcd'):]
+                self.msg_writer.write_xkcd(channel, requestedComic)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():

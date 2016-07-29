@@ -375,7 +375,7 @@ class Messenger(object):
 
     def write_xkcd(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
-        txt = xkcd_manager.getImageLocation(msg[msg.find('xkcd')])
+        txt = xkcd_manager.getImageLocation(msg)
         self.send_message(channel_id, txt)
 
 
