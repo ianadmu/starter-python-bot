@@ -4,6 +4,7 @@ import logging
 import random
 import re
 import os.path
+import xkcd_manager
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -172,9 +173,9 @@ class Messenger(object):
         txt = "I'm sorry, I didn't quite understand... Can I help you? (e.g. `<@" + bot_uid + "> help`)"
         self.send_message(channel_id, txt)
 
-    def write_pigeon_noise(self, channel_id, message_text):
+    def write_pigeon_noise(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
-        txt = self.pigeon.pigeonate(message_text)
+        txt = self.pigeon.pigeonate(msg)
         self.send_message(channel_id, txt)
 
     def write_joke(self, channel_id):
@@ -370,6 +371,11 @@ class Messenger(object):
         target = target.upper()
         txt = ' '.join(target for num in range(5))
         self.clients.send_user_typing_pause(channel_id) 
+        self.send_message(channel_id, txt)
+
+    def write_xkcd(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = xkcd_manager.getImageLocation(msg[msg.find('xkcd')])
         self.send_message(channel_id, txt)
 
 
