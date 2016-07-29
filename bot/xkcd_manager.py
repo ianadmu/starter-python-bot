@@ -26,7 +26,7 @@ def getImageLocation(comicRequest):
 	imageAddressStart = html.find('//imgs.xkcd.com/comics/')
 	imageAddressEnd = html[imageAddressStart:].find('"') + imageAddressStart
 	imageAddress = html[imageAddressStart:imageAddressEnd]
-	return "http:" + imageAddress
+	return "http:" + str(imageAddress)
 
 def getCurrentMaxComic():
 	response = urllib2.urlopen("http://xkcd.org/")
