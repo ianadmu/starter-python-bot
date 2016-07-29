@@ -104,7 +104,7 @@ class RtmEventHandler(object):
                 self.msg_writer.write_pigeon_noise(channel, msg_txt) 
 
             if 'xkcd' in lower_txt:
-                requestedComic = lower_txt[lower_txt.find('xkcd'):]
+                requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel, requestedComic)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
