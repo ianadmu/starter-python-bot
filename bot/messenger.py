@@ -88,7 +88,7 @@ class Messenger(object):
             "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
             "> `<@" + bot_uid + "> french <phrase>` - I know flawless French! I'll translate for you :bombardier:",
             "> `<@" + bot_uid + "> marry me` - ...Are you going to propose to me?? _Le gasp_ :le gasp:",
-            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato",
+            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato:",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
