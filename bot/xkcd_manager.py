@@ -1,5 +1,6 @@
 import urllib2
 import random
+from HTMLParser import HTMLParser
 
 def parseComicRequest(comicRequest):
 	#This will give url to the desired comic
@@ -30,6 +31,9 @@ def getImageLocation(comicRequest):
 	captionStart = html[imageAddressEnd:].find('title="') + imageAddressEnd + 7
 	captionEnd = html[captionStart:].find('"') + captionStart
 	caption = html[captionStart:captionEnd]
+
+	parser = HTMLParser()
+	caption = parser.unescape(caption)
 
 	return "http:" + str(imageAddress) + '\n' + caption
 
