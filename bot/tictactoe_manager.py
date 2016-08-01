@@ -16,7 +16,7 @@ class TicTacToeManager:
 					length = int(command[3])
 					self.start(channel, size, length)
 				except:
-					self.msg_writer.send_message(channel,"Error parsing initial prameters")
+					self.msg_writer.send_message(channel,command[0] + command[1] + command[2] + command[3])
 
 		elif len(command) > 1:
 			process_command(channel, command[1])
