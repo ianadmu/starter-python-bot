@@ -29,5 +29,4 @@ class TicTacToeManager:
 	def process_command(self, channel, command):
 		result = self.games[channel].process_command(command)
 		self.msg_writer.send_message(channel,result)
-		if result == True:
-			del self.games[channel]
+		

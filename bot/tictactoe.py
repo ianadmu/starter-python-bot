@@ -201,15 +201,12 @@ class TicTacToe:
 		return spot.get_token()
 
 	def __str__(self):
-		blank = '   ' + '|'.join(["   "] * self.size) + '\n'
 		middle = " | "
 		line = '   ' + ('-' * ((4 * self.size) - 1))
 		rows = []
 		top_row = '    ' + "   ".join(map(str,range(self.size))) + '\n'
 		for row_index in range(self.size):
-			result = '\n' + blank + ' '
-			result += chr(ord('A') + row_index) + '  ' + middle.join(map(self.tokenize, self.board[row_index]))
-			result += ' \n' + blank
+			result = '\n' + chr(ord('A') + row_index) + '  ' + middle.join(map(self.tokenize,self.board[row_index])) + '\n'
 			rows.append(result)
 
 		return "```" + top_row + line.join(rows) + "```"
