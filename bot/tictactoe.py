@@ -113,13 +113,11 @@ class TicTacToe:
 		if self.player_move(message):
 			#success full move
 			if self._is_over():
-				print("You win!")
-				return True
+				return("You win!\n" + self.__str__())
 			else:
 				self._self_move()
 				if self._is_over():
-					print("Zac wins!")
-					return True
+					return("Zac wins!\n" + self.__str__())
 
 			return(self.__str__())
 		else:
