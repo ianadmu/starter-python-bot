@@ -1,5 +1,5 @@
 from tictactoe import TicTacToe
-import defaultdict
+from collections import defaultdict
 
 class TicTacToeManager:
 

@@ -265,12 +265,3 @@ class TicTacToe:
 			return False
 		self.winner = self._move(self.human_player, self.board[coordinates[0]][coordinates[1]])
 		return True
-
-tic = TicTacToe(6,5)
-winner = False
-print(tic)
-while(not winner):
-	result = tic.process_command(raw_input())
-	print(result)
-	if result == True:
-		winner = result
