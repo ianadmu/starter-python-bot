@@ -162,8 +162,6 @@ class TicTacToe:
 		y = start[1]
 
 		spots = []
-		if x == 2 and y == 2 and direction == (-1,-1):
-			print(x + (direction[0] * length))
 
 		if x + (direction[0] * length) > self.size or x + (direction[0] * length) < -1:
 			return spots

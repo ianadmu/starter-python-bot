@@ -11,9 +11,14 @@ class TicTacToeManager:
 		command = message.split()
 		if len(command) > 3:
 			if command[1].upper() == "START":
-				self.start(channel, command[2], command[3])
+				try:
+					size = int(command[2])
+					length = int(command[3])
+					self.start(channel, size, length)
+				except:
+					self.msg_writer.send_message(channel,"Error parsing initial prameters")
 
-		if len(command) > 1:
+		elif len(command) > 1:
 			process_command(channel, command[1])
 
 	def start(self, channel, size, length):
