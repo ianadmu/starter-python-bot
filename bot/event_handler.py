@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+from tictactoe_manager import TicTacToeManager
 
 logger = logging.getLogger(__name__)
 
@@ -8,6 +9,7 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.tictactoe_manager = TicTacToeManager(self.msg_writer)
 
     def handle(self, event):
 
@@ -106,6 +108,9 @@ class RtmEventHandler(object):
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel, requestedComic)
+
+            if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
+                self.tictactoe_manager.get_message(channel, msg_txt)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
