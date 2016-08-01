@@ -214,7 +214,7 @@ class TicTacToe:
 			result += ' \n' + blank
 			rows.append(result)
 
-		return top_row + line.join(rows)
+		return "```" + top_row + line.join(rows) + "```"
 
 	def _move(self, player, spot):
 		self.open_spots.remove(spot)
