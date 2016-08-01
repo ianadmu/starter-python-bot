@@ -11,7 +11,7 @@ class Line:
 		self.owner = 0
 
 	def get_score(self, player):
-		if player == self.owner and self.length == self.current_size + 1:
+		if player != -1 and self.length == self.current_size + 1:
 			return float("inf")
 
 		if player != self.owner:
@@ -193,7 +193,7 @@ class TicTacToe:
 		rows = []
 		top_row = '    ' + "   ".join(map(str,range(self.size))) + '\n'
 		for row_index in range(self.size):
-			result = '\n' + chr(ord('A') + row_index) + '  ' + middle.join(map(self.tokenize,self.board[row_index])) + '\n'
+			result = '\n' + chr(ord('A') + row_index) + ' ' + middle.join(map(self.tokenize,self.board[row_index])) + '\n'
 			rows.append(result)
 
 		return "```" + top_row + line.join(rows) + "```"

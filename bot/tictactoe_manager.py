@@ -22,11 +22,9 @@ class TicTacToeManager:
 			self.process_command(channel, command[1])
 
 	def start(self, channel, size, length):
-		self.msg_writer.send_message(channel,str(size) + " " + str(length))
 		self.games[channel] = TicTacToe(size, length)
 		self.msg_writer.send_message(channel,self.games[channel].__str__())
 
 	def process_command(self, channel, command):
 		result = self.games[channel].process_command(command)
 		self.msg_writer.send_message(channel,result)
-		
