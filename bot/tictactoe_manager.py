@@ -16,14 +16,14 @@ class TicTacToeManager:
 					length = int(command[3])
 					self.start(channel, size, length)
 				except:
-					self.msg_writer.send_message(channel,command[0] + command[1] + command[2] + command[3])
+					self.msg_writer.send_message(channel,"Error parsing initial prameters")
 
 		elif len(command) > 1:
 			process_command(channel, command[1])
 
 	def start(self, channel, size, length):
 		games[channel] = TicTacToe(size, length)
-		self.msg_writer.send_message(channel,tic.__str__())
+		self.msg_writer.send_message(channel,games[channel].__str__())
 
 	def process_command(self, channel, command):
 		result = games[channel].process_command(command)
