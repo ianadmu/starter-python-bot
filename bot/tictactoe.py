@@ -15,9 +15,9 @@ class Line:
 			return float("inf")
 
 		if player != self.owner:
-			return (self.current_size + 3) ** Line.k
+			return (self.current_size + 1) ** Line.k
 
-		return (self.current_size + 2) ** Line.k
+		return (self.current_size + 0.5) ** Line.k
 
 	def play(self, player):
 		#returns -1 when the line becomes impossible to win on
