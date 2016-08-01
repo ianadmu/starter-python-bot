@@ -112,12 +112,15 @@ class TicTacToe:
 			return "Game is over"
 		if self.player_move(message):
 			#success full move
-			if self._is_over():
+			if self.winner():
 				return("You win!\n" + self.__str__())
 			else:
 				self._self_move()
-				if self._is_over():
+				if self.winner():
 					return("Zac wins!\n" + self.__str__())
+
+			if self._is_over():
+				return("Cats Game!\n" + self.__str__())
 
 			return(self.__str__())
 		else:
@@ -125,22 +128,6 @@ class TicTacToe:
 
 	def _is_over(self):
 		return not self.open_spots or self.winner
-
-	def start_game(self):
-		while self.open_spots and not self.winner:
-			self.turn = not self.turn
-			if self.turn:
-				self._self_move()
-			else:
-				move = raw_input(self)
-				self.player_move(move)
-		if self.winner:
-			if self.turn:
-				message = "Zac wins!"
-			else:
-				message = "You win!"
-			print(message)
-		print(self)
 
 	def add_lines_to_board(self):
 		line_directions = [(0,1),(1,0),(1,1),(1,-1)]
