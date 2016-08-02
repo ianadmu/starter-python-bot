@@ -21,7 +21,7 @@ class TicTacToeManager:
 					self.start(channel, size, length)
 				except:
 					self.msg_writer.send_message(channel,"Error parsing initial prameters")
-			elif command[1].upper == "SELF":
+			elif command[1].upper() == "SELF":
 				try:
 					size = int(command[2])
 					length = int(command[3])
@@ -31,7 +31,7 @@ class TicTacToeManager:
 
 		elif len(command) > 1:
 			if command[1].upper() == "HELP":
-				self.msg_writer.send_message(channel,help_message)
+				self.msg_writer.send_message(channel,TicTacToeManager.help_message)
 			else:
 				self.process_command(channel, command[1])
 
