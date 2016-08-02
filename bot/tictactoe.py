@@ -89,6 +89,8 @@ class BoardSpot:
 
 class TicTacToe:
 
+	tokens = [' ', 'O', 'X']
+
 	def __init__(self, size, line_size, comp_player):
 		if size < 3:
 			size = 3
@@ -108,10 +110,13 @@ class TicTacToe:
 			self._self_move(self.comp_player)
 
 	def play_self(self):
+		end_message = "Cats Game!\n"
 		while not self._is_over():
 			self.turn = not self.turn
 			self._self_move(2 - self.turn)
-		return(self.__str__())
+		if self.winner():
+			end_message = TicTacTow.tokens[2 - self.turn] + " Won!\n"
+		return(end_message + self.__str__())
 
 	def process_command(self, message):
 		if self._is_over():
