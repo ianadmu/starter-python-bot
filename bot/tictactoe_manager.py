@@ -25,7 +25,7 @@ class TicTacToeManager:
 				try:
 					size = int(command[2])
 					length = int(command[3])
-					self.start(channel, size, length)
+					self.play_self(channel, size, length)
 				except:
 					self.msg_writer.send_message(channel,"Error parsing initial prameters")
 
