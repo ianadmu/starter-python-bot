@@ -71,6 +71,7 @@ class Messenger(object):
             self.send_message(channel_id, txt)
         else:
             self.write_greeting(channel_id, user_id)
+            self.write_xkcd(channel_id, "15")
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
