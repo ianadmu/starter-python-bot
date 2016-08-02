@@ -48,7 +48,9 @@ class RtmEventHandler(object):
 
     def _handle_message(self, event):
         if 'subtype' in event:
-            if event['subtype'] == 'channel_join':
+            if event['subtype'] == 'message_changed' and not self.clients.is_message_from_me(event["message"]["user"]):
+                self.msg_writer.write_spelling_mistake(event['channel'])
+            elif event['subtype'] == 'channel_join':
                 # someone joined a channel
                 self.msg_writer.write_joined_channel(event['channel'], event['user'])
             elif event['subtype'] == 'message_deleted':
@@ -58,10 +60,6 @@ class RtmEventHandler(object):
 
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event['user']):
-
-            if 'subtype' in event:
-                if event['subtype'] == 'message_changed':
-                    self.msg_writer.write_spelling_mistake(event['channel'])
 
             msg_txt = event['text']
             channel = event['channel']
