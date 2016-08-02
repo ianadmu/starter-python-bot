@@ -114,7 +114,7 @@ class TicTacToe:
 		while not self._is_over():
 			self.turn = not self.turn
 			self._self_move(2 - self.turn)
-		if self.winner():
+		if self.winner:
 			end_message = TicTacToe.tokens[2 - self.turn] + " Won!\n"
 		return(end_message + self.__str__())
 
