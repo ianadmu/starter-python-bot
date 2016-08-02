@@ -235,6 +235,11 @@ class Messenger(object):
         attachment = "https://www.youtube.com/watch?v=ZXsQAXx_ao0"
         self.send_message(channel_id, attachment)
 
+    def write_dont_do_it(self, channel_id):
+        self.clients.send_user_typing_pause(channel_id)
+        attachment = "https://www.youtube.com/watch?v=mbre5NC_10c"
+        self.send_message(channel_id, attachment)
+
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         txt = "This always cracks me up. :wink:"

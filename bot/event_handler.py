@@ -106,6 +106,9 @@ class RtmEventHandler(object):
             if re.search('just do it', msg_txt.lower()):
                 self.msg_writer.write_do_it(channel)
 
+            if "don't do it" in lower_txt:
+                self.msg_writer.write_dont_do_it(channel)
+
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
 
