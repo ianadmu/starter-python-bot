@@ -99,7 +99,8 @@ class Messenger(object):
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
             "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:",
             "> `Pigeon Mode` - Want a pigeon sound? Type a sentence with 'coo ' in it.",
-            "> `XKCD` - Want an XKCD comic? Type it's number to get it, or leave it blank to get the latest one"]
+            "> `XKCD` - Want an XKCD comic? Type it's number to get it, or leave it blank to get the latest one",
+            "> `TicTacToe` - Want to play TicTacToe? Type 'TicTacToe help' for more information"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]

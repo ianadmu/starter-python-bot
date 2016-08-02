@@ -89,7 +89,7 @@ class BoardSpot:
 
 class TicTacToe:
 
-	def __init__(self, size, line_size):
+	def __init__(self, size, line_size, comp_player):
 		if size < 3:
 			size = 3
 		elif size > 10:
@@ -104,8 +104,14 @@ class TicTacToe:
 		self.board = [[BoardSpot() for x in range(size)] for y in range(size)]
 		self.open_spots = self._get_all_spots()
 		self.add_lines_to_board()
-		if self.turn:
-			self._self_move()
+		if self.turn and comp_player:
+			self._self_move(self.comp_player)
+
+	def play_self(self):
+		while not self._is_over():
+			self.turn = not self.turn
+			self._self_move(2 - self.turn)
+		return(self.__str__())
 
 	def process_command(self, message):
 		if self._is_over():
@@ -115,7 +121,7 @@ class TicTacToe:
 			if self.winner:
 				return("You win!\n" + self.__str__())
 			else:
-				self._self_move()
+				self._self_move(self.comp_player)
 				if self.winner:
 					return("Zac wins!\n" + self.__str__())
 
@@ -161,9 +167,9 @@ class TicTacToe:
 
 		return spots
 
-	def _self_move(self):
+	def _self_move(self, player):
 		comp_move = self._find_best_move()
-		self.winner = self._move(self.comp_player, comp_move)
+		self.winner = self._move(player, comp_move)
 		self._update_lines()
 
 	def _update_lines(self):
