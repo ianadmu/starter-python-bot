@@ -46,9 +46,15 @@ class RtmEventHandler(object):
 
         return True
 
+    def _is_edited_by_user(self, event):
+        if 'subtype' in event:
+            if event['subtype'] == 'message_changed' and event["message"]["user"] == event["message"]["edited"]["user"]:
+                return True;
+        return False
+
     def _handle_message(self, event):
         if 'subtype' in event:
-            if event['subtype'] == 'message_changed' and not self.clients.is_message_from_me(event["message"]["user"]):
+            if self._is_edited_by_user(event):
                 self.msg_writer.write_spelling_mistake(event['channel'])
             elif event['subtype'] == 'channel_join':
                 # someone joined a channel
