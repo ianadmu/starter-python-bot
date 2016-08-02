@@ -50,7 +50,7 @@ class RtmEventHandler(object):
         if 'subtype' in event:
             if event['subtype'] == 'message_changed':
                 if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"]:
-                     return event["message"]["user"] == event["message"]["edited"]["user"]:
+                     return event["message"]["user"] == event["message"]["edited"]["user"]
         return False
 
     def _handle_message(self, event):
