@@ -115,7 +115,7 @@ class TicTacToe:
 			self.turn = not self.turn
 			self._self_move(2 - self.turn)
 		if self.winner():
-			end_message = TicTacTow.tokens[2 - self.turn] + " Won!\n"
+			end_message = TicTacToe.tokens[2 - self.turn] + " Won!\n"
 		return(end_message + self.__str__())
 
 	def process_command(self, message):
