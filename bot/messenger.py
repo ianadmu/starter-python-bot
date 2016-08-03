@@ -69,9 +69,9 @@ class Messenger(object):
             txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
+            self.write_xkcd(channel_id, "15")
         else:
             self.write_greeting(channel_id, user_id)
-            self.write_xkcd(channel_id, "15")
 
     def write_help_message(self, channel_id):
         bot_uid = self.clients.bot_user_id()
