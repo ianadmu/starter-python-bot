@@ -46,9 +46,10 @@ class RtmEventHandler(object):
         emoji_pattern = re.compile(":.*:")
         tag_pattern = re.compile("<@.*")
 
+        tokens = message.split()
         if len(tokens) < 2: 
             return False
-        for token in message.split():
+        for token in tokens:
             if not (token.isupper() or emoji_pattern.match(token)) or tag_pattern.match(token):
                 return False
 
