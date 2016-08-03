@@ -33,10 +33,18 @@ class RtmEventHandler(object):
         else:
             pass
 
+    def _is_edited_with_star(self, message):
+        bold_pattern = re.compile("\*.*\*")
+
+        for token in message.split():
+            if "*" in token and not bold_pattern.match(token):
+                return True
+
+        return False
+
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
         tag_pattern = re.compile("<@.*")
-        tokens = message.split()
 
         if len(tokens) < 2: 
             return False
@@ -97,7 +105,7 @@ class RtmEventHandler(object):
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(channel)
 
-            if msg_txt.endswith('*'):
+            if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel)
 
             if re.search('fuck this', msg_txt.lower()):
