@@ -50,7 +50,6 @@
 
 		{
 			"Triggers": ["boyer"],
-			"Hash": false,
 			"Named": false,
 			"Responses": ["_It was working upstairs--_", "_Idk why it's not working now_", "_Last time I taught this course it was working_", "_We do take these seriously.... at least my boss does_",
 				"_Last time I taught this course I didn't have to do this_", "_I'll have to update my notes_", "_This was working earlier_", "_Sorry I'm late_", "_Sorry the example wasn't working last class, it should be working now_",
