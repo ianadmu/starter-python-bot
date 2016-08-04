@@ -15,7 +15,7 @@ class Response:
 			total += trigger
 		for r in self.responses:
 			total += r
-		return "\n>>" + total + "<<\n"
+		return "\n>" + total + "\n"
 
 
 		has_trigger = False
