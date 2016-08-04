@@ -49,7 +49,7 @@
 		},
 
 		{
-			"Triggers": ["thanks", "thank you", " ty", "thank-you", "ty zac"]
+			"Triggers": ["thanks", "thank you", " ty", "thank-you", "ty zac"],
 			"Named": true,
 			"Responses": ["No problem mon user_id!", "Please don't use Comic Sans; this isn't a lemonade stand user_id!", "Why, you're welcome my friend user_id!", "Don't mention it user_id!", "Don't mention it user_id!", "You're welcome user_id!", "It was a pleasure user_id!", "It was my pleasure user_id!", "No sweat user_id!", "Anytime user_id!", "_Le gratitude_ pleases me. :heart: Thank you user_id!", "No worries user_id!", "No, thank you user_id!"]
 		}
