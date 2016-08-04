@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
 
 logger = logging.getLogger(__name__)
@@ -10,6 +11,7 @@ class RtmEventHandler(object):
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
+        self.response_master = Response_master()
 
     def handle(self, event):
 
@@ -81,6 +83,11 @@ class RtmEventHandler(object):
             channel = event['channel']
             user = event['user']
             lower_txt = msg_txt.lower()
+
+            response_master_response = response_master.get_response(lower_txt)
+
+            if response_master_response:
+                self.msg_writer.write_slow(channel, response_master_response)
 
             if channel == 'C17QBAY2X':
                 self.msg_writer.write_dont_talk(channel, user, event['ts'])

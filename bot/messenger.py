@@ -44,6 +44,10 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
+    def write_slow(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, msg)
+
     def write_closing(self,):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
         txt = random.choise(closing_msgs)
