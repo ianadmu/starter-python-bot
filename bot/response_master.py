@@ -57,6 +57,7 @@ class Response_master:
 			self.events.append(Response(triggers, responses, use_hash, named))
 
 	def get_response(self, message, user):
+		user = user["name"]
 		combined_responses = ""
 		for event in self.events:
 			current_response = event.get_response(message, user)
