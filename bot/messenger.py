@@ -329,7 +329,7 @@ class Messenger(object):
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
         token = re.split(riri_flag, msg.lower())
-        if len(token > 2):
+        if len(token) > 2:
             target = token[1]
             target = target.upper()
         else:
