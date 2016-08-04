@@ -38,9 +38,9 @@ class Response_master:
 		master_file = open(os.path.join('./resources', 'events.txt'), 'r')
 		json_events = json.load(master_file.read())
 		self.responses = []
-		for event in json_events["Events"]:
-			use_hash = not "Hash" in event or event["Hash"]
-			self.responses.append(Response(event["Triggers"], event["Responses"],use_hash))
+		# for event in json_events["Events"]:
+		# 	use_hash = not "Hash" in event or event["Hash"]
+		# 	self.responses.append(Response(event["Triggers"], event["Responses"],use_hash))
 
 	def get_response(self, message):
 		combined_responses = ""
