@@ -42,7 +42,7 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
-    def write_error(self, msg):
+    def write_custom_error(self, msg):
         self.send_message('C1SDALDG9', msg)
 
     def write_slow(self, channel_id, msg):
