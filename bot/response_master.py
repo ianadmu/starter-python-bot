@@ -8,7 +8,6 @@ class Response:
 		self.triggers = triggers
 		self.responses = responses
 		self.use_hash = use_hash
-		self.rng = random.Random()
 
 	def get_response(self, message):
 		has_trigger = False
@@ -32,7 +31,7 @@ class Response:
 		return self.responses[hashValue % len(self.responses)]
 
 	def random(self):
-		return self.rng.choice(self.responses)
+		return self.responses[self.random.randint(len(self.responses))]
 
 class Response_master:
 
