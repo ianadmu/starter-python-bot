@@ -57,7 +57,7 @@ class Response_master:
 					responses.append(r)
 				self.events.append(Response(triggers, responses, use_hash, named))
 		except :
-			msg_writer.write_error("Error loading JSON file")
+			#msg_writer.write_error("Error loading JSON file")
 			self.events = []
 
 	def get_response(self, message, user):
