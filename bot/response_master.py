@@ -10,14 +10,6 @@ class Response:
 		self.use_hash = use_hash
 
 	def get_response(self, message):
-		total = ""
-		for trigger in self.triggers:
-			total += trigger
-		for r in self.responses:
-			total += r
-		return "\n>" + total + "\n"
-
-
 		has_trigger = False
 		for trigger in self.triggers:
 			if trigger in message:
