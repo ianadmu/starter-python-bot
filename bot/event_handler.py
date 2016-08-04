@@ -107,9 +107,6 @@ class RtmEventHandler(object):
             if 'wiener' in msg_txt.lower():
                 self.msg_writer.write_wiener(channel)
 
-            if re.search('boyer', msg_txt.lower()):
-                self.msg_writer.write_boyer_bot(channel)
-
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(channel)
 
