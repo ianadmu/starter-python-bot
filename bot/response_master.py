@@ -6,10 +6,11 @@ class Response:
 
 	name = "zac"
 
-	def __init__(self, triggers, responses, use_hash):
+	def __init__(self, triggers, responses, use_hash, named):
 		self.triggers = triggers
 		self.responses = responses
 		self.use_hash = use_hash
+		self.named = named
 
 	def get_response(self, message, user):
 		has_trigger = False
@@ -20,7 +21,7 @@ class Response:
 
 		result = ""
 
-		if has_trigger and (not named or Response.name in lower):
+		if has_trigger and (not self.named or Response.name in lower):
 			if self.use_hash:
 				result = self.hash(message)
 			else:
