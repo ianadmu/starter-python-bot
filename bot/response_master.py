@@ -56,8 +56,8 @@ class Response_master:
 				for r in event["Responses"]:
 					responses.append(r)
 				self.events.append(Response(triggers, responses, use_hash, named))
-		except Exception as e:
-			msg_writer.write_error(e)
+		except :
+			msg_writer.write_error(sys.exc_info()[0])
 			self.events = []
 
 	def get_response(self, message, user):
