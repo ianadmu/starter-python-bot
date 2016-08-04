@@ -98,23 +98,11 @@ class RtmEventHandler(object):
             if re.search('i choose you', msg_txt.lower()):
                 self.msg_writer.write_cast_pokemon(channel, msg_txt.lower())
 
-            if 'wiener' in msg_txt.lower():
-                self.msg_writer.write_wiener(channel)
-
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(channel)
 
             if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel)
-
-            if re.search('fuck this', msg_txt.lower()):
-                self.msg_writer.write_fuck_this(channel)
-                
-            if re.search('just do it', msg_txt.lower()):
-                self.msg_writer.write_do_it(channel)
-
-            if "don't do it" in lower_txt:
-                self.msg_writer.write_dont_do_it(channel)
 
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
