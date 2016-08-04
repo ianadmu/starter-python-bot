@@ -92,17 +92,11 @@ class RtmEventHandler(object):
             if channel == 'C17QBAY2X':
                 self.msg_writer.write_dont_talk(channel, user, event['ts'])
 
-            if re.search('qbot', msg_txt.lower()):
-                self.msg_writer.write_no_qbot(channel)
-
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(channel, msg_txt)
 
             if re.search('i choose you', msg_txt.lower()):
                 self.msg_writer.write_cast_pokemon(channel, msg_txt.lower())
-
-            if re.search('cry|crying', msg_txt.lower()):
-                self.msg_writer.write_crying_into_my_tea(channel)
 
             if 'wiener' in msg_txt.lower():
                 self.msg_writer.write_wiener(channel)

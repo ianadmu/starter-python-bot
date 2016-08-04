@@ -20,6 +20,36 @@
 		},
 
 		{
+			"Triggers": ["qbot"],
+			"Responses": ["I'm no Qbot but..."]
+		},
+
+		{
+			"Triggers": ["cry", "crying"],
+			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"]
+		},
+
+		{
+			"Triggers": ["weiner"],
+			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven"]
+		},
+
+		{
+			"Triggers": ["fuck this"],
+			"Responses": ["https://www.youtube.com/watch?v=5FjWe31S_0g"]
+		},
+
+		{
+			"Triggers": ["just do it"],
+			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"]
+		},
+
+		{
+			"Triggers": ["don't do it"],
+			"Responses": ["https://www.youtube.com/watch?v=mbre5NC_10c"]
+		},
+
+		{
 			"Triggers": ["coo "],
 			"Hash": true,
 			"Responses": ["Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo coo", "Caw Caw", "Chirp",

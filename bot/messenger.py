@@ -149,16 +149,6 @@ class Messenger(object):
         txt = 'Spelft it wronbg again I see...'
         self.send_message(channel_id, txt)
 
-    def write_crying_into_my_tea(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = ':joy: _CRYING INTO MY TEA_ :joy:'
-        self.send_message(channel_id, txt)
-
-    def write_wiener(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'I AM A WIENER!!! :eggplant: ...jk that\'s Steven'
-        self.send_message(channel_id, txt)
-
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         bot_uid = self.clients.bot_user_id()
@@ -203,26 +193,6 @@ class Messenger(object):
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)
-
-    def write_no_qbot(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'I\'m no Qbot but...'
-        self.send_message(channel_id, txt)
-
-    def write_fuck_this(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        attachment = "https://www.youtube.com/watch?v=5FjWe31S_0g"
-        self.send_message(channel_id, attachment)
-        
-    def write_do_it(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        attachment = "https://www.youtube.com/watch?v=ZXsQAXx_ao0"
-        self.send_message(channel_id, attachment)
-
-    def write_dont_do_it(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        attachment = "https://www.youtube.com/watch?v=mbre5NC_10c"
-        self.send_message(channel_id, attachment)
 
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
@@ -359,8 +329,11 @@ class Messenger(object):
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
         token = re.split(riri_flag, msg.lower())
-        target = token[1]
-        target = target.upper()
+        if len(token > 2):
+            target = token[1]
+            target = target.upper()
+        else:
+            target = "WHY WOULD YOU JUST TYPE RIRI?\n"
         txt = ' '.join(target for num in range(5))
         self.clients.send_user_typing_pause(channel_id) 
         self.send_message(channel_id, txt)
