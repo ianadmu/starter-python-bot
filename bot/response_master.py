@@ -48,7 +48,7 @@ class Response_master:
 			self.events = []
 			for event in json_events["Events"]:
 				use_hash = ("Hash" not in event) or event["Hash"]
-				named = ("Named" not in event) or event["Named"]
+				named = "Named" in event and event["Named"]
 				triggers = []
 				responses = []
 				for t in event["Triggers"]:
