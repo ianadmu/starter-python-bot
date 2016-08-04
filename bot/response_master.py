@@ -31,7 +31,8 @@ class Response:
 		return self.responses[hashValue % len(self.responses)]
 
 	def random(self):
-		return self.responses[self.random.randint(len(self.responses))]
+		return str(self.responses)
+		# return random.choice(self.responses)
 
 class Response_master:
 
