@@ -35,7 +35,7 @@ class Response:
 class Response_master:
 
 	def __init__(self):
-		master_file = open("/responses/events.txt", "w")
+		drunk_comments_file = open(os.path.join('./resources', 'events.txt'), 'r')
 		json_events = json.load(master_file.read())
 		self.responses = []
 		for event in json_events["Events"]:
