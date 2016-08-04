@@ -1,3 +1,5 @@
 {"Events": 
 	[{"Triggers":["!@#$"],
+	"Responses":["Do you kiss your mother with that mouth?"]}
+	]
 }
