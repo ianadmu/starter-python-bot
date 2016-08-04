@@ -28,7 +28,7 @@ class Response:
 		for character in text:
 			hashValue *= 47
 			hashValue += ord(character)
-		return self.responses[hashValue % len(self.responses)] + " Hashing it up"
+		return self.responses[hashValue % len(self.responses)]
 
 	def random(self):
 		return random.choice(self.responses)
@@ -40,7 +40,7 @@ class Response_master:
 		json_events = json.load(master_file)
 		self.events = []
 		for event in json_events["Events"]:
-			use_hash = not event.get("Hash") or event["Hash"]
+			use_hash = event["Hash"]
 			triggers = []
 			responses = []
 			for t in event["Triggers"]:

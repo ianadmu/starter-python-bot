@@ -1,6 +1,7 @@
 {
 	"Events": [{
 			"Triggers": ["!@#$", "%%"],
+			"Hash": "False",
 			"Responses": ["Do you kiss your mother with that mouth?", "YOU BETTER FUCKING CLEAN UP YOUR ACT!"]
 		},
 
@@ -12,6 +13,7 @@
 
 		{
 			"Triggers": ["____"],
+			"Hash": "False",
 			"Responses": ["You are a monster"]
 		}
 	]
