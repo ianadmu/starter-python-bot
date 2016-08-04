@@ -5,14 +5,16 @@ import os.path
 class Response:
 
 	def __init__(self, triggers, responses, use_hash):
-		self.triggers = list(triggers)
-		self.responses = list(responses)
+		self.triggers = triggers
+		self.responses = responses
 		self.use_hash = use_hash
+		random.seed()
 
 	def get_response(self, message):
 		has_trigger = False
+		lower = message.lower()
 		for trigger in self.triggers:
-			if trigger in message:
+			if trigger in lower:
 				has_trigger = True
 
 		if has_trigger:
