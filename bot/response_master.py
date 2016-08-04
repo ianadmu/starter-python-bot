@@ -19,18 +19,17 @@ class Response:
 				return self.hash(message)
 			else:
 				return self.random()
-
 		return ""
 
-    def hash(self, text):
-    	hashValue = 11;
-    	for character in text:
-    		hashValue *= 47
-    		hashValue += ord(character)
-        return self.responses[hashValue % len(self.responses)]
+	def hash(self, text):
+		hashValue = 11;
+		for character in text:
+			hashValue *= 47
+			hashValue += ord(character)
+		return self.responses[hashValue % len(self.responses)]
 
-    def random(self):
-    	return random.choice(self.responses)
+	def random(self):
+		return random.choice(self.responses)
 
 class Response_master:
 
