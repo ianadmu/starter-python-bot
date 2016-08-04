@@ -26,7 +26,7 @@ class Response:
 				result = self.hash(message)
 			else:
 				result = self.random()
-		result = result.replace("user_id", "@<" + user + ">")
+		result = result.replace("user_id", "<@" + user + ">")
 		return result
 
 	def hash(self, text):
