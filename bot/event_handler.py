@@ -128,9 +128,6 @@ class RtmEventHandler(object):
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
 
-            if 'coo ' in lower_txt:
-                self.msg_writer.write_pigeon_noise(channel, msg_txt) 
-
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel, requestedComic)

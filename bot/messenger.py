@@ -17,7 +17,6 @@ from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
-from pigeon_manager import Pigeon
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +33,6 @@ class Messenger(object):
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
         self.user_dict = {}
-        self.pigeon = Pigeon()
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload is a complex dictionary
@@ -178,11 +176,6 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         bot_uid = self.clients.bot_user_id()
         txt = "I'm sorry, I didn't quite understand... Can I help you? (e.g. `<@" + bot_uid + "> help`)"
-        self.send_message(channel_id, txt)
-
-    def write_pigeon_noise(self, channel_id, msg):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = self.pigeon.pigeonate(msg)
         self.send_message(channel_id, txt)
 
     def write_joke(self, channel_id):
