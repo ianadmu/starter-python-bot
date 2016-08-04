@@ -1,5 +1,6 @@
 import random
 import json
+import os
 
 class Response:
 
@@ -10,12 +11,12 @@ class Response:
 
 	def get_response(self, message):
 		has_trigger = False
-		for trigger in self.trigger():
+		for trigger in self.triggers:
 			if trigger in message:
 				has_trigger = True
 
 		if has_trigger:
-			if self.use_hash():
+			if self.use_hash:
 				return self.hash(message)
 			else:
 				return self.random()
@@ -34,7 +35,7 @@ class Response:
 class Response_master:
 
 	def __init__(self):
-		drunk_comments_file = open(os.path.join('./resources', 'events.txt'), 'r')
+		master_file = open(os.path.join('./resources', 'events.txt'), 'r')
 		json_events = json.load(master_file.read())
 		self.responses = []
 		for event in json_events["Events"]:
@@ -47,6 +48,9 @@ class Response_master:
 			combined_responses += responses.get_response(message)
 
 		return combined_responses
+
+res = Response_master()
+print(res.get_response("!@#$"))
 
 
 
