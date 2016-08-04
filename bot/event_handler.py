@@ -11,7 +11,7 @@ class RtmEventHandler(object):
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
-        self.response_master = Response_master()
+        self.response_master = Response_master(self.msg_writer)
 
     def handle(self, event):
 
