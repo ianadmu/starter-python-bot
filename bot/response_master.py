@@ -10,7 +10,7 @@ class Response:
 		self.use_hash = use_hash
 
 	def get_response(self, message):
-		return str(responses)
+		return str(self.responses)
 		has_trigger = False
 		for trigger in self.triggers:
 			if trigger in message:
