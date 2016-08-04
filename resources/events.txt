@@ -14,6 +14,20 @@
 		},
 
 		{
+			"Triggers": ["garret "],
+			"Hash": false,
+			"Named": false,
+			"Responses": ["You fucker, can you not count to two?"]
+		},
+
+		{
+			"Triggers": ["----"],
+			"Hash": false,
+			"Named": false,
+			"Responses": ["It's underscores Jill"]
+		},
+
+		{
 			"Triggers": ["coo "],
 			"Hash": true,
 			"Named": false,
