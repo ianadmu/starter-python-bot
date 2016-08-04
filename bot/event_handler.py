@@ -84,7 +84,7 @@ class RtmEventHandler(object):
             user = event['user']
             lower_txt = msg_txt.lower()
 
-            response_master_response = response_master.get_response(lower_txt)
+            response_master_response = self.response_master.get_response(lower_txt)
 
             if response_master_response:
                 self.msg_writer.write_slow(channel, response_master_response)
