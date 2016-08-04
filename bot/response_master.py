@@ -31,8 +31,7 @@ class Response:
 		return self.responses[hashValue % len(self.responses)]
 
 	def random(self):
-		return "WHAT THE HELL ZAC" #str(self.responses) + " " + str(self.triggers)
-		# return random.choice(self.responses)
+		return random.choice(self.responses)
 
 class Response_master:
 
@@ -41,7 +40,7 @@ class Response_master:
 		json_events = json.load(master_file)
 		self.events = []
 		for event in json_events["Events"]:
-			use_hash = not "Hash" in event or event["Hash"]
+			use_hash = (not "Hash" in event) or event["Hash"]
 			triggers = []
 			responses = []
 			for t in event["Triggers"]:
