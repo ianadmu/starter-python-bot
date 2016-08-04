@@ -1,36 +1,27 @@
 {
 	"Events": [{
 			"Triggers": ["shit", "fuck"],
-			"Hash": false,
-			"Named": false,
-			"Responses": ["Do you kiss your mother with that mouth?", "YOU BETTER FUCKING CLEAN UP YOUR ACT!"]
+			"Responses": ["Do you kiss your mother with that mouth?"]
 		},
 
 		{
 			"Triggers": ["____"],
-			"Hash": false,
-			"Named": false,
 			"Responses": ["You are a monster"]
 		},
 
 		{
 			"Triggers": ["garret "],
-			"Hash": false,
-			"Named": false,
 			"Responses": ["You fucker, can you not count to two?"]
 		},
 
 		{
 			"Triggers": ["----"],
-			"Hash": false,
-			"Named": false,
 			"Responses": ["It's underscores Jill"]
 		},
 
 		{
 			"Triggers": ["coo "],
 			"Hash": true,
-			"Named": false,
 			"Responses": ["Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo coo", "Caw Caw", "Chirp",
 				"CooOOoooOO", "Cee Chee Cee", "Caw", "Ouip Ouip", "Chika dee", "Chika dee dee dee", "CaCAAA",
 				"C-c-c-c-c-caaaaaaa~!", "Tweet", "Coocoocachoo", "Cookle doodle doo", "Coo", "Coo", "Coo", "Coo",
@@ -50,7 +41,6 @@
 
 		{
 			"Triggers": ["boyer"],
-			"Named": false,
 			"Responses": ["_It was working upstairs--_", "_Idk why it's not working now_", "_Last time I taught this course it was working_", "_We do take these seriously.... at least my boss does_",
 				"_Last time I taught this course I didn't have to do this_", "_I'll have to update my notes_", "_This was working earlier_", "_Sorry I'm late_", "_Sorry the example wasn't working last class, it should be working now_",
 				"_........so that's basically what you'll need to do for assignment one_", "_[After 5 minutes of lecturing] Okay let's take a 10-minute break_",
@@ -60,7 +50,6 @@
 
 		{
 			"Triggers": ["thanks", "thank you", " ty", "thank-you", "ty zac"],
-			"Hash": false,
 			"Named": true,
 			"Responses": ["No problem mon user_id!", "Please don't use Comic Sans; this isn't a lemonade stand user_id!", "Why, you're welcome my friend user_id!", "Don't mention it user_id!", "Don't mention it user_id!", "You're welcome user_id!", "It was a pleasure user_id!", "It was my pleasure user_id!", "No sweat user_id!", "Anytime user_id!", "_Le gratitude_ pleases me. :heart: Thank you user_id!", "No worries user_id!", "No, thank you user_id!"]
 		}
