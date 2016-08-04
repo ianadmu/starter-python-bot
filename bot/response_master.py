@@ -10,7 +10,6 @@ class Response:
 		self.use_hash = use_hash
 
 	def get_response(self, message):
-		return str(self.responses)
 		has_trigger = False
 		for trigger in self.triggers:
 			if trigger in message:
@@ -41,13 +40,7 @@ class Response_master:
 		self.responses = []
 		for event in json_events["Events"]:
 			use_hash = not "Hash" in event or event["Hash"]
-			triggers = []
-			responses = []
-			for t in event["Triggers"]:
-				triggers.append(t)
-			for r in event["Responses"]:
-				responses.append(r)
-			self.responses.append(Response(triggers, responses,use_hash))
+			self.responses.append(Response(json.loads(event["Triggers"]), json.loads(event["Responses"]),use_hash))
 
 	def get_response(self, message):
 		combined_responses = ""
