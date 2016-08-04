@@ -141,11 +141,11 @@ class Messenger(object):
         txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
         self.send_message(channel_id, txt)
 
-    def write_your_welcome(self, channel_id, user_id):
-        self.clients.send_user_typing_pause(channel_id)
-        your_welcomes = ['No problem mon', 'Please don\'t use Comic Sans; this isn\'t a lemonade stand', 'Why, you\'re welcome my friend', 'Don\'t mention it', 'Don\'t mention it', 'You\'re welcome', 'It was a pleasure', 'It was my pleasure', 'No sweat', 'Anytime', '_Le gratitude_ pleases me. :heart: Thank you', 'No worries', 'No, thank you']
-        txt = '{}, <@{}>!'.format(random.choice(your_welcomes), user_id)
-        self.send_message(channel_id, txt)
+    # def write_your_welcome(self, channel_id, user_id):
+    #     self.clients.send_user_typing_pause(channel_id)
+    #     your_welcomes = ['No problem mon', 'Please don\'t use Comic Sans; this isn\'t a lemonade stand', 'Why, you\'re welcome my friend', 'Don\'t mention it', 'Don\'t mention it', 'You\'re welcome', 'It was a pleasure', 'It was my pleasure', 'No sweat', 'Anytime', '_Le gratitude_ pleases me. :heart: Thank you', 'No worries', 'No, thank you']
+    #     txt = '{}, <@{}>!'.format(random.choice(your_welcomes), user_id)
+    #     self.send_message(channel_id, txt)
 
     def write_spelling_mistake(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)

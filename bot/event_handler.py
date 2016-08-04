@@ -84,7 +84,7 @@ class RtmEventHandler(object):
             user = event['user']
             lower_txt = msg_txt.lower()
 
-            response_master_response = self.response_master.get_response(msg_txt)
+            response_master_response = self.response_master.get_response(msg_txt, user)
 
             if response_master_response:
                 self.msg_writer.write_slow(channel, response_master_response)
@@ -141,8 +141,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_morning(channel, user)
                 if re.search('night', msg_txt.lower()):
                     self.msg_writer.write_good_night(channel, user)
-                if re.search('thanks|thank you|thank-you', msg_txt.lower()):
-                    self.msg_writer.write_your_welcome(channel, user)
                 if 'joke' in msg_txt.lower():
                     self.msg_writer.write_joke(channel)
                 if 'french' in msg_txt.lower():

@@ -4,24 +4,29 @@ import os.path
 
 class Response:
 
+	name = "zac"
+
 	def __init__(self, triggers, responses, use_hash):
 		self.triggers = triggers
 		self.responses = responses
 		self.use_hash = use_hash
 
-	def get_response(self, message):
+	def get_response(self, message, user):
 		has_trigger = False
 		lower = message.lower()
 		for trigger in self.triggers:
 			if trigger in lower:
 				has_trigger = True
 
-		if has_trigger:
+		result = ""
+
+		if has_trigger and (not named or Response.name in lower):
 			if self.use_hash:
-				return self.hash(message)
+				result = self.hash(message)
 			else:
-				return self.random()
-		return ""
+				result = self.random()
+		result = result.replace("user_id", "@" + user)
+		return result
 
 	def hash(self, text):
 		hashValue = 11;
@@ -41,17 +46,21 @@ class Response_master:
 		self.events = []
 		for event in json_events["Events"]:
 			use_hash = event["Hash"]
+			named = event["Named"]
 			triggers = []
 			responses = []
 			for t in event["Triggers"]:
 				triggers.append(t)
 			for r in event["Responses"]:
 				responses.append(r)
-			self.events.append(Response(triggers, responses, use_hash))
+			self.events.append(Response(triggers, responses, use_hash, named))
 
-	def get_response(self, message):
+	def get_response(self, message, user):
 		combined_responses = ""
 		for event in self.events:
-			combined_responses += event.get_response(message)
+			current_response = event.get_response(message, user)
+			if current_response != "":
+				current_response += '\n'
+			combined_responses += current_response
 
 		return combined_responses
