@@ -39,7 +39,7 @@ class Response_master:
 	def __init__(self):
 		master_file = open(os.path.join('./resources', 'events.txt'), 'r')
 		json_events = json.load(master_file)
-		self.responses = []
+		self.events = []
 		for event in json_events["Events"]:
 			use_hash = not "Hash" in event or event["Hash"]
 			triggers = []
@@ -48,11 +48,11 @@ class Response_master:
 				triggers.append(t)
 			for r in event["Responses"]:
 				responses.append(r)
-			self.responses.append(Response(triggers, responses,use_hash))
+			self.events.append(Response(triggers, responses, use_hash))
 
 	def get_response(self, message):
 		combined_responses = ""
-		for responses in self.responses:
-			combined_responses += responses.get_response(message)
+		for event in self.events:
+			combined_responses += event.get_response(message)
 
 		return combined_responses
