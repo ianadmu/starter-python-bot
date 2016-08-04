@@ -1,5 +1,9 @@
 {"Events": 
-	[{"Triggers":["!@#$"],
-	"Responses":["Do you kiss your mother with that mouth?"]}
+	[{"Triggers":["!@#$", "%%"],
+	"Responses":["Do you kiss your mother with that mouth?", "YOU BETTER FUCKING CLEAN UP YOUR ACT"]},
+
+	{"Triggers":["testOne", "testTwo",
+	"Hash":"True",
+	"Responses":["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]}
 	]
 }
