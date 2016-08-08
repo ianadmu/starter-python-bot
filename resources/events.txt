@@ -121,6 +121,22 @@
 
 		{
 			"Triggers": {
+				"Words": ["flip"]
+			},
+			"Named": true,
+			"Responses": ["HEADS","TAILS"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["roll"]
+			},
+			"Named": true,
+			"Responses": ["1","2","3","4","5","6"]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["hi", "hey", "hello", "sup"]
 			},
 			"Named": true,
