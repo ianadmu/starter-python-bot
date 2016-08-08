@@ -1,56 +1,78 @@
 {
 	"Events": [{
-			"Triggers": ["shit", "fuck"],
-			"Responses": ["Do you kiss your mother with that mouth?"]
-		},
-
-		{
-			"Triggers": ["____"],
-			"Responses": ["You are a monster"]
-		},
-
-		{
-			"Triggers": ["garret "],
-			"Responses": ["You fucker, can you not count to two?"]
-		},
-
-		{
-			"Triggers": ["----"],
-			"Responses": ["It's underscores Jill"]
-		},
-
-		{
-			"Triggers": ["qbot"],
+			"Triggers": {
+				"Words": ["qbot"]
+			},
 			"Responses": ["I'm no Qbot but..."]
 		},
 
 		{
-			"Triggers": ["cry", "crying"],
+			"Triggers": {
+				"Words": ["shit", "fuck", "piss", "cunt", "cocksucker", "motherfucker", "tits", "fart", "turd", "shitstain", "twat"]
+			},
+			"Responses": ["Do you kiss your mother with that mouth?"]
+		},
+
+		{
+			"Triggers": {
+				"Phrase": ["____"]
+			},
+			"Responses": ["You are a monster"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["garret"]
+			},
+			"Responses": ["You fucker, can you not count to two?"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["----"]
+			},
+			"Responses": ["It's underscores Jill"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["cry", "crying"]
+			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"]
 		},
 
 		{
-			"Triggers": ["weiner"],
+			"Triggers": {
+				"Words": ["weiner"]
+			},
 			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven"]
 		},
 
 		{
-			"Triggers": ["fuck this"],
+			"Triggers": {
+				"Phrase": ["fuck this"]
+			},
 			"Responses": ["https://www.youtube.com/watch?v=5FjWe31S_0g"]
 		},
 
 		{
-			"Triggers": ["just do it"],
+			"Triggers": {
+				"Phrase": ["just do it"]
+			},
 			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"]
 		},
 
 		{
-			"Triggers": ["don't do it"],
+			"Triggers": {
+				"Phrase": ["dont do it", "don't do it"]
+			},
 			"Responses": ["https://www.youtube.com/watch?v=mbre5NC_10c"]
 		},
 
 		{
-			"Triggers": ["coo "],
+			"Triggers": {
+				"Words": ["coo"]
+			},
 			"Hash": true,
 			"Responses": ["Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo coo", "Caw Caw", "Chirp",
 				"CooOOoooOO", "Cee Chee Cee", "Caw", "Ouip Ouip", "Chika dee", "Chika dee dee dee", "CaCAAA",
@@ -70,7 +92,9 @@
 		},
 
 		{
-			"Triggers": ["boyer"],
+			"Triggers": {
+				"Words": ["boyer"]
+			},
 			"Responses": ["_It was working upstairs--_", "_Idk why it's not working now_", "_Last time I taught this course it was working_", "_We do take these seriously.... at least my boss does_",
 				"_Last time I taught this course I didn't have to do this_", "_I'll have to update my notes_", "_This was working earlier_", "_Sorry I'm late_", "_Sorry the example wasn't working last class, it should be working now_",
 				"_........so that's basically what you'll need to do for assignment one_", "_[After 5 minutes of lecturing] Okay let's take a 10-minute break_",
@@ -79,7 +103,10 @@
 		},
 
 		{
-			"Triggers": ["thanks", "thank you", " ty", "thank-you", "ty zac"],
+			"Triggers": {
+				"Phrase": ["thank you"],
+				"Words": ["thanks", "ty", "thank-you"]
+			},
 			"Named": true,
 			"Responses": ["No problem mon user_id!", "Please don't use Comic Sans; this isn't a lemonade stand user_id!", "Why, you're welcome my friend user_id!", "Don't mention it user_id!", "Don't mention it user_id!", "You're welcome user_id!", "It was a pleasure user_id!", "It was my pleasure user_id!", "No sweat user_id!", "Anytime user_id!", "_Le gratitude_ pleases me. :heart: Thank you user_id!", "No worries user_id!", "No, thank you user_id!"]
 		}

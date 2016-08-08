@@ -4,24 +4,38 @@ import os.path
 
 class Response:
 
-	name = "zac"
+	names = ["zac", "qbot"]
 
-	def __init__(self, triggers, responses, use_hash, named):
-		self.triggers = triggers
+	def __init__(self, phrases, words, responses, use_hash, named):
+		self.phrases = phrases
+		self.words = words
 		self.responses = responses
 		self.use_hash = use_hash
 		self.named = named
 
-	def get_response(self, message, user):
+	def get_response(self, message, tokens, user):
 		has_trigger = False
+		is_named = False
 		lower = message.lower()
-		for trigger in self.triggers:
-			if trigger in lower:
+		for phrase in self.phrases:
+			if phrase in lower:
 				has_trigger = True
+				continue
+
+		if not has_trigger:
+			for word in self.words:
+				for token in tokens:
+					if word == token:
+						has_trigger = True
+						continue
+
+		for name in Response.names:
+			if name in message:
+				is_named = True
 
 		result = ""
 
-		if has_trigger and (not self.named or Response.name in lower):
+		if has_trigger and (not self.named or is_named):
 			if self.use_hash:
 				result = self.hash(message)
 			else:
@@ -49,21 +63,25 @@ class Response_master:
 			for event in json_events["Events"]:
 				use_hash = ("Hash" not in event) or event["Hash"]
 				named = "Named" in event and event["Named"]
-				triggers = []
+				phrases = []
+				words = []
 				responses = []
-				for t in event["Triggers"]:
-					triggers.append(t)
+				for w in event["Triggers"]["Words"]:
+					words.append(w)
+				for p in event["Triggers"]["Phrases"]:
+					phrases.append(p)
 				for r in event["Responses"]:
 					responses.append(r)
-				self.events.append(Response(triggers, responses, use_hash, named))
+				self.events.append(Response(phrases, words, responses, use_hash, named))
 		except :
 			msg_writer.write_custom_error("Error loading JSON file")
 			self.events = []
 
 	def get_response(self, message, user):
 		combined_responses = ""
+		tokens = message.split()
 		for event in self.events:
-			current_response = event.get_response(message, user)
+			current_response = event.get_response(message, tokens, user)
 			if current_response != "":
 				current_response += '\n'
 			combined_responses += current_response
