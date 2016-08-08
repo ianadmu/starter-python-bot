@@ -117,10 +117,6 @@ class RtmEventHandler(object):
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(channel)
-                if re.search('hi |hey|hello|howdy|sup ', msg_txt.lower()) or msg_txt.lower().endswith(' hi') or msg_txt.lower().endswith(' sup'):
-                    self.msg_writer.write_greeting(channel, user)
-                if re.search('morning', msg_txt.lower()):
-                    self.msg_writer.write_good_morning(channel, user)
                 if re.search('night', msg_txt.lower()):
                     self.msg_writer.write_good_night(channel, user)
                 if 'joke' in msg_txt.lower():

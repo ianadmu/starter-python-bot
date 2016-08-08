@@ -109,6 +109,22 @@
 			},
 			"Named": true,
 			"Responses": ["No problem mon user_id!", "Please don't use Comic Sans; this isn't a lemonade stand user_id!", "Why, you're welcome my friend user_id!", "Don't mention it user_id!", "Don't mention it user_id!", "You're welcome user_id!", "It was a pleasure user_id!", "It was my pleasure user_id!", "No sweat user_id!", "Anytime user_id!", "_Le gratitude_ pleases me. :heart: Thank you user_id!", "No worries user_id!", "No, thank you user_id!"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["morning"]
+			},
+			"Named": true,
+			"Responses": ["Good morning user_id!", "Morning user_id!", "Guten Morgen user_id!", "Bonjour user_id!", "Ohayou user_id!", "Good morning to you user_id!", "Aloha user_id!", "Konnichiwashington user_id!", "Buenos dias user_id!", ":sunny: Good morning user_id!"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["hi", "hey", "hello", "sup"]
+			},
+			"Named": true,
+			"Responses": ["Hi user_id!", "Hello user_id!", "Nice to meet you user_id!", "Howdy user_id!", "Salutations user_id!"]
 		}
 
 	]
