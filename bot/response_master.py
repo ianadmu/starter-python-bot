@@ -81,7 +81,7 @@ class Response_master:
 
 	def get_response(self, message, user):
 		combined_responses = ""
-		tokens = message.split()
+		tokens = message.lower().split()
 		for event in self.events:
 			current_response = event.get_response(message, tokens, user)
 			if current_response != "":
