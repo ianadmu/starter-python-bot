@@ -121,7 +121,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["flip"]
+				"Words": ["coin"]
 			},
 			"Named": true,
 			"Responses": ["HEADS","TAILS"]

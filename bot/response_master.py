@@ -61,7 +61,7 @@ class Response_master:
 			json_events = json.load(master_file)
 			self.events = []
 			for event in json_events["Events"]:
-				use_hash = ("Hash" not in event) or event["Hash"]
+				use_hash = "Hash" in event and event["Hash"]
 				named = "Named" in event and event["Named"]
 				phrases = []
 				words = []
