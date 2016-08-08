@@ -66,10 +66,12 @@ class Response_master:
 				phrases = []
 				words = []
 				responses = []
-				for w in event["Triggers"]["Words"]:
-					words.append(w)
-				for p in event["Triggers"]["Phrases"]:
-					phrases.append(p)
+				if "Words" in event["Triggers"]:
+					for w in event["Triggers"]["Words"]:
+						words.append(w)
+				if "Phrases" in event["Triggers"]:
+					for p in event["Triggers"]["Phrases"]:
+						phrases.append(p)
 				for r in event["Responses"]:
 					responses.append(r)
 				self.events.append(Response(phrases, words, responses, use_hash, named))
