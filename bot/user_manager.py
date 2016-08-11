@@ -11,9 +11,9 @@ class UserManager:
 		msg_writer.write_custom_error(str(self.users))
 		self.users = json.loads(str(self.users))
 		msg_writer.write_custom_error("Loads")
+		self.user_names = dict()
 		if self.users["ok"]:
 			msg_writer.write_custom_error("Is ok")
-			self.user_names = dict()
 			for user in self.users["members"]:
 				self.user_names[user["id"]] = user["name"]
 		else:
