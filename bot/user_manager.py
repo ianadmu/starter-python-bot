@@ -3,7 +3,8 @@ import json
 class UserManager:
 	
 	def __init__(self, clients, msg_writer):
-		msg_writer.write_custom_error("Starting to load")
+		msg_writer.write_custom_error("Starting to load\nToken = \n")
+		msg_writer.write_custom_error(str(clients.token))
 		self.users = clients.get_users()
 		msg_writer.write_custom_error("Api call")
 		self.users = json.dumps(self.users)
