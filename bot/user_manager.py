@@ -6,11 +6,6 @@ class UserManager:
 		msg_writer.write_custom_error("Starting to load")
 		self.users = clients.get_users()
 		msg_writer.write_custom_error("Api call")
-		# self.users = json.dumps(self.users)
-		# msg_writer.write_custom_error("Dumps")
-		self.users = json.load(self.users)
-		msg_writer.write_custom_error("Loads!")
-		msg_writer.write_custom_error(str(json.dumps(self.users)))
 		self.user_names = dict()
 		if self.users["ok"]:
 			msg_writer.write_custom_error("Is ok")
@@ -22,6 +17,7 @@ class UserManager:
 				msg_writer.write_custom_error(self.users["error"])
 			else:
 				msg_writer.write_custom_error("Something bad happend while loading users")
+		msg_writer.write_custom_error(str(self.user_names))
 
 	def get_user(self, key):
 		if key in self.user_names:
