@@ -3,7 +3,6 @@ import logging
 import re
 from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
-from game_manager import GameManager
 from user_manager import UserManager
 
 logger = logging.getLogger(__name__)
@@ -12,10 +11,10 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
-        #self.msg_writer.write_custom_error("Testing early message")
+        self.msg_writer.write_custom_error("Testing early message")
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
         self.response_master = Response_master(self.msg_writer)
-        self.user_manager = UserManager(self.clients)
+        self.user_manager = UserManager(self.clients, self.msg_writer)
 
     def handle(self, event):
 
