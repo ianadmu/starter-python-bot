@@ -6,7 +6,7 @@ class UserManager:
 		msg_writer.write_custom_error("Starting to load")
 		self.users = clients.get_users()
 		msg_writer.write_custom_error("Api call")
-		msg_writer.write_custom_error(str(self.users))
+		msg_writer.write_custom_error(str(self.users == None))
 		self.users = json.dumps(self.users)
 		msg_writer.write_custom_error("Dumps")
 		self.users = json.loads(str(self.users))
