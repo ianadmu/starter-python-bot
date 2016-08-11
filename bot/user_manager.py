@@ -8,6 +8,7 @@ class UserManager:
 		msg_writer.write_custom_error("Api call")
 		self.users = json.dumps(self.users)
 		msg_writer.write_custom_error("Dumps")
+		msg_writer.write_custom_error(str(self.users))
 		self.users = json.loads(str(self.users))
 		msg_writer.write_custom_error("Loads")
 		if self.users["ok"]:
