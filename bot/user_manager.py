@@ -3,6 +3,7 @@ import json
 class UserManager:
 	
 	def __init__(self, clients, msg_writer):
+		msg_writer.write_custom_error("Starting to load users")
 		self.clients = clients
 		self.users = self.clients.api_call("users.list")
 		self.users = json.dumps(self.users)
