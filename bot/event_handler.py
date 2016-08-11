@@ -3,6 +3,8 @@ import logging
 import re
 from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
+from game_manager import GameManager
+from user_manager import UserManager
 
 logger = logging.getLogger(__name__)
 
@@ -10,8 +12,10 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.game
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
         self.response_master = Response_master(self.msg_writer)
+        self.user_manager = UserManager(self.clients)
 
     def handle(self, event):
 
@@ -82,6 +86,7 @@ class RtmEventHandler(object):
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
+            user_name = self.user_manager.get_user(user)
             lower_txt = msg_txt.lower()
 
             response_master_response = self.response_master.get_response(msg_txt, user)
@@ -112,7 +117,8 @@ class RtmEventHandler(object):
                 self.msg_writer.write_xkcd(channel, requestedComic)
 
             if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
-                self.tictactoe_manager.get_message(channel, msg_txt)
+                self.msg_writer.write_custom_error(user_name)
+                self.tictactoe_manager.get_message(channel, msg_txt, user_name)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():

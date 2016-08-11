@@ -30,7 +30,7 @@ class Response:
 						continue
 
 		for name in Response.names:
-			if name in message:
+			if name in lower:
 				is_named = True
 
 		result = ""
