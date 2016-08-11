@@ -5,7 +5,7 @@ class UserManager:
 	def __init__(self, clients, msg_writer):
 		msg_writer.write_custom_error("Starting to load")
 		self.clients = clients
-		self.users = self.clients.api_call("users.list")
+		self.users = self.clients.api_call("https://slack.com/api/users.info")
 		msg_writer.write_custom_error("Api call")
 		self.users = json.dumps(self.users)
 		msg_writer.write_custom_error("Dumps")
