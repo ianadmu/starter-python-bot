@@ -6,13 +6,18 @@ class UserManager:
 		msg_writer.write_custom_error("Starting to load")
 		self.clients = clients
 		self.users = self.clients.api_call("users.list")
+		msg_writer.write_custom_error("Api call")
 		self.users = json.dumps(self.users)
+		msg_writer.write_custom_error("Dumps")
 		self.users = json.loads(str(self.users))
+		msg_writer.write_custom_error("Loads")
 		if self.users["ok"]:
+			msg_writer.write_custom_error("Is ok")
 			self.user_names = dict()
 			for user in self.users["members"]:
 				self.user_names[user["id"]] = user["name"]
 		else:
+			msg_writer.write_custom_error("Is not ok")
 			if "error" in self.users:
 				msg_writer.write_custom_error(self.users["error"])
 			else:
