@@ -15,7 +15,7 @@ class RtmEventHandler(object):
         self.game
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
         self.response_master = Response_master(self.msg_writer)
-        self.user_manager = UserManager(self.clients)
+        self.user_manager = UserManager(self.clients, self.msg_writer)
 
     def handle(self, event):
 
