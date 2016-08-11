@@ -115,7 +115,6 @@ class RtmEventHandler(object):
                 self.msg_writer.write_xkcd(channel, requestedComic)
 
             if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
-                self.msg_writer.write_custom_error(user_name)
                 self.tictactoe_manager.get_message(channel, msg_txt, user_name)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
