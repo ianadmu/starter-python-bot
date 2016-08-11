@@ -12,10 +12,10 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
-        self.msg_writer.write_custom_error("Testing early message")
+        #self.msg_writer.write_custom_error("Testing early message")
         self.tictactoe_manager = TicTacToeManager(self.msg_writer)
         self.response_master = Response_master(self.msg_writer)
-        self.user_manager = UserManager(self.clients, self.msg_writer)
+        self.user_manager = UserManager(self.clients)
 
     def handle(self, event):
 
