@@ -102,8 +102,9 @@ class TicTacToe:
 		self.winner = False
 		self.comp_player = 2
 		self.players = dict()
-		for player_num in range(len(players)):
-			self.players[players[player_num]] = player_num + 1
+		player_list = list(players)
+		for player_num in range(len(player_list)):
+			self.players[player_list[player_num]] = player_num + 1
 		self.size = size
 		self.turn = random.choice([True, False])
 		self.board = [[BoardSpot() for x in range(size)] for y in range(size)]
