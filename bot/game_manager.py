@@ -4,7 +4,7 @@ class Game:
 		self.game = game
 
 	def process_command(self, message, player):
-		return self.game.process_command(message, self.players[player])
+		return self.game.process_command(message, player)
 
 class GameManager:
 
