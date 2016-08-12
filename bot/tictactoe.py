@@ -115,7 +115,7 @@ class TicTacToe:
 
 	def _play_self(self):
 		end_message = "Cats Game!\n"
-		while not self._is_over():
+		while not self.is_over():
 			self.turn = not self.turn
 			self._self_move(2 - self.turn)
 		if self.winner:
@@ -124,7 +124,7 @@ class TicTacToe:
 
 	def process_command(self, message, player):
 		player_num = self.players[player]
-		if self._is_over():
+		if self.is_over():
 			return "Game is over"
 		elif self.game_type == "pvp" and (2 - self.turn) == player_num:
 			if self.player_move(message, player_num):
@@ -151,7 +151,7 @@ class TicTacToe:
 
 		return self._get_move_error(message, player_num)
 
-	def _is_over(self):
+	def is_over(self):
 		return not self.open_spots or self.winner
 
 	def add_lines_to_board(self):

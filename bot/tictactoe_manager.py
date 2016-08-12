@@ -1,3 +1,4 @@
+import re
 from tictactoe import TicTacToe
 
 class TicTacToeManager:
@@ -29,9 +30,9 @@ class TicTacToeManager:
 		move = ""
 		for token in tokens:
 			if TicTacToeManager.size_command in token:
-				size = int(token)
+				size = int(re.search(r'\d+', token).group())
 			elif TicTacToeManager.length_command in token:
-				length = int(token)
+				length = int(re.search(r'\d+', token).group())
 			elif token == TicTacToeManager.zac_command:
 				match_type = TicTacToeManager.zac_command
 			elif token == TicTacToeManager.pvp_command:
