@@ -30,7 +30,7 @@ class GameManager:
 			result = game.process_command(message, current_player)
 			self.msg_writer.send_message(channel, result)
 		else:
-			error_msg = "There is currently no game that can be selected with the information provided"
-			self.msg_writer(channel, error_msg)
+			error_msg = "There is currently no game that can be selected with the information provided\n" + key
+			self.msg_writer.send_message(channel, error_msg)
 
 
