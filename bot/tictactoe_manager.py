@@ -5,7 +5,7 @@ class TicTacToeManager:
 	name = "TicTacToe"
 	size_command = "size="
 	length_command = "length="
-	zac_command = "zac"
+	zac_command = "comp"
 	pvp_command = "pvp"
 
 

@@ -134,7 +134,7 @@ class TicTacToe:
 				elif self.is_over():
 					return "Cats Game!\n" + self.__str__()
 				return self.__str__()
-		elif self.game_type == "zac":
+		elif self.game_type == "comp":
 			if self.player_move(message, player_num):
 				self.turn = not self.turn
 				if self.winner:
