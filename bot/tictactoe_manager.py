@@ -21,7 +21,7 @@ class TicTacToeManager:
 
 	def get_message(self, channel, message, user):
 		players = self.user_manager.get_users_mentioned(message)
-		players.add(self.user_manager.get_user_by_id(user))
+		players.add(user)
 		tokens = message.split()
 		size = 3
 		length = 3
