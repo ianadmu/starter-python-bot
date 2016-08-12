@@ -40,19 +40,7 @@ class TicTacToeManager:
 				move = token
 
 		if match_type:
-			game = TicTacToe(size, length, match_type)
+			game = TicTacToe(size, length, match_type, players)
 			self.game_manager.add_game(game, players, channel, TicTacToeManager.name)
 		else:
 			self.game_manager.process_message(players, channel, TicTacToeManager.name, move, user)
-
-	def play_self(self, channel, size, length):
-		self.games[channel] = TicTacToe(size, length, True)
-		self.msg_writer.send_message(channel,self.games[channel].play_self())
-
-	def start(self, channel, size, length):
-		self.games[channel] = TicTacToe(size, length, True)
-		self.msg_writer.send_message(channel,self.games[channel].__str__())
-
-	def process_command(self, channel, command):
-		result = self.games[channel].process_command(command)
-		self.msg_writer.send_message(channel,result)
