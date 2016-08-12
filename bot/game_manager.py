@@ -2,9 +2,6 @@ class Game:
 
 	def __init__(self, game, players):
 		self.game = game
-		self.players = dict()
-		for player_num in range(len(players)):
-			self.players[players[player_num]] = player_num
 
 	def process_command(self, message, player):
 		return self.game.process_command(message, self.players[player])
