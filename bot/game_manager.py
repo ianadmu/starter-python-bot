@@ -20,6 +20,7 @@ class GameManager:
 		key = self._make_key(players, channel, game_name)
 		self.games[key] = Game(game, players)
 		self.msg_writer.send_message(channel, str(game))
+		self.msg_writer.send_message(channel, key)
 
 	def process_message(self, players, channel, game_name, message, current_player):
 		#the message needs to be parsed earlier up in the process
