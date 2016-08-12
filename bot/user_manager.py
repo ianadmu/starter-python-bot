@@ -29,5 +29,6 @@ class UserManager:
 		for token in message.split():
 			if token in self.user_ids:
 				mentioned_users.add(token)
+		return mentioned_users
 
 		
