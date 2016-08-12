@@ -16,7 +16,7 @@ class GameManager:
 		self.msg_writer = msg_writer
 
 	def _make_key(self, players, channel, game_name):
-		return set(channel, frozenset(players), game_name)
+		return frozenset(channel, frozenset(players), game_name)
 
 	def add_game(self, game, players, channel, game_name):
 		#game should be initialized here
