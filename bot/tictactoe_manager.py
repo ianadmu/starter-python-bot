@@ -1,39 +1,49 @@
 from tictactoe import TicTacToe
-from collections import defaultdict
 
 class TicTacToeManager:
+
+	name = "TicTacToe"
+	size_command = "size="
+	length_command = "length="
+	zac_command = "zac"
+	pvp_command = "pvp"
+
+
 	help_message = "To talk to the TicTacToe manager type a sentence that starts with 'tictactoe' or 'ttt'\n"
 	help_message += "To start a game agaisnt Zac, type start as the second word, followed by the size of the square board, and the length required to win\n"
 	help_message += "To play a move, type where you would like to go as the second word\n"
 	help_message += "To have Zac play himself, type self instead of start"
 
-	def __init__(self, msg_writer):
-		self.games = defaultdict(lambda: TicTacToe(3,3, True))
+	def __init__(self, msg_writer, user_manager, game_manager):
+		self.game_manager = game_manager
+		self.user_manager = user_manager
 		self.msg_writer = msg_writer
 
-	def get_message(self, channel, message):
-		command = message.split()
-		if len(command) > 3:
-			if command[1].upper() == "START":
-				try:
-					size = int(command[2])
-					length = int(command[3])
-					self.start(channel, size, length)
-				except:
-					self.msg_writer.send_message(channel,"Error parsing initial prameters")
-			elif command[1].upper() == "SELF":
-				try:
-					size = int(command[2])
-					length = int(command[3])
-					self.play_self(channel, size, length)
-				except:
-					self.msg_writer.send_message(channel,"Error parsing initial prameters")
-
-		elif len(command) > 1:
-			if command[1].upper() == "HELP":
-				self.msg_writer.send_message(channel,TicTacToeManager.help_message)
+	def get_message(self, channel, message, user):
+		players = self.user_manager.get_users_mentioned(message)
+		players.add(self.user_manager.get_user_by_id(user))
+		tokens = message.split()
+		size = 3
+		length = 3
+		match_type = False
+		move = ""
+		for token in tokens:
+			if TicTacToeManager.size_command in token:
+				size = int(token)
+			elif TicTacToeManager.length_command in token:
+				length = int(token)
+			elif token == TicTacToeManager.zac_command:
+				match_type = TicTacToeManager.zac_command
+			elif token == TicTacToeManager.pvp_command:
+				match_type = TicTacToeManager.pvp_command
 			else:
-				self.process_command(channel, command[1])
+				move = token
+
+		if match_type:
+			game = TicTacToe(size, length, match_type)
+			self.game_manager.add_game(game, players, channel, TicTacToeManager.name)
+		else:
+			self.game_manager.process_message(players, channel, TicTacToeManager.name, move, user)
 
 	def play_self(self, channel, size, length):
 		self.games[channel] = TicTacToe(size, length, True)

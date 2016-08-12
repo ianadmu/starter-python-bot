@@ -89,27 +89,30 @@ class BoardSpot:
 
 class TicTacToe:
 
-	tokens = [' ', 'O', 'X']
+	tokens = [' ', 'X', 'O']
 
-	def __init__(self, size, line_size, comp_player):
+	def __init__(self, size, line_size, game_type, players):
 		if size < 3:
 			size = 3
 		elif size > 10:
 			size = 10
 
+		self.game_type = game_type
 		self.line_size = line_size
 		self.winner = False
-		self.comp_player = 1
-		self.human_player = 2
+		self.comp_player = 2
+		self.players = dict()
+		for player_num in range(len(players)):
+			self.players[players[player_num]] = player_num + 1
 		self.size = size
 		self.turn = random.choice([True, False])
 		self.board = [[BoardSpot() for x in range(size)] for y in range(size)]
 		self.open_spots = self._get_all_spots()
 		self.add_lines_to_board()
-		if self.turn and comp_player:
+		if self.turn and self.game_type != "pvp":
 			self._self_move(self.comp_player)
 
-	def play_self(self):
+	def _play_self(self):
 		end_message = "Cats Game!\n"
 		while not self._is_over():
 			self.turn = not self.turn
@@ -118,24 +121,34 @@ class TicTacToe:
 			end_message = TicTacToe.tokens[2 - self.turn] + " Won!\n"
 		return(end_message + self.__str__())
 
-	def process_command(self, message):
+	def process_command(self, message, player):
+		player_num = self.players[player]
 		if self._is_over():
 			return "Game is over"
-		if self.player_move(message):
-			#success full move
-			if self.winner:
-				return("You win!\n" + self.__str__())
-			else:
-				self._self_move(self.comp_player)
+		elif self.game_type == "pvp" and (2 - self.turn) == player_num:
+			if self.player_move(message, player_num):
+				self.turn = not self.turn
 				if self.winner:
-					return("Zac wins!\n" + self.__str__())
+					return "You win!\n" + self.__str__()
+				elif self.is_over():
+					return "Cats Game!\n" + self.__str__()
+				return self.__str__()
+		elif self.game_type == "zac":
+			if self.player_move(message, player_num):
+				self.turn = not self.turn
+				if self.winner:
+					return "You win!\n" + self.__str__()
+				else:
+					self._self_move(self.comp_player)
+					if self.winner:
+						return "Zac wins!\n" + self.__str__()
 
-			if self._is_over():
-				return("Cats Game!\n" + self.__str__())
+				if self.is_over():
+					return "Cats Game!\n" + self.__str__()
 
-			return(self.__str__())
-		else:
-			return self._get_move_error(message)
+				return self.__str__()
+
+		return self._get_move_error(message, player_num)
 
 	def _is_over(self):
 		return not self.open_spots or self.winner
@@ -185,8 +198,8 @@ class TicTacToe:
 		return random.choice(self.open_spots)
 
 	def _find_best_move(self):
-		moves = sorted(self.open_spots, key=lambda spot: spot.get_score(self.comp_player), reverse=True)
-		return moves[0]
+		self.open_spots = sorted(self.open_spots, key=lambda spot: spot.get_score(self.comp_player), reverse=True)
+		return self.open_spots[0]
 
 	def _get_all_spots(self):
 		spots = []
@@ -228,9 +241,11 @@ class TicTacToe:
 		else:
 			return None
 
-	def _get_move_error(self, move):
+	def _get_move_error(self, move, player_num):
 		x = self._getX(move)
 		y = self._getY(move)
+		if self.game_type == "PVP" and (2 - self.turn) != player_num:
+			return "It's not your turn"
 		if x == None:
 			return "You must have at least one letter"
 		elif y == None:
@@ -250,9 +265,9 @@ class TicTacToe:
 			return (None,None)
 		return (x,y)
 
-	def player_move(self,move):
+	def player_move(self, move, player):
 		coordinates = self._parse_move(move)
 		if None in coordinates:
 			return False
-		self.winner = self._move(self.human_player, self.board[coordinates[0]][coordinates[1]])
+		self.winner = self._move(player, self.board[coordinates[0]][coordinates[1]])
 		return True
