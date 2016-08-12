@@ -84,7 +84,7 @@ class RtmEventHandler(object):
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
-            user_name = self.user_manager.get_user(user)
+            user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
 
             response_master_response = self.response_master.get_response(msg_txt, user)

@@ -23,4 +23,11 @@ class UserManager:
 		if name in self.user_names:
 			return self.user_names[name]
 		return None
+
+	def get_users_mentioned(self, message):
+		mentioned_users = set()
+		for token in message.split():
+			if token in self.user_ids:
+				mentioned_users.add(token)
+
 		
