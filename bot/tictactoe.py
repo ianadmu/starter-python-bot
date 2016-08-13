@@ -41,7 +41,6 @@ class Line:
 
 
 class BoardSpot:
-	tokens = [' ', 'O', 'X']
 
 	def __init__(self):
 		self.value = 0
@@ -69,13 +68,13 @@ class BoardSpot:
 		return score
 
 	def get_token(self):
-		return BoardSpot.tokens[self.value]
+		return TicTacToe.tokens[self.value]
 
 	def get_value(self):
 		return self.value
 
 	def change_tokens(self):
-		BoardSpot.tokens[1], BoardSpot.tokens[2] = BoardSpot.tokens[2], BoardSpot.tokens[1]
+		TicTacToe.tokens[1], TicTacToe.tokens[2] = TicTacToe.tokens[2], TicTacToe.tokens[1]
 
 	def __str__(self):
 		lines_str = "Lines: "
