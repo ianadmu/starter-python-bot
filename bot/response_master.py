@@ -6,12 +6,14 @@ class Response:
 
 	names = ["zac", "qbot"]
 
-	def __init__(self, phrases, words, responses, use_hash, named):
+	def __init__(self, phrases, words, responses, use_hash, named, start, end):
 		self.phrases = phrases
 		self.words = words
 		self.responses = responses
 		self.use_hash = use_hash
 		self.named = named
+		self.start = start
+		self.end = end
 
 	def get_response(self, message, tokens, user):
 		has_trigger = False
@@ -41,7 +43,7 @@ class Response:
 			else:
 				result = self.random()
 		result = result.replace("user_id", "<@" + user + ">")
-		return result
+		return start + result + end
 
 	def hash(self, text):
 		hashValue = 11;
@@ -63,6 +65,12 @@ class Response_master:
 			for event in json_events["Events"]:
 				use_hash = "Hash" in event and event["Hash"]
 				named = "Named" in event and event["Named"]
+				start = ""
+				end = ""
+				if "Start" in event:
+					start = event["Start"]
+				if "End" in event:
+					end = event["End"]
 				phrases = []
 				words = []
 				responses = []
@@ -74,7 +82,7 @@ class Response_master:
 						phrases.append(p)
 				for r in event["Responses"]:
 					responses.append(r)
-				self.events.append(Response(phrases, words, responses, use_hash, named))
+				self.events.append(Response(phrases, words, responses, use_hash, named, start, end))
 		except :
 			msg_writer.write_custom_error("Error loading JSON file")
 			self.events = []
