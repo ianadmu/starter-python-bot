@@ -23,6 +23,9 @@ class TicTacToeManager:
 	def get_message(self, channel, message, user):
 		players = self.user_manager.get_users_mentioned(message)
 		players.add(user)
+		if len(players) > 2:
+			self.msg_writer.send_message(channel, "You may not have more than two players currently")
+			return
 		tokens = message.split()
 		size = 3
 		length = 3
@@ -47,5 +50,6 @@ class TicTacToeManager:
 		if match_type:
 			game = TicTacToe(size, length, match_type, players)
 			self.game_manager.add_game(game, players, channel, TicTacToeManager.name)
+			self.msg_writer.send_message(channel, game.starting_message())
 		else:
 			self.game_manager.process_message(players, channel, TicTacToeManager.name, move, user)

@@ -113,6 +113,13 @@ class TicTacToe:
 		if self.turn and self.game_type != "pvp":
 			self._self_move(self.comp_player)
 
+	def starting_message():
+		player_string = ""
+		for name in self.players:
+			player_string += name + " will be playing as " + TicTacToe.tokens[self.players[name]] + '\n'
+
+		return player_string
+
 	def _play_self(self):
 		end_message = "Cats Game!\n"
 		while not self.is_over():
@@ -247,7 +254,7 @@ class TicTacToe:
 	def _get_move_error(self, move, player_num):
 		x = self._getX(move)
 		y = self._getY(move)
-		if self.game_type == "PVP" and (2 - self.turn) != player_num:
+		if self.game_type == "pvp" and (2 - self.turn) != player_num:
 			return "It's not your turn"
 		if x == None:
 			return "You must have at least one letter"
