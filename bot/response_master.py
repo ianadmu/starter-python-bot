@@ -39,10 +39,9 @@ class Response:
 
 		if has_trigger and (not self.named or is_named):
 			if self.use_hash:
-				result = self.hash(message)
+				result = self.start + self.hash(message) + self.end
 			else:
-				result = self.random()
-		result = self.start + result + self.end
+				result = self.start + self.random() + self.end
 		result = result.replace("user_id", "<@" + user + ">")
 		return result
 
