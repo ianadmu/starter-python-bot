@@ -118,7 +118,7 @@ class TicTacToe:
 		for name in self.players:
 			player_string += name + " will be playing as " + TicTacToe.tokens[self.players[name]] + '\n'
 
-		player_string += TicTacToe.tokens[2 - self.turn] + "will be going next"	
+		player_string += TicTacToe.tokens[2 - not self.turn] + " will be going next"	
 		return player_string
 
 	def _play_self(self):
