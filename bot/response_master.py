@@ -42,8 +42,9 @@ class Response:
 				result = self.hash(message)
 			else:
 				result = self.random()
+		result = self.start + result + self.end
 		result = result.replace("user_id", "<@" + user + ">")
-		return start + result + end
+		return result
 
 	def hash(self, text):
 		hashValue = 11;
