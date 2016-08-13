@@ -113,11 +113,12 @@ class TicTacToe:
 		if self.turn and self.game_type != "pvp":
 			self._self_move(self.comp_player)
 
-	def starting_message():
+	def starting_message(self):
 		player_string = ""
 		for name in self.players:
 			player_string += name + " will be playing as " + TicTacToe.tokens[self.players[name]] + '\n'
 
+		player_string += TicTacToe.tokens[2 - self.turn] + "will be going next"	
 		return player_string
 
 	def _play_self(self):
