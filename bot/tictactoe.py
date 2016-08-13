@@ -139,6 +139,8 @@ class TicTacToe:
 				self.turn = not self.turn
 				if self.winner:
 					return "You win!\n" + self.__str__()
+				elif self.is_over():
+					return "Cats Game!\n" + self.__str__()
 				else:
 					self._self_move(self.comp_player)
 					if self.winner:

@@ -30,9 +30,13 @@ class TicTacToeManager:
 		move = ""
 		for token in tokens:
 			if TicTacToeManager.size_command in token:
-				size = int(re.search(r'\d+', token).group())
+				numbers = re.search(r'\d+', token)
+				if numbers:
+					size = int(re.search(r'\d+', token).group())
 			elif TicTacToeManager.length_command in token:
-				length = int(re.search(r'\d+', token).group())
+				numbers = re.search(r'\d+', token)
+				if numbers:
+					length = int(re.search(r'\d+', token).group())
 			elif token == TicTacToeManager.zac_command:
 				match_type = TicTacToeManager.zac_command
 			elif token == TicTacToeManager.pvp_command:
