@@ -19,6 +19,7 @@ class Response:
 	def get_emoji_response(self, reaction):
 		if reaction in self.emoji:
 			return self.random()
+		return ""
 
 	def get_response(self, message, tokens, user):
 		has_trigger = False
