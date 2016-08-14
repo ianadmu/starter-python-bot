@@ -8,7 +8,8 @@
 
 		{
 			"Triggers": {
-				"Words": ["shit", "fuck", "piss", "cunt", "cocksucker", "motherfucker", "tits", "fart", "turd", "shitstain", "twat", "horseshit"]
+				"Words": ["shit", "fuck", "piss", "cunt", "cocksucker", "motherfucker", "tits", "fart", "turd", "shitstain", "twat", "horseshit"],
+				"Emoji": ["middle_finger", "reversed_hand_with_middle_finger_extended"]
 			},
 			"Responses": ["Do you kiss your mother with that mouth?"]
 		},
@@ -43,7 +44,8 @@
 
 		{
 			"Triggers": {
-				"Words": ["cry", "crying"]
+				"Words": ["cry", "crying"],
+				"Emoji": ["cry"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"]
 		},
