@@ -39,7 +39,6 @@ class RtmEventHandler(object):
             self.msg_writer.write_help_message(event['channel'])
         elif event_type == "reaction_added":
             response_master_response = self.response_master.get_emoji_response(event["reaction"])
-            self.msg_writer.send_message("D1WN2RGK1", response_master_response + "!")
             if response_master_response and "channel" in event["item"]:
                 self.msg_writer.write_slow(event["item"]['channel'], response_master_response)
         else:
