@@ -178,7 +178,8 @@
 		{
 			"Triggers": {
 				"Words": ["bender"],
-				"Phrases": ["bend it"]
+				"Phrases": ["bend it"],
+				"Emoji": ["bender","benderr"],
 			},
 			"Start":"\"",
 			"End":"\"\n :bender:",

@@ -6,19 +6,11 @@ class Response:
 
 	names = ["zac", "qbot"]
 
-	def __init__(self, phrases, words, emoji, responses, use_hash, named, start, end):
-		self.phrases = phrases
-		self.words = words
-		self.responses = responses
-		self.use_hash = use_hash
-		self.named = named
-		self.start = start
-		self.end = end
+	def __init__(self, emoji, responses, added, removed):
 		self.emoji = emoji
-
-	def get_emoji_response(self, reaction):
-		if reaction in self.emoji:
-			return self.random()
+		self.responses = responses
+		self.added = added
+		self.removed = removed
 
 	def get_response(self, message, tokens, user):
 		has_trigger = False
@@ -44,9 +36,9 @@ class Response:
 
 		if has_trigger and (not self.named or is_named):
 			if self.use_hash:
-				result = self.hash(message)
+				result = self.start + self.hash(message) + self.end
 			else:
-				result = self.random()
+				result = self.start + self.random() + self.end
 		result = result.replace("user_id", "<@" + user + ">")
 		return result
 
@@ -55,16 +47,16 @@ class Response:
 		for character in text:
 			hashValue *= 47
 			hashValue += ord(character)
-		return self.start + self.responses[hashValue % len(self.responses)] + self.end
+		return self.responses[hashValue % len(self.responses)]
 
 	def random(self):
-		return self.start + random.choice(self.responses) + self.end
+		return random.choice(self.responses)
 
-class Response_master:
+class Emoji_master:
 
 	def __init__(self, msg_writer):
 		try:
-			master_file = open(os.path.join('./resources', 'events.txt'), 'r')
+			master_file = open(os.path.join('./resources', 'emoji_event.txt'), 'r')
 			json_events = json.load(master_file)
 			self.events = []
 			for event in json_events["Events"]:
@@ -78,7 +70,6 @@ class Response_master:
 					end = event["End"]
 				phrases = []
 				words = []
-				emoji = []
 				responses = []
 				if "Words" in event["Triggers"]:
 					for w in event["Triggers"]["Words"]:
@@ -86,25 +77,12 @@ class Response_master:
 				if "Phrases" in event["Triggers"]:
 					for p in event["Triggers"]["Phrases"]:
 						phrases.append(p)
-				if "Emoji" in event["Triggers"]:
-					for e in event["Triggers"]["Emoji"]:
-						emoji.append(e)
 				for r in event["Responses"]:
 					responses.append(r)
-				self.events.append(Response(phrases, words, emoji, responses, use_hash, named, start, end))
+				self.events.append(Response(phrases, words, responses, use_hash, named, start, end))
 		except :
 			msg_writer.write_custom_error("Error loading JSON file")
 			self.events = []
-
-	def get_emoji_response(self, response):
-		combined_responses = ""
-		for event in self.events:
-			current_response = event.get_emoji_response(response)
-			if current_response != "":
-				current_response += '\n'
-			combined_responses += current_response
-
-		return combined_responses
 
 	def get_response(self, message, user):
 		combined_responses = ""

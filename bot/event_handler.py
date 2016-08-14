@@ -37,6 +37,10 @@ class RtmEventHandler(object):
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
+        elif event_type == "reaction_added":
+            response_master_response = self.response_master.get_emoji_response(event["reaction"])
+            if response_master_response and "channel" in event["item"]:
+                self.msg_writer.write_slow(event['channel'], response_master_response)
         else:
             pass
 
