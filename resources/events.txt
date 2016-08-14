@@ -29,7 +29,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["garret"]
+				"Words": ["garret", "gurrit"]
 			},
 			"Responses": ["You fucker, can you not count to two?"]
 		},
