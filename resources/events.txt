@@ -16,6 +16,13 @@
 
 		{
 			"Triggers": {
+				"Phrases": ["donger", "dong", "bulldog"]
+			},
+			"Responses": ["ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ"]
+		},
+
+		{
+			"Triggers": {
 				"Phrases": ["____"]
 			},
 			"Responses": ["You are a monster"]
