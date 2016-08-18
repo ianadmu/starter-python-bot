@@ -96,7 +96,7 @@ class RtmEventHandler(object):
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
 
-            rude_manager.run(channel, user)
+            self.rude_manager.run(channel, user)
 
             response_master_response = self.response_master.get_response(msg_txt, user)
 
