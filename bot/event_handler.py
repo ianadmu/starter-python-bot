@@ -5,6 +5,7 @@ from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
 from game_manager import GameManager
+from rude_manager import RudeManager
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ class RtmEventHandler(object):
         self.tictactoe_manager = TicTacToeManager(self.msg_writer, self.user_manager, self.game_manager)
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
+        self.rude_manager = RudeManager(self.msg_writer)
 
     def handle(self, event):
 
@@ -93,6 +95,8 @@ class RtmEventHandler(object):
             user = event['user']
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
+
+            rude_manager.run(channel, user)
 
             response_master_response = self.response_master.get_response(msg_txt, user)
 
