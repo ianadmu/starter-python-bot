@@ -100,6 +100,12 @@ class RtmEventHandler(object):
 
             response_master_response = self.response_master.get_response(msg_txt, user)
 
+            if lower_txt == "channelinfo":
+                self.msg_writer.send_message(channel, channel)
+
+            if lower_txt == "userinfo":
+                self.msg_writer.send_message(channel, user)
+
             if response_master_response:
                 self.msg_writer.write_slow(channel, response_master_response)
 
