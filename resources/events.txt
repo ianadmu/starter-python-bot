@@ -37,6 +37,13 @@
 
 		{
 			"Triggers": {
+				"Phrases": ["well played", "well met"]
+			},
+			"Responses": [">Well Met!"]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["garret", "gurrit"]
 			},
 			"Responses": ["You fucker, can you not count to two?"]
@@ -149,6 +156,13 @@
 			},
 			"Named": true,
 			"Responses": ["1","2","3","4","5","6"]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["kkk"]
+			},
+			"Responses": ["Holy shit calm down."]
 		},
 
 		{
