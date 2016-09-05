@@ -1,11 +1,13 @@
 import json
 import logging
 import re
+import os.path
 from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
 from game_manager import GameManager
 from rude_manager import RudeManager
+from markov import Markov
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +21,13 @@ class RtmEventHandler(object):
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
+
+        self.lotrMarkov = Markov(3)
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
+
 
     def handle(self, event):
 
@@ -99,6 +108,10 @@ class RtmEventHandler(object):
             self.rude_manager.run(channel, user)
 
             response_master_response = self.response_master.get_response(msg_txt, user)
+
+            if channel == 'C244LFHS7' and message == "markov":
+                #markov
+                self.msg_writer.send_message(channel, str(self.lotrMarkov))
 
             if lower_txt == "channelinfo":
                 self.msg_writer.send_message(channel, channel)
