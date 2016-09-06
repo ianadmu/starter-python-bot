@@ -59,7 +59,7 @@ class RtmEventHandler(object):
             pass
 
     def _is_edited_with_star(self, message):
-        return "*" not in re.sub(self.bold_pattern, '', message)
+        return "*" in re.sub(self.bold_pattern, '', message)
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
