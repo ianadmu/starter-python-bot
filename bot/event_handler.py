@@ -22,6 +22,8 @@ class RtmEventHandler(object):
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
 
+        self.msg_writer.send_message('C244LFHS7', "made it this far")
+
         self.lotrMarkov = Markov(3)
         self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
         self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
