@@ -56,13 +56,8 @@ class RtmEventHandler(object):
             pass
 
     def _is_edited_with_star(self, message):
-        bold_pattern = re.compile("\*.*\*")
-
-        for token in message.split():
-            if "*" in token and not bold_pattern.match(token):
-                return True
-
-        return False
+        bold_pattern = re.compile("((?<!.)| )\*.*?\*( |(?!.))*")
+        return "*" in re.sub(bold_pattern, '', message):
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
