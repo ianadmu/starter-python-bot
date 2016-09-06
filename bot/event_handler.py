@@ -31,8 +31,8 @@ class RtmEventHandler(object):
         self.msg_writer.send_message('C244LFHS7', "The two towers are loaded")
         self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
         self.msg_writer.send_message('C244LFHS7', "The king has returned")
-        self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
-        self.msg_writer.send_message('C244LFHS7', "oh shit a hobbit")
+        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
+        # self.msg_writer.send_message('C244LFHS7', "oh shit a hobbit")
 
 
     def handle(self, event):
