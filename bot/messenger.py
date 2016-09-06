@@ -49,7 +49,7 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, msg)
 
-    def write_closing(self,):
+    def write_closing(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
         txt = random.choise(closing_msgs)
         self.send_message('C171ASJJK',txt)
