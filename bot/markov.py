@@ -9,8 +9,9 @@ class Markov:
 	maximum_length = 1000
 	words_that_end_in_periods = ("Mrs", "Mr", "Co", "M", "Dr", "Ms", "Sr", "St", "Rd", "Ave", "Mt", "Blvd", "Org", "Ltd")
 	terminators = [".", "!", "?"]
-	characters_to_remove = re.compile("[\n'\"`\”—‘’\(\):;]")
+	characters_to_remove = re.compile("[\n\"`\”—‘’\(\):;]")
 	phrase_to_remove = re.compile("BOOK .* ")
+	quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
 	def __init__(self, length):
 		self.length = length
@@ -25,6 +26,7 @@ class Markov:
 	def process_line(self, line):
 		line = re.sub(self.characters_to_remove, '', line) + ' '
 		line = re.sub(self.phrase_to_remove, '', line)
+		line = re.sub(self.quotes_on_the_outside_of_words, ' ', line)
 
 		for index in range(len(line)):
 			self.processing_string += line[index]
