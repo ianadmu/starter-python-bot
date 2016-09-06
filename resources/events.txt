@@ -118,7 +118,7 @@
 			"Triggers": {
 				"Words": ["boyer"]
 			},
-			"Start":"_,
+			"Start":"_",
 			"End":"_",
 			"Responses": ["It was working upstairs--", "Idk why it's not working now", "Last time I taught this course it was working", "We do take these seriously.... at least my boss does",
 				"Last time I taught this course I didn't have to do this", "I'll have to update my notes", "This was working earlier", "Sorry I'm late", "Sorry the example wasn't working last class, it should be working now",
