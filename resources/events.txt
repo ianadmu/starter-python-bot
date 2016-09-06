@@ -118,10 +118,12 @@
 			"Triggers": {
 				"Words": ["boyer"]
 			},
-			"Responses": ["_It was working upstairs--_", "_Idk why it's not working now_", "_Last time I taught this course it was working_", "_We do take these seriously.... at least my boss does_",
-				"_Last time I taught this course I didn't have to do this_", "_I'll have to update my notes_", "_This was working earlier_", "_Sorry I'm late_", "_Sorry the example wasn't working last class, it should be working now_",
-				"_........so that's basically what you'll need to do for assignment one_", "_[After 5 minutes of lecturing] Okay let's take a 10-minute break_",
-				"_*Shows up 15 minutes late_", "_*Takes 15 minutes to notice a raised hand_", "_This code came from a tutorial_", "_Looks like break-time [Leaves]_"
+			"Start":"_,
+			"End":"_",
+			"Responses": ["It was working upstairs--", "Idk why it's not working now", "Last time I taught this course it was working", "We do take these seriously.... at least my boss does",
+				"Last time I taught this course I didn't have to do this", "I'll have to update my notes", "This was working earlier", "Sorry I'm late", "Sorry the example wasn't working last class, it should be working now",
+				"........so that's basically what you'll need to do for assignment one", "[After 5 minutes of lecturing] Okay let's take a 10-minute break",
+				"*Shows up 15 minutes late", "*Takes 15 minutes to notice a raised hand", "This code came from a tutorial", "Looks like break-time [Leaves]"
 			]
 		},
 
