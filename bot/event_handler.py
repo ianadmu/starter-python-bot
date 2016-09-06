@@ -12,6 +12,9 @@ from markov import Markov
 logger = logging.getLogger(__name__)
 
 class RtmEventHandler(object):
+
+    bold_pattern = re.compile("(((?<!.)| )\*.+?\*( |(?!.)))*")
+
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
@@ -56,8 +59,7 @@ class RtmEventHandler(object):
             pass
 
     def _is_edited_with_star(self, message):
-        bold_pattern = re.compile("((?<!.)| )\*.*?\*( |(?!.))*")
-        return "*" in re.sub(bold_pattern, '', message):
+        return "*" not in re.sub(self.bold_pattern, '', message)
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
