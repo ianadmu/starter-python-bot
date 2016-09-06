@@ -51,7 +51,7 @@ class Messenger(object):
 
     def write_closing(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
-        txt = random.choise(closing_msgs)
+        txt = random.choice(closing_msgs)
         self.send_message('C1SDALDG9',txt)
 
     def write_dont_talk(self, channel_id, user_id, timestamp):
