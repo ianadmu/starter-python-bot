@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class RtmEventHandler(object):
 
-    bold_pattern = re.compile("(((?<!.)| )\*.+?\*( |(?!.)))*")
+    bold_pattern = re.compile("(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))")
 
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
