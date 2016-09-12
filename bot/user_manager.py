@@ -14,6 +14,10 @@ class UserManager:
 			if "error" in self.users:
 				msg_writer.write_custom_error(self.users["error"])
 
+	def print_all_users(self, msg_writer):
+		for name, user_id in self.user_ids:
+			msg_writer.write_custom_error(name + ": " + user_id)
+
 	def get_user_by_id(self, user_id):
 		if user_id in self.user_names:
 			return self.user_names[user_id]

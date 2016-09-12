@@ -116,6 +116,9 @@ class RtmEventHandler(object):
             if lower_txt == "userinfo":
                 self.msg_writer.send_message(channel, user)
 
+            if lower_txt == "allusersinfo":
+                self.user_manager.print_all_users(self.msg_writer)
+
             if response_master_response:
                 self.msg_writer.write_slow(channel, response_master_response)
 
