@@ -1,7 +1,7 @@
 import os.path
 import random
 import re
-import Markov from markov
+from markov import Markov
 
 sass_flag = re.compile('sass[a-z]* ')
 
