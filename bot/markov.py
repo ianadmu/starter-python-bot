@@ -7,7 +7,7 @@ from collections import defaultdict
 from collections import deque
 class Markov:
 	maximum_length = 1000
-	words_that_end_in_periods = ("Mrs", "Mr", "Co", "M", "Dr", "Ms", "Sr", "St", "Rd", "Ave", "Mt", "Blvd", "Org", "Ltd")
+	words_that_end_in_periods = ("Mrs", "Mr", "Co", "M", "Dr", "Ms", "Sr", "St", "Rd", "Ave", "Mt", "Blvd", "Org", "Ltd", "...")
 	terminators = [".", "!", "?"]
 	characters_to_remove = re.compile("[\n\"`\”—‘’\(\):;]")
 	phrase_to_remove = re.compile("BOOK .* ")
