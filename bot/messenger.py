@@ -20,6 +20,7 @@ from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
 
+
 class Messenger(object):
     def __init__(self, slack_clients):
         self.clients = slack_clients
@@ -228,6 +229,7 @@ class Messenger(object):
         # response = WeatherController.get_weather()
         self.send_message(channel_id, response)
         self.write_food(channel_id)
+        self.write_apology(channel_id)
 
     def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
