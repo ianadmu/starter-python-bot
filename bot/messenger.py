@@ -226,8 +226,8 @@ class Messenger(object):
     def write_weather(self, channel_id):
         self.write_apology(channel_id)
         self.clients.send_user_typing_pause(channel_id)
-        response = "I do not know the weather today :zacefron: "
-        "Please let me give you this instead:"
+        response = """I do not know the weather today :zacefron:
+                   Please let me give you this instead:"""
         # response = WeatherController.get_weather()
         self.send_message(channel_id, response)
         self.write_food(channel_id)
@@ -253,7 +253,6 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_apology(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.apology_manager.get_random_apology())
 
     def write_solution(self, channel_id, msg):
