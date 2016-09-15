@@ -73,8 +73,8 @@ class WeatherController:
 
         try:
             response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        except urllib2.URLError as e:
-            return WeatherController.get_weather_error_response(e)
+        #except urllib2.URLError as e:
+         #   return WeatherController.get_weather_error_response(e)
         except Exception as e:
             return "Error: " + WeatherController.get_weather_error_response(e)
         else:
