@@ -224,10 +224,9 @@ class Messenger(object):
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
 
     def write_weather(self, channel_id):
-        self.write_apology(channel_id)
         self.clients.send_user_typing_pause(channel_id)
         response = """I do not know the weather today :zacefron:
-                   Please let me give you this instead:"""
+        Please let me give you this instead:"""
         # response = WeatherController.get_weather()
         self.send_message(channel_id, response)
         self.write_food(channel_id)
