@@ -62,15 +62,20 @@ class WeatherController:
             return ":zacefron:"
     get_icon = staticmethod(get_icon)
 
+    def get_weather_error_response(e):
+        my_string = (":zacefron: Have a very merry time "
+                     "not knowing the weather :theotherzacefron:")
+        response = str(e.reason) + "\n" + my_string
+        return response
+
     def get_weather():
 
         try:
             response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        #except urllib2.URLError as e:
-            #return str(e.reason)
+        except urllib2.URLError as e:
+            return WeatherController.get_weather_error_response(e)
         except Exception as e:
-            return str(e.reason) + ("\n:zacefron: wishes you a very merry time "
-                                "not knowing the weather :theotherzacefron:")
+            return "Error: " + WeatherController.get_weather_error_response(e)
         else:
             data = response.read().decode('utf-8')
             temp = XML(data).find("current_condition").find("temp_C").text
