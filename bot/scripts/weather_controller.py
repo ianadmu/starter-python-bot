@@ -4,7 +4,7 @@ import time
 import optparse
 import json
 import logging
-import urllib
+import urllib2
 import time
 
 logger = logging.getLogger(__name__)
@@ -65,7 +65,9 @@ class WeatherController:
     def get_weather():
 
         try:
-             response = urllib.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
+            response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
+        except urllib2.error.URLError as e:
+            return "nanana" + e
         except Exception:
             return (":zacefron: wishes you a very merry time not knowing the "
                     "weather :theotherzacefron:")
