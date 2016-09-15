@@ -225,13 +225,12 @@ class Messenger(object):
 
     def write_weather(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        response = ("Sorry, I don't know the weather today :zacefron: \n"
-                    "It's always hot when I'm around :sunglasses: \n"
-                    "Please let me give you this instead:")
+        response = "Sorry, I don't know the weather today :zacefron: "
+        line2 = "Anyways, it's always hot when I'm around :sunglasses: "
         # response = WeatherController.get_weather()
         self.send_message(channel_id, response)
-        self.write_food(channel_id)
-        self.write_apology(channel_id)
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, line2)
 
     def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
