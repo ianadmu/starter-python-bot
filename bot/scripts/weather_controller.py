@@ -2,7 +2,7 @@ import sys
 import os
 import time
 import optparse
-import json 
+import json
 import urllib
 import time
 
@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 API="954b5bfc706747b6aff23600161607"
 URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
- 
+
 CITY="Winnipeg"
 SUNSET_HOUR = 21
 SUNRISE_HOUR = 5
@@ -65,8 +65,10 @@ class WeatherController:
         try:
              response = urllib.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
              #req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        except urllib.error.URLError as e: 
+        except urllib.error.URLError as e:
             return ":zacefron: wishes you a very merry time not knowing the weather :theotherzacefron:"
+        except:
+            return "nanana"
         else:
             data = response.read().decode('utf-8')
             temp = XML(data).find("current_condition").find("temp_C").text
