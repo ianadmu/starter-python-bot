@@ -4,6 +4,7 @@ import logging
 import random
 import re
 import os.path
+import xkcd_manager
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -18,6 +19,7 @@ from apology_manager import ApologyManager
 from equation_manager import EquationManager
 
 logger = logging.getLogger(__name__)
+
 
 class Messenger(object):
     def __init__(self, slack_clients):
@@ -34,23 +36,35 @@ class Messenger(object):
         self.user_dict = {}
 
     def send_message(self, channel_id, msg):
-        # in the case of Group and Private channels, RTM channel payload is a complex dictionary
+        # in the case of Group and Private channels, RTM channel payload
+        # is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
-        #logger.debug('Sending msg: {} to channel: {}'.format(msg, channel_id))
+        # logger.debug(
+        #   'Sending msg: {} to channel: {}'.format(msg, channel_id)
+        # )
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
 
-    def write_closing(self,):
-        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!", "I'm dying again :sob:", "Have you gotten tired of this face :zacefron: ?"]
-        txt = random.choise(closing_msgs)
-        self.send_message('C171ASJJK',txt)
+    def write_custom_error(self, msg):
+        self.send_message('C1SDALDG9', msg)
+
+    def write_slow(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, msg)
+
+    def write_closing(self):
+        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
+                        "I'm dying again :sob:",
+                        "Have you gotten tired of this face :zacefron: ?"]
+        txt = random.choice(closing_msgs)
+        self.send_message('C1SDALDG9', txt)
 
     def write_dont_talk(self, channel_id, user_id, timestamp):
         if user_id in self.user_dict:
             if float(self.user_dict[user_id]) + 600 >= float(timestamp):
                 txt = 'PSSST... no talking in the announcements channel!'
-                self.send_message(channel_id,txt)
+                self.send_message(channel_id, txt)
         self.user_dict[user_id] = timestamp
 
     def write_message_deleted(self, channel_id):
@@ -66,6 +80,7 @@ class Messenger(object):
             txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
+            self.write_xkcd(channel_id, "15")
         else:
             self.write_greeting(channel_id, user_id)
 
@@ -86,7 +101,7 @@ class Messenger(object):
             "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
             "> `<@" + bot_uid + "> french <phrase>` - I know flawless French! I'll translate for you :bombardier:",
             "> `<@" + bot_uid + "> marry me` - ...Are you going to propose to me?? _Le gasp_ :le gasp:",
-            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato",
+            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato:",
             "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
             "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
@@ -94,15 +109,18 @@ class Messenger(object):
             "> `encourage` - Let me help you get back on track. :grinning:",
             "> `hungry | feed` - Have some food courtesy of moi :banana:",
             "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
-            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:"]
+            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:",
+            "> `Pigeon Mode` - Want a pigeon sound? Type a sentence with 'coo ' in it.",
+            "> `XKCD` - Want an XKCD comic? Type it's number to get it, or leave it blank to get the latest one",
+            "> `TicTacToe` - Want to play TicTacToe? Type 'TicTacToe help' for more information"]
         txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
             txt += '\n'
-        
+
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, txt)
-    
+
     def write_to_french(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
         msg = msg.lower()
@@ -119,48 +137,16 @@ class Messenger(object):
         txt = '{}, <@{}>!'.format(random.choice(greetings), user_id)
         self.send_message(channel_id, txt)
 
-    def write_good_morning(self, channel_id, user_id):
-        self.clients.send_user_typing_pause(channel_id)
-        good_mornings = ['Good morning', 'Morning', 'Guten Morgen', 'Bonjour', 'Ohayou', 'Good morning to you', 'Aloha', 'Konnichiwashington', 'Buenos dias', ':sunny: Good morning']
-        txt = '{}, <@{}>!'.format(random.choice(good_mornings), user_id)
-        self.send_message(channel_id, txt)
-  
     def write_good_night(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
-        good_nights = ['Goodnight', ':crescent_moon: Good night', 'Goodnight, my dear', 'Sweet dreams', 'Don\'t let the bed bugs bite', 
+        good_nights = ['Goodnight', ':crescent_moon: Good night', 'Goodnight, my dear', 'Sweet dreams', 'Don\'t let the bed bugs bite',
         'Pleasant dreams', 'Sleep well', 'Until tomorrow then', 'May your dreams be filled with my beautiful face :zacefron:']
         txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
-        self.send_message(channel_id, txt)
-
-    def write_your_welcome(self, channel_id, user_id):
-        self.clients.send_user_typing_pause(channel_id)
-        your_welcomes = ['No problem mon', 'Please don\'t use Comic Sans; this isn\'t a lemonade stand', 'Why, you\'re welcome my friend', 'Don\'t mention it', 'Don\'t mention it', 'You\'re welcome', 'It was a pleasure', 'It was my pleasure', 'No sweat', 'Anytime', '_Le gratitude_ pleases me. :heart: Thank you', 'No worries', 'No, thank you']
-        txt = '{}, <@{}>!'.format(random.choice(your_welcomes), user_id)
         self.send_message(channel_id, txt)
 
     def write_spelling_mistake(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         txt = 'Spelft it wronbg again I see...'
-        self.send_message(channel_id, txt)
-    
-    def write_boyer_bot(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        boyer_responses = ['It was working upstairs--', 'Idk why it\'s not working now', 'Last time I taught this course it was working', 'We do take these seriously.... at least my boss does', 
-        'Last time I taught this course I didn\'t have to do this', 'I\'ll have to update my notes', 'This was working earlier',
-        'Sorry I\'m late', 'Sorry the example wasn\'t working last class, it should be working now', 
-        '........so that\'s basically what you\'ll need to do for assignment one', '[After 5 minutes of lecturing] Okay let\'s take a 10-minute break',
-        '*Shows up 15 minutes late', '*Takes 15 minutes to notice a raised hand', 'This code came from a tutorial', 'Looks like break-time [Leaves]']
-        txt = '_{}_'.format(random.choice(boyer_responses))
-        self.send_message(channel_id, txt)
-
-    def write_crying_into_my_tea(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = ':joy: _CRYING INTO MY TEA_ :joy:'
-        self.send_message(channel_id, txt)
-
-    def write_wiener(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'I AM A WIENER!!! :eggplant: ...jk that\'s Steven'
         self.send_message(channel_id, txt)
 
     def write_prompt(self, channel_id):
@@ -176,16 +162,16 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
         self.send_message(channel_id, answer)
-        
+
     def write_encouragement(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, 'Get your shit together <@{0}>'.format(user_id))
-        
+
     def write_food(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         food = self.food_getter.get_random_food()
         self.send_message(channel_id, food)
-        
+
     def write_bang(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
         bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
@@ -195,7 +181,7 @@ class Messenger(object):
         pkmn = self.pokemon_caster.i_choose_you(msg)
         if pkmn is not None:
             self.send_message(channel_id, pkmn)
-        
+
     def write_whos_that_pokemon(self, channel_id):
         self.send_message(channel_id, self.whos_that_pokemon_manager.whos_that_pkmn())
 
@@ -207,21 +193,6 @@ class Messenger(object):
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
         self.send_message(channel_id, txt)
-
-    def write_no_qbot(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'I\'m no Qbot but...'
-        self.send_message(channel_id, txt)
-
-    def write_fuck_this(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        attachment = "https://www.youtube.com/watch?v=5FjWe31S_0g"
-        self.send_message(channel_id, attachment)
-        
-    def write_do_it(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        attachment = "https://www.youtube.com/watch?v=ZXsQAXx_ao0"
-        self.send_message(channel_id, attachment)
 
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
@@ -253,11 +224,15 @@ class Messenger(object):
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
 
     def write_weather(self, channel_id):
+        # line1 = WeatherController.get_weather()
+        line1 = "Sorry, I don't know the weather today :zacefron: "
+        line2 = "Anyways, it's always hot when I'm around :sunglasses: "
         self.clients.send_user_typing_pause(channel_id)
-        response = WeatherController.get_weather()
-        self.send_message(channel_id, response)
+        self.send_message(channel_id, line1)
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, line2)
 
-    def write_loud(self,channel_id,origMessage):
+    def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
         self.send_message(channel_id, self.loud_manager.get_random_loud())
 
@@ -266,11 +241,11 @@ class Messenger(object):
         response = self.hogwarts_house_sorter.sort_into_house(msg)
         txt = '<@{}>: {}'.format(user_id, response)
         self.send_message(channel_id, txt)
-    
+
     def write_explanation(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.explanation_manager.get_explanation())
-        
+
     def write_sass(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
         txt = self.sass_manager.get_sass(msg)
@@ -283,12 +258,12 @@ class Messenger(object):
     def write_solution(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, self.equation_manager.solve(msg))
-        
+
     def write_sweetpotato_me(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
         self.send_message(channel_id, txt)
-        
+
     def write_marry_me(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
         responses = ['OKAY! :ring:', 'Ummm, how \'bout no.', 'Shoot I would...if you were :kiera:', '_le shrug_ \'k.',
@@ -323,7 +298,7 @@ class Messenger(object):
         self.send_message(channel_id, emoji)
 
     def write_story(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)        
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, "STORY TIME")
         self.clients.send_user_typing_pause(channel_id)
         starts = ['Once upon a time', 'In the beginning', 'A long time ago']
@@ -331,9 +306,9 @@ class Messenger(object):
         locations = ['heights of a mountain', 'depghts of the ocean', 'sandiest beach of all time', 'most amazing wizard convention that has ever existed', 'smoky cauldron next door', 'alphabet']
         start_txt = '{} there were two {} located in the {}...'.format(random.choice(starts), random.choice(protagonists), random.choice(locations))
         self.send_message(channel_id, start_txt)
-        dialougue = ["\"Is it really?\"", "\"Absolutely. I'm awfully sorry about the odor though. That must bother you.\"", "\"Don't! Please don't.\"", "\"But _look_ at them!\"", "\"I'm only talking\"", "\"It's much easier if I talk. But I don't want to bother you.\"", 
-                    "\"You know it doesn't bother me\"", "\"Please tell me what I can do. There must be something I can do.\"", "\"You might think about some one else.\"", "\"I don't mean that.\"", "\"You do it. I'm too tired.\"", "\"Anything you do too bloody long.\"", 
-                    "\"Do you feel anything strange?\"", "\"No. Just a little sleepy.\"", "\"You know the only thing I've never lost is curiosity.\"", "\"Tell it to go away.\"",  "\"What's the matter?\"", "\"I don't really care about it, you know.\"", "\"What about the tea?\"",  
+        dialougue = ["\"Is it really?\"", "\"Absolutely. I'm awfully sorry about the odor though. That must bother you.\"", "\"Don't! Please don't.\"", "\"But _look_ at them!\"", "\"I'm only talking\"", "\"It's much easier if I talk. But I don't want to bother you.\"",
+                    "\"You know it doesn't bother me\"", "\"Please tell me what I can do. There must be something I can do.\"", "\"You might think about some one else.\"", "\"I don't mean that.\"", "\"You do it. I'm too tired.\"", "\"Anything you do too bloody long.\"",
+                    "\"Do you feel anything strange?\"", "\"No. Just a little sleepy.\"", "\"You know the only thing I've never lost is curiosity.\"", "\"Tell it to go away.\"",  "\"What's the matter?\"", "\"I don't really care about it, you know.\"", "\"What about the tea?\"",
                     "\"Why nothing.\"", "\"Why what, dear?\"", "\"You tell them why\"", "\"It's not good for you.\"", "\"I never learned.\"", "\"That's all right.\""]
         for i in range(8):
             txt = random.choice(dialougue)
@@ -341,9 +316,9 @@ class Messenger(object):
             self.send_message(channel_id, txt)
         conclusions = ["Then they went home.", "Then they went home and lived happily ever after.", "Then a witch swooped down and killed them.", "Then a truck ran over them", 'Then they lived happily ever after']
         end_txt = random.choice(conclusions)
-        self.clients.send_user_typing_pause(channel_id)        
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, end_txt)
-        self.clients.send_user_typing_pause(channel_id)        
+        self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, "THE END")
 
     def write_flip(self,channel_id):
@@ -358,10 +333,18 @@ class Messenger(object):
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
         token = re.split(riri_flag, msg.lower())
-        target = token[1]
-        target = target.upper()
+        if len(token) > 1:
+            target = token[1]
+            target = target.upper()
+        else:
+            target = "WHY WOULD YOU JUST TYPE RIRI?\n"
         txt = ' '.join(target for num in range(5))
-        self.clients.send_user_typing_pause(channel_id) 
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, txt)
+
+    def write_xkcd(self, channel_id, msg):
+        self.clients.send_user_typing_pause(channel_id)
+        txt = xkcd_manager.getImageLocation(msg)
         self.send_message(channel_id, txt)
 
 

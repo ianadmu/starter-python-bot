@@ -1,13 +1,36 @@
 import json
 import logging
 import re
+import os.path
+from response_master import Response_master
+from tictactoe_manager import TicTacToeManager
+from user_manager import UserManager
+from game_manager import GameManager
+from rude_manager import RudeManager
+from markov import Markov
 
 logger = logging.getLogger(__name__)
 
 class RtmEventHandler(object):
+
+    bold_pattern = re.compile("(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))")
+
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+        self.game_manager = GameManager(self.msg_writer)
+        self.user_manager = UserManager(self.clients, self.msg_writer)
+        self.tictactoe_manager = TicTacToeManager(self.msg_writer, self.user_manager, self.game_manager)
+        self.response_master = Response_master(self.msg_writer)
+        self.user_manager = UserManager(self.clients, self.msg_writer)
+        self.rude_manager = RudeManager(self.msg_writer)
+
+        self.lotrMarkov = Markov(3)
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
+        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
+        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
+        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
+ 
 
     def handle(self, event):
 
@@ -28,25 +51,39 @@ class RtmEventHandler(object):
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
+        elif event_type == "reaction_added":
+            response_master_response = self.response_master.get_emoji_response(event["reaction"])
+            if response_master_response and "channel" in event["item"]:
+                self.msg_writer.write_slow(event["item"]['channel'], response_master_response)
         else:
             pass
+
+    def _is_edited_with_star(self, message):
+        return "*" in re.sub(self.bold_pattern, '', message)
 
     def is_loud(self,message):
         emoji_pattern = re.compile(":.*:")
         tag_pattern = re.compile("<@.*")
-        tokens = message.split()
 
+        tokens = message.split()
         if len(tokens) < 2: 
             return False
-        for token in message.split():
+        for token in tokens:
             if not (token.isupper() or emoji_pattern.match(token)) or tag_pattern.match(token):
                 return False
 
         return True
 
-    def _handle_message(self, event):
+    def _is_edited_by_user(self, event):
         if 'subtype' in event:
             if event['subtype'] == 'message_changed':
+                if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"]:
+                     return event["message"]["user"] == event["message"]["edited"]["user"]
+        return False
+
+    def _handle_message(self, event):
+        if 'subtype' in event:
+            if self._is_edited_by_user(event):
                 self.msg_writer.write_spelling_mistake(event['channel'])
             elif event['subtype'] == 'channel_join':
                 # someone joined a channel
@@ -62,12 +99,31 @@ class RtmEventHandler(object):
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
+            user_name = self.user_manager.get_user_by_id(user)
+            lower_txt = msg_txt.lower()
+
+            self.rude_manager.run(channel, user)
+
+            response_master_response = self.response_master.get_response(msg_txt, user)
+
+            if channel == 'C244LFHS7' or lower_txt == "markov":
+                #markov
+                self.msg_writer.send_message(channel, str(self.lotrMarkov))
+
+            if lower_txt == "channelinfo":
+                self.msg_writer.send_message(channel, channel)
+
+            if lower_txt == "userinfo":
+                self.msg_writer.send_message(channel, user)
+
+            if lower_txt == "allusersinfo":
+                self.user_manager.print_all_users(self.msg_writer)
+
+            if response_master_response:
+                self.msg_writer.write_slow(channel, response_master_response)
 
             if channel == 'C17QBAY2X':
                 self.msg_writer.write_dont_talk(channel, user, event['ts'])
-
-            if re.search('qbot', msg_txt.lower()):
-                self.msg_writer.write_no_qbot(channel)
 
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(channel, msg_txt)
@@ -75,41 +131,27 @@ class RtmEventHandler(object):
             if re.search('i choose you', msg_txt.lower()):
                 self.msg_writer.write_cast_pokemon(channel, msg_txt.lower())
 
-            if re.search('cry|crying', msg_txt.lower()):
-                self.msg_writer.write_crying_into_my_tea(channel)
-
-            if 'wiener' in msg_txt.lower():
-                self.msg_writer.write_wiener(channel)
-
-            if re.search('boyer', msg_txt.lower()):
-                self.msg_writer.write_boyer_bot(channel)
-
             if re.search('weather', msg_txt.lower()):
                 self.msg_writer.write_weather(channel)
 
-            if msg_txt.endswith('*'):
+            if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel)
-
-            if re.search('fuck this', msg_txt.lower()):
-                self.msg_writer.write_fuck_this(channel)
-                
-            if re.search('just do it', msg_txt.lower()):
-                self.msg_writer.write_do_it(channel)
 
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
+
+            if 'xkcd' in lower_txt:
+                requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
+                self.msg_writer.write_xkcd(channel, requestedComic)
+
+            if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
+                self.tictactoe_manager.get_message(channel, lower_txt, user_name)
                 
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(channel)
-                if re.search('hi |hey|hello|howdy|sup ', msg_txt.lower()) or msg_txt.lower().endswith(' hi') or msg_txt.lower().endswith(' sup'):
-                    self.msg_writer.write_greeting(channel, user)
-                if re.search('morning', msg_txt.lower()):
-                    self.msg_writer.write_good_morning(channel, user)
                 if re.search('night', msg_txt.lower()):
                     self.msg_writer.write_good_night(channel, user)
-                if re.search('thanks|thank you|thank-you', msg_txt.lower()):
-                    self.msg_writer.write_your_welcome(channel, user)
                 if 'joke' in msg_txt.lower():
                     self.msg_writer.write_joke(channel)
                 if 'french' in msg_txt.lower():

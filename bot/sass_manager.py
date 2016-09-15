@@ -1,6 +1,7 @@
 import os.path
 import random
 import re
+from markov import Markov
 
 sass_flag = re.compile('sass[a-z]* ')
 
@@ -9,10 +10,15 @@ class SassManager(object):
     def __init__(self):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sassy_remarks = self.sass_file.readlines()
+        self.sassMarkov = Markov(3)
+        self.sassMarkov.add_file(open(os.path.join('./resources', 'insults.txt'), 'r'))
 
     def get_sass(self, msg):
         target = self.get_target(msg)
-        sass = random.choice(self.sassy_remarks)
+        if random.choice([True, False]):
+            sass = random.choice(self.sassy_remarks)
+        else:
+            sass = str(self.sassMarkov)
         return 'Hey, {}! {}'.format(target, sass)
 
     def get_target(self, msg):

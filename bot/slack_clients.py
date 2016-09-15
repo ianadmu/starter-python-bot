@@ -57,6 +57,9 @@ class SlackClients(object):
     	user_info = response['user'].items()
     	return user_info[1][1]
 
+    def get_users(self):
+        return self.rtm.api_call("users.list", token=str(self.token))
+
     def upload_file_to_slack(self): 
     	my_file = os.path.join('./resources', 'pokemon_correct.txt')  #files = {'file': open('test.png', 'rb')}
     	self.web.files.upload(my_file, channels='#zac-testing')
