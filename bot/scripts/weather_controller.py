@@ -67,6 +67,7 @@ class WeatherController:
                      "not knowing the weather :theotherzacefron:")
         response = str(e.reason) + "\n" + my_string
         return response
+    get_weather_error_response = staticmethod(get_weather_error_response)
 
     def get_weather():
 
