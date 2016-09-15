@@ -3,9 +3,11 @@ import os
 import time
 import optparse
 import json
+import logging
 import urllib
 import time
 
+logger = logging.getLogger(__name__)
 from xml.etree.ElementTree import XML
 from datetime import datetime, timedelta
 
@@ -64,16 +66,14 @@ class WeatherController:
 
         try:
              response = urllib.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-             #req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        except urllib.URLError as e:
-            return ":zacefron: wishes you a very merry time not knowing the weather :theotherzacefron:"
-        except:
-            return "nanana"
+        except Exception:
+            return (":zacefron: wishes you a very merry time not knowing the "
+                    "weather :theotherzacefron:")
         else:
             data = response.read().decode('utf-8')
             temp = XML(data).find("current_condition").find("temp_C").text
-            feels_like= XML(data).find("current_condition").find("FeelsLikeC").text
-            conditions= XML(data).find("current_condition").find("weatherDesc").text
+            feels_like = XML(data).find("current_condition").find("FeelsLikeC").text
+            conditions = XML(data).find("current_condition").find("weatherDesc").text
             icon = WeatherController.get_icon(str.lower(conditions))
             if int(feels_like) != int(temp):
                 return "Winnipeg is currently :zacefron: "+temp+"C but feels like :theotherzacefron: "+feels_like+"C and conditions are "+conditions+" "+icon
