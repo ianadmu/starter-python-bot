@@ -224,13 +224,13 @@ class Messenger(object):
         self.clients.web.chat.post_message(channel_id, txt, attachments=[attachment], as_user='true')
 
     def write_weather(self, channel_id):
+        # line1 = WeatherController.get_weather()
+        line1 = "Sorry, I don't know the weather today :zacefron: "
+        line2 = "Anyways, it's always hot when I'm around :sunglasses: "
         self.clients.send_user_typing_pause(channel_id)
-        # response = "Sorry, I don't know the weather today :zacefron: "
-        # line2 = "Anyways, it's always hot when I'm around :sunglasses: "
-        response = WeatherController.get_weather()
-        self.send_message(channel_id, response)
-        # self.clients.send_user_typing_pause(channel_id)
-        # self.send_message(channel_id, line2)
+        self.send_message(channel_id, line1)
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message(channel_id, line2)
 
     def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
