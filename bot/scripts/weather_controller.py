@@ -66,11 +66,11 @@ class WeatherController:
 
         try:
             response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        except urllib2.URLError as e:
-            return str(e.reason) + "\n\n" + str(e)
-        except Exception:
-            return (":zacefron: wishes you a very merry time not knowing the "
-                    "weather :theotherzacefron:")
+        #except urllib2.URLError as e:
+            #return str(e.reason)
+        except Exception as e:
+            return e.message + ("\n:zacefron: wishes you a very merry time "
+                                "not knowing the weather :theotherzacefron:")
         else:
             data = response.read().decode('utf-8')
             temp = XML(data).find("current_condition").find("temp_C").text
