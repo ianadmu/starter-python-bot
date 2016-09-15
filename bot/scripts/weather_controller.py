@@ -67,7 +67,7 @@ class WeatherController:
         try:
             response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
         except urllib2.URLError as e:
-            return e
+            return str(e.reason) + "\n\n" + str(e)
         except Exception:
             return (":zacefron: wishes you a very merry time not knowing the "
                     "weather :theotherzacefron:")
