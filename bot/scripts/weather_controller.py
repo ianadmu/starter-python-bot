@@ -69,7 +69,7 @@ class WeatherController:
         #except urllib2.URLError as e:
             #return str(e.reason)
         except Exception as e:
-            return e.message + ("\n:zacefron: wishes you a very merry time "
+            return str(e.message) + ("\n:zacefron: wishes you a very merry time "
                                 "not knowing the weather :theotherzacefron:")
         else:
             data = response.read().decode('utf-8')
