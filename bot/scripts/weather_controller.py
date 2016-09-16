@@ -2,16 +2,18 @@ import sys
 import os
 import time
 import optparse
-import json 
-import urllib
+import json
+import logging
+import urllib2
 import time
 
+logger = logging.getLogger(__name__)
 from xml.etree.ElementTree import XML
 from datetime import datetime, timedelta
 
 API="954b5bfc706747b6aff23600161607"
 URL="http://api.worldweatheronline.com/premium/v1/weather.ashx"
- 
+
 CITY="Winnipeg"
 SUNSET_HOUR = 21
 SUNRISE_HOUR = 5
@@ -63,15 +65,18 @@ class WeatherController:
     def get_weather():
 
         try:
-             response = urllib.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-             #req = urllib.request.Request(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
-        except urllib.error.URLError as e: 
-            return ":zacefron: wishes you a very merry time not knowing the weather :theotherzacefron:"
+            response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
+        # except urllib2.URLError as e: # works but is not needed
+        except Exception as e:
+            my_string = (":zacefron: Have a very merry time "
+                         "not knowing the weather :theotherzacefron:")
+            response = str(e) + "\n" + my_string
+            return response
         else:
             data = response.read().decode('utf-8')
             temp = XML(data).find("current_condition").find("temp_C").text
-            feels_like= XML(data).find("current_condition").find("FeelsLikeC").text
-            conditions= XML(data).find("current_condition").find("weatherDesc").text
+            feels_like = XML(data).find("current_condition").find("FeelsLikeC").text
+            conditions = XML(data).find("current_condition").find("weatherDesc").text
             icon = WeatherController.get_icon(str.lower(conditions))
             if int(feels_like) != int(temp):
                 return "Winnipeg is currently :zacefron: "+temp+"C but feels like :theotherzacefron: "+feels_like+"C and conditions are "+conditions+" "+icon
