@@ -6,6 +6,7 @@ import json
 import logging
 import urllib2
 import time
+import weather_manager
 
 logger = logging.getLogger(__name__)
 from xml.etree.ElementTree import XML
@@ -68,8 +69,9 @@ class WeatherController:
             response = urllib2.urlopen(URL+"?key="+API+"&q="+CITY+"&num_of_days=1")
         # except urllib2.URLError as e: # works but is not needed
         except Exception as e:
-            my_string = (":zacefron: Have a very merry time "
-                         "not knowing the weather :theotherzacefron:")
+            my_string = weather_manager.getCurrentWeather()
+            # my_string = (":zacefron: Have a very merry time "
+            #              "not knowing the weather :theotherzacefron:")
             response = str(e) + "\n" + my_string
             return response
         else:
