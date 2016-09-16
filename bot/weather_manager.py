@@ -5,13 +5,15 @@ import urllib2
 import random
 from HTMLParser import HTMLParser
 import re
-
+import ssl
+ 
 def scrapeItem(html, startString, endString, parser):
 	start = html.find(startString) + len(startString)
 	end = html[start:].find(endString) + start
 	return parser.unescape(html[start:end])
 
 def getCurrentWeather():
+	ssl._create_default_https_context = ssl._create_unverified_context
 	stringsBeforeGT = re.compile("(\n|.)*>")
 	url = "https://weather.gc.ca/city/pages/mb-38_metric_e.html"
 	conditionString = 'Condition:'
