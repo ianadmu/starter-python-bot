@@ -3,6 +3,7 @@ import json
 import os.path
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
+import weather_manager
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
 
@@ -74,7 +75,8 @@ class TimeTriggeredEventManager(object):
         self.clients.send_time_triggered_msg(channel, txt)
 
     def trigger_weather(self):
-        response = WeatherController.get_weather()
+        response = weather_manager.getCurrentWeather()
+        # response = WeatherController.get_weather()
         self.clients.send_time_triggered_msg('#zac-testing', response)
 
     def trigger_945(self):
