@@ -6,7 +6,7 @@ import json
 import logging
 import urllib2
 import time
-import weather_manager
+from . import weather_manager
 
 logger = logging.getLogger(__name__)
 from xml.etree.ElementTree import XML
