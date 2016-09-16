@@ -5,6 +5,7 @@ import random
 import re
 import os.path
 import xkcd_manager
+import weather_manager
 from datetime import datetime
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -219,7 +220,8 @@ class Messenger(object):
 
     def write_weather(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
-        response = WeatherController.get_weather()
+        #response = WeatherController.get_weather()
+        response = weather_manager.getCurrentWeather()
         self.send_message(channel_id, response)
 
     def write_loud(self,channel_id,origMessage):
