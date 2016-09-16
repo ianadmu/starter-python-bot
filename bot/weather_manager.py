@@ -6,7 +6,46 @@ import random
 from HTMLParser import HTMLParser
 import re
 import ssl
- 
+
+def get_icon(conds):
+        if "tornado" in conds or "hurricane" in conds or "cyclone" in conds:
+            return ":cyclone:"
+        if "light rain" in conds or "patchy rain" in conds:
+            return ":closed_umbrella:"
+        if "rain" in conds:
+            return ":umbrella:"
+        if "thunder" in conds:
+            return ":zap:"
+        if "snow" in conds:
+            return ":snowflake:"
+        if "fog" in conds or "mist" in conds:
+            return ":foggy:"
+        if "cloud" in conds or "overcast" in conds:
+            return ":cloud:"
+        if "sunny" in conds:
+            return ":sunny:"
+        if "clear" in conds:
+            curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS) #change here when daylight savings ends
+            curr_time = int(curr_datetime.strftime('%H'))
+            if curr_time >= SUNSET_HOUR or curr_time < SUNRISE_HOUR:
+                return ":night_with_stars:"
+            else:
+                return ":sunny:"
+        if "drizzle" in conds or "sleet" in conds:
+            return ":umbrella:"
+        if "tsunami" in conds:
+            return ":ocean:"
+        if "fire" in conds:
+            return ":fire:"
+        if "smog" in conds:
+            return ":shit:"
+        if "wind" in conds:
+            return ":flags:"
+        if "eclipse" in conds:
+            return ":new_moon_with_face:"
+        else:
+            return ":zacefron:"
+
 def scrapeItem(html, startString, endString, parser):
 	start = html.find(startString) + len(startString)
 	end = html[start:].find(endString) + start
@@ -31,4 +70,4 @@ def getCurrentWeather():
 	condition = re.sub(stringsBeforeGT, "", condition)
 	temperature = re.sub(stringsBeforeGT, "", temperature)
 
-	return "It is currently " + temperature + "°C and " + condition
+	return "It is currently " + temperature + "°C and " + condition + "\n" + get_icon(condition)
