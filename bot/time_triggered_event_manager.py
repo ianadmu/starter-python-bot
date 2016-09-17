@@ -14,8 +14,9 @@ HR_PER_DAY = 24
 
 class TimeTriggeredEventManager(object):
 
-    def __init__(self, slack_clients, markov_chain):
-        self.clients = slack_clients
+    def __init__(self, clients, msg_writer, markov_chain):
+        self.clients = clients
+        self.msg_writer = msg_writer
         self.last_random_hour = 0
         self.last_random_minutes = 0
         self.random_interval_minutes = 0
@@ -24,28 +25,28 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
 
     def trigger_markov(self):
-        self.clients.send_time_triggered_msg('#markov', str(self.markov_chain))
+        self.msg_writer.send_message('#markov', str(self.markov_chain))
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'Ping on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':'
-        self.clients.send_time_triggered_msg('#zac-testing', msg)
+        self.msg_writer.send_message('#zac-testing', msg)
 
     def trigger_method_log(self, method_name):
         msg = 'Event: {}'.format(method_name)
-        self.clients.send_time_triggered_msg('#zac-testing', msg)
+        self.msg_writer.send_message('#zac-testing', msg)
 
     def trigger_startup_log(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':'
-        self.clients.send_time_triggered_msg('#zac-testing', msg)
+        self.msg_writer.send_message('#zac-testing', msg)
 
     def trigger_random(self):
         channel = '#{}'.format('random')
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
-        self.clients.send_time_triggered_msg(channel, txt)
+        self.msg_writer.send_message(channel, txt)
         self.trigger_method_log('random')
 
     def check_trigger_random(self, hour, minute):
@@ -68,7 +69,7 @@ class TimeTriggeredEventManager(object):
         tag_users = ['channel', 'here']
         msg = 'WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: :wine_glass: :wine_glass: :wine_glass:'
         txt = '<!{}> {}'.format(random.choice(tag_users), msg)
-        self.clients.send_time_triggered_msg('#random', txt)
+        self.msg_writer.send_message('#random', txt)
 
     def trigger_drunk_phrase(self):
         channel = '#{}'.format('random')
@@ -76,22 +77,22 @@ class TimeTriggeredEventManager(object):
         drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
         drunk_comments = drunk_comments_file.read().splitlines()
         txt = '{} :{}:'.format(random.choice(drunk_comments), random_custom_emoji)
-        self.clients.send_time_triggered_msg(channel, txt)
+        self.msg_writer.send_message(channel, txt)
 
     def trigger_weather(self):
         response = weather_manager.getCurrentWeather()
         # response = WeatherController.get_weather()
-        self.clients.send_time_triggered_msg('#zac-testing', response)
+        self.msg_writer.send_message('#zac-testing', response)
 
     def trigger_945(self):
         random_custom_emoji = self.clients.get_random_emoji()
         tag_users = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~', ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:', '945!........', '945 time', '945 quickie', '945 o\'clock', '945! :sheep: :panda_face: :slowpoke:', '945! :boom:', ':eggplant: 945.', '945 :coffee:', '_le 945_', '_le fast 945_']
         txt = '<!{}> {} :{}:'.format(random.choice(tag_users), random.choice(kip_msgs), random_custom_emoji)
-        self.clients.send_time_triggered_msg('#random', txt)
+        self.msg_writer.send_message('#random', txt)
         digg_options = ['edition', 'tech', 'technology', 'computer', 'computers', 'fun', 'neowin', '', 'trending', 'programmer']
         digg_msg = '/digg {}'.format(random.choice(digg_options))
-        self.clients.send_time_triggered_msg('#zac-testing', digg_msg)
+        self.msg_writer.send_message('#zac-testing', digg_msg)
 
     def trigger_mochaccino(self):
         tag_users = ['channel', 'here']
@@ -101,7 +102,7 @@ class TimeTriggeredEventManager(object):
         'Today\'s mochaccino is like an angel pooped out a nice hot cup of coffee mmmmm~', 'Mochaccino status: passable',
         'MOCHACCINO MOCHACCINO MOCHACCINO!!!', 'Who\'s ready for a nice cup o\' mochaccino?', '_le mochaccino_']
         txt = '<!{}> {} :coffee:'.format(random.choice(tag_users), random.choice(msgs))
-        self.clients.send_time_triggered_msg('#random', txt)
+        self.msg_writer.send_message('#random', txt)
 
     def trigger_timed_event(self):
         #get date and time

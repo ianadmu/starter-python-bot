@@ -49,7 +49,7 @@ class SlackBot(object):
 
             msg_writer = Messenger(self.clients)
             event_handler = RtmEventHandler(self.clients, msg_writer, markov_chain)
-            time_event_handler = TimeTriggeredEventManager(self.clients, markov_chain)
+            time_event_handler = TimeTriggeredEventManager(self.clients, msg_writer, markov_chain)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():
