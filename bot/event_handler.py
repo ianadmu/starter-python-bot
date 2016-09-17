@@ -15,7 +15,7 @@ class RtmEventHandler(object):
 
     bold_pattern = re.compile("(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))")
 
-    def __init__(self, slack_clients, msg_writer):
+    def __init__(self, slack_clients, msg_writer, markov_chain):
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.game_manager = GameManager(self.msg_writer)
@@ -24,6 +24,8 @@ class RtmEventHandler(object):
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
+
+        self.markov_chain = markov_chain
 
         self.lotrMarkov = Markov(3)
         self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
@@ -101,6 +103,8 @@ class RtmEventHandler(object):
             user = event['user']
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
+
+            markov_chain.add_single_line(msg_txt)
 
             self.rude_manager.run(channel, user)
 

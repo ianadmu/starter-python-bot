@@ -23,6 +23,16 @@ class Markov:
 			self.process_line(line)
 		self.process_current_string()
 
+	def add_single_line(self, line):
+		line = re.sub(self.characters_to_remove, '', line) + ' '
+		line = re.sub(self.phrase_to_remove, '', line)
+		line = re.sub(self.quotes_on_the_outside_of_words, ' ', line)
+
+		for index in range(len(line)):
+			self.processing_string += line[index]
+
+		self.process_current_string()
+
 	def process_line(self, line):
 		line = re.sub(self.characters_to_remove, '', line) + ' '
 		line = re.sub(self.phrase_to_remove, '', line)
