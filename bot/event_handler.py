@@ -104,7 +104,7 @@ class RtmEventHandler(object):
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
 
-            markov_chain.add_single_line(msg_txt)
+            self.markov_chain.add_single_line(msg_txt)
 
             self.rude_manager.run(channel, user)
 

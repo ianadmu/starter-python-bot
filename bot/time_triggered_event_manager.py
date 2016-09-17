@@ -24,7 +24,7 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
 
     def trigger_markov(self):
-        self.clients.send_time_triggered_msg('#zac-testing', str(markov_chain))
+        self.clients.send_time_triggered_msg('#zac-testing', str(self.markov_chain))
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
