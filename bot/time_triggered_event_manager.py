@@ -42,7 +42,7 @@ class TimeTriggeredEventManager(object):
         self.msg_writer.send_message('C1SDALDG9', msg)
 
     def trigger_random(self):
-        channel = ('C15S4357W')
+        channel = 'C15S4357W'
         tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
         root = tree.getroot()
         txt = root[int(random.random()*len(root))].text
@@ -72,7 +72,7 @@ class TimeTriggeredEventManager(object):
         self.msg_writer.send_message('C15S4357W', txt)
 
     def trigger_drunk_phrase(self):
-        channel = '#{}'.format('random')
+        channel = 'C15S4357W'
         random_custom_emoji = self.clients.get_random_emoji()
         drunk_comments_file = open(os.path.join('./resources', 'drunk_comments.txt'), 'r')
         drunk_comments = drunk_comments_file.read().splitlines()
