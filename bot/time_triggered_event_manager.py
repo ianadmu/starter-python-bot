@@ -24,7 +24,7 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
 
     def trigger_markov(self):
-        self.clients.send_time_triggered_msg('#zac-testing', str(self.markov_chain))
+        self.clients.send_time_triggered_msg('#markov', str(self.markov_chain))
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
@@ -122,7 +122,7 @@ class TimeTriggeredEventManager(object):
             self.check_trigger_random(hour, minute)
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
-            if (hour + 3) % 12 and minute == 15:
+            if minute == 15:
                 self.trigger_markov()
             if day != 'Saturday' and day !='Sunday' and hour == 9 and minute == 45:
                 self.trigger_945()
