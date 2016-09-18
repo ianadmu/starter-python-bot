@@ -2,3 +2,6 @@ bot/rude_manager.py
 bot/game_manager.pyc
 bot/tictactoe.pyc
 bot/response_master.pyc
+bot/setup_rude_manager.py
+
+bot/rudemodule.c
