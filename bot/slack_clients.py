@@ -2,7 +2,6 @@
 import logging
 import re
 import time
-import json
 import random
 import os.path
 
@@ -24,10 +23,6 @@ class SlackClients(object):
 
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
-    
-    #I failed at this. But leaving here to try another day!    
-    # def get_user_name(self, user):
-    #     return self.rtm.login_data['self']['name']
 
     def is_message_from_me(self, user):
         return user == self.rtm.server.login_data['self']['id']
@@ -44,30 +39,15 @@ class SlackClients(object):
         self.rtm.server.send_to_websocket(user_typing_json)
         time.sleep(sleep_time)
 
-    def get_random_emoji(self): #this method only gets custom emojis not all slack emojis
-    	response = self.rtm.api_call('emoji.list')
-    	emojis = response['emoji'].items()
-    	return emojis[int(random.random()*len(emojis))][0]
-
-    def get_user_name(self, user_id): #method not working yet
-    	response = self.rtm.api_call('users.info', user=user_id)
-    	user_info = response['user'].items()
-    	return user_info[1][1]
+    # this method only gets a team's custom emojis and NOT all slack emojis
+    def get_random_emoji(self):
+        response = self.rtm.api_call('emoji.list')
+        emojis = response['emoji'].items()
+        return emojis[int(random.random()*len(emojis))][0]
 
     def get_users(self):
         return self.rtm.api_call("users.list", token=str(self.token))
 
-    def upload_file_to_slack(self): 
-    	my_file = os.path.join('./resources', 'pokemon_correct.txt')  #files = {'file': open('test.png', 'rb')}
-    	self.web.files.upload(my_file, channels='#zac-testing')
-    	#file = response['file'].items()
-    	#self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zacefron-testing', text=response)
-    	#self.rtm.api_call('files.upload', filename='pokemon_correct.txt', file=open(os.path.join('./resources', 'pokemon_correct.txt'), 'rb'), channels='#zacefron-testing')
-
-    def get_file_info(self): 
-    	response = self.rtm.api_call('files.info', file='F19NX4WJD')
-    	files = response['file']#.items()
-    	self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zac-testing', text=files)
-    	#response2 = self.rtm.api_call('users.info', user='U15FDSK5M')
-    	#user_info = response2['user'].items()
-    	#self.rtm.api_call('chat.postMessage', as_user='true:', channel='#zac-testing', text=user_info[0][2])
+    def upload_file_to_slack(self, filepath, filename, channel):
+        my_file = os.path.join(filepath, filename)
+        self.web.files.upload(my_file, channels=channel)
