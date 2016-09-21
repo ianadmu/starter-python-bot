@@ -32,7 +32,7 @@ class RtmEventHandler(object):
 
         self.markov_chain = markov_chain
 
-        self.lotrMarkov = Markov(3)
+        self.lotrMarkov = Markov(2)
         self.lotrMarkov.add_file(open(
             os.path.join('./resources', 'hpOne.txt'), 'r')
         )
