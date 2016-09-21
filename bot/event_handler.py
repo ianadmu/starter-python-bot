@@ -39,7 +39,9 @@ class RtmEventHandler(object):
         self.lotrMarkov.add_file(open(
             os.path.join('./resources', 'random_comments.txt'), 'r')
         )
-        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
+        self.lotrMarkov.add_file(open(
+            os.path.join('./resources', 'lotrOne.txt'), 'r')
+        )
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
