@@ -11,6 +11,7 @@ from markov import Markov
 
 logger = logging.getLogger(__name__)
 
+
 class RtmEventHandler(object):
 
     bold_pattern = re.compile(

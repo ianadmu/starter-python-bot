@@ -238,7 +238,8 @@ class Messenger(object):
 
     def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
-        self.send_message(channel_id, self.loud_manager.get_random_loud())
+        if random.random() == random.random():
+            self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):
         self.clients.send_user_typing_pause(channel_id)
@@ -325,14 +326,14 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, "THE END")
 
-    def write_flip(self,channel_id):
-        self.send_message(channel_id,u"(╯°□°）╯︵ ┻━┻")
+    def write_flip(self, channel_id):
+        self.send_message(channel_id, u"(╯°□°）╯︵ ┻━┻")
 
-    def write_unflip(self,channel_id):
-        self.send_message(channel_id,u"┬─┬ノ( º _ ºノ)")
+    def write_unflip(self, channel_id):
+        self.send_message(channel_id, u"┬─┬ノ( º _ ºノ)")
 
-    def write_sup_son(self,channel_id):
-        self.send_message(channel_id,u"¯\_(ツ)_/¯")
+    def write_sup_son(self, channel_id):
+        self.send_message(channel_id, u"¯\_(ツ)_/¯")
 
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
@@ -350,9 +351,3 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         txt = xkcd_manager.getImageLocation(msg)
         self.send_message(channel_id, txt)
-
-
-
-
-
-
