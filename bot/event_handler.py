@@ -13,14 +13,18 @@ logger = logging.getLogger(__name__)
 
 class RtmEventHandler(object):
 
-    bold_pattern = re.compile("(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))")
+    bold_pattern = re.compile(
+        "(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))"
+    )
 
     def __init__(self, slack_clients, msg_writer, markov_chain):
         self.clients = slack_clients
         self.msg_writer = msg_writer
         self.game_manager = GameManager(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
-        self.tictactoe_manager = TicTacToeManager(self.msg_writer, self.user_manager, self.game_manager)
+        self.tictactoe_manager = TicTacToeManager(
+            self.msg_writer, self.user_manager, self.game_manager
+        )
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
@@ -28,11 +32,16 @@ class RtmEventHandler(object):
         self.markov_chain = markov_chain
 
         self.lotrMarkov = Markov(3)
-        self.lotrMarkov.add_file(open(os.path.join('./resources', 'hpOne.txt'), 'r'))
+        self.lotrMarkov.add_file(open(
+            os.path.join('./resources', 'hpOne.txt'), 'r')
+        )
+        self.lotrMarkov.add_file(open(
+            os.path.join('./resources', 'random_comments.txt'), 'r')
+        )
+        # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
-
 
     def handle(self, event):
 
@@ -63,7 +72,7 @@ class RtmEventHandler(object):
     def _is_edited_with_star(self, message):
         return "*" in re.sub(self.bold_pattern, '', message)
 
-    def is_loud(self,message):
+    def is_loud(self, message):
         emoji_pattern = re.compile(":.*:")
         tag_pattern = re.compile("<@.*")
 
@@ -151,7 +160,7 @@ class RtmEventHandler(object):
             if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
                 self.tictactoe_manager.get_message(channel, lower_txt, user_name)
 
-            if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
+            if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt):
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(channel)
                 if re.search('night', msg_txt.lower()):
@@ -182,7 +191,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_apology(channel)
                 if 'solve' in msg_txt.lower():
                     self.msg_writer.write_solution(channel, msg_txt)
-                if  re.search('explain|why', msg_txt.lower()):
+                if re.search('explain|why', msg_txt.lower()):
                     self.msg_writer.write_explanation(channel)
                 if re.search('sweetpotato me|sweet potato me', msg_txt.lower()):
                     self.msg_writer.write_sweetpotato_me(channel, user)
@@ -194,11 +203,11 @@ class RtmEventHandler(object):
                     self.msg_writer.write_forever(channel)
                 if re.search('story|stories', msg_txt.lower()):
                     self.msg_writer.write_story(channel)
-                if re.search('unflip',msg_txt.lower()):
+                if re.search('unflip', msg_txt.lower()):
                     self.msg_writer.write_unflip(channel)
-                elif re.search('flip|rageflip',msg_txt.lower()):
+                elif re.search('flip|rageflip', msg_txt.lower()):
                     self.msg_writer.write_flip(channel)
-                if re.search('sup son',msg_txt.lower()):
+                if re.search('sup son', msg_txt.lower()):
                     self.msg_writer.write_sup_son(channel)
                 if msg_txt.lower().count("zac") >= 2:
                     self.msg_writer.write_prompt(channel)
