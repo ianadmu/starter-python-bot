@@ -28,11 +28,11 @@ class RtmEventHandler(object):
         self.markov_chain = markov_chain
 
         self.lotrMarkov = Markov(3)
-        self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrOne.txt'), 'r'))
+        self.lotrMarkov.add_file(open(os.path.join('./resources', 'hpOne.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrTwo.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'lotrThree.txt'), 'r'))
         # self.lotrMarkov.add_file(open(os.path.join('./resources', 'hobbit.txt'), 'r'))
- 
+
 
     def handle(self, event):
 
@@ -68,7 +68,7 @@ class RtmEventHandler(object):
         tag_pattern = re.compile("<@.*")
 
         tokens = message.split()
-        if len(tokens) < 2: 
+        if len(tokens) < 2:
             return False
         for token in tokens:
             if not (token.isupper() or emoji_pattern.match(token)) or tag_pattern.match(token):
@@ -150,7 +150,7 @@ class RtmEventHandler(object):
 
             if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
                 self.tictactoe_manager.get_message(channel, lower_txt, user_name)
-                
+
             if re.search(' ?zac', msg_txt.lower()) or self.clients.is_bot_mention(msg_txt) or re.search('qbot', msg_txt.lower()):
                 if 'help' in msg_txt.lower():
                     self.msg_writer.write_help_message(channel)
@@ -177,7 +177,7 @@ class RtmEventHandler(object):
                 if 'sort me' in msg_txt.lower():
                     self.msg_writer.write_hogwarts_house(channel, user,  msg_txt)
                 if 'sass ' in msg_txt.lower():
-                    self.msg_writer.write_sass(channel, msg_txt)	
+                    self.msg_writer.write_sass(channel, msg_txt)
                 if re.search('apologize|apologise', msg_txt.lower()):
                     self.msg_writer.write_apology(channel)
                 if 'solve' in msg_txt.lower():
