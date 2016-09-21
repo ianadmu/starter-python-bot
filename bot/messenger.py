@@ -18,6 +18,7 @@ from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
+import common
 
 logger = logging.getLogger(__name__)
 
@@ -61,13 +62,6 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message('C1SDALDG9', txt)
 
-    def write_dont_talk(self, channel_id, user_id, timestamp):
-        if user_id in self.user_dict:
-            if float(self.user_dict[user_id]) + 600 >= float(timestamp):
-                txt = 'PSSST... no talking in the announcements channel!'
-                self.send_message(channel_id, txt)
-        self.user_dict[user_id] = timestamp
-
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT'
         self.send_message(channel_id, txt)
@@ -77,7 +71,8 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_joined_channel(self, channel_id, user_id):
-        if channel_id == 'C171ASJJK' or channel_id == 'C1SDALDG9':
+        if (common.channels['iq']['zac-testing'] or
+                channel_id == common.channels['slackers']['zac-testing']):
             txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
@@ -238,7 +233,7 @@ class Messenger(object):
 
     def write_loud(self, channel_id, origMessage):
         self.loud_manager.write_loud_to_file(origMessage)
-        if random.random() == random.random():
+        if common.should_spam():
             self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):
