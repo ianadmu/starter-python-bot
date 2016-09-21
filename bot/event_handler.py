@@ -202,8 +202,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_draw_me(channel)
                 if re.search('love|forever|relationship|commitment', msg_txt.lower()):
                     self.msg_writer.write_forever(channel)
-                if re.search('story|stories', msg_txt.lower()):
-                    self.msg_writer.write_story(channel)
                 if re.search('unflip', msg_txt.lower()):
                     self.msg_writer.write_unflip(channel)
                 elif re.search('flip|rageflip', msg_txt.lower()):
