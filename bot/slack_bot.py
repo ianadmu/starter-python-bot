@@ -6,6 +6,7 @@ from slack_clients import SlackClients
 from messenger import Messenger
 from event_handler import RtmEventHandler
 from time_triggered_event_manager import TimeTriggeredEventManager
+from markov import Markov
 
 logger = logging.getLogger(__name__)
 
@@ -43,9 +44,12 @@ class SlackBot(object):
                 self.clients.rtm.server.login_data['team']['name'],
                 self.clients.rtm.server.domain))
 
+            markov_chain = Markov(3)
+            markov_chain.add_single_line("This is the default phrase.")
+
             msg_writer = Messenger(self.clients)
-            event_handler = RtmEventHandler(self.clients, msg_writer)
-            time_event_handler = TimeTriggeredEventManager(self.clients)
+            event_handler = RtmEventHandler(self.clients, msg_writer, markov_chain)
+            time_event_handler = TimeTriggeredEventManager(self.clients, msg_writer, markov_chain)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():

@@ -1,13 +1,6 @@
 {
 	"Events": [{
 			"Triggers": {
-				"Words": ["qbot"]
-			},
-			"Responses": ["I'm no Qbot but..."]
-		},
-
-		{
-			"Triggers": {
 				"Words": ["shit", "fuck", "piss", "cunt", "cocksucker", "motherfucker", "tits", "fart", "turd", "shitstain", "twat", "horseshit"],
 				"Emoji": ["middle_finger", "reversed_hand_with_middle_finger_extended"]
 			},
@@ -58,8 +51,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["cry", "crying"],
-				"Emoji": ["cry"]
+				"Words": ["lol", "hahaha"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"]
 		},
@@ -68,7 +60,8 @@
 			"Triggers": {
 				"Words": ["weiner"]
 			},
-			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven"]
+			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven",
+				"Steven is a wiener!!! :eggplant:"]
 		},
 
 		{
@@ -171,7 +164,7 @@
 			"Triggers": {
 				"Words": ["random"]
 			},
-			"Responses": ["3"]
+			"Responses": ["Something other than 3"]
 		},
 
 		{
