@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import weather_manager
 import scripts.weather_controller
 from scripts.weather_controller import WeatherController
+import common
 
 HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
 HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6 #for Winnipeg
@@ -39,7 +40,10 @@ class TimeTriggeredEventManager(object):
     def trigger_startup_log(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()
         msg = 'I came back to life on ' + day + ' ' + str(hour)  + ':' + str(minute) + ':' + str(second) + ' :' + str(random_custom_emoji) + ':'
-        self.msg_writer.send_message('C1SDALDG9', msg)
+        try:
+            self.msg_writer.send_message(common.channels['slackers']['zac-testing'], msg)
+        except:
+            self.msg_writer.send_message(common.channels['iq']['zac-testing'], msg)
 
     def trigger_random(self):
         channel = 'C15S4357W'
