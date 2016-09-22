@@ -35,13 +35,15 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
-        self.user_dict = {}
+        self.channel_manager = ChannelManager(self.slack_clients, self)
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload
         # is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
+        else
+            channel_id = self.channel_manager.get_channel_id(channel_id)
         # logger.debug(
         #   'Sending msg: {} to channel: {}'.format(msg, channel_id)
         # )
