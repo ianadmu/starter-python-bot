@@ -7,7 +7,7 @@ class ChannelManager:
 		self.channel_names = dict()
 		self.channel_ids = dict()
 		if self.channels["ok"]:
-			for channel in self.channels["members"]:
+			for channel in self.channels["channels"]:
 				self.channel_names[channel["id"]] = channel["name"]
 				self.channel_ids[channel["name"]] = channel["id"]
 
