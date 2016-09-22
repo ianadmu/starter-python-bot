@@ -15,10 +15,7 @@ class SassManager(object):
 
     def get_sass(self, msg):
         target = self.get_target(msg)
-        if random.choice([True, False]):
-            sass = random.choice(self.sassy_remarks)
-        else:
-            sass = str(self.sassMarkov)
+        sass = str(self.sassMarkov)
         return 'Hey, {}! {}'.format(target, sass)
 
     def get_target(self, msg):
