@@ -6,8 +6,8 @@ class ChannelManager:
     def __init__(self, slack_clients):
         self.clients = slack_clients
         channels = self.clients.get_channels()
-        self.channel_names = dict()
-        self.channel_ids = dict()
+        self.channel_names = {}
+        self.channel_ids = {}
         if self.channels["ok"]:
             for channel in channels["channels"]:
                 self.channel_names[channel["id"]] = channel["name"]
