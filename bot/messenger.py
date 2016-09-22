@@ -38,7 +38,7 @@ class Messenger(object):
         self.equation_manager = EquationManager()
         channel = self.clients.rtm.server.channels.find('C1SDALDG9')
         channel.send_message("Made it this far")
-        self.channel_manager = ChannelManager(self.slack_clients)
+        self.channel_manager = ChannelManager(self.clients)
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload
