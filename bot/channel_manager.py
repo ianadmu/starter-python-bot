@@ -5,8 +5,8 @@ class ChannelManager:
 
     def __init__(self, clients):
         channels = clients.get_channels()
-        self.channel_names = dict()
-        self.channel_ids = dict()
+        self.channel_names = {}
+        self.channel_ids = {}
         try:
             if self.channels["ok"]:
                 for channel in channels["channels"]:
