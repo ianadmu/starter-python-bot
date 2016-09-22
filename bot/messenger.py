@@ -36,7 +36,8 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
-        self.send_message('C1SDALDG9', "Made it this far")
+        channel = self.clients.rtm.server.channels.find('C1SDALDG9')
+        channel.send_message("Made it this far")
         self.channel_manager = ChannelManager(self.slack_clients)
 
     def send_message(self, channel_id, msg):
