@@ -3,8 +3,9 @@ import json
 
 class ChannelManager:
 
-    def __init__(self, clients):
-        channels = clients.get_channels()
+    def __init__(self, slack_clients):
+        self.clients = slack_clients
+        channels = self.clients.get_channels()
         self.channel_names = {}
         self.channel_ids = {}
         try:
