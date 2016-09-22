@@ -8,7 +8,7 @@ class ChannelManager:
         channels = self.clients.get_channels()
         self.channel_names = {}
         self.channel_ids = {}
-        if self.channels["ok"]:
+        if channels["ok"]:
             for channel in channels["channels"]:
                 self.channel_names[channel["id"]] = channel["name"]
                 self.channel_ids[channel["name"]] = channel["id"]
