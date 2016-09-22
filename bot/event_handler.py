@@ -91,7 +91,7 @@ class RtmEventHandler(object):
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
             if event['subtype'] == 'message_changed':
-                if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"]:
+                if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"] and ("subtype" not in event["message"] or event["message"]["subtype"] == "bot_message"):
                      return event["message"]["user"] == event["message"]["edited"]["user"]
         return False
 

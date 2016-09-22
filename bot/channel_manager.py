@@ -1,7 +1,7 @@
 import json
 
 class ChannelManager:
-	
+
 	def __init__(self, clients):
 		channels = clients.get_channels()
 		self.channel_names = dict()
@@ -16,7 +16,7 @@ class ChannelManager:
 			return self.channel_names[identifier]
 		elif identifier in self.channel_ids:
 			return identifier
-		else
+		else:
 			return None
 
 	def get_channel_by_id(self, user_id):
