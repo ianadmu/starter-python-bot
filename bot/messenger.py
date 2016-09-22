@@ -18,6 +18,7 @@ from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
+from channel_manager import ChannelManager
 import common
 
 logger = logging.getLogger(__name__)

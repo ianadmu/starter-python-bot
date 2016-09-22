@@ -3,11 +3,11 @@ import json
 class ChannelManager:
 	
 	def __init__(self, clients):
-		self.channels = clients.get_channels()
+		channels = clients.get_channels()
 		self.channel_names = dict()
 		self.channel_ids = dict()
 		if self.channels["ok"]:
-			for channel in self.channels["channels"]:
+			for channel in channels["channels"]:
 				self.channel_names[channel["id"]] = channel["name"]
 				self.channel_ids[channel["name"]] = channel["id"]
 
@@ -25,6 +25,6 @@ class ChannelManager:
 		return None
 
 	def get_channel_by_name(self, name):
-		if name in self.channel_names:
-			return self.channel_names[name]
+		if name in self.channel_ids:
+			return self.channel_ids[name]
 		return None
