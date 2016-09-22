@@ -26,7 +26,10 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
 
     def trigger_markov(self):
-        self.msg_writer.send_message('C244LFHS7', str(self.markov_chain))
+        try:
+            self.msg_writer.send_message('C244LFHS7', str(self.markov_chain))
+        except:
+            pass
 
     def trigger_ping(self, day, hour, minute, second):
         random_custom_emoji = self.clients.get_random_emoji()

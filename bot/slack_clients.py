@@ -48,6 +48,9 @@ class SlackClients(object):
     def get_users(self):
         return self.rtm.api_call("users.list", token=str(self.token))
 
+    def get_channels(self):
+        return self.rtm.api_call("channels.list", token=str(self.token))
+
     def upload_file_to_slack(self, filepath, filename, channel):
         my_file = os.path.join(filepath, filename)
         self.web.files.upload(my_file, channels=channel)

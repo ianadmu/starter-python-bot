@@ -32,7 +32,7 @@ class RtmEventHandler(object):
 
         self.markov_chain = markov_chain
 
-        self.lotrMarkov = Markov(3)
+        self.lotrMarkov = Markov(2)
         self.lotrMarkov.add_file(open(
             os.path.join('./resources', 'hpOne.txt'), 'r')
         )
@@ -91,7 +91,7 @@ class RtmEventHandler(object):
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
             if event['subtype'] == 'message_changed':
-                if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"]:
+                if "message" in event and "user" in event["message"] and "edited" in event["message"] and "user" in event["message"]["edited"] and ("subtype" not in event["message"] or event["message"]["subtype"] != "bot_message"):
                      return event["message"]["user"] == event["message"]["edited"]["user"]
         return False
 
@@ -121,6 +121,9 @@ class RtmEventHandler(object):
             self.rude_manager.run(channel, user)
 
             response_master_response = self.response_master.get_response(msg_txt, user)
+
+            if "printchannel" in lower_txt:
+                self.msg_writer.write_channel_id(lower_txt.split()[1])
 
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 #markov

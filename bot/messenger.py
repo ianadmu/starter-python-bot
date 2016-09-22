@@ -18,6 +18,7 @@ from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
+from channel_manager import ChannelManager
 import common
 
 logger = logging.getLogger(__name__)
@@ -35,7 +36,7 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
-        self.user_dict = {}
+        self.channel_manager = ChannelManager(self.clients)
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload
@@ -47,6 +48,9 @@ class Messenger(object):
         # )
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
+
+    def write_channel_id(self, channel_id):
+        self.write_custom_error(self.channel_manager.get_channel_id(channel_id))
 
     def write_custom_error(self, msg):
         self.send_message('C1SDALDG9', msg)
