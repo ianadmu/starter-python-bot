@@ -36,7 +36,7 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ExplanationManager()
         self.equation_manager = EquationManager()
-        self.channel_manager = ChannelManager(self.slack_clients, self)
+        self.channel_manager = ChannelManager(self.slack_clients)
 
     def send_message(self, channel_id, msg):
         # in the case of Group and Private channels, RTM channel payload
