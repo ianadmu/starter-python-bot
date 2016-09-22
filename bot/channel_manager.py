@@ -7,10 +7,14 @@ class ChannelManager:
         channels = clients.get_channels()
         self.channel_names = dict()
         self.channel_ids = dict()
-        if self.channels["ok"]:
-            for channel in channels["channels"]:
-                self.channel_names[channel["id"]] = channel["name"]
-                self.channel_ids[channel["name"]] = channel["id"]
+        try:
+            if self.channels["ok"]:
+                for channel in channels["channels"]:
+                    self.channel_names[channel["id"]] = channel["name"]
+                    self.channel_ids[channel["name"]] = channel["id"]
+        except:
+            channel = self.clients.rtm.server.channels.find('C1SDALDG9')
+            channel.send_message("Made it here 2")
 
     def get_channel_id(self, identifier):
         if identifier in self.channel_names:
