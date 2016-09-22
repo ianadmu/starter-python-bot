@@ -122,6 +122,9 @@ class RtmEventHandler(object):
 
             response_master_response = self.response_master.get_response(msg_txt, user)
 
+            if "printchannel" in lower_txt:
+                self.msg_writer.write_channel_id(msg_txt.split()[1].upper())
+
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 #markov
                 self.msg_writer.send_message(channel, str(self.lotrMarkov))

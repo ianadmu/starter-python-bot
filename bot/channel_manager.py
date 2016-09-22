@@ -2,7 +2,7 @@ import json
 
 class ChannelManager:
 	
-	def __init__(self, clients, msg_writer):
+	def __init__(self, clients):
 		self.channels = clients.get_channels()
 		self.channel_names = dict()
 		self.channel_ids = dict()
@@ -10,10 +10,6 @@ class ChannelManager:
 			for channel in self.channels["members"]:
 				self.channel_names[channel["id"]] = channel["name"]
 				self.channel_ids[channel["name"]] = channel["id"]
-
-	def print_all_channels(self, msg_writer):
-		for name in self.channel_ids:
-			msg_writer.write_custom_error(name + ": " + self.user_ids[name])
 
 	def get_channel_id(self, identifier):
 		if identifier in self.channel_names:

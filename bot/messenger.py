@@ -42,13 +42,14 @@ class Messenger(object):
         # is a complex dictionary
         if isinstance(channel_id, dict):
             channel_id = channel_id['id']
-        else
-            channel_id = self.channel_manager.get_channel_id(channel_id)
         # logger.debug(
         #   'Sending msg: {} to channel: {}'.format(msg, channel_id)
         # )
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message(msg)
+
+    def write_channel_id(self, channel_id):
+        self.write_custom_error(self.channel_manager.get_channel_id(channel_id))
 
     def write_custom_error(self, msg):
         self.send_message('C1SDALDG9', msg)
