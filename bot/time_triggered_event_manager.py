@@ -51,7 +51,7 @@ class TimeTriggeredEventManager(object):
                      "Ohayou", "Good morning to you", "Aloha",
                      "Konnichiwashington", "Buenos dias",
                      ":sunny: Good morning"]
-        txt = '{} <!{}>!{}:'.format(
+        txt = '{} <!{}>! :{}:'.format(
             random.choice(responses), random.choice(tag_users),
             random_custom_emoji
         )
