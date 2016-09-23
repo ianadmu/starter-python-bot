@@ -54,7 +54,7 @@ class Messenger(object):
         msg = msg.replace('&', "&amp;")
         msg = msg.replace('<', "&lt;")
         msg = msg.replace('>', "&gt;")
-        msg = msg.encode("utf8")
+        msg = msg.decode("utf8", "ignore")
         #msg = urllib2.quote(msg)
 
         self.clients.send_message(channel_id, msg)
