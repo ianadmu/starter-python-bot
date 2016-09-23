@@ -18,6 +18,8 @@ class ChannelManager:
             return self.channel_ids[identifier]
         elif identifier in self.channel_names:
             return identifier
+        elif identifier.remove('#') in self.channel_names:
+            return identifier.remove('#')
         else:
             return self.channel_ids['zac-testing']
 
