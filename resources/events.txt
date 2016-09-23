@@ -9,7 +9,7 @@
 
 		{
 			"Triggers": {
-				"Phrases": ["donger", "dong", "bulldog"]
+				"Phrases": ["donger", "dong", "bulldog", "dongers"]
 			},
 			"Responses": ["ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ"],
 			"Sender":"jill"
