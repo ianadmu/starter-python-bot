@@ -70,8 +70,8 @@ class Messenger(object):
         self.send_message('C1SDALDG9', txt)
 
     def write_message_deleted(self, channel_id):
-        txt = 'I SAW THAT'
-        self.send_message(channel_id, txt)
+        txt = 'I SAW THAT! Someone deleted a message from channel: {}'.format(channel_id)
+        self.send_message('zac-testing', txt)
 
     def write_left_channel(self, channel_id):
         txt = '...well THAT was something'
