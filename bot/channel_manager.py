@@ -16,8 +16,10 @@ class ChannelManager:
     def get_channel_id(self, identifier):
         if identifier in self.channel_ids:
             return self.channel_ids[identifier]
-        else:
+        elif identifier in self.channel_names:
             return identifier
+        else:
+            return self.channel_ids['zac-testing']
 
     def get_channel_by_id(self, channel_id):
         if channel_id in self.channel_names:
