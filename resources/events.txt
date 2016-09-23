@@ -33,7 +33,8 @@
 			"Triggers": {
 				"Phrases": ["well played", "well met"]
 			},
-			"Responses": [">Well Met!"]
+			"Responses": [">Well Met!"],
+			"Sender":"chuckle"
 		},
 
 		{
