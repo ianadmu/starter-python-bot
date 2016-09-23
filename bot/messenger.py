@@ -20,6 +20,7 @@ from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
 import common
+import urllib2
 
 logger = logging.getLogger(__name__)
 
@@ -39,15 +40,14 @@ class Messenger(object):
         self.channel_manager = ChannelManager(self.clients)
 
     def send_message(self, channel_id, msg):
-        # in the case of Group and Private channels, RTM channel payload
-        # is a complex dictionary
-        if isinstance(channel_id, dict):
-            channel_id = channel_id['id']
-        # logger.debug(
-        #   'Sending msg: {} to channel: {}'.format(msg, channel_id)
-        # )
-        channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message(msg)
+        channel_id = self.channel_manager.get_channel_id(channel_id)
+        msg = msg.replace('&', "&amp;")
+        msg = msg.replace('<', "&lt;")
+        msg = msg.replace('>', "&gt;")
+
+        msg = urllib2.quote(msg.encode("utf8"))
+
+        self.clients.send_message(channel_id, msg)
 
     def write_channel_id(self, channel_id):
         self.write_custom_error(self.channel_manager.get_channel_id(channel_id))
