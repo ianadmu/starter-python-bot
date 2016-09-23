@@ -67,7 +67,7 @@
 			},
 			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven",
 				"Steven is a wiener!!! :eggplant:"],
-				"Sender":"weiner"
+				"Sender":"eggplant"
 		},
 
 		{
