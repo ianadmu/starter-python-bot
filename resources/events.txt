@@ -53,7 +53,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["lol", "hahaha"]
+				"Words": ["hahahahaha", "hahaha", "joy"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
 			"Sender":"nicole"
