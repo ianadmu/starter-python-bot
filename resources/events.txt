@@ -63,7 +63,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["weiner"]
+				"Words": ["wiener"]
 			},
 			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven",
 				"Steven is a wiener!!! :eggplant:"],
