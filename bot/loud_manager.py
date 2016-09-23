@@ -8,7 +8,7 @@ class LoudManager(object):
         self.cache_loaded = False
 
     def write_loud_to_file(self, loudMessage):
-        self.loud_file.write(loudMessage.replace("\n", " ")+"\n")
+        self.loud_file.write(unicode(loudMessage).replace("\n", " ")+"\n")
         self.loud_cache.append(loudMessage)
 
     def load_loud_cache(self):

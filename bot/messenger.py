@@ -39,6 +39,13 @@ class Messenger(object):
         self.equation_manager = EquationManager()
         self.channel_manager = ChannelManager(self.clients)
 
+    def __del__(self):
+        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
+                        "I'm dying again :sob:",
+                        "Have you gotten tired of this face :zacefron: ?"]
+        txt = random.choice(closing_msgs)
+        self.send_message('zac-testing', txt)
+
     def send_message(self, channel_id, msg):
         channel_id = self.channel_manager.get_channel_id(channel_id)
         msg = msg.replace('&', "&amp;")
