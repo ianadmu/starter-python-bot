@@ -52,8 +52,8 @@ class Messenger(object):
     def send_message_as_other(self, channel_id, msg, username, emoji):
         channel_id = self.channel_manager.get_channel_id(channel_id)
         msg = msg.replace('&', "&amp;")
-        msg = msg.replace('<', "&lt;")
-        msg = msg.replace('>', "&gt;")
+        # msg = msg.replace('<', "&lt;")
+        # msg = msg.replace('>', "&gt;")
         #msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message_as_other(channel_id, msg, username, emoji)
@@ -61,8 +61,8 @@ class Messenger(object):
     def send_message(self, channel_id, msg):
         channel_id = self.channel_manager.get_channel_id(channel_id)
         msg = msg.replace('&', "&amp;")
-        msg = msg.replace('<', "&lt;")
-        msg = msg.replace('>', "&gt;")
+        # msg = msg.replace('<', "&lt;")
+        # msg = msg.replace('>', "&gt;")
         #msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message(channel_id, msg)
