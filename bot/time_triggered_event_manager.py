@@ -1,17 +1,19 @@
 import random
-import json
 import os.path
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
-import weather_manager
-import scripts.weather_controller
-from scripts.weather_controller import WeatherController
 import common
+import weather_manager
 
-HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5 #for Winnipeg
-HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6 #for Winnipeg
+from datetime import datetime, timedelta
+from response_master import Response_master
+
+HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5  # for Winnipeg
+HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6  # for Winnipeg
 MIN_PER_HOUR = 60
 HR_PER_DAY = 24
+
+TESTING_CHANNEL = 'zac-testing'
+
 
 class TimeTriggeredEventManager(object):
 
@@ -24,6 +26,27 @@ class TimeTriggeredEventManager(object):
         self.random_hasnt_fired = True
         self.is_just_starting_up = True
         self.markov_chain = markov_chain
+        self.response_master = Response_master(self.msg_writer)
+
+    def send_message(self, channel, msg_txt):
+        try:
+            self.msg_writer.send_message(channel, msg_txt)
+        except Exception as e:
+            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
+        except:
+            pass
+
+    def get_response(self, trigger, user=None):
+        try:
+            self.response_master.get_response(trigger, user)
+        except Exception as e:
+            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
+        except:
+            pass
+
+    def trigger_morning(self):
+        msg = self.get_response('morning')
+        self.send_message('zac-testing', msg)
 
     def trigger_markov(self):
         try:
@@ -137,6 +160,7 @@ class TimeTriggeredEventManager(object):
 
         #leaves 10-ish seconds to trigger since method is called every 10-ish seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
+            self.trigger_morning()
             #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
             if hour % 3 == 0 and minute == 0:
