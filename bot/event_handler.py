@@ -98,10 +98,13 @@ class RtmEventHandler(object):
     def _handle_message(self, event):
         if 'subtype' in event:
             if self._is_edited_by_user(event):
-                self.msg_writer.write_spelling_mistake(event['channel'], event['ts'])
+                self.msg_writer.write_spelling_mistake(
+                    event['channel'], event['message']['ts']
+                )
             elif event['subtype'] == 'channel_join':
-                # someone joined a channel
-                self.msg_writer.write_joined_channel(event['channel'], event['user'])
+                self.msg_writer.write_joined_channel(
+                    event['channel'], event['user']
+                )
             elif event['subtype'] == 'message_deleted':
                 self.msg_writer.write_message_deleted(event['channel'])
             elif event['subtype'] == 'channel_leave':

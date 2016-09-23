@@ -59,6 +59,9 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, msg)
 
+    def send_reaction(self, emoji_name, channel_id, timestamp):
+        self.clients.send_reaction(emoji_name, channel_id, timestamp)
+
     def write_closing(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
                         "I'm dying again :sob:",
@@ -151,7 +154,7 @@ class Messenger(object):
         # self.send_message(channel_id, txt)
         # Using emoji reactions instead
         emoji_name = "spelft_it_wronbg_again_i_see"
-        self.clients.send_reaction(emoji_name, channel_id, timestamp)
+        self.send_reaction(emoji_name, channel_id, timestamp)
 
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
