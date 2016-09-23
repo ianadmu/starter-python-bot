@@ -14,10 +14,12 @@ class ChannelManager:
                 self.channel_ids[channel["name"]] = channel["id"]
 
     def get_channel_id(self, identifier):
-        if self.channel_names[identifier]:
+        if identifier in self.channel_ids:
+            return self.channel_ids[identifier]
+        elif identifier in self.channel_names:
             return identifier
         else:
-            return self.channel_ids[identifier]
+            return None
 
     def get_channel_by_id(self, channel_id):
         if channel_id in self.channel_names:
