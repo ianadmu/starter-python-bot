@@ -52,7 +52,7 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias",
                      ":sunny: Good morning"]
         txt = '{} <!{}>!{}:'.format(
-            random.choice(tag_users), random.choice(responses),
+            random.choice(responses), random.choice(tag_users),
             random_custom_emoji
         )
         self.send_message(TESTING_CHANNEL, txt)
