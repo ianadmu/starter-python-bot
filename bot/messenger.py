@@ -59,6 +59,9 @@ class Messenger(object):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message(channel_id, msg)
 
+    def send_reaction(self, emoji_name, channel_id, timestamp):
+        self.clients.send_reaction(emoji_name, channel_id, timestamp)
+
     def write_closing(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
                         "I'm dying again :sob:",
@@ -67,8 +70,8 @@ class Messenger(object):
         self.send_message('C1SDALDG9', txt)
 
     def write_message_deleted(self, channel_id):
-        txt = 'I SAW THAT'
-        self.send_message(channel_id, txt)
+        txt = 'I SAW THAT! Someone deleted a message from channel: {}'.format(channel_id)
+        self.send_message('zac-testing', txt)
 
     def write_left_channel(self, channel_id):
         txt = '...well THAT was something'
@@ -144,10 +147,14 @@ class Messenger(object):
         txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
         self.send_message(channel_id, txt)
 
-    def write_spelling_mistake(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'Spelft it wronbg again I see...'
-        self.send_message(channel_id, txt)
+    def write_spelling_mistake(self, channel_id, timestamp):
+        # Commented out because tired of too much zac spelling spam
+        # self.clients.send_user_typing_pause(channel_id)
+        # txt = 'Spelft it wronbg again I see...'
+        # self.send_message(channel_id, txt)
+        # Using emoji reactions instead
+        emoji_name = "spelft_it_wronbg_again_i_see"
+        self.send_reaction(emoji_name, channel_id, timestamp)
 
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
