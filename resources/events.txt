@@ -11,7 +11,8 @@
 			"Triggers": {
 				"Phrases": ["donger", "dong", "bulldog"]
 			},
-			"Responses": ["ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ"]
+			"Responses": ["ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ"],
+			"Sender":"jill"
 		},
 
 		{
@@ -39,7 +40,8 @@
 			"Triggers": {
 				"Words": ["garret", "gurrit"]
 			},
-			"Responses": ["You fucker, can you not count to two?"]
+			"Responses": ["You fucker, can you not count to two?"],
+			"Sender":"gurritt"
 		},
 
 		{
@@ -53,7 +55,8 @@
 			"Triggers": {
 				"Words": ["lol", "hahaha"]
 			},
-			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"]
+			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
+			"Sender":"nicole"
 		},
 
 		{
@@ -104,7 +107,8 @@
 				"* nibbles at neck", "* eats worm", "*twitches", "Coo Coo *Cough Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo",
 				"Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo",
 				"Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer"
-			]
+			],
+			"Sender":"parrot"
 		},
 
 		{
@@ -135,7 +139,8 @@
 				"Words": ["morning"]
 			},
 			"Named": true,
-			"Responses": ["Good morning user_id!", "Morning user_id!", "Guten Morgen user_id!", "Bonjour user_id!", "Ohayou user_id!", "Good morning to you user_id!", "Aloha user_id!", "Konnichiwashington user_id!", "Buenos dias user_id!", ":sunny: Good morning user_id!"]
+			"Responses": ["Good morning user_id!", "Morning user_id!", "Guten Morgen user_id!", "Bonjour user_id!", "Ohayou user_id!", "Good morning to you user_id!", "Aloha user_id!", "Konnichiwashington user_id!", "Buenos dias user_id!", ":sunny: Good morning user_id!"],
+			"Sender":"sunglasses"
 		},
 
 		{
@@ -143,7 +148,8 @@
 				"Words": ["coin"]
 			},
 			"Named": true,
-			"Responses": ["HEADS","TAILS"]
+			"Responses": ["HEADS","TAILS"],
+			"Sender":"slot_machine"
 		},
 
 		{
@@ -151,7 +157,8 @@
 				"Words": ["roll"]
 			},
 			"Named": true,
-			"Responses": ["1","2","3","4","5","6"]
+			"Responses": ["1","2","3","4","5","6"],
+			"Sender":"slot_machine"
 		},
 
 		{
@@ -165,7 +172,8 @@
 			"Triggers": {
 				"Words": ["random"]
 			},
-			"Responses": ["Something other than 3"]
+			"Responses": ["3"],
+			"Sender":"slot_machine"
 		},
 
 		{
