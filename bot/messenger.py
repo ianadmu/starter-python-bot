@@ -54,7 +54,7 @@ class Messenger(object):
         msg = msg.replace('&', "&amp;")
         msg = msg.replace('<', "&lt;")
         msg = msg.replace('>', "&gt;")
-        msg = msg.decode("utf8", "ignore")
+        #msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message_as_other(channel_id, msg, username, emoji)
 
@@ -63,7 +63,7 @@ class Messenger(object):
         msg = msg.replace('&', "&amp;")
         msg = msg.replace('<', "&lt;")
         msg = msg.replace('>', "&gt;")
-        msg = msg.decode("utf8", "ignore")
+        #msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message(channel_id, msg)
 
