@@ -45,7 +45,17 @@ class TimeTriggeredEventManager(object):
             pass
 
     def trigger_morning(self):
-        self.give_response(TESTING_CHANNEL, 'morning')
+        tag_users = ['channel', 'here']
+        random_custom_emoji = self.clients.get_random_emoji()
+        responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
+                     "Ohayou", "Good morning to you", "Aloha",
+                     "Konnichiwashington", "Buenos dias",
+                     ":sunny: Good morning"]
+        txt = '{} <!{}>!{}:'.format(
+            random.choice(tag_users), random.choice(responses),
+            random_custom_emoji
+        )
+        self.send_message(TESTING_CHANNEL, txt)
 
     def trigger_markov(self):
         try:
@@ -145,33 +155,41 @@ class TimeTriggeredEventManager(object):
             self.msg_writer.send_message('C15S5LNM9', txt)
 
     def trigger_timed_event(self):
-        #get date and time
-        curr_datetime = datetime.utcnow() - timedelta(hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS) #change here when daylight savings ends
+        curr_datetime = datetime.utcnow() - timedelta(
+            hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS
+        )
         day = curr_datetime.strftime('%A')
         hour = int(curr_datetime.strftime('%H'))
         minute = int(curr_datetime.strftime('%M'))
         second = int(curr_datetime.strftime('%S'))
 
-        #trigger startup log to testing channel
+        # trigger startup log to testing channel
         if(self.is_just_starting_up):
             self.trigger_startup_log(day, hour, minute, second)
             self.is_just_starting_up = False
 
-        #leaves 10-ish seconds to trigger since method is called every 10-ish seconds and we wantz the if statement to trigger once per min only
+        # leaves 10-ish seconds to trigger since method is called every 10-ish
+        # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            #self.trigger_morning()
-            #self.trigger_ping(day, hour, minute, second) #will post a ping every minute to testing channel
+            self.trigger_morning()
+            # self.trigger_ping(day, hour, minute, second)
+            # will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
             if minute == 15:
                 self.trigger_markov()
-            if day != 'Saturday' and day != 'Sunday' and hour == 9 and minute == 45:
+            if (day != 'Saturday' and day != 'Sunday'
+                    and hour == 9 and minute == 45):
                 self.trigger_945()
-            if day != 'Saturday' and day != 'Sunday' and hour == 9 and minute == 0:
+            if (day != 'Saturday' and day != 'Sunday'
+                    and hour == 9 and minute == 0):
                 self.trigger_mochaccino()
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if (hour == 16 and minute == 35) or (hour == 17 and minute == 0) or (hour == 17 and minute == 30) or (hour == 18 and minute == 0):
+                if ((hour == 16 and minute == 35) or
+                        (hour == 17 and minute == 0) or
+                        (hour == 17 and minute == 30) or
+                        (hour == 18 and minute == 0)):
                     self.trigger_drunk_phrase()
