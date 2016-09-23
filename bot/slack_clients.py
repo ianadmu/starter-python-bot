@@ -4,9 +4,11 @@ import re
 import time
 import random
 import os.path
+import traceback
 
 from slacker import Slacker
 from slackclient import SlackClient
+from messenger import Messenger
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +22,8 @@ class SlackClients(object):
 
         # SlackClient is a Slack Websocket RTM API Client
         self.rtm = SlackClient(token)
+
+        self.msg_writer = Messenger(self)
 
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
@@ -50,6 +54,20 @@ class SlackClients(object):
 
     def get_channels(self):
         return self.rtm.api_call("channels.list", token=str(self.token))
+
+    def send_reaction(self, emoji_name, channel_id, timestamp):
+        try:
+            response = self.rtm.api_call(
+                "channels.list", token=str(self.token), name=emoji_name,
+                channel=channel_id, timestamp=timestamp
+            )
+            if "ok" not in response:
+                self.msg_writer.write_error(channel_id, str(response))
+        except:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(channel_id, err_msg)
+            pass
 
     def upload_file_to_slack(self, filepath, filename, channel):
         my_file = os.path.join(filepath, filename)

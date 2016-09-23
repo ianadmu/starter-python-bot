@@ -144,10 +144,14 @@ class Messenger(object):
         txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
         self.send_message(channel_id, txt)
 
-    def write_spelling_mistake(self, channel_id):
-        self.clients.send_user_typing_pause(channel_id)
-        txt = 'Spelft it wronbg again I see...'
-        self.send_message(channel_id, txt)
+    def write_spelling_mistake(self, channel_id, timestamp):
+        # Commented out because tired of too much zac spelling spam
+        # self.clients.send_user_typing_pause(channel_id)
+        # txt = 'Spelft it wronbg again I see...'
+        # self.send_message(channel_id, txt)
+        # Using emoji reactions instead
+        emoji_name = "spelft_it_wronbg_again_i_see"
+        self.client.send_reaction(emoji_name, channel_id, timestamp)
 
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)

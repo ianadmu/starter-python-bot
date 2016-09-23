@@ -98,7 +98,7 @@ class RtmEventHandler(object):
     def _handle_message(self, event):
         if 'subtype' in event:
             if self._is_edited_by_user(event):
-                self.msg_writer.write_spelling_mistake(event['channel'])
+                self.msg_writer.write_spelling_mistake(event['channel'], event['ts'])
             elif event['subtype'] == 'channel_join':
                 # someone joined a channel
                 self.msg_writer.write_joined_channel(event['channel'], event['user'])
@@ -141,9 +141,6 @@ class RtmEventHandler(object):
             if response_master_response:
                 self.msg_writer.write_slow(channel, response_master_response)
 
-            if channel == 'C17QBAY2X':
-                self.msg_writer.write_dont_talk(channel, user, event['ts'])
-
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(channel, msg_txt)
 
@@ -154,7 +151,7 @@ class RtmEventHandler(object):
                 self.msg_writer.write_weather(channel)
 
             if self._is_edited_with_star(msg_txt):
-                self.msg_writer.write_spelling_mistake(channel)
+                self.msg_writer.write_spelling_mistake(channel, event['ts'])
 
             if re.search('riri', msg_txt.lower()):
                 self.msg_writer.write_riri_me(channel, msg_txt)
