@@ -36,24 +36,22 @@ class TimeTriggeredEventManager(object):
         except:
             pass
 
-    def give_response(self, channel, trigger, user=None):
+    def get_emoji(self):
         try:
-            self.response_master.give_message(channel, trigger, user)
+            return self.clients.get_random_emoji()
         except Exception as e:
             self.msg_writer.send_message(TESTING_CHANNEL, str(e))
         except:
             pass
 
     def trigger_morning(self):
-        tag_users = ['channel', 'here']
-        random_custom_emoji = self.clients.get_random_emoji()
+        tags = ['channel', 'here']
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
                      "Ohayou", "Good morning to you", "Aloha",
                      "Konnichiwashington", "Buenos dias",
                      ":sunny: Good morning"]
         txt = '{} <!{}>! :{}:'.format(
-            random.choice(responses), random.choice(tag_users),
-            random_custom_emoji
+            random.choice(responses), random.choice(tags), self.get_emoji()
         )
         self.send_message(TESTING_CHANNEL, txt)
 
@@ -171,7 +169,7 @@ class TimeTriggeredEventManager(object):
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            self.trigger_morning()
+            # self.trigger_morning()
             # self.trigger_ping(day, hour, minute, second)
             # will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
