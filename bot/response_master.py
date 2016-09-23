@@ -132,7 +132,7 @@ class Response_master:
 
         if sender:
             self.msg_writer.send_message_as_other(channel,
-             combined_responses, sender, ':' + sender ':')
+             combined_responses, sender, ':' + sender + ':')
         else:
             self.msg_writer.send_message(channel, combined_responses)
         return combined_responses
