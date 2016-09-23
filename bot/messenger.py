@@ -151,7 +151,7 @@ class Messenger(object):
         # self.send_message(channel_id, txt)
         # Using emoji reactions instead
         emoji_name = "spelft_it_wronbg_again_i_see"
-        self.client.send_reaction(emoji_name, channel_id, timestamp)
+        self.clients.send_reaction(emoji_name, channel_id, timestamp)
 
     def write_prompt(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
