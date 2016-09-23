@@ -123,10 +123,7 @@ class RtmEventHandler(object):
 
             self.rude_manager.run(channel, user)
 
-            response_master_response = self.response_master.get_response(msg_txt, user)
-
-            if "printchannel" in lower_txt:
-                self.msg_writer.write_channel_id(lower_txt.split()[1])
+            self.response_master.give_message(channel, msg_txt, user)
 
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 #markov
@@ -140,9 +137,6 @@ class RtmEventHandler(object):
 
             if lower_txt == "allusersinfo":
                 self.user_manager.print_all_users(self.msg_writer)
-
-            if response_master_response:
-                self.msg_writer.write_slow(channel, response_master_response)
 
             if self.is_loud(msg_txt):
                 self.msg_writer.write_loud(channel, msg_txt)

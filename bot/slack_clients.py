@@ -49,6 +49,16 @@ class SlackClients(object):
         emojis = response['emoji'].items()
         return emojis[int(random.random()*len(emojis))][0]
 
+    def send_message_as_other(self, channel_id, msg, name, emoji):
+        self.rtm.api_call("chat.postMessage", token=str(self.token),
+        channel=channel_id, text=msg, link_names=1, username=name,
+        unfurl_links=True, icon_emoji=emoji)
+
+    def send_message(self, channel_id, msg):
+        self.rtm.api_call("chat.postMessage", token=str(self.token),
+        channel=channel_id, text=msg, as_user=True, link_names=1,
+        unfurl_links=True)
+
     def get_users(self):
         return self.rtm.api_call("users.list", token=str(self.token))
 

@@ -8,7 +8,8 @@ class Response:
     names = ["zac", "qbot"]
 
     def __init__(
-        self, phrases, words, emoji, responses, use_hash, named, start, end
+        self, phrases, words, emoji, responses,
+        use_hash, named, start, end, sender
     ):
         self.phrases = phrases
         self.words = words
@@ -18,6 +19,7 @@ class Response:
         self.start = start
         self.end = end
         self.emoji = emoji
+        self.sender = sender
 
     def get_emoji_response(self, reaction):
         if reaction in self.emoji:
@@ -77,10 +79,13 @@ class Response_master:
                 named = "Named" in event and event["Named"]
                 start = ""
                 end = ""
+                sender = ""
                 if "Start" in event:
                     start = event["Start"]
                 if "End" in event:
                     end = event["End"]
+                if "Sender" in event:
+                    sender = event["Sender"]
                 phrases = []
                 words = []
                 emoji = []
@@ -96,7 +101,9 @@ class Response_master:
                         emoji.append(e)
                 for r in event["Responses"]:
                     responses.append(r)
-                self.events.append(Response(phrases, words, emoji, responses, use_hash, named, start, end))
+                self.events.append(Response(phrases, words, emoji, responses,
+                    use_hash, named, start, end, sender))
+                self.msg_writer = msg_writer
         except:
             msg_writer.write_custom_error("Error loading JSON file")
             self.events = []
@@ -111,13 +118,21 @@ class Response_master:
 
         return combined_responses
 
-    def get_response(self, message, user):
+    def give_message(self, channel, message, user):
         combined_responses = ""
         tokens = message.lower().split()
+        sender = None
         for event in self.events:
             current_response = event.get_response(message, tokens, user)
             if current_response != "":
                 current_response += '\n'
+                if event.sender:
+                    sender = event.sender
             combined_responses += current_response
 
+        if sender:
+            self.msg_writer.send_message_as_other(channel,
+             combined_responses, sender, ':' + sender + ':')
+        else:
+            self.msg_writer.send_message(channel, combined_responses)
         return combined_responses

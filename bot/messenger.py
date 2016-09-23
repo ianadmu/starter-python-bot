@@ -20,6 +20,7 @@ from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
 import common
+import urllib2
 
 logger = logging.getLogger(__name__)
 
@@ -38,16 +39,33 @@ class Messenger(object):
         self.equation_manager = EquationManager()
         self.channel_manager = ChannelManager(self.clients)
 
+    def __del__(self):
+        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
+                        "I'm dying again :sob:",
+                        "Have you gotten tired of this face :zacefron: ?"]
+        txt = random.choice(closing_msgs)
+        self.send_message('zac-testing', txt)
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        self.send_message('zac-testing', 'exit')
+
+    def send_message_as_other(self, channel_id, msg, username, emoji):
+        channel_id = self.channel_manager.get_channel_id(channel_id)
+        msg = msg.replace('&', "&amp;")
+        # msg = msg.replace('<', "&lt;")
+        # msg = msg.replace('>', "&gt;")
+        #msg = msg.decode("utf8", "ignore")
+
+        self.clients.send_message_as_other(channel_id, msg, username, emoji)
+
     def send_message(self, channel_id, msg):
-        # in the case of Group and Private channels, RTM channel payload
-        # is a complex dictionary
-        if isinstance(channel_id, dict):
-            channel_id = channel_id['id']
-        # logger.debug(
-        #   'Sending msg: {} to channel: {}'.format(msg, channel_id)
-        # )
-        channel = self.clients.rtm.server.channels.find(channel_id)
-        channel.send_message(msg)
+        channel_id = self.channel_manager.get_channel_id(channel_id)
+        msg = msg.replace('&', "&amp;")
+        # msg = msg.replace('<', "&lt;")
+        # msg = msg.replace('>', "&gt;")
+        #msg = msg.decode("utf8", "ignore")
+
+        self.clients.send_message(channel_id, msg)
 
     def write_channel_id(self, channel_id):
         self.write_custom_error(self.channel_manager.get_channel_id(channel_id))

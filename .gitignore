@@ -5,3 +5,5 @@ bot/response_master.pyc
 bot/setup_rude_manager.py
 
 bot/rudemodule.c
+
+*.pyc
