@@ -56,18 +56,10 @@ class SlackClients(object):
         return self.rtm.api_call("channels.list", token=str(self.token))
 
     def send_reaction(self, emoji_name, channel_id, timestamp):
-        try:
-            response = self.rtm.api_call(
-                "channels.list", token=str(self.token), name=emoji_name,
-                channel=channel_id, timestamp=timestamp
-            )
-            if "ok" not in response:
-                self.msg_writer.write_error(channel_id, str(response))
-        except:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(channel_id, err_msg)
-            pass
+        return self.rtm.api_call(
+            "reactions.add", token=str(self.token), name=emoji_name,
+            channel=channel_id, timestamp=timestamp
+        )
 
     def upload_file_to_slack(self, filepath, filename, channel):
         my_file = os.path.join(filepath, filename)
