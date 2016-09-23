@@ -36,17 +36,16 @@ class TimeTriggeredEventManager(object):
         except:
             pass
 
-    def get_response(self, trigger, user=None):
+    def give_response(self, channel, trigger, user=None):
         try:
-            self.response_master.get_response(trigger, user)
+            self.response_master.give_message(channel, trigger, user)
         except Exception as e:
             self.msg_writer.send_message(TESTING_CHANNEL, str(e))
         except:
             pass
 
     def trigger_morning(self):
-        msg = self.get_response('morning')
-        self.send_message('zac-testing', msg)
+        self.give_response(TESTING_CHANNEL, 'morning')
 
     def trigger_markov(self):
         try:
