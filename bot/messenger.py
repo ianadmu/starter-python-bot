@@ -46,6 +46,9 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message('zac-testing', txt)
 
+    def __exit__(self, exception_type, exception_value, traceback):
+        self.send_message('zac-testing', 'exit')
+
     def send_message(self, channel_id, msg):
         channel_id = self.channel_manager.get_channel_id(channel_id)
         msg = msg.replace('&', "&amp;")
