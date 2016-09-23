@@ -51,7 +51,8 @@ class SlackClients(object):
 
     def send_message(self, channel_id, msg):
         self.rtm.api_call("chat.postMessage", token=str(self.token),
-        channel=channel_id, text=msg, as_user=True)
+        channel=channel_id, text=msg, as_user=True, link_names=True,
+        unfurl_links=True, parse="url")
 
     def get_users(self):
         return self.rtm.api_call("users.list", token=str(self.token))
