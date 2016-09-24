@@ -54,7 +54,7 @@ class SlackBot(object):
 
             # Random markov here
             markov_chain = Markov(2)
-            markov_chain.add_single_line("This is the default phrase.")
+            markov_chain.add_single_line("Why do we need a default phrase?")
 
             msg_writer = Messenger(self.clients)
             event_handler = RtmEventHandler(
