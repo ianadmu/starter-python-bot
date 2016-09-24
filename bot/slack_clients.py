@@ -72,6 +72,9 @@ class SlackClients(object):
     def get_channels(self):
         return self.rtm.api_call("channels.list", token=str(self.token))
 
+    def get_groups(self):
+        return self.rtm.api_call("groups.list", token=str(self.token))
+
     def send_reaction(self, emoji_name, channel_id, timestamp):
         return self.rtm.api_call(
             "reactions.add", token=str(self.token), name=emoji_name,

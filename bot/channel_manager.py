@@ -9,6 +9,11 @@ class ChannelManager:
             for channel in channels["channels"]:
                 self.channel_names[channel["id"]] = channel["name"]
                 self.channel_ids[channel["name"]] = channel["id"]
+        groups = self.clients.get_groups()
+        if groups["ok"]:
+            for group in groups["groups"]:
+                self.channel_names[group["id"]] = group["name"]
+                self.channel_ids[group["name"]] = group["id"]
 
     def get_channel_id(self, identifier):
         if identifier in self.channel_ids:
