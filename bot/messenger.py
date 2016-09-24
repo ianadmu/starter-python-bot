@@ -275,8 +275,10 @@ class Messenger(object):
         self.write_slow(channel_id, response)
 
     def write_loud(self, channel_id, orig_msg):
-        self.loud_manager.write_loud_to_file(orig_msg)
-        if re.search(' ?zac', orig_msg.lower() or common.should_spam()):
+        zac_mentioned = re.search(' ?zac', orig_msg.lower())
+        if not zac_mentioned:
+            self.loud_manager.write_loud_to_file(orig_msg)
+        if zac_mentioned or common.should_spam():
             self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):

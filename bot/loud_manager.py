@@ -1,9 +1,10 @@
 import random
+import os.path
 
 
 class LoudManager(object):
     def __init__(self):
-        self.loud_file = open("louds.txt", 'a+')
+        self.loud_file = open(os.path.join('./resources', 'louds.txt'), 'a+')
         self.loud_cache = list()
         self.cache_loaded = False
 
@@ -13,8 +14,7 @@ class LoudManager(object):
         self.loud_cache.append(loudMessage)
 
     def load_loud_cache(self):
-        for line in self.loud_file.read().splitlines():
-            self.loud_cache.append(line)
+        self.loud_cache = list(self.loud_file.readlines())
 
     def get_random_loud(self):
         if not self.cache_loaded:
