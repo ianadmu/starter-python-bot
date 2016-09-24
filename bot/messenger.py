@@ -161,6 +161,7 @@ class Messenger(object):
             "> `Feed me` - Have some food courtesy of moi :banana:",
             "> `Fuck this` - Don't worry I got just the video. :+1:",
             "> `Just Do it` - Need some motivation? :just_do_it:",
+            "> `Markov` - I like to mix things up a bit too :lips:",
             "> `Coo` - Want a pigeon sound? Pigeon Mode is for you! :parrot:",
             ("> `XKCD` - Want an XKCD comic? Type it's number, or get the "
                 "latest one"),

@@ -4,7 +4,6 @@ import re
 import time
 import random
 import os.path
-import traceback
 
 from slacker import Slacker
 from slackclient import SlackClient
