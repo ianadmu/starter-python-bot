@@ -27,7 +27,7 @@ def get_icon(conds):
             return ":snowflake:"
         if "fog" in conds or "mist" in conds:
             return ":foggy:"
-        if re.search('cloud|overcast', conds):
+        if re.search('cloud|overcast', str(conds)):
             return ":cloud:"
         if "sunny" in conds:
             return ":sunny:"
@@ -84,7 +84,7 @@ def getCurrentWeather():
     temperature = re.sub(stringsBeforeGT, "", temperature)
 
     result = (
-        "It is currently " + temperature + "°C and " + condition +
+        "It is currently " + temperature + "°C and " + condition + " " +
         get_icon(condition)
     )
     return result
