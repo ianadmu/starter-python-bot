@@ -8,10 +8,10 @@ import xkcd_manager
 import weather_manager
 import common
 import traceback
+import requests
 
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
-from pokemon_caster import PokemonCaster
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from food_getter import FoodGetter
@@ -26,7 +26,6 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
-        self.pokemon_caster = PokemonCaster()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
         self.apology_manager = ResourceManager('apologies.txt')
@@ -223,7 +222,7 @@ class Messenger(object):
         self.write_slow(channel_id, bang)
 
     def write_cast_pokemon(self, channel_id, msg):
-        pkmn = self.pokemon_caster.i_choose_you(msg)
+        pkmn = pokemon_i_choose_you(msg)
         if pkmn is not None:
             self.send_message(channel_id, pkmn)
 
@@ -369,3 +368,26 @@ class ResourceManager(object):
 
     def get_response(self):
         return random.choice(self.responses)
+
+
+def pokemon_i_choose_you(self, msg):
+    teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
+    target = msg.split()[0]
+    if target in teammates:
+        return "Go! {}!\n:{}:".format(target.title(), target)
+    elif target.lower() == "sleep":
+        return "Go! {}!\n:{}:".format(target.title(), 'bed')
+    else:
+        link = 'http://pokeapi.co/api/v2/pokemon/{}/'
+        pkmn = link.format(target)
+        try:
+            response = requests.get(pkmn)
+        except requests.exceptions.RequestException:
+            return None
+        else:
+            pokemon = response.json()
+            if 'sprites' in pokemon:
+                result = "Go! {}!\n{}".format(
+                    target.title(), pokemon['sprites']['front_default']
+                )
+                return result
