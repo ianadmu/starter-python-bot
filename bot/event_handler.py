@@ -98,7 +98,9 @@ class RtmEventHandler(object):
                         "user" in event["message"]["edited"] and
                         ("subtype" not in event["message"] or
                             event["message"]["subtype"] != "bot_message")):
-                    return event["message"]["user"] == event["message"]["edited"]["user"]
+                    user1 = event["message"]["user"]
+                    user2 = event["message"]["edited"]["user"]
+                    return user1 == user2
         return False
 
     def _handle_message(self, event):
@@ -120,6 +122,7 @@ class RtmEventHandler(object):
         if ('user' in event and
                 not self.clients.is_message_from_me(event['user'])):
 
+            # Do admin
             msg_txt = event['text']
             channel = event['channel']
             user = event['user']
@@ -133,7 +136,7 @@ class RtmEventHandler(object):
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 self.msg_writer.send_message(channel, str(self.lotrMarkov))
 
-            # Return channel and user informations
+            # Return channel and user information
             if lower_txt == "channelinfo":
                 self.msg_writer.send_message(channel, channel)
             if lower_txt == "userinfo":
@@ -154,6 +157,10 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_night(channel, user)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel, msg_txt)
+            if re.search('(feed)|(hungry)', lower_txt):
+                self.msg_writer.write_food(channel)
+            if re.search('encourage me', lower_txt):
+                self.msg_writer.write_encouragement(channel, user)
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel, requestedComic)
@@ -162,6 +169,7 @@ class RtmEventHandler(object):
                     channel, lower_txt, user_name
                 )
 
+            # Respond to message text with `zac` included
             if (re.search(' ?zac', lower_txt) or
                     self.clients.is_bot_mention(msg_txt)):
                 if 'help' in lower_txt:
@@ -176,16 +184,12 @@ class RtmEventHandler(object):
                     self.msg_writer.write_pokemon_guessed_response(
                         channel, user, msg_txt
                     )
-                if 'attachment' in msg_txt:
+                if re.search('attachment|beep boop', lower_txt):
                     self.msg_writer.demo_attachment(channel)
                 if 'sad' in lower_txt:
                     self.msg_writer.write_sad(channel)
                 if 'kill me' in lower_txt:
                     self.msg_writer.write_bang(channel, user)
-                if re.search('(feed)|(hungry)', lower_txt):
-                    self.msg_writer.write_food(channel)
-                if re.search('encourage me', lower_txt):
-                    self.msg_writer.write_encouragement(channel, user)
                 if 'sort me' in lower_txt:
                     self.msg_writer.write_hogwarts_house(
                         channel, user,  msg_txt
