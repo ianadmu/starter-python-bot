@@ -112,9 +112,7 @@ class RtmEventHandler(object):
                     event['channel'], event['user']
                 )
             elif event['subtype'] == 'message_deleted':
-                self.msg_writer.write_message_deleted(
-                    event['user'], event['channel']
-                )
+                self.msg_writer.write_message_deleted(event['channel'])
             elif event['subtype'] == 'channel_leave':
                 self.msg_writer.write_left_channel(event['channel'])
 

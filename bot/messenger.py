@@ -91,10 +91,9 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message('zac-testing', txt)
 
-    def write_message_deleted(self, user, channel_id):
-        txt = 'I SAW THAT! *** deleted a message from channel: <#{}>'.format(
-            channel_id
-        )
+    def write_message_deleted(self, channel_id):
+        txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
+               "<#{}>").format(channel_id)
         self.send_message('zac-testing', txt)
 
     def write_left_channel(self, channel_id):
