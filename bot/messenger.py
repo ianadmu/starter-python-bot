@@ -139,21 +139,22 @@ class Messenger(object):
             "> `Solve <equation>` - Math sucks. I can help! :nerd_face:",
             ("> `Sass <name>` - I'll be sure to sass <name> until the sun "
                 "burns out. :smiling_imp:"),
+            ">`Riri` - WORK WORK WORK WORK WORK",
             ("> `Good morning` - I shall wish you a very good morning as "
                 "well! :sunny:"),
             "> `Good night` - I'll say good night! :crescent_moon:",
             "> `Who's that pokemon?` - Are you a pokemon master? :slowpoke:",
-            "> `Explain | Why` - I'll explain what's going on. :reginageorge:",
+            "> `Explain | Why` - I'll explain what's going on :reginageorge:",
             ("> `French <phrase>` - I know flawless French! I'll translate "
                 "for you :bombardier:"),
             "> `Marry me` - ...Are you going to propose to me?? _Le gasp_ ",
-            "> `Love you` - ...Do you really!? :heart:",
+            "> `I love you` - ...Do you really!? :heart:",
             "> `Sweetpotato me` - Sometimes you just need a :sweet_potato:",
             "> `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:",
-            "> `Crying` - I cry when you cry :joy:",
+            "> `:joy:` - Sometimes it's hard for me to control my laughter!",
             ("> `Wiener` - You wanna know who is a wiener? I'll tell you "
                 ":eggplant:"),
-            "> `Draw me` - I am le best artist :art:",
+            "> `Draw me` - I am _le best artist_ :art:",
             ("> `<pokemon> I choose you!` - Are you going to be the very "
                 "best? :yourturn:"),
             "> `Encourage me` - Let me help you get back on track. :grinning:",
@@ -166,7 +167,7 @@ class Messenger(object):
             "> `TicTacToe` - Want to play TicTacToe? See also `TicTacToe help`"
         ]
         txt = ("I'm Zac Efron.  I'll *_respond_* to the following {0} "
-               "commands:\n").format(len(help_txt))
+               "commands:\n").format(len(help_txt)-1)
         for val in range(len(help_txt)):
             txt += help_txt[val]
             txt += '\n'

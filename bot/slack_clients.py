@@ -50,20 +50,20 @@ class SlackClients(object):
         return emojis[int(random.random()*len(emojis))][0]
 
     def send_message_as_other(self, channel_id, msg, name, emoji):
-        self.rtm.api_call(
+        return self.rtm.api_call(
             "chat.postMessage", token=str(self.token), channel=channel_id,
             text=msg, link_names=1, username=name, unfurl_links=True,
             icon_emoji=emoji
         )
 
     def send_message(self, channel_id, msg):
-        self.rtm.api_call(
+        return self.rtm.api_call(
             "chat.postMessage", token=str(self.token), channel=channel_id,
             text=msg, as_user=True, link_names=1, unfurl_links=True
         )
 
     def send_attachment(self, channel_id, txt, attachment):
-        self.clients.web.chat.post_message(
+        return self.web.chat.post_message(
             channel_id, txt, attachments=[attachment], as_user='true'
         )
 
@@ -81,4 +81,4 @@ class SlackClients(object):
 
     def upload_file_to_slack(self, filepath, filename, channel):
         my_file = os.path.join(filepath, filename)
-        self.web.files.upload(my_file, channels=channel)
+        return self.web.files.upload(my_file, channels=channel)
