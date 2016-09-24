@@ -62,6 +62,11 @@ class SlackClients(object):
             text=msg, as_user=True, link_names=1, unfurl_links=True
         )
 
+    def send_attachment(self, channel_id, txt, attachment):
+        self.clients.web.chat.post_message(
+            channel_id, txt, attachments=[attachment], as_user='true'
+        )
+
     def get_users(self):
         return self.rtm.api_call("users.list", token=str(self.token))
 
