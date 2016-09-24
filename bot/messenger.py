@@ -51,7 +51,7 @@ class Messenger(object):
         msg = msg.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
-        #msg = msg.decode("utf8", "ignore")
+        # msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message_as_other(channel_id, msg, username, emoji)
 
@@ -60,15 +60,22 @@ class Messenger(object):
         msg = msg.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
-        #msg = msg.decode("utf8", "ignore")
+        # msg = msg.decode("utf8", "ignore")
 
         self.clients.send_message(channel_id, msg)
 
     def write_channel_id(self, channel_id):
-        self.write_custom_error(self.channel_manager.get_channel_id(channel_id))
+        self.send_message(
+            'zac-testing', self.channel_manager.get_channel_id(channel_id)
+        )
 
     def write_custom_error(self, msg):
-        self.send_message('C1SDALDG9', msg)
+        self.send_message('zac-testing', msg)
+
+    def write_error(self, channel_id, err_msg):
+        txt = (":face_with_head_bandage: my maker didn't handle this error "
+               "very well:\n>```{}```").format(err_msg)
+        self.send_message(channel_id, txt)
 
     def write_slow(self, channel_id, msg):
         self.clients.send_user_typing_pause(channel_id)
@@ -82,7 +89,7 @@ class Messenger(object):
                         "I'm dying again :sob:",
                         "Have you gotten tired of this face :zacefron: ?"]
         txt = random.choice(closing_msgs)
-        self.send_message('C1SDALDG9', txt)
+        self.send_message('zac-testing', txt)
 
     def write_message_deleted(self, channel_id):
         txt = 'I SAW THAT! Someone deleted a message from channel: {}'.format(channel_id)
@@ -211,10 +218,6 @@ class Messenger(object):
         result = self.whos_that_pokemon_manager.check_response(user_id, msg)
         if result is not None:
             self.send_message(channel_id, result)
-
-    def write_error(self, channel_id, err_msg):
-        txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)
-        self.send_message(channel_id, txt)
 
     def write_sad(self, channel_id):
         self.clients.send_user_typing_pause(channel_id)
