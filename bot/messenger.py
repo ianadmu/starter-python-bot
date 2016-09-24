@@ -6,7 +6,6 @@ import re
 import os.path
 import xkcd_manager
 import weather_manager
-import common
 import traceback
 import requests
 
@@ -17,6 +16,7 @@ from sass_manager import SassManager
 from food_getter import FoodGetter
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
+from common import ResourceManager
 
 logger = logging.getLogger(__name__)
 
@@ -108,8 +108,7 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_joined_channel(self, channel_id, user_id):
-        if (common.channels['iq']['zac-testing'] or
-                channel_id == common.channels['slackers']['zac-testing']):
+        if channel_id == self.channel_manager.get_channel_id('zac-testing'):
             txt = ("Hey <@{}>! Welcome to the Testing (aka the Weather) "
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
@@ -357,18 +356,6 @@ class Messenger(object):
     def write_xkcd(self, channel_id, msg):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(channel_id, txt)
-
-
-class ResourceManager(object):
-
-    def __init__(self, file_name):
-        self.resource_file = open(os.path.join(
-            './resources', file_name), 'r'
-        )
-        self.responses = self.resource_file.readlines()
-
-    def get_response(self):
-        return random.choice(self.responses)
 
 
 def pokemon_i_choose_you(msg):
