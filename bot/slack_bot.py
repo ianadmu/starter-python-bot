@@ -10,15 +10,18 @@ from markov import Markov
 
 logger = logging.getLogger(__name__)
 
+
 def spawn_bot():
     return SlackBot()
+
 
 class SlackBot(object):
     def __init__(self, token=None):
         """Creates Slacker Web and RTM clients with API Bot User token.
 
         Args:
-            token (str): Slack API Bot User token (for development token set in env)
+            token (str): Slack API Bot User token
+            (for development token set in env)
         """
         self.last_ping = 0
         self.keep_running = True
@@ -27,8 +30,8 @@ class SlackBot(object):
 
     def start(self, resource):
         """Creates Slack Web and RTM clients for the given Resource
-        using the provided API tokens and configuration, then connects websocket
-        and listens for RTM events.
+        using the provided API tokens and configuration, then
+        connects websocket and listens for RTM events.
 
         Args:
             resource (dict of Resource JSON): See message payloads - https://beepboophq.com/docs/article/resourcer-api
@@ -39,12 +42,16 @@ class SlackBot(object):
             self.clients = SlackClients(res_access_token)
 
         if self.clients.rtm.rtm_connect():
-            logging.info(u'Connected {} to {} team at https://{}.slack.com'.format(
-                self.clients.rtm.server.username,
-                self.clients.rtm.server.login_data['team']['name'],
-                self.clients.rtm.server.domain))
+            logging.info(
+                u'Connected {} to {} team at https://{}.slack.com'.format(
+                    self.clients.rtm.server.username,
+                    self.clients.rtm.server.login_data['team']['name'],
+                    self.clients.rtm.server.domain
+                )
+            )
 
-            markov_chain = Markov(3)
+            # Random markov here
+            markov_chain = Markov(2)
             markov_chain.add_single_line("This is the default phrase.")
 
             msg_writer = Messenger(self.clients)
