@@ -24,6 +24,14 @@
 
 		{
 			"Triggers": {
+				"Words": ["toast"]
+			},
+			"Responses": ["Never Forget :kieratoast:"],
+			"Sender":"kieratoast"
+		},
+
+		{
+			"Triggers": {
 				"Phrases": ["too many cooks"]
 			},
 			"Responses": ["https://www.youtube.com/watch?v=QrGrOK8oZG8"]
