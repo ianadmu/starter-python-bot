@@ -85,6 +85,6 @@ def getCurrentWeather():
 
     result = (
         "It is currently " + temperature + "°C and " + condition +
-        + get_icon(condition)
+        get_icon(condition)
     )
     return result
