@@ -91,8 +91,10 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message('zac-testing', txt)
 
-    def write_message_deleted(self, channel_id):
-        txt = 'I SAW THAT! Someone deleted a message from channel: {}'.format(channel_id)
+    def write_message_deleted(self, user, channel_id):
+        txt = 'I SAW THAT! *** deleted a message from channel: <#{}>'.format(
+            channel_id
+        )
         self.send_message('zac-testing', txt)
 
     def write_left_channel(self, channel_id):
@@ -102,7 +104,9 @@ class Messenger(object):
     def write_joined_channel(self, channel_id, user_id):
         if (common.channels['iq']['zac-testing'] or
                 channel_id == common.channels['slackers']['zac-testing']):
-            txt = 'Hey <@{}>! Welcome to the Testing (aka the Weather) channel. Please MUTE this channel or be inundaded with notifications!'.format(user_id)
+            txt = ("Hey <@{}>! Welcome to the Testing (aka the Weather) "
+                   "channel. Please MUTE this channel or be inundaded with "
+                   "notifications!").format(user_id)
             self.clients.send_user_typing_pause(channel_id)
             self.send_message(channel_id, txt)
             self.write_xkcd(channel_id, "15")
@@ -164,9 +168,14 @@ class Messenger(object):
 
     def write_good_night(self, channel_id, user_id):
         self.clients.send_user_typing_pause(channel_id)
-        good_nights = ['Goodnight', ':crescent_moon: Good night', 'Goodnight, my dear', 'Sweet dreams', 'Don\'t let the bed bugs bite',
-        'Pleasant dreams', 'Sleep well', 'Until tomorrow then', 'May your dreams be filled with my beautiful face :zacefron:']
-        txt =txt = '{}, <@{}>!'.format(random.choice(good_nights), user_id)
+        nights = [
+            'Goodnight', ':crescent_moon: Good night',
+            'Goodnight, my dear', 'Sweet dreams',
+            'Don\'t let the bed bugs bite', 'Pleasant dreams',
+            'Sleep well', 'Until tomorrow then',
+            'May your dreams be filled with my beautiful face :zacefron:'
+        ]
+        txt = '{}, <@{}>!'.format(random.choice(nights), user_id)
         self.send_message(channel_id, txt)
 
     def write_spelling_mistake(self, channel_id, timestamp):

@@ -54,7 +54,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["hahahahaha", "hahaha"],
+				"Words": [dying],
 				"Emoji": ["joy"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
