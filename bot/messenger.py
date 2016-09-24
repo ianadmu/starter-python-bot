@@ -153,7 +153,7 @@ class Messenger(object):
             "> `Crying` - I cry when you cry :joy:",
             ("> `Wiener` - You wanna know who is a wiener? I'll tell you "
                 ":eggplant:"),
-            "> `Draw me` - I am le best artist :art:"
+            "> `Draw me` - I am le best artist :art:",
             ("> `<pokemon> I choose you!` - Are you going to be the very "
                 "best? :yourturn:"),
             "> `Encourage me` - Let me help you get back on track. :grinning:",
