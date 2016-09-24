@@ -6,21 +6,18 @@ import re
 import os.path
 import xkcd_manager
 import weather_manager
-from datetime import datetime
+import common
+
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from pokemon_caster import PokemonCaster
 from hogwarts_house_sorter import HogwartsHouseSorter
-import scripts.weather_controller
-from scripts.weather_controller import WeatherController
 from sass_manager import SassManager
 from food_getter import FoodGetter
 from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
-import common
-import urllib2
 
 logger = logging.getLogger(__name__)
 
