@@ -15,7 +15,6 @@ from pokemon_caster import PokemonCaster
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from food_getter import FoodGetter
-from explanation_manager import ExplanationManager
 from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
@@ -33,7 +32,7 @@ class Messenger(object):
         self.sass_manager = SassManager()
         self.apology_manager = ApologyManager()
         self.food_getter = FoodGetter()
-        self.explanation_manager = ExplanationManager()
+        self.explanation_manager = ResourceManager('explanations.txt')
         self.equation_manager = EquationManager()
         self.channel_manager = ChannelManager(self.clients)
 
@@ -360,3 +359,15 @@ class Messenger(object):
     def write_xkcd(self, channel_id, msg):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(channel_id, txt)
+
+
+class ResourceManager(object):
+
+    def __init__(self, file_name):
+        self.resource_file = open(os.path.join(
+            './resources', file_name), 'r'
+        )
+        self.responses = self.responses.readlines()
+
+    def get_random_response(self):
+        return random.choice(self.responses)
