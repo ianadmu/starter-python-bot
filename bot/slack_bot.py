@@ -34,10 +34,12 @@ class SlackBot(object):
         connects websocket and listens for RTM events.
 
         Args:
-            resource (dict of Resource JSON): See message payloads - https://beepboophq.com/docs/article/resourcer-api
+            resource (dict of Resource JSON): See message payloads:
+            https://beepboophq.com/docs/article/resourcer-api
         """
         logger.debug('Starting bot for resource: {}'.format(resource))
-        if 'resource' in resource and 'SlackBotAccessToken' in resource['resource']:
+        if ('resource' in resource and
+                'SlackBotAccessToken' in resource['resource']):
             res_access_token = resource['resource']['SlackBotAccessToken']
             self.clients = SlackClients(res_access_token)
 
@@ -55,8 +57,12 @@ class SlackBot(object):
             markov_chain.add_single_line("This is the default phrase.")
 
             msg_writer = Messenger(self.clients)
-            event_handler = RtmEventHandler(self.clients, msg_writer, markov_chain)
-            time_event_handler = TimeTriggeredEventManager(self.clients, msg_writer, markov_chain)
+            event_handler = RtmEventHandler(
+                self.clients, msg_writer, markov_chain
+            )
+            time_event_handler = TimeTriggeredEventManager(
+                self.clients, msg_writer, markov_chain
+            )
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():
@@ -73,7 +79,11 @@ class SlackBot(object):
             msg_writer.write_closing()
 
         else:
-            logger.error('Failed to connect to RTM client with token: {}'.format(self.clients.token))
+            logger.error(
+                'Failed to connect to RTM client with token: {}'.format(
+                    self.clients.token
+                )
+            )
 
     def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds
@@ -88,6 +98,7 @@ class SlackBot(object):
         close connections if possible.
 
         Args:
-            resource (dict of Resource JSON): See message payloads - https://beepboophq.com/docs/article/resourcer-api
+            resource (dict of Resource JSON): See message payloads:
+            https://beepboophq.com/docs/article/resourcer-api
         """
         self.keep_running = False

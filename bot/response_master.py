@@ -1,7 +1,7 @@
 import random
 import json
 import os.path
-
+import re
 
 class Response:
 
@@ -68,6 +68,7 @@ class Response:
 
 
 class Response_master:
+    string_split = "[\s\.,?!]"
 
     def __init__(self, msg_writer):
         try:
@@ -120,7 +121,7 @@ class Response_master:
 
     def give_message(self, channel, message, user):
         combined_responses = ""
-        tokens = message.lower().split()
+        tokens = re.split(self.string_split,message.lower())
         sender = None
         for event in self.events:
             current_response = event.get_response(message, tokens, user)
