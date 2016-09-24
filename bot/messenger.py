@@ -370,7 +370,7 @@ class ResourceManager(object):
         return random.choice(self.responses)
 
 
-def pokemon_i_choose_you(self, msg):
+def pokemon_i_choose_you(msg):
     teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
     target = msg.split()[0]
     if target in teammates:
