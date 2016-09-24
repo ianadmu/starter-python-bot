@@ -101,4 +101,7 @@ class SlackBot(object):
             resource (dict of Resource JSON): See message payloads:
             https://beepboophq.com/docs/article/resourcer-api
         """
+        self.clients.web.chat.post_message(
+            'zac-testing', 'main bye bye', as_user='true'
+        )
         self.keep_running = False

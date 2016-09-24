@@ -99,11 +99,7 @@ class Messenger(object):
         self.clients.send_reaction(emoji_name, channel_id, timestamp)
 
     def write_closing(self):
-        closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
-                        "I'm dying again :sob:",
-                        "Have you gotten tired of this face :zacefron: ?"]
-        txt = random.choice(closing_msgs)
-        self.send_message('zac-testing', txt)
+        self.send_message('zac-testing', "I'm closing, ~byeeee~!!!!!")
 
     def write_message_deleted(self, channel_id):
         txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
