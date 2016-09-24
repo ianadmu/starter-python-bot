@@ -50,7 +50,7 @@ class TimeTriggeredEventManager(object):
         txt = '{} <!{}>! :{}:'.format(
             random.choice(responses), random.choice(tags), self.get_emoji()
         )
-        self.send_message(TESTING_CHANNEL, txt)
+        self.send_message('random', txt)
 
     def trigger_markov(self):
         self.send_message('markov', str(self.markov_chain))
