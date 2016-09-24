@@ -223,8 +223,9 @@ class Messenger(object):
 
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = pokemon_i_choose_you(msg)
-        if pkmn is not None:
-            self.send_message(channel_id, pkmn)
+        if pkmn is None:
+            pkmn = 'Your pokemon escaped! :O'
+        self.send_message(channel_id, pkmn)
 
     def write_whos_that_pokemon(self, channel_id):
         txt = self.whos_that_pokemon_manager.whos_that_pkmn()
