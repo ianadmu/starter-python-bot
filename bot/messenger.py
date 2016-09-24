@@ -120,58 +120,66 @@ class Messenger(object):
             txt = ("Hey <@{}>! Welcome to the Testing (aka the Weather) "
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
-            self.clients.send_user_typing_pause(channel_id)
-            self.send_message(channel_id, txt)
+            self.write_slow(channel_id, txt)
             self.write_xkcd(channel_id, "15")
         else:
             self.write_greeting(channel_id, user_id)
 
     def write_help_message(self, channel_id):
-        bot_uid = self.clients.bot_user_id()
-        help_txt = [ "> `hi <@" + bot_uid + ">` - I'll greet back, i don't bite. :wave:",
-            "> `<@" + bot_uid + "> joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:",
-            "> `<@" + bot_uid + "> weather` - Let me tell you the weather in Winnipeg. :rainbow:",
-            "> `<@" + bot_uid + "> I'm sad` - Maybe I can cheer you up. :wink:",
-            "> `<@" + bot_uid + "> sort me` - I'll sort you into one of the four Hogwarts houses! Better hope you don't get :slytherin:",
-            "> `<@" + bot_uid + "> apologize` - Sometimes I make mistakes. Tell me when I do so I can apologize. :bow:",
-            "> `<@" + bot_uid + "> thanks!` - I also sometimes do well! I also like to be appreciated :innocent:",
-            "> `<@" + bot_uid + "> solve <equation>` - Math sucks. I can help! :nerd_face:",
-            "> `<@" + bot_uid + "> sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:",
-            "> `<@" + bot_uid + "> good morning` - I shall wish you a good morning as well! :sunny:",
-            "> `<@" + bot_uid + "> good night` - I'll give you a goodnight greeting :crescent_moon:",
-            "> `<@" + bot_uid + "> who's that pokemon?` - Are you a pokemon master? :slowpoke:",
-            "> `<@" + bot_uid + "> Explain | Why` - I'll explain what's going on. :reginageorge:",
-            "> `<@" + bot_uid + "> french <phrase>` - I know flawless French! I'll translate for you :bombardier:",
-            "> `<@" + bot_uid + "> marry me` - ...Are you going to propose to me?? _Le gasp_ :le gasp:",
-            "> `<@" + bot_uid + "> sweetpotato me` - Sometimes you just need a :sweet_potato:",
-            "> `Boyer` - Did you know Gord Boyer is my favourite prof? I'll give you one of his wise quotes :nerd_face:",
+        help_txt = [
+            "_Hint: sometimes you need to say my name for me to respond!_",
+            "> `Hi` - I'll greet back, i don't bite. :wave:",
+            "> `Joke` - I'll tell you one of my finest jokes :laughing:",
+            "> `Weather` - Let me tell you the weather in Winnipeg. :rainbow:",
+            "> `I'm sad` - Maybe I can cheer you up. :wink:",
+            "> `Sort me` - I'll sort you into a Hogwarts house!",
+            ("> `Apologize` - Sometimes I make mistakes. Tell me when I do so "
+                "I can apologize. :bow:"),
+            "> `Thanks!` - I also like to be appreciated :innocent:",
+            "> `Solve <equation>` - Math sucks. I can help! :nerd_face:",
+            ("> `Sass <name>` - I'll be sure to sass <name> until the sun "
+                "burns out. :smiling_imp:"),
+            ("> `Good morning` - I shall wish you a very good morning as "
+                "well! :sunny:"),
+            "> `Good night` - I'll say good night! :crescent_moon:",
+            "> `Who's that pokemon?` - Are you a pokemon master? :slowpoke:",
+            "> `Explain | Why` - I'll explain what's going on. :reginageorge:",
+            ("> `French <phrase>` - I know flawless French! I'll translate "
+                "for you :bombardier:"),
+            "> `Marry me` - ...Are you going to propose to me?? _Le gasp_ ",
+            "> `Love you` - ...Do you really!? :heart:",
+            "> `Sweetpotato me` - Sometimes you just need a :sweet_potato:",
+            "> `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:",
             "> `Crying` - I cry when you cry :joy:",
-            "> `Wiener` - You wanna know who a wiener is? I'll tell you :eggplant:",
-            "> `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:",
-            "> `encourage` - Let me help you get back on track. :grinning:",
-            "> `hungry | feed` - Have some food courtesy of moi :banana:",
-            "> `Fuck this` - You're referring to OS, aren't you? Don't worry I got just the video. :+1:",
-            "> `Just Do it` - Need some motivation? This vid should do the trick :sunglasses:",
-            "> `Pigeon Mode` - Want a pigeon sound? Type a sentence with 'coo ' in it.",
-            "> `XKCD` - Want an XKCD comic? Type it's number to get it, or leave it blank to get the latest one",
-            "> `TicTacToe` - Want to play TicTacToe? Type 'TicTacToe help' for more information"]
-        txt = "I'm Zac Efron.  I'll *_respond_* to the following {0} commands:\n".format(len(help_txt))
+            ("> `Wiener` - You wanna know who is a wiener? I'll tell you "
+                ":eggplant:"),
+            ("> `<pokemon> I choose you!` - Are you going to be the very "
+                "best? :yourturn:"),
+            "> `Encourage me` - Let me help you get back on track. :grinning:",
+            "> `Feed me` - Have some food courtesy of moi :banana:",
+            "> `Fuck this` - Don't worry I got just the video. :+1:",
+            "> `Just Do it` - Need some motivation? :just_do_it:",
+            "> `Coo` - Want a pigeon sound? Pigeon Mode is for you! :parrot:",
+            ("> `XKCD` - Want an XKCD comic? Type it's number, or get the "
+                "latest one"),
+            "> `TicTacToe` - Want to play TicTacToe? See also `TicTacToe help`"
+        ]
+        txt = ("I'm Zac Efron.  I'll *_respond_* to the following {0} "
+               "commands:\n").format(len(help_txt))
         for val in range(len(help_txt)):
             txt += help_txt[val]
             txt += '\n'
 
-        self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, txt)
+        self.write_slow(channel_id, txt)
 
     def write_to_french(self, channel_id, msg):
-        self.clients.send_user_typing_pause(channel_id)
         msg = msg.lower()
         msg = msg.replace('zac', '')
         msg = msg.replace('french', '')
         tokens = msg.split()
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
-        self.send_message(channel_id, txt)
+        self.write_slow(channel_id, txt)
 
     def write_greeting(self, channel_id, user_id):
         greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
@@ -179,7 +187,6 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_good_night(self, channel_id, user_id):
-        self.clients.send_user_typing_pause(channel_id)
         nights = [
             'Goodnight', ':crescent_moon: Good night',
             'Goodnight, my dear', 'Sweet dreams',
@@ -188,7 +195,7 @@ class Messenger(object):
             'May your dreams be filled with my beautiful face :zacefron:'
         ]
         txt = '{}, <@{}>!'.format(random.choice(nights), user_id)
-        self.send_message(channel_id, txt)
+        self.write_slow(channel_id, txt)
 
     def write_spelling_mistake(self, channel_id, timestamp):
         emoji_name = "spelft_it_wronbg_again_i_see"
@@ -290,8 +297,7 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_solution(self, channel_id, msg):
-        self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, self.equation_manager.solve(msg))
+        self.write_slow(channel_id, self.equation_manager.solve(msg))
 
     def write_sweetpotato_me(self, channel_id, user_id):
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
