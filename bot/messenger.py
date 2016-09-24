@@ -367,7 +367,7 @@ class ResourceManager(object):
         self.resource_file = open(os.path.join(
             './resources', file_name), 'r'
         )
-        self.responses = self.responses.readlines()
+        self.responses = self.resource_file.readlines()
 
     def get_random_response(self):
         return random.choice(self.responses)
