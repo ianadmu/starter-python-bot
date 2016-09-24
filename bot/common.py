@@ -1,14 +1,5 @@
 import random
-
-channels = {
-    'slackers': {
-        'zac-testing': 'C1SDALDG9'
-
-    },
-    'iq': {
-        'zac-testing': 'C171ASJJK'
-    }
-}
+import os.path
 
 
 def should_spam():
@@ -18,3 +9,15 @@ def should_spam():
     if random1 < random2 and random1 < random3:
         return True
     return False
+
+
+class ResourceManager(object):
+
+    def __init__(self, file_name):
+        self.resource_file = open(os.path.join(
+            './resources', file_name), 'r'
+        )
+        self.responses = self.resource_file.readlines()
+
+    def get_response(self):
+        return random.choice(self.responses)

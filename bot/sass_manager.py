@@ -1,9 +1,9 @@
 import os.path
-import random
 import re
 from markov import Markov
 
 sass_flag = re.compile('sass[a-z]* ')
+
 
 class SassManager(object):
 
@@ -11,7 +11,9 @@ class SassManager(object):
         self.sass_file = open(os.path.join('./resources', 'sass.txt'), 'r')
         self.sassy_remarks = self.sass_file.readlines()
         self.sassMarkov = Markov(3)
-        self.sassMarkov.add_file(open(os.path.join('./resources', 'insults.txt'), 'r'))
+        self.sassMarkov.add_file(
+            open(os.path.join('./resources', 'insults.txt'), 'r')
+        )
 
     def get_sass(self, msg):
         target = self.get_target(msg)
@@ -20,7 +22,7 @@ class SassManager(object):
 
     def get_target(self, msg):
         token = re.split(sass_flag, msg.lower())
-        target = self.format_target(token[1]) #lower().encode('ascii','ignore') is causing tags to not work
+        target = self.format_target(token[1])
         return target
 
     def format_target(self, target):

@@ -3,6 +3,7 @@ import json
 import os.path
 import re
 
+
 class Response:
 
     names = ["zac", "qbot"]
@@ -57,7 +58,7 @@ class Response:
         return result
 
     def hash(self, text):
-        hashValue = 11;
+        hashValue = 11
         for character in text:
             hashValue *= 47
             hashValue += ord(character)
@@ -102,8 +103,12 @@ class Response_master:
                         emoji.append(e)
                 for r in event["Responses"]:
                     responses.append(r)
-                self.events.append(Response(phrases, words, emoji, responses,
-                    use_hash, named, start, end, sender))
+                self.events.append(
+                    Response(
+                        phrases, words, emoji, responses,
+                        use_hash, named, start, end, sender
+                    )
+                )
                 self.msg_writer = msg_writer
         except:
             msg_writer.write_custom_error("Error loading JSON file")
@@ -121,7 +126,7 @@ class Response_master:
 
     def give_message(self, channel, message, user):
         combined_responses = ""
-        tokens = re.split(self.string_split,message.lower())
+        tokens = re.split(self.string_split, message.lower())
         sender = None
         for event in self.events:
             current_response = event.get_response(message, tokens, user)
@@ -132,8 +137,9 @@ class Response_master:
             combined_responses += current_response
 
         if sender:
-            self.msg_writer.send_message_as_other(channel,
-             combined_responses, sender, ':' + sender + ':')
+            self.msg_writer.send_message_as_other(
+                channel, combined_responses, sender, ':' + sender + ':'
+            )
         else:
             self.msg_writer.send_message(channel, combined_responses)
         return combined_responses

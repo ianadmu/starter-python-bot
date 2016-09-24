@@ -1,9 +1,8 @@
 import random
-import os.path
-import xml.etree.ElementTree as ET
 import weather_manager
 
 from datetime import datetime, timedelta
+from common import ResourceManager
 
 HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5  # for Winnipeg
 HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6  # for Winnipeg
@@ -24,6 +23,8 @@ class TimeTriggeredEventManager(object):
         self.random_hasnt_fired = True
         self.is_just_starting_up = True
         self.markov_chain = markov_chain
+        self.drunk_manager = ResourceManager('drunk_comments.txt')
+        self.random_manager = ResourceManager('random_comments.txt')
 
     def send_message(self, channel, msg_txt):
         try:
@@ -71,9 +72,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random(self):
-        tree = ET.parse(os.path.join('./resources', 'random_comments.xml'))
-        root = tree.getroot()
-        txt = root[int(random.random()*len(root))].text
+        txt = self.random_manager.get_response()
         self.send_message('random', txt)
         self.trigger_method_log('random')
 
@@ -113,11 +112,8 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_drunk_phrase(self):
-        drunk_comments_file = open(
-            os.path.join('./resources', 'drunk_comments.txt'), 'r'
-        )
-        drunk_comments = drunk_comments_file.read().splitlines()
-        txt = '{} :{}:'.format(random.choice(drunk_comments), self.get_emoji())
+        drunk_comment = self.drunk_manager.get_response()
+        txt = '{} :{}:'.format(drunk_comment, self.get_emoji())
         self.send_message('random', txt)
 
     def trigger_weather(self):

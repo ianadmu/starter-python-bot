@@ -6,19 +6,17 @@ import re
 import os.path
 import xkcd_manager
 import weather_manager
-import common
 import traceback
+import requests
 
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
-from pokemon_caster import PokemonCaster
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from food_getter import FoodGetter
-from explanation_manager import ExplanationManager
-from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
+from common import ResourceManager
 
 logger = logging.getLogger(__name__)
 
@@ -28,12 +26,11 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
-        self.pokemon_caster = PokemonCaster()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
-        self.apology_manager = ApologyManager()
+        self.apology_manager = ResourceManager('apologies.txt')
         self.food_getter = FoodGetter()
-        self.explanation_manager = ExplanationManager()
+        self.explanation_manager = ResourceManager('explanations.txt')
         self.equation_manager = EquationManager()
         self.channel_manager = ChannelManager(self.clients)
 
@@ -57,13 +54,20 @@ class Messenger(object):
         self.clients.send_message_as_other(channel_id, msg, username, emoji)
 
     def send_message(self, channel_id, msg):
-        channel_id = self.channel_manager.get_channel_id(channel_id)
-        msg = msg.replace('&', "&amp;")
-        # msg = msg.replace('<', "&lt;")
-        # msg = msg.replace('>', "&gt;")
-        # msg = msg.decode("utf8", "ignore")
+        try:
+            channel_id = self.channel_manager.get_channel_id(channel_id)
+            msg = msg.replace('&', "&amp;")
+            # msg = msg.replace('<', "&lt;")
+            # msg = msg.replace('>', "&gt;")
+            # msg = msg.decode("utf8", "ignore")
 
-        self.clients.send_message(channel_id, msg)
+            self.clients.send_message(channel_id, msg)
+        except Exception as e:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            txt = err_msg + " \n" + str(e)
+            self.write_error('zac-testing', txt)
+            pass
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
@@ -71,11 +75,10 @@ class Messenger(object):
             if "ok" not in result:
                 raise Exception
         except Exception as e:
-            self.write_custom_error(str(e))
-        except:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error('zac-testing', err_msg)
+            txt = err_msg + " \n" + str(e)
+            self.write_error('zac-testing', txt)
             pass
 
     def write_channel_id(self, channel_id):
@@ -111,8 +114,7 @@ class Messenger(object):
         self.send_message(channel_id, txt)
 
     def write_joined_channel(self, channel_id, user_id):
-        if (common.channels['iq']['zac-testing'] or
-                channel_id == common.channels['slackers']['zac-testing']):
+        if channel_id == self.channel_manager.get_channel_id('zac-testing'):
             txt = ("Hey <@{}>! Welcome to the Testing (aka the Weather) "
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
@@ -225,9 +227,10 @@ class Messenger(object):
         self.write_slow(channel_id, bang)
 
     def write_cast_pokemon(self, channel_id, msg):
-        pkmn = self.pokemon_caster.i_choose_you(msg)
-        if pkmn is not None:
-            self.send_message(channel_id, pkmn)
+        pkmn = pokemon_i_choose_you(msg)
+        if pkmn is None:
+            pkmn = 'Your pokemon escaped! :O'
+        self.send_message(channel_id, pkmn)
 
     def write_whos_that_pokemon(self, channel_id):
         txt = self.whos_that_pokemon_manager.whos_that_pkmn()
@@ -287,15 +290,14 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_explanation(self, channel_id):
-        self.write_slow(channel_id, self.explanation_manager.get_explanation())
+        self.write_slow(channel_id, self.explanation_manager.get_response())
 
     def write_sass(self, channel_id, msg):
         txt = self.sass_manager.get_sass(msg)
         self.write_slow(channel_id, txt)
 
     def write_apology(self, channel_id):
-        txt = self.apology_manager.get_random_apology()
-        self.write_slow(channel_id, txt)
+        self.write_slow(channel_id, self.apology_manager.get_response())
 
     def write_solution(self, channel_id, msg):
         self.write_slow(channel_id, self.equation_manager.solve(msg))
@@ -360,3 +362,26 @@ class Messenger(object):
     def write_xkcd(self, channel_id, msg):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(channel_id, txt)
+
+
+def pokemon_i_choose_you(msg):
+    teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
+    target = msg.split()[0]
+    if target in teammates:
+        return "Go! {}!\n:{}:".format(target.title(), target)
+    elif target.lower() == "sleep":
+        return "Go! {}!\n:{}:".format(target.title(), 'bed')
+    else:
+        link = 'http://pokeapi.co/api/v2/pokemon/{}/'
+        pkmn = link.format(target)
+        try:
+            response = requests.get(pkmn)
+        except requests.exceptions.RequestException:
+            return None
+        else:
+            pokemon = response.json()
+            if 'sprites' in pokemon:
+                result = "Go! {}!\n{}".format(
+                    target.title(), pokemon['sprites']['front_default']
+                )
+                return result
