@@ -15,7 +15,6 @@ from pokemon_caster import PokemonCaster
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from food_getter import FoodGetter
-from apology_manager import ApologyManager
 from equation_manager import EquationManager
 from channel_manager import ChannelManager
 
@@ -30,7 +29,7 @@ class Messenger(object):
         self.pokemon_caster = PokemonCaster()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
-        self.apology_manager = ApologyManager()
+        self.apology_manager = ResourceManager('apologies.txt')
         self.food_getter = FoodGetter()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.equation_manager = EquationManager()
@@ -286,15 +285,14 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_explanation(self, channel_id):
-        self.write_slow(channel_id, self.explanation_manager.get_explanation())
+        self.write_slow(channel_id, self.explanation_manager.get_response())
 
     def write_sass(self, channel_id, msg):
         txt = self.sass_manager.get_sass(msg)
         self.write_slow(channel_id, txt)
 
     def write_apology(self, channel_id):
-        txt = self.apology_manager.get_random_apology()
-        self.write_slow(channel_id, txt)
+        self.write_slow(channel_id, self.apology_manager.get_response())
 
     def write_solution(self, channel_id, msg):
         self.write_slow(channel_id, self.equation_manager.solve(msg))
@@ -369,5 +367,5 @@ class ResourceManager(object):
         )
         self.responses = self.resource_file.readlines()
 
-    def get_random_response(self):
+    def get_response(self):
         return random.choice(self.responses)
