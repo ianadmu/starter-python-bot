@@ -54,13 +54,20 @@ class Messenger(object):
         self.clients.send_message_as_other(channel_id, msg, username, emoji)
 
     def send_message(self, channel_id, msg):
-        channel_id = self.channel_manager.get_channel_id(channel_id)
-        msg = msg.replace('&', "&amp;")
-        # msg = msg.replace('<', "&lt;")
-        # msg = msg.replace('>', "&gt;")
-        # msg = msg.decode("utf8", "ignore")
+        try:
+            channel_id = self.channel_manager.get_channel_id(channel_id)
+            msg = msg.replace('&', "&amp;")
+            # msg = msg.replace('<', "&lt;")
+            # msg = msg.replace('>', "&gt;")
+            # msg = msg.decode("utf8", "ignore")
 
-        self.clients.send_message(channel_id, msg)
+            self.clients.send_message(channel_id, msg)
+        except Exception as e:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            txt = err_msg + " \n" + str(e)
+            self.write_error('zac-testing', txt)
+            pass
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
@@ -68,11 +75,10 @@ class Messenger(object):
             if "ok" not in result:
                 raise Exception
         except Exception as e:
-            self.write_custom_error(str(e))
-        except:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error('zac-testing', err_msg)
+            txt = err_msg + " \n" + str(e)
+            self.write_error('zac-testing', txt)
             pass
 
     def write_channel_id(self, channel_id):
