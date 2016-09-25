@@ -33,7 +33,7 @@ class Markov:
             with open(os.path.join('./resources', file_name), 'r') as file:
                 for line in file:
                     self.process_line(line)
-                self.process_current_string()
+            self.process_current_string()
         except:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))

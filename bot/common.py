@@ -19,3 +19,5 @@ class ResourceManager(object):
 
     def get_response(self):
         return random.choice(self.responses)
+
+

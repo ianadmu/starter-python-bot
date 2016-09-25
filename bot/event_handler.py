@@ -1,7 +1,6 @@
 import json
 import logging
 import re
-import os.path
 import traceback
 
 from response_master import Response_master
