@@ -198,7 +198,7 @@ class Messenger(object):
         msg = msg.lower()
         msg = msg.replace('zac', '')
         msg = msg.replace('french', '')
-        msg.replace('_', '')
+        msg = msg.replace('_', '')
         tokens = msg.split()
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
