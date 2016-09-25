@@ -62,7 +62,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["dying"],
+				"Words": ["_dying_"],
 				"Emoji": ["joy"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
