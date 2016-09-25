@@ -85,6 +85,12 @@ class SlackBot(object):
                 )
             )
 
+    def __del__(self, exception_type, exception_value, traceback):
+        self.clients.send_message('zac-testing', 'del slackbot')
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        self.clients.send_message('zac-testing', 'exit slackbot')
+
     def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds
         now = int(time.time())
@@ -101,7 +107,4 @@ class SlackBot(object):
             resource (dict of Resource JSON): See message payloads:
             https://beepboophq.com/docs/article/resourcer-api
         """
-        self.clients.web.chat.post_message(
-            'zac-testing', 'main bye bye', as_user='true'
-        )
         self.keep_running = False
