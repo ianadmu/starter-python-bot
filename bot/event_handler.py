@@ -34,7 +34,7 @@ class RtmEventHandler(object):
 
         self.markov_chain = markov_chain
 
-        self.lotrMarkov = Markov(2)
+        self.lotrMarkov = Markov(2, msg_writer)
         self.lotrMarkov.add_file('hpOne.txt')
         self.lotrMarkov.add_file('random_comments.txt')
         self.lotrMarkov.add_file('lotrOne.txt')

@@ -6,8 +6,8 @@ sass_flag = re.compile('sass[a-z]* ')
 
 class SassManager(object):
 
-    def __init__(self):
-        self.sassMarkov = Markov(3)
+    def __init__(self, msg_writer):
+        self.sassMarkov = Markov(3, msg_writer)
         self.sassMarkov.add_file('insults.txt')
 
     def get_sass(self, msg):

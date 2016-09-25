@@ -26,7 +26,7 @@ class Messenger(object):
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-        self.sass_manager = SassManager()
+        self.sass_manager = SassManager(self)
         self.food_getter = FoodGetter()
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')

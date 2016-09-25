@@ -22,7 +22,8 @@ class Markov:
     phrase_to_remove = re.compile("BOOK .* ")
     quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
-    def __init__(self, length):
+    def __init__(self, length, msg_writer):
+        self.msg_writer = msg_writer
         self.length = length
         self.processing_string = ""
         self.chain = defaultdict(list)
@@ -36,7 +37,7 @@ class Markov:
         except:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error(err_msg)
+            self.msg_writer.write_error(err_msg)
             pass
 
     def add_single_line(self, line):
