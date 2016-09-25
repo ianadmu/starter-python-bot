@@ -1,6 +1,7 @@
-import os.path
 import random
 import requests
+
+from common import ResourceManager
 
 
 URL = 'http://pokeapi.co/api/v2/pokemon/{}/'
@@ -9,14 +10,8 @@ URL = 'http://pokeapi.co/api/v2/pokemon/{}/'
 class WhosThatPokemonManager(object):
     def __init__(self):
         self.correct_answer = None
-        self.pos_responses_file = open(
-            os.path.join('./resources', 'pokemon_correct.txt'), 'r'
-        )
-        self.pos_responses = self.pos_responses_file.readlines()
-        self.neg_responses_file = open(
-            os.path.join('./resources', 'pokemon_incorrect.txt'), 'r'
-        )
-        self.neg_responses = self.neg_responses_file.readlines()
+        self.pos_response_manager = ResourceManager('pokemon_correct.txt')
+        self.neg_response_manager = ResourceManager('pokemon_incorrect.txt')
 
     def whos_that_pkmn(self):
         if self.correct_answer is None:
@@ -48,12 +43,12 @@ class WhosThatPokemonManager(object):
                 return self.guessed_correctly(user_id)
             else:
                 result = '<@{}> {}'.format(
-                    user_id, random.choice(self.neg_responses)
+                    user_id, self.neg_response_manager.get_response()
                 )
                 return result
 
     def guessed_correctly(self, user_id):
-        random_response = random.choice(self.pos_responses)
+        random_response = self.pos_response_manager.get_response()
         revealed_name = self.reveal_answer()
         result = '{} {} You go <@{}>!'.format(
             random_response, revealed_name, user_id
