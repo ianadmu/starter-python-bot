@@ -69,7 +69,9 @@ class Messenger(object):
             self.write_error('zac-testing', txt)
             pass
 
-    def send_slow_message_then_update(self, channel_id, msg, updated_msg):
+    def send_slow_message_then_update(
+        self, channel_id, msg, updated_msg, reaction=None
+    ):
         try:
             self.clients.send_user_typing_pause(channel_id)
             msg = msg.replace('&', "&amp;")
@@ -78,6 +80,8 @@ class Messenger(object):
             if 'ok' in response:
                 ts = response['ts']
                 self.clients.update_message(channel_id, ts, updated_msg)
+                if reaction is not None:
+                    self.send_reaction(reaction, channel_id, ts)
         except Exception as e:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
@@ -345,9 +349,11 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         part1 = self.forever_manager.get_response()
-        update_part1 = '~{}~'.format(part1)
-        self.send_slow_message_then_update(channel_id, part1, update_part1)
-        part2 = '{}'.format('Just kidding! :laughing: :trollface:')
+        updated = '~{}~'.format(part1.stip())
+        self.send_slow_message_then_update(
+            channel_id, part1, updated, ':trollface:'
+        )
+        part2 = '{}'.format('Just kidding! :laughing:')
         self.send_message(channel_id, part2)
 
     def write_flip(self, channel_id):
