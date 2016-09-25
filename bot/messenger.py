@@ -349,7 +349,7 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         part1 = self.forever_manager.get_response()
-        updated = '~{}~'.format(part1.stip())
+        updated = '~{}~'.format(part1.strip())
         self.send_slow_message_then_update(
             channel_id, part1, updated, ':trollface:'
         )
