@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import logging
+import os.path
 import re
 import random
+import traceback
+
 from collections import defaultdict
 from collections import deque
 
@@ -23,10 +27,17 @@ class Markov:
         self.processing_string = ""
         self.chain = defaultdict(list)
 
-    def add_file(self, file):
-        for line in file:
-            self.process_line(line)
-        self.process_current_string()
+    def add_file(self, file_name):
+        try:
+            with open(os.path.join('./resources', file_name, 'r')) as file:
+                for line in file:
+                    self.process_line(line)
+                self.process_current_string()
+        except:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.write_error(err_msg)
+            pass
 
     def add_single_line(self, line):
         line = re.sub(self.characters_to_remove, '', line) + ' '
