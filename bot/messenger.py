@@ -194,10 +194,11 @@ class Messenger(object):
 
         self.write_slow(channel_id, txt)
 
-    def write_to_french(self, channel_id, msg):
+    def write_french(self, channel_id, msg):
         msg = msg.lower()
         msg = msg.replace('zac', '')
         msg = msg.replace('french', '')
+        msg.replace('_', '')
         tokens = msg.split()
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)

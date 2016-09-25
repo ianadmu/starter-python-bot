@@ -189,7 +189,7 @@ class RtmEventHandler(object):
                 if 'joke' in lower_txt:
                     self.msg_writer.write_joke(channel)
                 if 'french' in lower_txt:
-                    self.msg_writer.write_to_french(channel, msg_txt)
+                    self.msg_writer.write_french(channel, msg_txt)
                 if re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_whos_that_pokemon(channel)
                 if re.search(' ?zac it\'?s', lower_txt):
