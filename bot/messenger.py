@@ -79,8 +79,11 @@ class Messenger(object):
             self.clients.send_user_typing_pause(channel_id)
             if 'ok' in response:
                 ts = response['ts']
-                self.clients.update_message(channel_id, ts, updated_msg)
-                if reaction is not None:
+                response = self.clients.update_message(
+                    channel_id, ts, updated_msg
+                )
+                if 'ok' in response and reaction is not None:
+                    ts = response['message']['ts']
                     self.send_reaction(reaction, channel_id, ts)
         except Exception as e:
             err_msg = traceback.format_exc()
