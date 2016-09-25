@@ -2,6 +2,8 @@ import json
 import logging
 import re
 import os.path
+import traceback
+
 from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
@@ -78,17 +80,22 @@ class RtmEventHandler(object):
 
     def is_loud(self, message):
         emoji_pattern = re.compile(":.*:")
-        tag_pattern = re.compile("<@.*")
 
         tokens = message.split()
-        if len(tokens) < 2:
+        if len(tokens) < 2 or self.contains_user_tag(message):
             return False
         for token in tokens:
-            if not ((token.isupper() or emoji_pattern.match(token)) or
-                    tag_pattern.match(token)):
+            if not (token.isupper() or emoji_pattern.match(token)):
                 return False
-
         return True
+
+    def contains_user_tag(self, message):
+        tag_pattern = re.compile("<@.*")
+        tokens = message.split()
+        for token in tokens:
+            if tag_pattern.match(token):
+                return True
+        return False
 
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
@@ -129,12 +136,21 @@ class RtmEventHandler(object):
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
 
-            self.markov_chain.add_single_line(msg_txt)
+            # Add message to markov chain unless it contains a user tag
+            if not self.contains_user_tag(msg_txt):
+                self.markov_chain.add_single_line(msg_txt)
             self.rude_manager.run(channel, user)
             self.response_master.give_message(channel, msg_txt, user)
 
             if channel == 'C244LFHS7' or lower_txt == "markov":
-                self.msg_writer.send_message(channel, str(self.lotrMarkov))
+                try:
+                    self.msg_writer.send_message(channel, str(self.lotrMarkov))
+                except Exception as e:
+                    err_msg = traceback.format_exc()
+                    logging.error('Unexpected error: {}'.format(err_msg))
+                    txt = err_msg + " \n" + str(e)
+                    self.msg_writer.write_error('zac-testing', txt)
+                    pass
 
             # Return channel and user information
             if lower_txt == "channelinfo":

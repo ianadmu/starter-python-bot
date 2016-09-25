@@ -345,9 +345,9 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         part1 = self.forever_manager.get_response()
-        update_part1 = '_{}_'.format(part1)
+        update_part1 = '~{}~'.format(part1)
         self.send_slow_message_then_update(channel_id, part1, update_part1)
-        part2 = '{}'.format('Just kidding! :laughing: :tollface:')
+        part2 = '{}'.format('Just kidding! :laughing: :trollface:')
         self.send_message(channel_id, part2)
 
     def write_flip(self, channel_id):
