@@ -83,7 +83,7 @@ class Messenger(object):
                     channel_id, ts, updated_msg
                 )
                 if 'ok' in response and reaction is not None:
-                    ts = response['message']['ts']
+                    ts = response['ts']
                     self.send_reaction(reaction, channel_id, ts)
         except Exception as e:
             err_msg = traceback.format_exc()
