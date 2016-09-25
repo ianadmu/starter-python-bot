@@ -254,7 +254,7 @@ class Messenger(object):
             ':chocolate_bar:', ':doughnut:', ':cookie:', ':baby_bottle:',
             ':beetle:', ':spider:', ':cow:', ':pig:', ':bug:', ':snail:',
             ':tropical_fish:', ':fish:', ':blowfish:', ':sheep:', ':pig2:',
-            ':rat:', ':rooster:', ':mushroom:', ':green_aple:', ':poop:']
+            ':rat:', ':rooster:', ':mushroom:', ':green_apple:', ':poop:']
         food = 'Here, for you {0}'.format(random.choice(edibles))
         self.write_slow(channel_id, food)
 
