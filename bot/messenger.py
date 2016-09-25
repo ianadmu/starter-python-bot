@@ -42,7 +42,7 @@ class Messenger(object):
         self.send_message('zac-testing', txt)
 
     def __exit__(self, exception_type, exception_value, traceback):
-        self.send_message('zac-testing', 'exit')
+        self.send_message('zac-testing', '__exit__')
 
     def send_message_as_other(self, channel_id, msg, username, emoji):
         msg = msg.replace('&', "&amp;")
