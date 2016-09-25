@@ -61,7 +61,9 @@ class Messenger(object):
             # msg = msg.replace('>', "&gt;")
             # msg = msg.decode("utf8", "ignore")
 
-            self.clients.send_message(channel_id, msg)
+            response = self.clients.send_message(channel_id, msg)
+            if 'error' in response:
+                self.clients.send_message('zac-testing', msg)
         except Exception as e:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
