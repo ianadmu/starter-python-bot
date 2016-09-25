@@ -13,7 +13,6 @@ from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
-from food_getter import FoodGetter
 from equation_manager import EquationManager
 from common import ResourceManager
 
@@ -27,7 +26,6 @@ class Messenger(object):
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager(self)
-        self.food_getter = FoodGetter()
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.apology_manager = ResourceManager('apologies.txt')
