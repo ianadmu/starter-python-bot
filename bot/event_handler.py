@@ -35,15 +35,9 @@ class RtmEventHandler(object):
         self.markov_chain = markov_chain
 
         self.lotrMarkov = Markov(2)
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'hpOne.txt'), 'r')
-        )
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'random_comments.txt'), 'r')
-        )
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'lotrOne.txt'), 'r')
-        )
+        self.lotrMarkov.add_file('hpOne.txt')
+        self.lotrMarkov.add_file('random_comments.txt')
+        self.lotrMarkov.add_file('lotrOne.txt')
 
     def handle(self, event):
 
