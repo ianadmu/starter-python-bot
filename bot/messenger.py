@@ -27,10 +27,10 @@ class Messenger(object):
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.sass_manager = SassManager()
-        self.apology_manager = ResourceManager('apologies.txt')
         self.food_getter = FoodGetter()
-        self.explanation_manager = ResourceManager('explanations.txt')
         self.equation_manager = EquationManager()
+        self.explanation_manager = ResourceManager('explanations.txt')
+        self.apology_manager = ResourceManager('apologies.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
 
