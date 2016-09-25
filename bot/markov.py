@@ -30,7 +30,7 @@ class Markov:
 
     def add_file(self, file_name):
         try:
-            with open(os.path.join('./resources', file_name, 'r')) as file:
+            with open(os.path.join('./resources', file_name), 'r') as file:
                 for line in file:
                     self.process_line(line)
                 self.process_current_string()
