@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import logging
+import os.path
 import re
 import random
+import traceback
+
 from collections import defaultdict
 from collections import deque
 
@@ -18,15 +22,23 @@ class Markov:
     phrase_to_remove = re.compile("BOOK .* ")
     quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
-    def __init__(self, length):
+    def __init__(self, length, msg_writer):
+        self.msg_writer = msg_writer
         self.length = length
         self.processing_string = ""
         self.chain = defaultdict(list)
 
-    def add_file(self, file):
-        for line in file:
-            self.process_line(line)
-        self.process_current_string()
+    def add_file(self, file_name):
+        try:
+            with open(os.path.join('./resources', file_name), 'r') as file:
+                for line in file:
+                    self.process_line(line)
+            self.process_current_string()
+        except:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
 
     def add_single_line(self, line):
         line = re.sub(self.characters_to_remove, '', line) + ' '

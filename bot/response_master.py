@@ -111,7 +111,7 @@ class Response_master:
                 )
                 self.msg_writer = msg_writer
         except:
-            msg_writer.write_custom_error("Error loading JSON file")
+            msg_writer.write_error("Error loading JSON file")
             self.events = []
 
     def get_emoji_response(self, response):

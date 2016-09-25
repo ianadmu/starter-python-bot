@@ -1,7 +1,6 @@
 import json
 import logging
 import re
-import os.path
 import traceback
 
 from response_master import Response_master
@@ -34,16 +33,10 @@ class RtmEventHandler(object):
 
         self.markov_chain = markov_chain
 
-        self.lotrMarkov = Markov(2)
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'hpOne.txt'), 'r')
-        )
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'random_comments.txt'), 'r')
-        )
-        self.lotrMarkov.add_file(open(
-            os.path.join('./resources', 'lotrOne.txt'), 'r')
-        )
+        self.lotrMarkov = Markov(2, msg_writer)
+        self.lotrMarkov.add_file('hpOne.txt')
+        self.lotrMarkov.add_file('random_comments.txt')
+        self.lotrMarkov.add_file('lotrOne.txt')
 
     def handle(self, event):
 
@@ -54,7 +47,7 @@ class RtmEventHandler(object):
         # See https://api.slack.com/rtm for a full list of events
         if event_type == 'error':
             # error
-            self.msg_writer.write_error(event['channel'], json.dumps(event))
+            self.msg_writer.write_error(json.dumps(event), event['channel'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
@@ -107,6 +100,10 @@ class RtmEventHandler(object):
                             event["message"]["subtype"] != "bot_message")):
                     user1 = event["message"]["user"]
                     user2 = event["message"]["edited"]["user"]
+
+                    # Dont allow zac to spam his own message edits
+                    if self.clients.is_message_from_me(user1):
+                        return False
                     return user1 == user2
         return False
 
@@ -145,11 +142,10 @@ class RtmEventHandler(object):
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 try:
                     self.msg_writer.send_message(channel, str(self.lotrMarkov))
-                except Exception as e:
+                except Exception:
                     err_msg = traceback.format_exc()
                     logging.error('Unexpected error: {}'.format(err_msg))
-                    txt = err_msg + " \n" + str(e)
-                    self.msg_writer.write_error('zac-testing', txt)
+                    self.msg_writer.write_error(err_msg)
                     pass
 
             # Return channel and user information
@@ -193,7 +189,7 @@ class RtmEventHandler(object):
                 if 'joke' in lower_txt:
                     self.msg_writer.write_joke(channel)
                 if 'french' in lower_txt:
-                    self.msg_writer.write_to_french(channel, msg_txt)
+                    self.msg_writer.write_french(channel, msg_txt)
                 if re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_whos_that_pokemon(channel)
                 if re.search(' ?zac it\'?s', lower_txt):

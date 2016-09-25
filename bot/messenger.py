@@ -13,7 +13,6 @@ from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
-from food_getter import FoodGetter
 from equation_manager import EquationManager
 from common import ResourceManager
 
@@ -26,8 +25,7 @@ class Messenger(object):
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-        self.sass_manager = SassManager()
-        self.food_getter = FoodGetter()
+        self.sass_manager = SassManager(self)
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.apology_manager = ResourceManager('apologies.txt')
@@ -42,7 +40,7 @@ class Messenger(object):
         self.send_message('zac-testing', txt)
 
     def __exit__(self, exception_type, exception_value, traceback):
-        self.send_message('zac-testing', 'exit')
+        self.send_message('zac-testing', '__exit__')
 
     def send_message_as_other(self, channel_id, msg, username, emoji):
         msg = msg.replace('&', "&amp;")
@@ -62,13 +60,13 @@ class Messenger(object):
             # msg = msg.decode("utf8", "ignore")
 
             response = self.clients.send_message(channel_id, msg)
+            # make sure the message gets sent to zac-testing at least
             if 'error' in response:
                 self.clients.send_message('zac-testing', msg)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def send_slow_message_then_update(
@@ -87,21 +85,19 @@ class Messenger(object):
                 if 'ok' in response and reaction is not None:
                     ts2 = response['ts']
                     self.send_reaction(reaction, channel_id, ts2)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
             self.clients.send_attachment(channel_id, txt, attachment)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def write_channel_id(self, channel_id):
@@ -112,9 +108,11 @@ class Messenger(object):
     def write_custom_error(self, msg):
         self.send_message('zac-testing', msg)
 
-    def write_error(self, channel_id, err_msg):
+    def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
                "very well:\n>```{}```").format(err_msg)
+        if channel_id is None:
+            channel_id = 'zac-testing'
         self.send_message(channel_id, txt)
 
     def write_slow(self, channel_id, msg):
@@ -196,10 +194,11 @@ class Messenger(object):
 
         self.write_slow(channel_id, txt)
 
-    def write_to_french(self, channel_id, msg):
+    def write_french(self, channel_id, msg):
         msg = msg.lower()
         msg = msg.replace('zac', '')
         msg = msg.replace('french', '')
+        msg = msg.replace('_', '')
         tokens = msg.split()
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
@@ -242,7 +241,22 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_food(self, channel_id):
-        food = self.food_getter.get_random_food()
+        edibles = [
+            ':apple:', ':banana:', ':pear:', ':peach:', ':pineapple:',
+            ':lemon:', ':watermelon:', ':grapes:', ':strawberry:', ':melon:',
+            ':cherry:', ':tomato:', ':eggplant:', ':hot_pepper:', ':corn:',
+            ':sweet_potato:', ':fries:', ':hamburger:', ':egg:',
+            ':fried_shrimp:', ':meat_on_bone:', ':poultry_leg:',
+            ':cheese_wedge:', ':bread:', ':hotdog:', ':pizza:', ':spaghetti:',
+            ':taco:', ':burrito:', ':ramen:', ':stew:', ':sushi:', ':bento:',
+            ':rice_ball:', ':rice:', ':rice_cracker:', ':oden:', ':dango:',
+            ':shaved_ice:', ':ice_cream:', ':icecream:', ':cake:',
+            ':birthday:', ':candy:', ':lollipop:', ':popcorn:',
+            ':chocolate_bar:', ':doughnut:', ':cookie:', ':baby_bottle:',
+            ':beetle:', ':spider:', ':cow:', ':pig:', ':bug:', ':snail:',
+            ':tropical_fish:', ':fish:', ':blowfish:', ':sheep:', ':pig2:',
+            ':rat:', ':rooster:', ':mushroom:', ':green_apple:', ':poop:']
+        food = 'Here, for you {0}'.format(random.choice(edibles))
         self.write_slow(channel_id, food)
 
     def write_bang(self, channel_id, user_id):

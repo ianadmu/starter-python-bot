@@ -52,11 +52,12 @@ class SlackBot(object):
                 )
             )
 
+            msg_writer = Messenger(self.clients)
+
             # Random markov here
-            markov_chain = Markov(2)
+            markov_chain = Markov(2, msg_writer)
             markov_chain.add_single_line("Why do we need a default phrase?")
 
-            msg_writer = Messenger(self.clients)
             event_handler = RtmEventHandler(
                 self.clients, msg_writer, markov_chain
             )
@@ -71,19 +72,23 @@ class SlackBot(object):
                     except:
                         err_msg = traceback.format_exc()
                         logging.error('Unexpected error: {}'.format(err_msg))
-                        msg_writer.write_error(event['channel'], err_msg)
+                        msg_writer.write_error(err_msg, event['channel'])
                         continue
 
                 self._auto_ping(time_event_handler)
                 time.sleep(.1)
-            msg_writer.write_closing()
-
         else:
             logger.error(
                 'Failed to connect to RTM client with token: {}'.format(
                     self.clients.token
                 )
             )
+
+    def __del__(self, exception_type, exception_value, traceback):
+        self.clients.send_message('zac-testing', 'del slackbot')
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        self.clients.send_message('zac-testing', 'exit slackbot')
 
     def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds
@@ -101,7 +106,4 @@ class SlackBot(object):
             resource (dict of Resource JSON): See message payloads:
             https://beepboophq.com/docs/article/resourcer-api
         """
-        self.clients.web.chat.post_message(
-            'zac-testing', 'main bye bye', as_user='true'
-        )
         self.keep_running = False

@@ -14,10 +14,10 @@ def should_spam():
 class ResourceManager(object):
 
     def __init__(self, file_name):
-        self.resource_file = open(os.path.join(
-            './resources', file_name), 'r'
-        )
-        self.responses = self.resource_file.readlines()
+        with open(os.path.join('./resources', file_name), 'r') as f:
+            self.responses = f.readlines()
 
     def get_response(self):
         return random.choice(self.responses)
+
+
