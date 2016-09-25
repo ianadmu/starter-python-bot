@@ -83,8 +83,8 @@ class Messenger(object):
                     channel_id, ts, updated_msg
                 )
                 if 'ok' in response and reaction is not None:
-                    ts = response['ts']
-                    self.send_reaction(reaction, channel_id, ts)
+                    ts2 = response['ts']
+                    self.send_reaction(reaction, channel_id, ts2)
         except Exception as e:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
@@ -354,7 +354,7 @@ class Messenger(object):
         part1 = self.forever_manager.get_response()
         updated = '~{}~'.format(part1.strip())
         self.send_slow_message_then_update(
-            channel_id, part1, updated, ':trollface:'
+            channel_id, part1, updated, 'trollface'
         )
         part2 = '{}'.format('Just kidding! :laughing:')
         self.send_message(channel_id, part2)
