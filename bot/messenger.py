@@ -3,11 +3,11 @@
 import logging
 import random
 import re
-import os.path
 import xkcd_manager
 import weather_manager
 import traceback
 import requests
+import common
 
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
@@ -15,7 +15,6 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from food_getter import FoodGetter
 from equation_manager import EquationManager
-from channel_manager import ChannelManager
 from common import ResourceManager
 
 logger = logging.getLogger(__name__)
@@ -32,7 +31,8 @@ class Messenger(object):
         self.food_getter = FoodGetter()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.equation_manager = EquationManager()
-        self.channel_manager = ChannelManager(self.clients)
+        self.drawing_manager = ResourceManager('draw_me.txt')
+        self.forever_manager = ResourceManager('forever.txt')
 
     def __del__(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
@@ -45,23 +45,39 @@ class Messenger(object):
         self.send_message('zac-testing', 'exit')
 
     def send_message_as_other(self, channel_id, msg, username, emoji):
-        channel_id = self.channel_manager.get_channel_id(channel_id)
         msg = msg.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
         # msg = msg.decode("utf8", "ignore")
 
-        self.clients.send_message_as_other(channel_id, msg, username, emoji)
+        return self.clients.send_message_as_other(
+            channel_id, msg, username, emoji
+        )
 
     def send_message(self, channel_id, msg):
         try:
-            channel_id = self.channel_manager.get_channel_id(channel_id)
             msg = msg.replace('&', "&amp;")
             # msg = msg.replace('<', "&lt;")
             # msg = msg.replace('>', "&gt;")
             # msg = msg.decode("utf8", "ignore")
 
             self.clients.send_message(channel_id, msg)
+        except Exception as e:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            txt = err_msg + " \n" + str(e)
+            self.write_error('zac-testing', txt)
+            pass
+
+    def send_slow_message_then_update(self, channel_id, msg, updated_msg):
+        try:
+            self.clients.send_user_typing_pause(channel_id)
+            msg = msg.replace('&', "&amp;")
+            response = self.clients.send_message(channel_id, msg)
+            self.clients.send_user_typing_pause(channel_id)
+            if 'ok' in response:
+                ts = response['ts']
+                self.clients.update_message(channel_id, ts, updated_msg)
         except Exception as e:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
@@ -324,20 +340,15 @@ class Messenger(object):
         self.write_slow(channel_id, txt)
 
     def write_draw_me(self, channel_id):
-        file = open(os.path.join('./resources', 'draw_me.txt'), 'r')
-        urls = file.read().splitlines()
-        txt = '{}'.format(random.choice(urls))
+        txt = self.drawing_manager.get_response()
         self.write_slow(channel_id, txt)
 
     def write_forever(self, channel_id):
-        file = open(os.path.join('./resources', 'forever.txt'), 'r')
-        comments = file.read().splitlines()
-        txt = '{}'.format(random.choice(comments))
-        self.write_slow(channel_id, txt)
-        answer = '{}'.format('Just kidding! :laughing:')
-        self.write_slow(channel_id, answer)
-        emoji = ':{}:'.format('trollface')
-        self.write_slow(channel_id, emoji)
+        part1 = self.forever_manager.get_response()
+        update_part1 = '_{}_'.format(part1)
+        self.send_slow_message_then_update(channel_id, part1, update_part1)
+        part2 = '{}'.format('Just kidding! :laughing: :tollface:')
+        self.send_message(channel_id, part2)
 
     def write_flip(self, channel_id):
         self.send_message(channel_id, u"(╯°□°）╯︵ ┻━┻")

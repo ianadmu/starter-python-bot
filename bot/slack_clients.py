@@ -50,15 +50,22 @@ class SlackClients(object):
 
     def send_message_as_other(self, channel_id, msg, name, emoji):
         return self.rtm.api_call(
-            "chat.postMessage", token=str(self.token), channel=channel_id,
+            'chat.postMessage', token=str(self.token), channel=channel_id,
             text=msg, link_names=1, username=name, unfurl_links=True,
             icon_emoji=emoji
         )
 
     def send_message(self, channel_id, msg):
         return self.rtm.api_call(
-            "chat.postMessage", token=str(self.token), channel=channel_id,
+            'chat.postMessage', token=str(self.token), channel=channel_id,
             text=msg, as_user=True, link_names=1, unfurl_links=True
+        )
+
+    def update_message(self, channel_id, timestamp, updated_msg):
+        return self.rtm.api_call(
+            'chat.update', token=str(self.token), channel=channel_id,
+            text=updated_msg, as_user=True, link_names=1, unfurl_links=True,
+            ts=timestamp
         )
 
     def send_attachment(self, channel_id, txt, attachment):
