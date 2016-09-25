@@ -107,6 +107,10 @@ class RtmEventHandler(object):
                             event["message"]["subtype"] != "bot_message")):
                     user1 = event["message"]["user"]
                     user2 = event["message"]["edited"]["user"]
+
+                    # Dont allow zac to spam his own message edits
+                    if self.clients.is_message_from_me(user1):
+                        return False
                     return user1 == user2
         return False
 
