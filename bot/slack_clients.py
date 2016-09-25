@@ -69,6 +69,7 @@ class SlackClients(object):
         )
 
     def send_attachment(self, channel_id, txt, attachment):
+        # this does not return the response object that rtm does
         return self.web.chat.post_message(
             channel_id, txt, attachments=[attachment], as_user='true'
         )

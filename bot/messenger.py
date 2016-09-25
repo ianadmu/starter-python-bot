@@ -94,9 +94,7 @@ class Messenger(object):
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
-            result = self.clients.send_attachment(channel_id, txt, attachment)
-            if "ok" not in result:
-                raise Exception
+            self.clients.send_attachment(channel_id, txt, attachment)
         except Exception as e:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
