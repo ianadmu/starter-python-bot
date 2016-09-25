@@ -62,13 +62,13 @@ class Messenger(object):
             # msg = msg.decode("utf8", "ignore")
 
             response = self.clients.send_message(channel_id, msg)
+            # make sure the message gets sent to zac-testing at least
             if 'error' in response:
                 self.clients.send_message('zac-testing', msg)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def send_slow_message_then_update(
@@ -87,21 +87,19 @@ class Messenger(object):
                 if 'ok' in response and reaction is not None:
                     ts2 = response['ts']
                     self.send_reaction(reaction, channel_id, ts2)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
             self.clients.send_attachment(channel_id, txt, attachment)
-        except Exception as e:
+        except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            txt = err_msg + " \n" + str(e)
-            self.write_error('zac-testing', txt)
+            self.write_error(err_msg)
             pass
 
     def write_channel_id(self, channel_id):
@@ -112,9 +110,11 @@ class Messenger(object):
     def write_custom_error(self, msg):
         self.send_message('zac-testing', msg)
 
-    def write_error(self, channel_id, err_msg):
+    def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
                "very well:\n>```{}```").format(err_msg)
+        if channel_id is None:
+            channel_id = 'zac-testing'
         self.send_message(channel_id, txt)
 
     def write_slow(self, channel_id, msg):

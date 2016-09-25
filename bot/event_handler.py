@@ -54,7 +54,7 @@ class RtmEventHandler(object):
         # See https://api.slack.com/rtm for a full list of events
         if event_type == 'error':
             # error
-            self.msg_writer.write_error(event['channel'], json.dumps(event))
+            self.msg_writer.write_error(json.dumps(event), event['channel'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
@@ -145,11 +145,10 @@ class RtmEventHandler(object):
             if channel == 'C244LFHS7' or lower_txt == "markov":
                 try:
                     self.msg_writer.send_message(channel, str(self.lotrMarkov))
-                except Exception as e:
+                except Exception:
                     err_msg = traceback.format_exc()
                     logging.error('Unexpected error: {}'.format(err_msg))
-                    txt = err_msg + " \n" + str(e)
-                    self.msg_writer.write_error('zac-testing', txt)
+                    self.msg_writer.write_error(err_msg)
                     pass
 
             # Return channel and user information
