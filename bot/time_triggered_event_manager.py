@@ -1,5 +1,7 @@
 import random
 import weather_manager
+import logging
+import traceback
 
 from datetime import datetime, timedelta
 from common import ResourceManager
@@ -27,20 +29,10 @@ class TimeTriggeredEventManager(object):
         self.random_manager = ResourceManager('random_comments.txt')
 
     def send_message(self, channel, msg_txt):
-        try:
-            self.msg_writer.send_message(channel, msg_txt)
-        except Exception as e:
-            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
-        except:
-            pass
+        self.msg_writer.send_message(channel, msg_txt)
 
     def get_emoji(self):
-        try:
-            return self.clients.get_random_emoji()
-        except Exception as e:
-            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
-        except:
-            pass
+        return self.clients.get_random_emoji()
 
     def trigger_morning(self):
         tags = ['channel', 'here']
@@ -54,7 +46,13 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_markov(self):
-        self.send_message('markov', str(self.markov_chain))
+        try:
+            self.msg_writer.send_message('markov', str(self.markov_chain))
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
 
     def trigger_ping(self, day, hour, minute, second):
         msg = ('Ping on ' + day + ' ' + str(hour) + ':' + str(minute) +
