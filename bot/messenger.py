@@ -9,6 +9,7 @@ import traceback
 import requests
 import common
 
+from channel_manager import ChannelManager
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
@@ -31,6 +32,7 @@ class Messenger(object):
         self.apology_manager = ResourceManager('apologies.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
+        self.channel_manager = ChannelManager(slack_clients)
 
     def __del__(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
