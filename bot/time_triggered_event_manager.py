@@ -1,11 +1,13 @@
 import random
 import weather_manager
+import logging
+import traceback
 
-from datetime import datetime, timedelta
 from common import ResourceManager
+from datetime import datetime, timedelta
 
-HOUR_DIFFERENCE_DAYLIGHT_SAVINGS = 5  # for Winnipeg
-HOUR_DIFFERENCE_NO_DAYLIGHT_SAVINGS = 6  # for Winnipeg
+HR_DIF_DST = 5  # for Winnipeg
+HR_DIF_NO_DST = 6  # for Winnipeg
 MIN_PER_HOUR = 60
 HR_PER_DAY = 24
 
@@ -25,22 +27,13 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
+        self.trigger_startup_log()
 
     def send_message(self, channel, msg_txt):
-        try:
-            self.msg_writer.send_message(channel, msg_txt)
-        except Exception as e:
-            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
-        except:
-            pass
+        self.msg_writer.send_message(channel, msg_txt)
 
     def get_emoji(self):
-        try:
-            return self.clients.get_random_emoji()
-        except Exception as e:
-            self.msg_writer.send_message(TESTING_CHANNEL, str(e))
-        except:
-            pass
+        return self.clients.get_random_emoji()
 
     def trigger_morning(self):
         tags = ['channel', 'here']
@@ -54,7 +47,13 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_markov(self):
-        self.send_message('markov', str(self.markov_chain))
+        try:
+            self.msg_writer.send_message('markov', str(self.markov_chain))
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
 
     def trigger_ping(self, day, hour, minute, second):
         msg = ('Ping on ' + day + ' ' + str(hour) + ':' + str(minute) +
@@ -65,7 +64,8 @@ class TimeTriggeredEventManager(object):
         msg = 'Event: {}'.format(method_name)
         self.send_message(TESTING_CHANNEL, msg)
 
-    def trigger_startup_log(self, day, hour, minute, second):
+    def trigger_startup_log(self):
+        day, hour, minute, second = _get_datetime()
         msg = ('I came back to life on ' + day + ' ' + str(hour) + ':' +
                str(minute) + ':' + str(second) + ' :' + str(self.get_emoji()) +
                ':')
@@ -73,6 +73,8 @@ class TimeTriggeredEventManager(object):
 
     def trigger_random(self):
         txt = self.random_manager.get_response()
+        if random.random() <= 0.30:
+            txt = str(self.markov_chain)
         self.send_message('random', txt)
         self.trigger_method_log('random')
 
@@ -89,7 +91,7 @@ class TimeTriggeredEventManager(object):
         ) % MIN_PER_HOUR
         if (self.random_hasnt_fired or
                 (hour == should_fire_hr and minute == should_fire_min)):
-            max_minutes_between_random_events = 720  # 24 hours max
+            max_minutes_between_random_events = 600  # 10 hours
             new_random_minutes = int(
                 random.random() * max_minutes_between_random_events
             ) + 1
@@ -158,18 +160,7 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_timed_event(self):
-        curr_datetime = datetime.utcnow() - timedelta(
-            hours=HOUR_DIFFERENCE_DAYLIGHT_SAVINGS
-        )
-        day = curr_datetime.strftime('%A')
-        hour = int(curr_datetime.strftime('%H'))
-        minute = int(curr_datetime.strftime('%M'))
-        second = int(curr_datetime.strftime('%S'))
-
-        # trigger startup log to testing channel
-        if(self.is_just_starting_up):
-            self.trigger_startup_log(day, hour, minute, second)
-            self.is_just_starting_up = False
+        day, hour, minute, second = _get_datetime()
 
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
@@ -197,3 +188,12 @@ class TimeTriggeredEventManager(object):
                         (hour == 17 and minute == 30) or
                         (hour == 18 and minute == 0)):
                     self.trigger_drunk_phrase()
+
+
+def _get_datetime():
+    curr_datetime = datetime.utcnow() - timedelta(hours=HR_DIF_DST)
+    day = curr_datetime.strftime('%A')
+    hour = int(curr_datetime.strftime('%H'))
+    minute = int(curr_datetime.strftime('%M'))
+    second = int(curr_datetime.strftime('%S'))
+    return day, hour, minute, second

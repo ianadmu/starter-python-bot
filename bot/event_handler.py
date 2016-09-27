@@ -165,7 +165,7 @@ class RtmEventHandler(object):
                 self.msg_writer.write_cast_pokemon(channel, lower_txt)
             if re.search('weather', lower_txt):
                 self.msg_writer.write_weather(channel)
-            if re.search('night', lower_txt):
+            if re.search('good night', lower_txt):
                     self.msg_writer.write_good_night(channel, user)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel, msg_txt)
