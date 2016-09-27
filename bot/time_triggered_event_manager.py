@@ -65,7 +65,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_startup_log(self):
-        day, hour, minute, second = self._get_datetime()
+        day, hour, minute, second = _get_datetime()
         msg = ('I came back to life on ' + day + ' ' + str(hour) + ':' +
                str(minute) + ':' + str(second) + ' :' + str(self.get_emoji()) +
                ':')
@@ -158,7 +158,7 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_timed_event(self):
-        day, hour, minute, second = self._get_datetime()
+        day, hour, minute, second = _get_datetime()
 
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
