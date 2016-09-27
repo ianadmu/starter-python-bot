@@ -73,6 +73,8 @@ class TimeTriggeredEventManager(object):
 
     def trigger_random(self):
         txt = self.random_manager.get_response()
+        if random.random() <= 0.30:
+            txt = str(self.markov_chain)
         self.send_message('random', txt)
         self.trigger_method_log('random')
 
@@ -89,7 +91,7 @@ class TimeTriggeredEventManager(object):
         ) % MIN_PER_HOUR
         if (self.random_hasnt_fired or
                 (hour == should_fire_hr and minute == should_fire_min)):
-            max_minutes_between_random_events = 720  # 24 hours max
+            max_minutes_between_random_events = 600  # 10 hours
             new_random_minutes = int(
                 random.random() * max_minutes_between_random_events
             ) + 1
