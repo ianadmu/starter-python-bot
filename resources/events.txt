@@ -55,6 +55,13 @@
 
 		{
 			"Triggers": {
+				"Emoji": ["congaparrot"]
+			},
+			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:"]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["----"]
 			},
 			"Responses": ["It's underscores Jill"]
