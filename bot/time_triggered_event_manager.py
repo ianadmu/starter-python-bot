@@ -173,7 +173,7 @@ class TimeTriggeredEventManager(object):
             if minute == 15:
                 self.trigger_markov()
             if (day != 'Saturday' and day != 'Sunday'):
-                if hour == 8 and minute == 30:
+                if hour == 8 and minute == 45:
                     self.trigger_morning()
                 if hour == 9:
                     if minute == 45:
