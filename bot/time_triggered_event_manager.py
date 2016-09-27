@@ -64,7 +64,7 @@ class TimeTriggeredEventManager(object):
         msg = 'Event: {}'.format(method_name)
         self.send_message(TESTING_CHANNEL, msg)
 
-    def trigger_startup_log(self, day, hour, minute, second):
+    def trigger_startup_log(self):
         day, hour, minute, second = self._get_datetime()
         msg = ('I came back to life on ' + day + ' ' + str(hour) + ':' +
                str(minute) + ':' + str(second) + ' :' + str(self.get_emoji()) +
