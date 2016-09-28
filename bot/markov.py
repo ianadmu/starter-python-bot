@@ -103,7 +103,9 @@ class Markov:
 
     def __str__(self):
         result = self.go_go_markov_chain()
-        try {
+        try: 
             result = result[0].upper() + result[1:]
-        }
+        except:
+            pass
+        
         return result
