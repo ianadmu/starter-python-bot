@@ -55,6 +55,39 @@
 
 		{
 			"Triggers": {
+				"Words": [
+					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin",
+					"poison", "anthrax", "hijack", "overthrow", "airstrike", "air strike",
+					"nuke", "nuclear meltdown", "coup d'etat", "missile"
+				]
+			},
+			"Responses": [
+				"You have been added to the watch list. ?_?",
+                "Take your hands off your keyboard. You have been added to the watch list. ?_?",
+				"Get on the floor now, you have been added to the watch list! ?_?",
+                "Take caution with your words, friend. You have been added to the watch list. ?_?"
+            ],
+			"Sender":"bomb"
+		},
+
+
+		{
+			"Triggers": {
+				"Words": ["on the watchlist"]
+			},
+			"Responses": [
+				"I'm sorry, that is classified information.",
+                "That information is classified.",
+                "You have insufficient clearance for access to that classified information.", 
+				"The only person with clearance is Nicole and she already knows.",
+                "You have been added to the watch list. ?_?"
+			],
+			"Sender":"no_good"
+		},
+
+
+		{
+			"Triggers": {
 				"Emoji": ["congaparrot"]
 			},
 			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:"]
