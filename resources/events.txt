@@ -57,9 +57,9 @@
 			"Triggers": {
 				"Words": [
 					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin",
-					"poison", "anthrax", "hijack", "overthrow", "airstrike", "air strike",
-					"nuke", "nuclear meltdown", "coup d'etat", "missile"
-				]
+					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile"
+				],
+				"Phrases": ["air strike", "nuclear meltdown", "coup d'etat"]
 			},
 			"Responses": [
 				"You have been added to the watch list. ?_?",
@@ -67,13 +67,13 @@
 				"Get on the floor now, you have been added to the watch list! ?_?",
                 "Take caution with your words, friend. You have been added to the watch list. ?_?"
             ],
-			"Sender":"bomb"
+			"Sender":"booom"
 		},
 
 
 		{
 			"Triggers": {
-				"Words": ["on the watchlist"]
+				"Phrases": ["on the watchlist", "on the watch list"]
 			},
 			"Responses": [
 				"I'm sorry, that is classified information.",
