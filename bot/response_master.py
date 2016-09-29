@@ -99,8 +99,10 @@ class Response_master:
                     end = event["End"]
                 if "Sender" in event:
                     sender = event["Sender"]
+                msg_writer.write_error("1")
                 if "RateLimiter" in event:
                     rateLimiter = timedelta(seconds=event["RateLimiter"])
+                msg_writer.write_error("2")
                 phrases = []
                 words = []
                 emoji = []
@@ -116,6 +118,7 @@ class Response_master:
                         emoji.append(e)
                 for r in event["Responses"]:
                     responses.append(r)
+                msg_writer.write_error("3")
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
