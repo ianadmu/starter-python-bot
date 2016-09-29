@@ -27,9 +27,10 @@ class Response:
 
     def rateLimit(self):
         #Don't call this unless you got a valid response
-        result = self.lastTimeResponded + self.rateLimiter <= datetime.datetime.now()
-        self.lastTimeResponded = datetime.datetime.today()
-        return result
+        allowedResponse = self.lastTimeResponded + self.rateLimiter <= datetime.datetime.now()
+        if allowedResponse
+            self.lastTimeResponded = datetime.datetime.today()
+        return allowedResponse
 
     def get_emoji_response(self, reaction):
         if reaction in self.emoji and self.rateLimit():
