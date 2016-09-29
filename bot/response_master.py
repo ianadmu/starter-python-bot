@@ -22,13 +22,13 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
-        self.lastTimeResponded = datetime.datetime(year=2000)
+        self.lastTimeResponded = datetime.datetime(1995, 1, 9)
         self.rateLimiter = rateLimiter
 
     def rateLimit(self):
         #Don't call this unless you got a valid response
         result = self.lastTimeResponded + self.rateLimiter <= datetime.datetime.now()
-        self.lastTimeResponded = datetime.datetime.now()
+        self.lastTimeResponded = datetime.datetime.today()
         return result
 
     def get_emoji_response(self, reaction):
