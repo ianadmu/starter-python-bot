@@ -37,6 +37,7 @@ class RtmEventHandler(object):
         self.lotrMarkov.add_file('hpOne.txt')
         self.lotrMarkov.add_file('random_comments.txt')
         self.lotrMarkov.add_file('lotrOne.txt')
+        self.lotrMarkov.add_file('memoriesOfIce.txt')
 
     def handle(self, event):
 

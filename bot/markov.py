@@ -18,7 +18,7 @@ class Markov:
         "Blvd", "Org", "Ltd", "..."
     )
     terminators = [".", "!", "?"]
-    characters_to_remove = re.compile("[\n\"`\”—‘’\(\);]")
+    characters_to_remove = re.compile("[\n\"`\”—‘…’\(\);]")
     phrase_to_remove = re.compile("BOOK .* ")
     quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
@@ -103,4 +103,9 @@ class Markov:
 
     def __str__(self):
         result = self.go_go_markov_chain()
-        return result[0].upper() + result[1:]
+        try: 
+            result = result[0].upper() + result[1:]
+        except:
+            pass
+        
+        return result
