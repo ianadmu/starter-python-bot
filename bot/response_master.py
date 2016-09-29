@@ -100,7 +100,7 @@ class Response_master:
                 if "Sender" in event:
                     sender = event["Sender"]
                 if "RateLimiter" in event:
-                    rateLimiter = timedelta(seconds=(event["RateLimiter"]))
+                    rateLimiter = timedelta(seconds=15)
                 phrases = []
                 words = []
                 emoji = []
