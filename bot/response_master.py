@@ -82,6 +82,7 @@ class Response_master:
 
     def __init__(self, msg_writer):
         try:
+            self.msg_writer = msg_writer
             master_file = open(os.path.join('./resources', 'events.txt'), 'r')
             json_events = json.load(master_file)
             self.events = []
@@ -99,7 +100,7 @@ class Response_master:
                 if "Sender" in event:
                     sender = event["Sender"]
                 if "RateLimiter" in event:
-                    rateLimiter = timedelta(seconds=event["RateLimiter"])
+                    rateLimiter = timedelta(seconds=(event["RateLimiter"]))
                 phrases = []
                 words = []
                 emoji = []
@@ -121,7 +122,6 @@ class Response_master:
                         use_hash, named, start, end, sender
                     )
                 )
-                self.msg_writer = msg_writer
         except:
             msg_writer.write_error("Error loading JSON file")
             self.events = []
