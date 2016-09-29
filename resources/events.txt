@@ -90,14 +90,16 @@
 			"Triggers": {
 				"Emoji": ["congaparrot"]
 			},
-			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:"]
+			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:",":aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot:"],
+			"Sender":"parrot"
 		},
 
 		{
 			"Triggers": {
 				"Emoji": ["reverse_conga_parrot"]
 			},
-			"Responses": [":reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot:"]
+			"Responses": [":reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot:",":aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot:"],
+			"Sender":"parrot"
 		},
 
 		{
@@ -180,7 +182,8 @@
 				"........so that's basically what you'll need to do for assignment one", "[After 5 minutes of lecturing] Okay let's take a 10-minute break",
 				"*Shows up 15 minutes late", "*Takes 15 minutes to notice a raised hand", "This code came from a tutorial", "Looks like break-time [Leaves]"
 			],
-			"Sender":"boyer"
+			"Sender":"boyer",
+			"RateLimiter":5
 		},
 
 		{

@@ -2,6 +2,7 @@ import random
 import json
 import os.path
 import re
+import datetime
 
 
 class Response:
@@ -10,7 +11,7 @@ class Response:
 
     def __init__(
         self, phrases, words, emoji, responses,
-        use_hash, named, start, end, sender
+        use_hash, named, start, end, sender, rateLimiter
     ):
         self.phrases = phrases
         self.words = words
@@ -21,9 +22,17 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
+        self.lastTimeResponded = datetime.datetime(year=2000)
+        self.rateLimiter = rateLimiter
+
+    def rateLimit(self):
+        #Don't call this unless you got a valid response
+        result = self.lastTimeResponded + self.rateLimiter <= datetime.datetime.now()
+        self.lastTimeResponded = datetime.datetime.now()
+        return result
 
     def get_emoji_response(self, reaction):
-        if reaction in self.emoji:
+        if reaction in self.emoji and self.rateLimit():
             return self.random()
         return ""
 
@@ -49,7 +58,7 @@ class Response:
 
         result = ""
 
-        if has_trigger and (not self.named or is_named):
+        if has_trigger and (not self.named or is_named) and self.rateLimit():
             if self.use_hash:
                 result = self.hash(message)
             else:
@@ -82,12 +91,15 @@ class Response_master:
                 start = ""
                 end = ""
                 sender = ""
+                rateLimiter = timedelta(seconds=60)
                 if "Start" in event:
                     start = event["Start"]
                 if "End" in event:
                     end = event["End"]
                 if "Sender" in event:
                     sender = event["Sender"]
+                if "RateLimiter" in event:
+                    rateLimiter = timedelta(seconds=event["RateLimiter"])
                 phrases = []
                 words = []
                 emoji = []
