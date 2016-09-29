@@ -26,9 +26,12 @@ class Response:
         self.rateLimiter = rateLimiter
 
     def rateLimit(self):
-        #Don't call this unless you got a valid response
-        allowedResponse = self.lastTimeResponded + self.rateLimiter <= datetime.datetime.now()
-        if allowedResponse
+        # Don't call this unless you got a valid response
+        allowedResponse = (
+            self.lastTimeResponded +
+            self.rateLimiter <= datetime.datetime.now()
+        )
+        if allowedResponse:
             self.lastTimeResponded = datetime.datetime.today()
         return allowedResponse
 
@@ -72,7 +75,10 @@ class Response:
         for character in text:
             hashValue *= 47
             hashValue += ord(character)
-        return self.start + self.responses[hashValue % len(self.responses)] + self.end
+        return (
+            self.start + self.responses[hashValue % len(self.responses)] +
+            self.end
+        )
 
     def random(self):
         return self.start + random.choice(self.responses) + self.end
@@ -101,7 +107,9 @@ class Response_master:
                 if "Sender" in event:
                     sender = event["Sender"]
                 if "RateLimiter" in event:
-                    rateLimiter = datetime.timedelta(seconds=event["RateLimiter"])
+                    rateLimiter = datetime.timedelta(
+                        seconds=event["RateLimiter"]
+                    )
                 phrases = []
                 words = []
                 emoji = []
