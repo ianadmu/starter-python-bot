@@ -56,7 +56,7 @@
 		{
 			"Triggers": {
 				"Words": [
-					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin",
+					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin", "roofie",
 					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile"
 				],
 				"Phrases": ["air strike", "nuclear meltdown", "coup d'etat"]
