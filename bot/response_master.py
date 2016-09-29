@@ -22,7 +22,7 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
-        self.lastTimeResponded = datetime.datetime(year=2000)
+        self.lastTimeResponded = datetime.datetime(2000)
         self.rateLimiter = rateLimiter
 
     def rateLimit(self):
@@ -122,6 +122,7 @@ class Response_master:
                         use_hash, named, start, end, sender, rateLimiter
                     )
                 )
+                msg_writer.write_error("Parsed One Correctly")
         except:
             msg_writer.write_error("Error loading JSON file")
             self.events = []
