@@ -10,7 +10,7 @@ class Response:
 
     def __init__(
         self, phrases, words, emoji, responses,
-        use_hash, named, start, end, sender
+        use_hash, named, start, end, sender, msg_writer
     ):
         self.phrases = phrases
         self.words = words
@@ -21,6 +21,7 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
+        self.msg_writer = msg_writer
 
     def get_emoji_response(self, reaction):
         if reaction in self.emoji:
@@ -107,7 +108,7 @@ class Response_master:
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
-                        use_hash, named, start, end, sender
+                        use_hash, named, start, end, sender, msg_writer
                     )
                 )
                 self.msg_writer = msg_writer
