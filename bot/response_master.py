@@ -92,7 +92,9 @@ class Response_master:
                 start = ""
                 end = ""
                 sender = ""
+                msg_writer.write_error("-1")
                 rateLimiter = timedelta(seconds=60)
+                msg_writer.write_error("0")
                 if "Start" in event:
                     start = event["Start"]
                 if "End" in event:
