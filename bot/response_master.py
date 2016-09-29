@@ -22,7 +22,7 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
-        self.lastTimeResponded = datetime.datetime(2000)
+        self.lastTimeResponded = datetime.datetime(year=2000)
         self.rateLimiter = rateLimiter
 
     def rateLimit(self):
@@ -92,19 +92,15 @@ class Response_master:
                 start = ""
                 end = ""
                 sender = ""
-                msg_writer.write_error("-1")
                 rateLimiter = datetime.timedelta(seconds=60)
-                msg_writer.write_error("0")
                 if "Start" in event:
                     start = event["Start"]
                 if "End" in event:
                     end = event["End"]
                 if "Sender" in event:
                     sender = event["Sender"]
-                msg_writer.write_error("1")
                 if "RateLimiter" in event:
                     rateLimiter = datetime.timedelta(seconds=event["RateLimiter"])
-                msg_writer.write_error("2")
                 phrases = []
                 words = []
                 emoji = []
@@ -120,14 +116,12 @@ class Response_master:
                         emoji.append(e)
                 for r in event["Responses"]:
                     responses.append(r)
-                msg_writer.write_error("3")
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
                         use_hash, named, start, end, sender, rateLimiter
                     )
                 )
-                msg_writer.write_error("Parsed One Correctly")
         except:
             msg_writer.write_error("Error loading JSON file")
             self.events = []
