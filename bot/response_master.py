@@ -100,7 +100,7 @@ class Response_master:
                 if "Sender" in event:
                     sender = event["Sender"]
                 if "RateLimiter" in event:
-                    rateLimiter = timedelta(seconds=15)
+                    rateLimiter = timedelta(seconds=event["RateLimiter"])
                 phrases = []
                 words = []
                 emoji = []
@@ -119,7 +119,7 @@ class Response_master:
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
-                        use_hash, named, start, end, sender
+                        use_hash, named, start, end, sender, rateLimiter
                     )
                 )
         except:
