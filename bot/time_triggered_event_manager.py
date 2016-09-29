@@ -36,14 +36,11 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def trigger_morning(self):
-        tags = ['channel', 'here']
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
                      "Ohayou", "Good morning to you", "Aloha",
-                     "Konnichiwashington", "Buenos dias",
-                     ":sunny: Good morning"]
-        txt = '{} <!{}>! :{}:'.format(
-            random.choice(responses), random.choice(tags), self.get_emoji()
-        )
+                     "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
+                     ":sunny: Good morning", "Where have you been. MORNING"]
+        txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
         self.send_message('random', txt)
 
     def trigger_markov(self):
@@ -73,7 +70,7 @@ class TimeTriggeredEventManager(object):
 
     def trigger_random(self):
         txt = self.random_manager.get_response()
-        if random.random() <= 0.30:
+        if random.random() <= 0.45:
             txt = str(self.markov_chain)
         self.send_message('random', txt)
         self.trigger_method_log('random')
@@ -123,7 +120,6 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, response)
 
     def trigger_945(self):
-        tags = ['channel', 'here']
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~',
                     ':horse: 945! giddyup', '945! :heart:',
                     '945! :sweet_potato:', '945!........', '945 time',
@@ -131,13 +127,10 @@ class TimeTriggeredEventManager(object):
                     '945! :sheep: :panda_face: :slowpoke:', '945! :boom:',
                     ':eggplant: 945.', '945 :coffee:', '_le 945_',
                     '_le fast 945_']
-        txt = '<!{}> {} :{}:'.format(
-            random.choice(tags), random.choice(kip_msgs), self.get_emoji()
-        )
+        txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
         self.send_message('random', txt)
 
     def trigger_mochaccino(self):
-        tags = ['channel', 'here']
         msgs = ['The mochaccino tastes _amazing_ this morning!',
                 'Eh, mochaccino ain\'t so great today...',
                 'HELP! MOCHACCINO EVERYWHERE!',
@@ -154,9 +147,7 @@ class TimeTriggeredEventManager(object):
                 'MOCHACCINO MOCHACCINO MOCHACCINO!!!',
                 'Who\'s ready for a nice cup o\' mochaccino?',
                 '_le mochaccino_']
-        txt = '<!{}> {} :coffee:'.format(
-            random.choice(tags), random.choice(msgs)
-        )
+        txt = '{} :coffee:'.format(random.choice(msgs))
         self.send_message('random', txt)
 
     def trigger_timed_event(self):
