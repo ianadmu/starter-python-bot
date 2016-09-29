@@ -93,7 +93,7 @@ class Response_master:
                 end = ""
                 sender = ""
                 msg_writer.write_error("-1")
-                rateLimiter = timedelta(seconds=60)
+                rateLimiter = datetime.timedelta(seconds=60)
                 msg_writer.write_error("0")
                 if "Start" in event:
                     start = event["Start"]
@@ -103,7 +103,7 @@ class Response_master:
                     sender = event["Sender"]
                 msg_writer.write_error("1")
                 if "RateLimiter" in event:
-                    rateLimiter = timedelta(seconds=event["RateLimiter"])
+                    rateLimiter = datetime.timedelta(seconds=event["RateLimiter"])
                 msg_writer.write_error("2")
                 phrases = []
                 words = []
