@@ -121,6 +121,9 @@ class Messenger(object):
     def send_reaction(self, emoji_name, channel_id, timestamp):
         self.clients.send_reaction(emoji_name, channel_id, timestamp)
 
+    def get_emoji(self):
+        return self.clients.get_random_emoji()
+
     def write_closing(self):
         self.send_message('zac-testing', "I'm closing, ~byeeee~!!!!!")
 

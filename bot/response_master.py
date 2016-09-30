@@ -11,7 +11,7 @@ class Response:
 
     def __init__(
         self, phrases, words, emoji, responses,
-        use_hash, named, start, end, sender, rateLimiter
+        use_hash, named, start, end, sender, rateLimiter, msg_writer
     ):
         self.phrases = phrases
         self.words = words
@@ -24,6 +24,7 @@ class Response:
         self.sender = sender
         self.lastTimeResponded = datetime.datetime(1995, 1, 9)
         self.rateLimiter = rateLimiter
+        self.msg_writer = msg_writer
 
     def rateLimit(self):
         # Don't call this unless you got a valid response
@@ -68,6 +69,10 @@ class Response:
             else:
                 result = self.random()
         result = result.replace("user_id", "<@" + user + ">")
+        if "random_emoji" in result:
+            result = result.replace(
+                "random_emoji", ":" + self.msg_writer.get_emoji() + ":"
+            )
         return result
 
     def hash(self, text):
@@ -123,12 +128,18 @@ class Response_master:
                 if "Emoji" in event["Triggers"]:
                     for e in event["Triggers"]["Emoji"]:
                         emoji.append(e)
-                for r in event["Responses"]:
-                    responses.append(r)
+
+                if "Formatting" in event:
+                    responses = self.get_formatting(event["Formatting"])
+
+                if "Responses" in event:
+                    for r in event["Responses"]:
+                        responses.append(r)
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
-                        use_hash, named, start, end, sender, rateLimiter
+                        use_hash, named, start, end, sender, rateLimiter,
+                        msg_writer
                     )
                 )
         except:
@@ -164,3 +175,37 @@ class Response_master:
         else:
             self.msg_writer.send_message(channel, combined_responses)
         return combined_responses
+
+    def get_formatting(self, event):
+        try:
+            if "Format" in event:
+                text = event["Format"]
+                response_list = []
+                for item in re.findall('{(.+?)}', text):
+                    temp_list = []
+                    if item in event:
+                        if len(response_list) == 0:
+                            for num in range(len(event[item])):
+                                temp_list.append(
+                                    text.replace(
+                                        "{" + item + "}", event[item][num]
+                                    )
+                                )
+                        else:
+                            for index in range(len(response_list)):
+                                for num in range(len(event[item])):
+                                    temp_list.append(
+                                        response_list[index].replace(
+                                            "{" + item + "}", event[item][num]  # noqa
+                                        )
+                                    )
+                    else:
+                        raise Exception(
+                            "BAD JSON FORMATTING: item not in event"
+                        )
+                    response_list = temp_list
+                return response_list
+            else:
+                raise Exception("BAD JSON FORMATTING: Format not in event")
+        except Exception as e:
+            self.msg_writer.write_error(str(e))
