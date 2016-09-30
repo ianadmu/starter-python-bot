@@ -131,6 +131,7 @@ class Response_master:
 
                 if "Formatting" in event:
                     responses = self.get_formatting(event["Formatting"])
+                    self.msg_writer.write_error(responses)
 
                 if "Responses" in event:
                     for r in event["Responses"]:

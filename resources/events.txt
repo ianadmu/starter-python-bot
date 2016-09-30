@@ -202,10 +202,11 @@
 			},
 			"Named": true,
 			"Formatting" : {
-				"Format" : "{Mornings} {user_id}!",
+				"Format" : "{Mornings} user_id!",
 				"Mornings" :  [
 					"Good morning", "Morning", "Guten Morgen", "Bonjour", "Ohayou", "Good morning to you", 
-					"Aloha", "Konnichiwashington", "Buenos dias", ":sunny: Good morning"],
+					"Aloha", "Konnichiwashington", "Buenos dias", ":sunny: Good morning"
+				]
 			},
 			"Sender": "sunglasses"
 		},
