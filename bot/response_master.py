@@ -10,7 +10,7 @@ class Response:
 
     def __init__(
         self, phrases, words, emoji, responses,
-        use_hash, named, start, end, sender, msg_writer
+        use_hash, named, start, end, sender
     ):
         self.phrases = phrases
         self.words = words
@@ -21,7 +21,6 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
-        self.msg_writer = msg_writer
 
     def get_emoji_response(self, reaction):
         if reaction in self.emoji:
@@ -33,9 +32,7 @@ class Response:
         is_named = False
         lower = message.lower()
         for phrase in self.phrases:
-            self.msg_writer.send_message('zac-testing', phrase)
-            if phrase in lower:
-                self.msg_writer.send_message('zac-testing', lower)
+            if lower.startswith(phrase) or (" " + phrase) in lower:
                 has_trigger = True
                 continue
 
@@ -109,7 +106,7 @@ class Response_master:
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
-                        use_hash, named, start, end, sender, msg_writer
+                        use_hash, named, start, end, sender
                     )
                 )
                 self.msg_writer = msg_writer
