@@ -45,7 +45,7 @@ class Response:
         is_named = False
         lower = message.lower()
         for phrase in self.phrases:
-            if phrase in lower:
+            if lower.startswith(phrase) or (" " + phrase) in lower:
                 has_trigger = True
                 continue
 
