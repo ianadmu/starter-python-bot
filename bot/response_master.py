@@ -131,7 +131,6 @@ class Response_master:
 
                 if "Formatting" in event:
                     responses = self.get_formatting(event["Formatting"])
-                    self.msg_writer.write_error(responses)
 
                 if "Responses" in event:
                     for r in event["Responses"]:
@@ -184,33 +183,27 @@ class Response_master:
                 response_list = []
                 for item in re.findall('{(.+?)}', text):
                     temp_list = []
-                    if item != "user_id" or item != "random_emoji":
-                        if item in event:
-                            if len(response_list) == 0:
+                    if item in event:
+                        if len(response_list) == 0:
+                            for num in range(len(event[item])):
+                                temp_list.append(
+                                    text.replace(
+                                        "{" + item + "}", event[item][num]
+                                    )
+                                )
+                        else:
+                            for index in range(len(response_list)):
                                 for num in range(len(event[item])):
                                     temp_list.append(
-                                        text.replace(
-                                            "{" + item + "}", event[item][num]
+                                        response_list[index].replace(
+                                            "{" + item + "}", event[item][num]  # noqa
                                         )
                                     )
-                            else:
-                                for index in range(len(response_list)):
-                                    for num in range(len(event[item])):
-                                        temp_list.append(
-                                            response_list[index].replace(
-                                                "{" + item + "}", event[item][num]  # noqa
-                                            )
-                                        )
-                        else:
-                            raise Exception(
-                                "BAD JSON FORMATTING: item not in event"
-                            )
-                        response_list = temp_list
-                for item in response_list:
-                    if "{user_id}" in item:
-                        item.replace("{user_id}", "user_id")
-                    if "{random_emoji}" in item:
-                        item.replace("{random_emoji}", "random_emoji")
+                    else:
+                        raise Exception(
+                            "BAD JSON FORMATTING: item not in event"
+                        )
+                    response_list = temp_list
                 return response_list
             else:
                 raise Exception("BAD JSON FORMATTING: Format not in event")

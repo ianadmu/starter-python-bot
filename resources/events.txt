@@ -193,7 +193,14 @@
 				"Words": ["thanks", "ty", "thank-you"]
 			},
 			"Named": true,
-			"Responses": ["No problem mon user_id!", "Please don't use Comic Sans; this isn't a lemonade stand user_id!", "Why, you're welcome my friend user_id!", "Don't mention it user_id!", "Don't mention it user_id!", "You're welcome user_id!", "It was a pleasure user_id!", "It was my pleasure user_id!", "No sweat user_id!", "Anytime user_id!", "_Le gratitude_ pleases me. :heart: Thank you user_id!", "No worries user_id!", "No, thank you user_id!"]
+			"Formatting" : {
+				"Format": "{Thanks} user_id!",
+				"Thanks": [
+					"No problem mon", "Please don't use Comic Sans; this isn't a lemonade stand", 
+					"Why, you're welcome my friend", "Don't mention it", "You're welcome", "It was a pleasure", 
+					"It was my pleasure", "No sweat", "Anytime", "_Le gratitude_ pleases me. :heart: Thank you", 
+					"No worries", "No, thank you"]
+			}
 		},
 
 		{
