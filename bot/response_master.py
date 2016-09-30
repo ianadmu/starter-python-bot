@@ -35,6 +35,7 @@ class Response:
         for phrase in self.phrases:
             self.msg_writer.send_message('zac-testing', phrase)
             if phrase in lower:
+                self.msg_writer.send_message('zac-testing', lower)
                 has_trigger = True
                 continue
 
