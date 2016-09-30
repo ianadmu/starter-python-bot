@@ -69,9 +69,10 @@ class Response:
             else:
                 result = self.random()
         result = result.replace("user_id", "<@" + user + ">")
-        result = result.replace(
-            "random_emoji", ":" + self.msg_writer.get_emoji() + ":"
-        )
+        if "random_emoji" in result:
+            result = result.replace(
+                "random_emoji", ":" + self.msg_writer.get_emoji() + ":"
+            )
         return result
 
     def hash(self, text):
