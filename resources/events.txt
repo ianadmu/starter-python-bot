@@ -201,7 +201,12 @@
 				"Words": ["morning"]
 			},
 			"Named": true,
-			"Responses": ["Good morning user_id!", "Morning user_id!", "Guten Morgen user_id!", "Bonjour user_id!", "Ohayou user_id!", "Good morning to you user_id!", "Aloha user_id!", "Konnichiwashington user_id!", "Buenos dias user_id!", ":sunny: Good morning user_id!"],
+			"Formatting" : {
+				"Format" : "{Mornings} {user_id}!",
+				"Mornings" :  [
+					"Good morning", "Morning", "Guten Morgen", "Bonjour", "Ohayou", "Good morning to you", 
+					"Aloha", "Konnichiwashington", "Buenos dias", ":sunny: Good morning"],
+			},
 			"Sender": "sunglasses"
 		},
 

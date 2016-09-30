@@ -205,12 +205,11 @@ class Response_master:
                                 "BAD JSON FORMATTING: item not in event"
                             )
                         response_list = temp_list
-                    else:
-                        for item in response_list:
-                            if "user_id" in item:
-                                item.replace("{user_id}", "user_id")
-                            elif "random_emoji" in item:
-                                item.replace("{random_emoji}", "random_emoji")
+                for item in response_list:
+                    if "{user_id}" in item:
+                        item.replace("{user_id}", "user_id")
+                    if "{random_emoji}" in item:
+                        item.replace("{random_emoji}", "random_emoji")
                 return response_list
             else:
                 raise Exception("BAD JSON FORMATTING: Format not in event")
