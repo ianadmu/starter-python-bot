@@ -107,9 +107,6 @@ class Messenger(object):
             'zac-testing', self.channel_manager.get_channel_id(channel_id)
         )
 
-    def write_custom_error(self, msg):
-        self.send_message('zac-testing', msg)
-
     def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
                "very well:\n>```{}```").format(err_msg)
@@ -128,9 +125,11 @@ class Messenger(object):
         self.send_message('zac-testing', "I'm closing, ~byeeee~!!!!!")
 
     def write_message_deleted(self, channel_id):
-        txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
-               "<#{}>").format(channel_id)
-        self.send_message('zac-testing', txt)
+        # Dont post is messages were deleted inside of #zac-testing
+        if channel_id != self.channel_manager.get_channel_id('zac-testing'):
+            txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
+                   "<#{}>").format(channel_id)
+            self.send_message('zac-testing', txt)
 
     def write_left_channel(self, channel_id):
         txt = '...well THAT was something'

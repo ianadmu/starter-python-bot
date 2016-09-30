@@ -12,7 +12,7 @@
 				"Phrases": ["donger", "dong", "bulldog", "dongers"]
 			},
 			"Responses": ["ヽ༼ຈل͜ຈ༽ﾉ raise your dongers ヽ༼ຈل͜ຈ༽ﾉ"],
-			"Sender":"jill"
+			"Sender": "jill"
 		},
 
 		{
@@ -27,7 +27,7 @@
 				"Words": ["toast"]
 			},
 			"Responses": ["Never Forget :kieratoast:"],
-			"Sender":"kieratoast"
+			"Sender": "kieratoast"
 		},
 
 		{
@@ -42,7 +42,7 @@
 				"Phrases": ["well played", "well met"]
 			},
 			"Responses": [">Well Met!"],
-			"Sender":"chuckle"
+			"Sender": "chuckle"
 		},
 
 		{
@@ -50,24 +50,24 @@
 				"Words": ["garret", "gurrit"]
 			},
 			"Responses": ["You fucker, can you not count to two?"],
-			"Sender":"gurritt"
+			"Sender": "gurritt"
 		},
 
 		{
 			"Triggers": {
 				"Words": [
-					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin",
+					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin", "roofie",
 					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile"
 				],
 				"Phrases": ["air strike", "nuclear meltdown", "coup d'etat"]
 			},
 			"Responses": [
 				"You have been added to the watch list. ?_?",
-                "Take your hands off your keyboard. You have been added to the watch list. ?_?",
+				"Take your hands off your keyboard. You have been added to the watch list. ?_?",
 				"Get on the floor now, you have been added to the watch list! ?_?",
-                "Take caution with your words, friend. You have been added to the watch list. ?_?"
-            ],
-			"Sender":"booom"
+				"Take caution with your words, friend. You have been added to the watch list. ?_?"
+			],
+			"Sender": "booom"
 		},
 
 
@@ -77,12 +77,12 @@
 			},
 			"Responses": [
 				"I'm sorry, that is classified information.",
-                "That information is classified.",
-                "You have insufficient clearance for access to that classified information.", 
+				"That information is classified.",
+				"You have insufficient clearance for access to that classified information.",
 				"The only person with clearance is Nicole and she already knows.",
-                "You have been added to the watch list. ?_?"
+				"You have been added to the watch list. ?_?"
 			],
-			"Sender":"no_good"
+			"Sender": "no_good"
 		},
 
 
@@ -90,14 +90,16 @@
 			"Triggers": {
 				"Emoji": ["congaparrot"]
 			},
-			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:"]
+			"Responses": [":congaparrot::congaparrot::congaparrot::congaparrot::congaparrot::congaparrot:", ":aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot::aussie_conga_parrot:"],
+			"Sender": "parrot"
 		},
 
 		{
 			"Triggers": {
 				"Emoji": ["reverse_conga_parrot"]
 			},
-			"Responses": [":reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot:"]
+			"Responses": [":reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot::reverse_conga_parrot:", ":aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot::aussie_reverse_conga_parrot:"],
+			"Sender": "parrot"
 		},
 
 		{
@@ -113,7 +115,7 @@
 				"Emoji": ["joy"]
 			},
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
-			"Sender":"nicole"
+			"Sender": "nicole"
 		},
 
 		{
@@ -121,8 +123,9 @@
 				"Words": ["wiener"]
 			},
 			"Responses": ["I AM A WIENER!!! :eggplant: ...jk that's Steven",
-				"Steven is a wiener!!! :eggplant:"],
-				"Sender":"eggplant"
+				"Steven is a wiener!!! :eggplant:"
+			],
+			"Sender": "eggplant"
 		},
 
 		{
@@ -166,21 +169,22 @@
 				"Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo", "Coo",
 				"Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer", "Brerererer"
 			],
-			"Sender":"parrot"
+			"Sender": "parrot"
 		},
 
 		{
 			"Triggers": {
 				"Words": ["boyer"]
 			},
-			"Start":"_",
-			"End":"_",
+			"Start": "_",
+			"End": "_",
 			"Responses": ["It was working upstairs--", "Idk why it's not working now", "Last time I taught this course it was working", "We do take these seriously.... at least my boss does",
 				"Last time I taught this course I didn't have to do this", "I'll have to update my notes", "This was working earlier", "Sorry I'm late", "Sorry the example wasn't working last class, it should be working now",
 				"........so that's basically what you'll need to do for assignment one", "[After 5 minutes of lecturing] Okay let's take a 10-minute break",
 				"*Shows up 15 minutes late", "*Takes 15 minutes to notice a raised hand", "This code came from a tutorial", "Looks like break-time [Leaves]"
 			],
-			"Sender":"boyer"
+			"Sender": "boyer",
+			"RateLimiter": 5
 		},
 
 		{
@@ -198,7 +202,7 @@
 			},
 			"Named": true,
 			"Responses": ["Good morning user_id!", "Morning user_id!", "Guten Morgen user_id!", "Bonjour user_id!", "Ohayou user_id!", "Good morning to you user_id!", "Aloha user_id!", "Konnichiwashington user_id!", "Buenos dias user_id!", ":sunny: Good morning user_id!"],
-			"Sender":"sunglasses"
+			"Sender": "sunglasses"
 		},
 
 		{
@@ -206,8 +210,8 @@
 				"Words": ["coin"]
 			},
 			"Named": true,
-			"Responses": ["HEADS","TAILS"],
-			"Sender":"slot_machine"
+			"Responses": ["HEADS", "TAILS"],
+			"Sender": "slot_machine"
 		},
 
 		{
@@ -215,8 +219,8 @@
 				"Words": ["roll"]
 			},
 			"Named": true,
-			"Responses": ["1","2","3","4","5","6"],
-			"Sender":"slot_machine"
+			"Responses": ["1", "2", "3", "4", "5", "6"],
+			"Sender": "slot_machine"
 		},
 
 		{
@@ -231,7 +235,7 @@
 				"Words": ["random"]
 			},
 			"Responses": ["3"],
-			"Sender":"slot_machine"
+			"Sender": "slot_machine"
 		},
 
 		{
@@ -259,16 +263,16 @@
 			"Named": true,
 			"Responses": ["Mmmm, _velour_", "When I'm in command, son, every mission is a suicide mission.", "Something's very wrong here, and yet a little bit right.", "Leela! We meet again! Except this time _I'm_ the one criticizing the sausage!", "I am the man with no name. Zapp Brannigan, at your service.", "Brannigan's law is like Brannigan's love: hard and fast.", "As a gentleman, I must warn you: If you so much as glance at another woman, I'll be all over Leela like a fly on a pile of very seductive manure.", "Fire all weapons and open a hailing frequency for my victory yodle.", "If we can hit that bull's-eye, the rest of the dominoes will fall like a house of cards.Checkmate.", "We'll write our _own_ bible. With less Sodom and more Gomorrah.", "Kif, crouch down and shield my thighs from the cold, for God's sake.", "Don't be such a chicken, Kif. Teenagers all smoke and they seem pretty on the ball.", "Now remember, Kif. The quickest way to a girl's bed is through her parents. Have sex wth them and you're in.", "My strategy is so simple an idiot could have devised it!", "So, you thought you could conquer us so easily, eh? Nice job. We surrender."]
 		},
-		
+
 		{
 			"Triggers": {
 				"Words": ["bender"],
 				"Phrases": ["bend it"],
-				"Emoji": ["bender","benderr"]
+				"Emoji": ["bender", "benderr"]
 			},
 			"Named": true,
-			"Responses": ["Game's over, losers! I have all the money. Compare your lives to mine and then kill yourselves.", "Bite my colossal metal ass!", "I don't need to drink, I can quit anytime I want!", "I don't have emotions and sometimes that makes me very sad.", "I say the world must learn our peaceful ways... _by force!_", "Lick my frozen metal ass!", "Our love isn't any different from yours. Except it's hotter 'cause _I'm_ involved.", "I'm so embarassed I wish everybody else was dead.", "My life, and by extension everyone else's, is meaningless.", "You've succeeded in convincing me life is worth living by showing how bad my funeral will suck.", "Bite my red-hot glowing ass!", "Should I get one $300 hooker or three hundred $1 hookers?", "Aw, are you still hung up on Whatshername? _Move on already!_", "Bite my glorious golden ass!", "Guess I'll do what I always do when I run out of booze. *_wailing sobs_*", "I'm so sorry guys. I never meant to hurt you - just to destroy everything you ever believed in.", "Have you ever tried simply turning off the TV, sitting down with your children, and hitting them?", "I bet I can eat nachos and go to the bathroom _at the same time!_", "Bite my shiny metal ass!", "This is the worst kind of discrimination there is. _The kind against me!_", "I guess if you want children beaten, you have to do it yourself.", "Hahahaha. Oh wait you're serious. Let me laugh even harder.", "I'll build my _own_ theme park. With black jack, and hookers. In fact, forget the park!", "Hey sexy mama. Wanna kill all humans?", "You know what cheers me up? Other people's misfortune.", "Anything less than immortality is a complete waste of time.", "'Blackmail' is such an ugly word. I prefer 'extortion'. The 'x' makes it sound cool.", " _Fry cracked corn and I don't care / _Leela cracked corn I still don't care / Bender cracked corn and he is greeeeeeat / Take that you stupid corn_ :musical_note:", "Oh. Your. God.", "You're a pimple on society's ass and you'll never amount to anything.", "Afterlife?! If I thought I had to live another life, I'd kill myself right now!", "Would you kindly shut your noise hole?", "_Shut up and get to the point!_", "So sober... so weak...", "This is quite a shock! On the other hand, it's not surprising in the least.", "I'll stay here and be in charge of not dying.", "Once again, television has given me a reason to live!", "But I don't like things that are scary and painful!", "I support and oppose many things, but not strongly enough to pick up a pen.", "Life is hilariously cruel.", "Take that, Beethoven, you deaf bastard!", "Everybody's a jerk! You, me, this jerk...", "Tempers are wearing thin. Let's hope some robot doesn't kill everybody.", "Let's face it, comedy's a dead art form. Tragedy - now that's funny.", "What kind of party is this!? There's no booze and only one hooker.", "What do you mean 'we', flesh-tube?!", "Bite my freshly-molted, blubber-filled ass.", "No robot cow should have to be milked by a milking machine! And no milking machine should have to milk a robot cow!", "It's not just safe, it's 40% safe!", "Thanks to you, I went on a soul-searching journey. I hate those!", "3rd place? This is the greatest injustice Germany has ever committed!", "Fry, some of us have real problems! I just learned there are people with fancier sausage meats than me!", "Oh, so now I'm your last resort booty call, huh? Okay, let's go!", "I'm bored. Let's drink!", "Now hold on, I feel like I was chased by a mushroom recently.", "I wanna come too! ... To prove I can put divisive partisan politics aside to participate in a break-in!", "Would it cheer you up if I punched Fry in the groin? Cause I'll do it, regardless.", "Oh wow, I can't believe how stupid I used to be and you still are.", "In order to fix your leaky roof I'll need to spend two or three hours down here in the wine cellar.", "You, sir, have defaced a national treasure! I demand you restore my buttocks to their former glory.", "Congratulations, Fry, you snagged the perfect girlfriend. Amy's rich, she's probably got other characteristics.", "On the count of three, you will awaken feeling refreshed, as if Futurama were never cancelled by idiots and then brought back by bigger idiots. One...two...", "I hate partying. If only I didn't have so much crunk in my ba-dun-ka-dunk!", "From now on, you guys'll do all the work while I sit on the couch and do nothing.", "I'll miss you, Leela. I know you're just a carbon-based life form but I'll always think of you as a big pile of titanium.", "In the event of an emergency my ass can be used as a flotation device.", "'m Bender, baby! Please insert liquor.", "Ah, Leela's experiencing the greatest joy a woman can feel: Worshipping some low-life jerk.", "Crippling pain? That's not covered by my insurance fraud!", "Let's commence preparations for rumbling!" ],
-			"Sender":"bender"
+			"Responses": ["Game's over, losers! I have all the money. Compare your lives to mine and then kill yourselves.", "Bite my colossal metal ass!", "I don't need to drink, I can quit anytime I want!", "I don't have emotions and sometimes that makes me very sad.", "I say the world must learn our peaceful ways... _by force!_", "Lick my frozen metal ass!", "Our love isn't any different from yours. Except it's hotter 'cause _I'm_ involved.", "I'm so embarassed I wish everybody else was dead.", "My life, and by extension everyone else's, is meaningless.", "You've succeeded in convincing me life is worth living by showing how bad my funeral will suck.", "Bite my red-hot glowing ass!", "Should I get one $300 hooker or three hundred $1 hookers?", "Aw, are you still hung up on Whatshername? _Move on already!_", "Bite my glorious golden ass!", "Guess I'll do what I always do when I run out of booze. *_wailing sobs_*", "I'm so sorry guys. I never meant to hurt you - just to destroy everything you ever believed in.", "Have you ever tried simply turning off the TV, sitting down with your children, and hitting them?", "I bet I can eat nachos and go to the bathroom _at the same time!_", "Bite my shiny metal ass!", "This is the worst kind of discrimination there is. _The kind against me!_", "I guess if you want children beaten, you have to do it yourself.", "Hahahaha. Oh wait you're serious. Let me laugh even harder.", "I'll build my _own_ theme park. With black jack, and hookers. In fact, forget the park!", "Hey sexy mama. Wanna kill all humans?", "You know what cheers me up? Other people's misfortune.", "Anything less than immortality is a complete waste of time.", "'Blackmail' is such an ugly word. I prefer 'extortion'. The 'x' makes it sound cool.", " _Fry cracked corn and I don't care / _Leela cracked corn I still don't care / Bender cracked corn and he is greeeeeeat / Take that you stupid corn_ :musical_note:", "Oh. Your. God.", "You're a pimple on society's ass and you'll never amount to anything.", "Afterlife?! If I thought I had to live another life, I'd kill myself right now!", "Would you kindly shut your noise hole?", "_Shut up and get to the point!_", "So sober... so weak...", "This is quite a shock! On the other hand, it's not surprising in the least.", "I'll stay here and be in charge of not dying.", "Once again, television has given me a reason to live!", "But I don't like things that are scary and painful!", "I support and oppose many things, but not strongly enough to pick up a pen.", "Life is hilariously cruel.", "Take that, Beethoven, you deaf bastard!", "Everybody's a jerk! You, me, this jerk...", "Tempers are wearing thin. Let's hope some robot doesn't kill everybody.", "Let's face it, comedy's a dead art form. Tragedy - now that's funny.", "What kind of party is this!? There's no booze and only one hooker.", "What do you mean 'we', flesh-tube?!", "Bite my freshly-molted, blubber-filled ass.", "No robot cow should have to be milked by a milking machine! And no milking machine should have to milk a robot cow!", "It's not just safe, it's 40% safe!", "Thanks to you, I went on a soul-searching journey. I hate those!", "3rd place? This is the greatest injustice Germany has ever committed!", "Fry, some of us have real problems! I just learned there are people with fancier sausage meats than me!", "Oh, so now I'm your last resort booty call, huh? Okay, let's go!", "I'm bored. Let's drink!", "Now hold on, I feel like I was chased by a mushroom recently.", "I wanna come too! ... To prove I can put divisive partisan politics aside to participate in a break-in!", "Would it cheer you up if I punched Fry in the groin? Cause I'll do it, regardless.", "Oh wow, I can't believe how stupid I used to be and you still are.", "In order to fix your leaky roof I'll need to spend two or three hours down here in the wine cellar.", "You, sir, have defaced a national treasure! I demand you restore my buttocks to their former glory.", "Congratulations, Fry, you snagged the perfect girlfriend. Amy's rich, she's probably got other characteristics.", "On the count of three, you will awaken feeling refreshed, as if Futurama were never cancelled by idiots and then brought back by bigger idiots. One...two...", "I hate partying. If only I didn't have so much crunk in my ba-dun-ka-dunk!", "From now on, you guys'll do all the work while I sit on the couch and do nothing.", "I'll miss you, Leela. I know you're just a carbon-based life form but I'll always think of you as a big pile of titanium.", "In the event of an emergency my ass can be used as a flotation device.", "'m Bender, baby! Please insert liquor.", "Ah, Leela's experiencing the greatest joy a woman can feel: Worshipping some low-life jerk.", "Crippling pain? That's not covered by my insurance fraud!", "Let's commence preparations for rumbling!"],
+			"Sender": "bender"
 		}
 	]
 }

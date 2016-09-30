@@ -2,6 +2,7 @@ import random
 import json
 import os.path
 import re
+import datetime
 
 
 class Response:
@@ -10,7 +11,7 @@ class Response:
 
     def __init__(
         self, phrases, words, emoji, responses,
-        use_hash, named, start, end, sender
+        use_hash, named, start, end, sender, rateLimiter
     ):
         self.phrases = phrases
         self.words = words
@@ -21,9 +22,21 @@ class Response:
         self.end = end
         self.emoji = emoji
         self.sender = sender
+        self.lastTimeResponded = datetime.datetime(1995, 1, 9)
+        self.rateLimiter = rateLimiter
+
+    def rateLimit(self):
+        # Don't call this unless you got a valid response
+        allowedResponse = (
+            self.lastTimeResponded +
+            self.rateLimiter <= datetime.datetime.now()
+        )
+        if allowedResponse:
+            self.lastTimeResponded = datetime.datetime.today()
+        return allowedResponse
 
     def get_emoji_response(self, reaction):
-        if reaction in self.emoji:
+        if reaction in self.emoji and self.rateLimit():
             return self.random()
         return ""
 
@@ -49,7 +62,7 @@ class Response:
 
         result = ""
 
-        if has_trigger and (not self.named or is_named):
+        if has_trigger and (not self.named or is_named) and self.rateLimit():
             if self.use_hash:
                 result = self.hash(message)
             else:
@@ -62,7 +75,10 @@ class Response:
         for character in text:
             hashValue *= 47
             hashValue += ord(character)
-        return self.start + self.responses[hashValue % len(self.responses)] + self.end
+        return (
+            self.start + self.responses[hashValue % len(self.responses)] +
+            self.end
+        )
 
     def random(self):
         return self.start + random.choice(self.responses) + self.end
@@ -73,6 +89,7 @@ class Response_master:
 
     def __init__(self, msg_writer):
         try:
+            self.msg_writer = msg_writer
             master_file = open(os.path.join('./resources', 'events.txt'), 'r')
             json_events = json.load(master_file)
             self.events = []
@@ -82,12 +99,17 @@ class Response_master:
                 start = ""
                 end = ""
                 sender = ""
+                rateLimiter = datetime.timedelta(seconds=60)
                 if "Start" in event:
                     start = event["Start"]
                 if "End" in event:
                     end = event["End"]
                 if "Sender" in event:
                     sender = event["Sender"]
+                if "RateLimiter" in event:
+                    rateLimiter = datetime.timedelta(
+                        seconds=event["RateLimiter"]
+                    )
                 phrases = []
                 words = []
                 emoji = []
@@ -106,10 +128,9 @@ class Response_master:
                 self.events.append(
                     Response(
                         phrases, words, emoji, responses,
-                        use_hash, named, start, end, sender
+                        use_hash, named, start, end, sender, rateLimiter
                     )
                 )
-                self.msg_writer = msg_writer
         except:
             msg_writer.write_error("Error loading JSON file")
             self.events = []

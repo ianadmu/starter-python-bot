@@ -18,7 +18,7 @@ class Markov:
         "Blvd", "Org", "Ltd", "..."
     )
     terminators = [".", "!", "?"]
-    characters_to_remove = re.compile("[\n\"`\”—‘…’\(\);]")
+    characters_to_remove = re.compile("[\n\"`\”—‘…�’\(\);]")
     phrase_to_remove = re.compile("BOOK .* ")
     quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
