@@ -107,9 +107,6 @@ class Messenger(object):
             'zac-testing', self.channel_manager.get_channel_id(channel_id)
         )
 
-    def write_custom_error(self, msg):
-        self.send_message('zac-testing', msg)
-
     def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
                "very well:\n>```{}```").format(err_msg)
