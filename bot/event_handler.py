@@ -205,8 +205,6 @@ class RtmEventHandler(object):
                     )
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(channel, msg_txt)
-                if re.search('apologize|apologise', lower_txt):
-                    self.msg_writer.write_apology(channel)
                 if 'solve' in lower_txt:
                     self.msg_writer.write_solution(channel, msg_txt)
                 if re.search('explain|why', lower_txt):

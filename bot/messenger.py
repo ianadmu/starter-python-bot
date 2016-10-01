@@ -29,7 +29,6 @@ class Messenger(object):
         self.sass_manager = SassManager(self)
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
-        self.apology_manager = ResourceManager('apologies.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
@@ -313,9 +312,6 @@ class Messenger(object):
     def write_sass(self, channel_id, msg):
         txt = self.sass_manager.get_sass(msg)
         self.write_slow(channel_id, txt)
-
-    def write_apology(self, channel_id):
-        self.write_slow(channel_id, self.apology_manager.get_response())
 
     def write_solution(self, channel_id, msg):
         self.write_slow(channel_id, self.equation_manager.solve(msg))
