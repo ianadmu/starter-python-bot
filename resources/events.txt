@@ -296,6 +296,24 @@
 
 		{
 			"Triggers": {
+				"Phrases": ["marry me"]
+			},
+			"Named": true,
+			"Responses": [
+	            "OKAY! :ring:", "Ummm, how 'bout no.",
+	            "Shoot I would...if you were :kiera:", "_le shrug_ 'k.",
+	            "R-Really? Okay, I shall be your ~bride~ husband from now on!!",
+	            "Sorry but I'm already married to my job.",
+	            "Sorry, but I'm already married to :nicole:",
+	            "HOW DO I KNOW YOU WON'T CHEAT ON ME WITH QBOT?!??",
+	            "_le HELLS YES!_", "No. Never. Nope. Nu-uh.",
+	            "Sorry, but you are human, and I am a mere bot. It could never work out between us...",
+	            ":musical_note: _IF YOU LIKE IT THEN YOU SHOULDA PUT A RING ON IT_:musical_note:"
+			]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["apologize", "apologise"]
 			},
 			"Named": true,
