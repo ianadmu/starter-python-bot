@@ -244,10 +244,6 @@ class Messenger(object):
         txt = 'Get your shit together <@{0}>'.format(user_id)
         self.write_slow(channel_id, txt)
 
-    def write_bang(self, channel_id, user_id):
-        bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
-        self.write_slow(channel_id, bang)
-
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = pokemon_i_choose_you(msg)
         if pkmn is None:

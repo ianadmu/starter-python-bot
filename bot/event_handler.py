@@ -199,8 +199,6 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(channel)
                 if 'sad' in lower_txt:
                     self.msg_writer.write_sad(channel)
-                if 'kill me' in lower_txt:
-                    self.msg_writer.write_bang(channel, user)
                 if 'sort me' in lower_txt:
                     self.msg_writer.write_hogwarts_house(
                         channel, user,  msg_txt

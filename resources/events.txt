@@ -289,6 +289,13 @@
 
 		{
 			"Triggers": {
+				"Phrases": ["kill me"]
+			},
+			"Responses": ["BANG you're dead user_id :gun:"]
+		},
+
+		{
+			"Triggers": {
 				"Phrases": ["any news", "any news?", "good news everyone"],
 				"Words": ["farnsworth"]
 			},
