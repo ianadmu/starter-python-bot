@@ -77,6 +77,7 @@ class SlackBot(object):
 
                 self._auto_ping(time_event_handler)
                 time.sleep(.1)
+            del msg_writer
         else:
             logger.error(
                 'Failed to connect to RTM client with token: {}'.format(

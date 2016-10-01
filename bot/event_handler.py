@@ -170,8 +170,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_night(channel, user)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel, msg_txt)
-            if re.search('(feed)|(hungry)', lower_txt):
-                self.msg_writer.write_food(channel)
             if re.search('encourage me', lower_txt):
                 self.msg_writer.write_encouragement(channel, user)
             if 'xkcd' in lower_txt:
@@ -185,6 +183,8 @@ class RtmEventHandler(object):
             # Respond to message text with `zac` included
             if (re.search(' ?zac', lower_txt) or
                     self.clients.is_bot_mention(msg_txt)):
+                if 'clean history' in lower_txt:
+                    self.msg_writer.go_through_history(channel, event['ts'])
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel)
                 if 'joke' in lower_txt:
@@ -201,24 +201,18 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(channel)
                 if 'sad' in lower_txt:
                     self.msg_writer.write_sad(channel)
-                if 'kill me' in lower_txt:
-                    self.msg_writer.write_bang(channel, user)
                 if 'sort me' in lower_txt:
                     self.msg_writer.write_hogwarts_house(
                         channel, user,  msg_txt
                     )
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(channel, msg_txt)
-                if re.search('apologize|apologise', lower_txt):
-                    self.msg_writer.write_apology(channel)
                 if 'solve' in lower_txt:
                     self.msg_writer.write_solution(channel, msg_txt)
                 if re.search('explain|why', lower_txt):
                     self.msg_writer.write_explanation(channel)
                 if re.search('sweetpotato me|sweet potato me', lower_txt):
                     self.msg_writer.write_sweetpotato_me(channel, user)
-                if re.search('marry me', lower_txt):
-                    self.msg_writer.write_marry_me(channel)
                 if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel)
                 if re.search('love|forever|relationship', lower_txt):

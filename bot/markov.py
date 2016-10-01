@@ -107,5 +107,4 @@ class Markov:
             result = result[0].upper() + result[1:]
         except:
             pass
-        
-        return result
+        return result.encode('ascii', 'ignore')

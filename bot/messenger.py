@@ -7,7 +7,6 @@ import xkcd_manager
 import weather_manager
 import traceback
 import requests
-import common
 
 from channel_manager import ChannelManager
 from loud_manager import LoudManager
@@ -29,10 +28,30 @@ class Messenger(object):
         self.sass_manager = SassManager(self)
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
-        self.apology_manager = ResourceManager('apologies.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
+
+    def go_through_history(self, channel_id, now_timestamp):
+        try:
+            response = self.clients.get_message_history(channel_id, 20)
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and 'ts' in message and
+                        self.clients.is_message_from_me(message['user'])
+                    ):
+                        if float(now_timestamp) - 600 > float(message['ts']):
+                            # self.send_message(channel_id, str(message))
+                            self.clients.delete_message(
+                                channel_id, message['ts']
+                            )
+
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
 
     def __del__(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
@@ -244,29 +263,6 @@ class Messenger(object):
         txt = 'Get your shit together <@{0}>'.format(user_id)
         self.write_slow(channel_id, txt)
 
-    def write_food(self, channel_id):
-        edibles = [
-            ':apple:', ':banana:', ':pear:', ':peach:', ':pineapple:',
-            ':lemon:', ':watermelon:', ':grapes:', ':strawberry:', ':melon:',
-            ':cherry:', ':tomato:', ':eggplant:', ':hot_pepper:', ':corn:',
-            ':sweet_potato:', ':fries:', ':hamburger:', ':egg:',
-            ':fried_shrimp:', ':meat_on_bone:', ':poultry_leg:',
-            ':cheese_wedge:', ':bread:', ':hotdog:', ':pizza:', ':spaghetti:',
-            ':taco:', ':burrito:', ':ramen:', ':stew:', ':sushi:', ':bento:',
-            ':rice_ball:', ':rice:', ':rice_cracker:', ':oden:', ':dango:',
-            ':shaved_ice:', ':ice_cream:', ':icecream:', ':cake:',
-            ':birthday:', ':candy:', ':lollipop:', ':popcorn:',
-            ':chocolate_bar:', ':doughnut:', ':cookie:', ':baby_bottle:',
-            ':beetle:', ':spider:', ':cow:', ':pig:', ':bug:', ':snail:',
-            ':tropical_fish:', ':fish:', ':blowfish:', ':sheep:', ':pig2:',
-            ':rat:', ':rooster:', ':mushroom:', ':green_apple:', ':poop:']
-        food = 'Here, for you {0}'.format(random.choice(edibles))
-        self.write_slow(channel_id, food)
-
-    def write_bang(self, channel_id, user_id):
-        bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
-        self.write_slow(channel_id, bang)
-
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = pokemon_i_choose_you(msg)
         if pkmn is None:
@@ -312,9 +308,6 @@ class Messenger(object):
         self.send_attachment(channel_id, txt, attachment)
 
     def write_weather(self, channel_id):
-        # line1 = WeatherController.get_weather()
-        # line1 = "Sorry, I don't know the weather today :zacefron: "
-        # line2 = "Anyways, it's always hot when I'm around :sunglasses: "
         response = weather_manager.getCurrentWeather()
         self.write_slow(channel_id, response)
 
@@ -322,7 +315,7 @@ class Messenger(object):
         zac_mentioned = re.search(' ?zac', orig_msg.lower())
         if not zac_mentioned:
             self.loud_manager.write_loud_to_file(orig_msg)
-        if zac_mentioned or common.should_spam():
+        if zac_mentioned or random.random() < 0.25:
             self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):
@@ -337,31 +330,11 @@ class Messenger(object):
         txt = self.sass_manager.get_sass(msg)
         self.write_slow(channel_id, txt)
 
-    def write_apology(self, channel_id):
-        self.write_slow(channel_id, self.apology_manager.get_response())
-
     def write_solution(self, channel_id, msg):
         self.write_slow(channel_id, self.equation_manager.solve(msg))
 
     def write_sweetpotato_me(self, channel_id, user_id):
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
-        self.write_slow(channel_id, txt)
-
-    def write_marry_me(self, channel_id):
-        responses = [
-            'OKAY! :ring:', 'Ummm, how \'bout no.',
-            'Shoot I would...if you were :kiera:', '_le shrug_ \'k.',
-            'R-Really? Okay, I shall be your ~bride~ husband from now on!!',
-            'Sorry but I\'m already married to my job.',
-            'Sorry, but I\'m already married to :nicole:',
-            'HOW DO I KNOW YOU WON\'T CHEAT ON ME WITH QBOT?!??',
-            '_le HELLS YES!_',
-            ('Sorry, but you are human, and I am a mere bot. It could never '
-                'work out between us...'),
-            (':musical_note: _IF YOU LIKE IT THEN YOU SHOULDA PUT A RING ON '
-                'IT_:musical_note:'), 'No. Never. Nope. Nu-uh.'
-        ]
-        txt = '{}'.format(random.choice(responses))
         self.write_slow(channel_id, txt)
 
     def write_draw_me(self, channel_id):
