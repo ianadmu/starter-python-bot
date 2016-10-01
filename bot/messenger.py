@@ -32,7 +32,7 @@ class Messenger(object):
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
 
-    def go_through_history(self, channel_id):
+    def go_through_history(self, channel_id, now_timestamp):
         try:
             response = self.clients.get_message_history(channel_id, 20)
             if 'messages' in response:
@@ -41,8 +41,11 @@ class Messenger(object):
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message['user'])
                     ):
-                        # self.send_message(channel_id, str(message))
-                        self.clients.delete_message(channel_id, message['ts'])
+                        if float(now_timestamp) - 600 > float(message['ts']):
+                            # self.send_message(channel_id, str(message))
+                            self.clients.delete_message(
+                                channel_id, message['ts']
+                            )
 
         except Exception:
             err_msg = traceback.format_exc()
