@@ -288,9 +288,6 @@ class Messenger(object):
         self.send_attachment(channel_id, txt, attachment)
 
     def write_weather(self, channel_id):
-        # line1 = WeatherController.get_weather()
-        # line1 = "Sorry, I don't know the weather today :zacefron: "
-        # line2 = "Anyways, it's always hot when I'm around :sunglasses: "
         response = weather_manager.getCurrentWeather()
         self.write_slow(channel_id, response)
 
@@ -298,7 +295,7 @@ class Messenger(object):
         zac_mentioned = re.search(' ?zac', orig_msg.lower())
         if not zac_mentioned:
             self.loud_manager.write_loud_to_file(orig_msg)
-        if zac_mentioned or common.should_spam():
+        if zac_mentioned or random.random() < 0.25:
             self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):
