@@ -183,7 +183,7 @@ class RtmEventHandler(object):
             # Respond to message text with `zac` included
             if (re.search(' ?zac', lower_txt) or
                     self.clients.is_bot_mention(msg_txt)):
-                if 'history' in lower_txt:
+                if 'clean history' in lower_txt:
                     self.msg_writer.go_through_history(channel)
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel)
