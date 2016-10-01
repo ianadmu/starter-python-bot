@@ -64,7 +64,7 @@ class Messenger(object):
         self.send_message('zac-testing', '__exit__')
 
     def send_slow_message_as_other(self, channel_id, msg, username, emoji):
-        self.clients.send_user_typing_pause(channel_id)
+        self.clients.send_user_typing_pause(channel_id, username=username)
         self.send_message_as_other(channel_id, msg, username, emoji)
 
     def send_message_as_other(self, channel_id, msg, username, emoji):
