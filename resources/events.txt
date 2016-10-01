@@ -256,7 +256,10 @@
 				"Words": ["hi", "hey", "hello", "sup"]
 			},
 			"Named": true,
-			"Responses": ["Hi user_id!", "Hello user_id!", "Nice to meet you user_id!", "Howdy user_id!", "Salutations user_id!"]
+			"Formatting": {
+				"Format": "{Greeting} user_id!",
+				"Greeting": ["Hi", "Hello", "Nice to meet you", "Howdy", "Salutations"]
+			}
 		},
 
 		{
