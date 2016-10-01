@@ -60,7 +60,8 @@ class RtmEventHandler(object):
             self.msg_writer.write_help_message(event['channel'])
         elif event_type == "reaction_added":
             if "channel" in event["item"]:
-                self.response_master.get_emoji_response(event["channel"], event["reaction"])
+                self.response_master.get_emoji_response(
+                    event["item"]["channel"], event["reaction"])
         else:
             pass
 
