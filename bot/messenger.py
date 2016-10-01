@@ -34,15 +34,14 @@ class Messenger(object):
 
     def go_through_history(self, channel_id):
         try:
-            response = self.clients.get_message_history(channel_id)
-            self.send_message(channel_id, str(response))
+            response = self.clients.get_message_history(channel_id, 10)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
                         'user' in message and
                         self.clients.is_message_from_me(message['user'])
                     ):
-                        self.send_message(channel_id, message)
+                        self.send_message(channel_id, str(message))
 
         except Exception:
             err_msg = traceback.format_exc()
