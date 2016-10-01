@@ -174,13 +174,13 @@ class Response_master:
         self.send_message(channel, combined_responses, sender)
 
     def send_message(self, channel, message, sender):
-        if sender:
-            self.msg_writer.send_slow_message_as_other(
-                channel, message, sender, ':' + sender + ':'
-            )
-        else:
-            self.msg_writer.write_slow(channel, message)
-        return message
+        if message:
+            if sender:
+                self.msg_writer.send_slow_message_as_other(
+                    channel, message, sender, ':' + sender + ':'
+                )
+            else:
+                self.msg_writer.write_slow(channel, message)
 
     def get_formatting(self, event):
         try:
