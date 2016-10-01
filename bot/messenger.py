@@ -63,6 +63,10 @@ class Messenger(object):
     def __exit__(self, exception_type, exception_value, traceback):
         self.send_message('zac-testing', '__exit__')
 
+    def send_slow_message_as_other(self, channel_id, msg, username, emoji):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message_as_other(channel_id, msg, username, emoji)
+
     def send_message_as_other(self, channel_id, msg, username, emoji):
         msg = msg.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")

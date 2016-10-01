@@ -146,15 +146,18 @@ class Response_master:
             msg_writer.write_error("Error loading JSON file")
             self.events = []
 
-    def get_emoji_response(self, response):
+    def get_emoji_response(self, channel, response):
         combined_responses = ""
+        sender = None
         for event in self.events:
             current_response = event.get_emoji_response(response)
             if current_response != "":
                 current_response += '\n'
+                if event.sender:
+                    sender = event.sender
             combined_responses += current_response
 
-        return combined_responses
+        self.send_message(channel, combined_responses, sender)
 
     def give_message(self, channel, message, user):
         combined_responses = ""
@@ -168,13 +171,16 @@ class Response_master:
                     sender = event.sender
             combined_responses += current_response
 
+        self.send_message(channel, combined_responses, sender)
+
+    def send_message(self, channel, message, sender):
         if sender:
-            self.msg_writer.send_message_as_other(
-                channel, combined_responses, sender, ':' + sender + ':'
+            self.msg_writer.send_slow_message_as_other(
+                channel, message, sender, ':' + sender + ':'
             )
         else:
-            self.msg_writer.send_message(channel, combined_responses)
-        return combined_responses
+            self.msg_writer.write_slow(channel, message)
+        return message
 
     def get_formatting(self, event):
         try:
