@@ -32,6 +32,23 @@ class Messenger(object):
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
 
+    def go_through_history(self, channel_id):
+        try:
+            response = self.clients.get_message_history('channel_id')
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and
+                        self.clients.is_message_from_me(message['user'])
+                    ):
+                        self.send_message(channel_id, message)
+
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
+
     def __del__(self):
         closing_msgs = ["No!! Don't kill me! I want to live!", "Good BYEEE!!!",
                         "I'm dying again :sob:",

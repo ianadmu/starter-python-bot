@@ -68,6 +68,11 @@ class SlackClients(object):
             ts=timestamp
         )
 
+    def get_message_history(self, channel_id):
+        return self.rtm.api_call(
+            'channels.history', token=str(self.token), channel=channel_id
+        )
+
     def send_attachment(self, channel_id, txt, attachment):
         # this does not return the response object that rtm does
         return self.web.chat.post_message(
