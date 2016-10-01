@@ -244,25 +244,6 @@ class Messenger(object):
         txt = 'Get your shit together <@{0}>'.format(user_id)
         self.write_slow(channel_id, txt)
 
-    def write_food(self, channel_id):
-        edibles = [
-            ':apple:', ':banana:', ':pear:', ':peach:', ':pineapple:',
-            ':lemon:', ':watermelon:', ':grapes:', ':strawberry:', ':melon:',
-            ':cherry:', ':tomato:', ':eggplant:', ':hot_pepper:', ':corn:',
-            ':sweet_potato:', ':fries:', ':hamburger:', ':egg:',
-            ':fried_shrimp:', ':meat_on_bone:', ':poultry_leg:',
-            ':cheese_wedge:', ':bread:', ':hotdog:', ':pizza:', ':spaghetti:',
-            ':taco:', ':burrito:', ':ramen:', ':stew:', ':sushi:', ':bento:',
-            ':rice_ball:', ':rice:', ':rice_cracker:', ':oden:', ':dango:',
-            ':shaved_ice:', ':ice_cream:', ':icecream:', ':cake:',
-            ':birthday:', ':candy:', ':lollipop:', ':popcorn:',
-            ':chocolate_bar:', ':doughnut:', ':cookie:', ':baby_bottle:',
-            ':beetle:', ':spider:', ':cow:', ':pig:', ':bug:', ':snail:',
-            ':tropical_fish:', ':fish:', ':blowfish:', ':sheep:', ':pig2:',
-            ':rat:', ':rooster:', ':mushroom:', ':green_apple:', ':poop:']
-        food = 'Here, for you {0}'.format(random.choice(edibles))
-        self.write_slow(channel_id, food)
-
     def write_bang(self, channel_id, user_id):
         bang = 'BANG you\'re dead <@{}> :gun:'.format(user_id)
         self.write_slow(channel_id, bang)

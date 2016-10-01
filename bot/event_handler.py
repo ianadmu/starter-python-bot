@@ -170,8 +170,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_good_night(channel, user)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel, msg_txt)
-            if re.search('(feed)|(hungry)', lower_txt):
-                self.msg_writer.write_food(channel)
             if re.search('encourage me', lower_txt):
                 self.msg_writer.write_encouragement(channel, user)
             if 'xkcd' in lower_txt:
