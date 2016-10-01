@@ -34,7 +34,7 @@ class Messenger(object):
 
     def go_through_history(self, channel_id):
         try:
-            response = self.clients.get_message_history(channel_id, 3)
+            response = self.clients.get_message_history(channel_id, 10)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
