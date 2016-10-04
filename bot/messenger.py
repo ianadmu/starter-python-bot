@@ -87,7 +87,7 @@ class Messenger(object):
             response = self.clients.send_message(channel_id, msg)
             # make sure the message gets sent to zac-testing at least
             if 'error' in response:
-                self.clients.send_message('zac-testing', str(response))
+                self.clients.send_message('zac-testing', str(response) + " " + str(channel_id))
         except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
