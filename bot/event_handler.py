@@ -50,11 +50,11 @@ class RtmEventHandler(object):
             self.msg_writer.write_error(json.dumps(event), event['channel'])
         elif event_type == 'channel_joined':
             # you joined a channel
-            self.msg_writer.send_message(str(event))
+            self.msg_writer.send_message('zac-testing', str(event))
             self.msg_writer.write_help_message(event['channel'])
         elif event_type == 'message':
             # message was sent to channel
-            self.msg_writer.send_message(str(event))
+            self.msg_writer.send_message('zac-testing', str(event))
             self._handle_message(event)
         elif event_type == 'group_joined':
             # you joined a private group
