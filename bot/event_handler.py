@@ -35,7 +35,6 @@ class RtmEventHandler(object):
 
         self.lotrMarkov = Markov(2, msg_writer)
         self.lotrMarkov.add_file('hpOne.txt')
-        self.lotrMarkov.add_file('random_comments.txt')
         self.lotrMarkov.add_file('lotrOne.txt')
         self.lotrMarkov.add_file('memoriesOfIce.txt')
 
@@ -49,12 +48,12 @@ class RtmEventHandler(object):
         if event_type == 'error':
             # error
             self.msg_writer.write_error(json.dumps(event), event['channel'])
-        elif event_type == 'message':
-            # message was sent to channel
-            self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
             self.msg_writer.write_help_message(event['channel'])
+        elif event_type == 'message':
+            # message was sent to channel
+            self._handle_message(event)
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
