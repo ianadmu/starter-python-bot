@@ -3,6 +3,9 @@ import os.path
 import re
 
 
+DONT_DELETE = 'i came back to life on|winnipeg is currently|added|erased'
+
+
 def contains_user_tag(message):
     tag_pattern = re.compile("<@.*")
     tokens = message.split()

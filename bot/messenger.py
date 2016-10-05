@@ -14,7 +14,7 @@ from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from equation_manager import EquationManager
-from common import ResourceManager
+from common import ResourceManager, DONT_DELETE
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +43,7 @@ class Messenger(object):
                     if (
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message['user'])
+                        and not re.search(DONT_DELETE, message['text'])
                     ):
                         response = self.clients.delete_message(
                             channel_id, message['ts']

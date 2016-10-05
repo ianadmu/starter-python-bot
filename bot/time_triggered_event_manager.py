@@ -5,7 +5,7 @@ import traceback
 import re
 
 from channel_manager import ChannelManager
-from common import ResourceManager, contains_user_tag
+from common import ResourceManager, contains_user_tag, DONT_DELETE
 from datetime import datetime, timedelta
 import time
 
@@ -15,8 +15,6 @@ MIN_PER_HOUR = 60
 HR_PER_DAY = 24
 
 TESTING_CHANNEL = 'zac-testing'
-
-DONT_DELETE = 'i came back to life on|winnipeg is currently'
 
 
 class TimeTriggeredEventManager(object):
