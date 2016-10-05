@@ -68,7 +68,7 @@ class SlackClients(object):
             ts=timestamp
         )
 
-    def get_message_history(self, channel_id, count):
+    def get_message_history(self, channel_id, count=None):
         return self.rtm.api_call(
             'channels.history', token=str(self.token), channel=channel_id,
             count=count
