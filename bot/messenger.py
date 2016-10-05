@@ -34,8 +34,9 @@ class Messenger(object):
 
     def erase_history(self, channel_id, now_timestamp, msg):
         try:
+            self.send_message(channel_id, msg)
             msg = msg.encode("utf8")
-            flag = re.compile('zac|erase|\s+')
+            flag = re.compile('zac|erase|\s+|\'')
             tokens = re.split(flag, msg.lower())
             self.send_message(channel_id, str(tokens))
             delete_num = int(tokens[0])
