@@ -28,7 +28,7 @@ class TimeTriggeredEventManager(object):
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
-        self.clean_history()
+        # self.clean_history()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -62,7 +62,6 @@ class TimeTriggeredEventManager(object):
             logging.error('Unexpected error: {}'.format(err_msg))
             self.write_error(err_msg)
             pass
-
 
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
