@@ -41,28 +41,20 @@ class TimeTriggeredEventManager(object):
 
     def clean_history(self):
         channel_id = self.channel_manager.get_channel_id('zac-testing')
-        try:
-            now_timestamp = float(time.time())
-            self.msg_writer.send_message(channel_id, str(now_timestamp))
-            response = self.clients.get_message_history(channel_id, 5)
-            if 'messages' in response:
-                for message in response['messages']:
-                    if (
-                        'user' in message and 'ts' in message and
-                        self.clients.is_message_from_me(message['user'])
-                    ):
-                        self.msg_writer.send_message(channel_id, str(float(message['ts'])))
-                        if now_timestamp - 600 > float(message['ts']):
-                            self.msg_writer.send_message(channel_id, str(message['ts']))
-                            response = self.clients.delete_message(
-                                channel_id, message['ts']
-                            )
-
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(err_msg)
-            pass
+        count = 0
+        now_timestamp = float(time.time())
+        response = self.clients.get_message_history(channel_id)
+        if 'messages' in response:
+            for message in response['messages']:
+                if (
+                    'user' in message and 'ts' in message and
+                    self.clients.is_message_from_me(message['user'])
+                ):
+                    if now_timestamp - 600 > float(message['ts']):
+                        self.clients.delete_message(channel_id, message['ts'])
+                        count += 1
+        result = "Erased " + str(count) + " messages"
+        self.send_message('zac-testing', result)
 
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
