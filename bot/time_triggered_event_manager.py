@@ -28,12 +28,42 @@ class TimeTriggeredEventManager(object):
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
+        self.clean_history()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
 
     def get_emoji(self):
         return self.clients.get_random_emoji()
+
+    def clean_history(self, channel_id, msg):
+        try:
+            now_timestamp = (
+                datetime.utcnow() - timedelta(hours=HR_DIF_DST)
+            ).total_seconds()
+            response = self.clients.get_message_history(channel_id)
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and 'ts' in message and
+                        self.clients.is_message_from_me(message['user'])
+                    ):
+                        self.send_message(channel_id, str(now_timestamp))
+                        if float(now_timestamp) - 600 > float(message['ts']):
+                            self.send_message(channel_id, str(message['ts']))
+                            response = self.clients.delete_message(
+                                channel_id, message['ts']
+                            )
+                            if 'ok' not in response:
+                                response = str(response)
+                                self.send_message('zac-testing', response)
+
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.write_error(err_msg)
+            pass
+
 
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
