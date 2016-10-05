@@ -36,7 +36,8 @@ class TimeTriggeredEventManager(object):
     def get_emoji(self):
         return self.clients.get_random_emoji()
 
-    def clean_history(self, channel_id, msg):
+    def clean_history(self, msg):
+        channel_id = 'zac-testing'
         try:
             now_timestamp = float(datetime.utcnow() - timedelta(hours=HR_DIF_DST))
             response = self.clients.get_message_history(channel_id)
