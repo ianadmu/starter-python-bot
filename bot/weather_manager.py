@@ -84,7 +84,7 @@ def getCurrentWeather():
     temperature = re.sub(stringsBeforeGT, "", temperature)
 
     result = (
-        "It is currently " + temperature + "°C and " + condition + " " +
+        "Winnipeg is currently " + temperature + "°C and " + condition + " " +
         get_icon(condition.lower())
     )
     return result

@@ -2,9 +2,10 @@ import random
 import weather_manager
 import logging
 import traceback
+import re
 
 from channel_manager import ChannelManager
-from common import ResourceManager
+from common import ResourceManager, contains_user_tag
 from datetime import datetime, timedelta
 import time
 
@@ -14,6 +15,8 @@ MIN_PER_HOUR = 60
 HR_PER_DAY = 24
 
 TESTING_CHANNEL = 'zac-testing'
+
+DONT_DELETE = 'i came back to life on|winnipeg is currently'
 
 
 class TimeTriggeredEventManager(object):
@@ -31,7 +34,7 @@ class TimeTriggeredEventManager(object):
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
-        self.clean_history()
+        self.add_markovs()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -40,20 +43,44 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def clean_history(self):
-        channel_id = self.channel_manager.get_channel_id('zac-testing')
+        channel = self.channel_manager.get_channel_id('zac-testing')
         count = 0
         now_timestamp = float(time.time())
-        response = self.clients.get_message_history(channel_id)
+        response = self.clients.get_message_history(channel)
         if 'messages' in response:
             for message in response['messages']:
                 if (
                     'user' in message and 'ts' in message and
                     self.clients.is_message_from_me(message['user'])
                 ):
-                    if now_timestamp - 600 > float(message['ts']):
-                        self.clients.delete_message(channel_id, message['ts'])
+                    # delete everything older than 3 days old
+                    if now_timestamp - (60*60*60*24*3) > float(message['ts']):
+                        self.clients.delete_message(channel, message['ts'])
                         count += 1
+                    # delete items older than a day old
+                    # unless they are weather posts or startup logs
+                    elif now_timestamp - (60*60*60*24) > float(message['ts']):
+                        msg = message['text'].lower()
+                        if not re.search(DONT_DELETE, msg):
+                            self.clients.delete_message(channel, message['ts'])
+                            count += 1
         result = "Erased " + str(count) + " messages"
+        self.send_message('zac-testing', result)
+
+    def add_markovs(self):
+        channel = self.channel_manager.get_channel_id('random')
+        count = 0
+        response = self.clients.get_message_history(channel)
+        if 'messages' in response:
+            for message in response['messages']:
+                if (
+                    'user' in message and 'ts' in message and
+                    self.clients.is_message_from_me(message['user'])
+                    and not contains_user_tag(message['text'])
+                ):
+                    self.markov_chain.add_single_line(message['text'])
+                    count += 1
+        result = "Added " + str(count) + " messages to markov"
         self.send_message('zac-testing', result)
 
     def trigger_morning(self):
@@ -180,6 +207,8 @@ class TimeTriggeredEventManager(object):
             # self.trigger_ping(day, hour, minute, second)
             # will post a ping every minute to testing channel
             self.check_trigger_random(hour, minute)
+            if hour == 1 and minute == 0:
+                self.clean_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
             if minute == 15:

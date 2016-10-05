@@ -9,6 +9,7 @@ from user_manager import UserManager
 from game_manager import GameManager
 from rude_manager import RudeManager
 from markov import Markov
+from common import contains_user_tag
 
 logger = logging.getLogger(__name__)
 
@@ -71,20 +72,12 @@ class RtmEventHandler(object):
         emoji_pattern = re.compile(":.*:")
 
         tokens = message.split()
-        if len(tokens) < 2 or self.contains_user_tag(message):
+        if len(tokens) < 2 or contains_user_tag(message):
             return False
         for token in tokens:
             if not (token.isupper() or emoji_pattern.match(token)):
                 return False
         return True
-
-    def contains_user_tag(self, message):
-        tag_pattern = re.compile("<@.*")
-        tokens = message.split()
-        for token in tokens:
-            if tag_pattern.match(token):
-                return True
-        return False
 
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
@@ -132,7 +125,7 @@ class RtmEventHandler(object):
             lower_txt = msg_txt.lower()
 
             # Add message to markov chain unless it contains a user tag
-            if not self.contains_user_tag(msg_txt):
+            if not contains_user_tag(msg_txt):
                 self.markov_chain.add_single_line(msg_txt)
             self.rude_manager.run(channel, user)
             self.response_master.give_message(channel, msg_txt, user)
