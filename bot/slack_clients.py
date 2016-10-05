@@ -73,8 +73,8 @@ class SlackClients(object):
             'channels.history', token=str(self.token), channel=channel_id,
             count=count
         )
-        if 'ok' not in response:
-            self.msg_writer.send_message('zac-testing', str(response))
+        if 'error' in response:
+            self.msg_writer.write_error(str(response))
         return response
 
     def delete_message(self, channel_id, timestamp):
@@ -82,8 +82,8 @@ class SlackClients(object):
             'chat.delete', token=str(self.token), channel=channel_id,
             as_user=True, ts=timestamp
         )
-        if 'ok' not in response:
-            self.msg_writer.send_message('zac-testing', str(response))
+        if 'error' in response:
+            self.msg_writer.write_error(str(response))
         return response
 
     def send_attachment(self, channel_id, txt, attachment):
