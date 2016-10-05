@@ -5,6 +5,7 @@ import traceback
 
 from common import ResourceManager
 from datetime import datetime, timedelta
+import time
 
 HR_DIF_DST = 5  # for Winnipeg
 HR_DIF_NO_DST = 6  # for Winnipeg
@@ -39,7 +40,7 @@ class TimeTriggeredEventManager(object):
     def clean_history(self):
         channel_id = 'zac-testing'
         try:
-            now_timestamp = float(datetime.utcnow() - timedelta(hours=HR_DIF_DST))
+            now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 20)
             if 'messages' in response:
                 for message in response['messages']:
