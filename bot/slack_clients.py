@@ -74,7 +74,8 @@ class SlackClients(object):
             count=count
         )
         if 'error' in response:
-            self.msg_writer.write_error(str(response))
+            error_msg = "`get_message_history` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
         return response
 
     def delete_message(self, channel_id, timestamp):
@@ -83,7 +84,8 @@ class SlackClients(object):
             as_user=True, ts=timestamp
         )
         if 'error' in response:
-            self.msg_writer.write_error(str(response))
+            error_msg = "`delete_message` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
         return response
 
     def send_attachment(self, channel_id, txt, attachment):

@@ -3,6 +3,7 @@ import weather_manager
 import logging
 import traceback
 
+from channel_manager import ChannelManager
 from common import ResourceManager
 from datetime import datetime, timedelta
 import time
@@ -26,6 +27,7 @@ class TimeTriggeredEventManager(object):
         self.random_hasnt_fired = True
         self.is_just_starting_up = True
         self.markov_chain = markov_chain
+        self.channel_manager = ChannelManager(clients)
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
@@ -38,12 +40,11 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def clean_history(self):
-        channel_id = '#zac-testing'
+        channel_id = self.channel_manager.get_channel_id('zac-testing')
         try:
             now_timestamp = float(time.time())
             self.msg_writer.send_message(channel_id, str(now_timestamp))
-            response = self.clients.get_message_history(channel_id, 20)
-            self.msg_writer.send_message(channel_id, str(response))
+            response = self.clients.get_message_history(channel_id, 5)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
