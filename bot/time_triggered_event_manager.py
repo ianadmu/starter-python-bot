@@ -47,7 +47,7 @@ class TimeTriggeredEventManager(object):
                         self.clients.is_message_from_me(message['user'])
                     ):
                         self.send_message(channel_id, str(now_timestamp))
-                        if float(now_timestamp) - 600 > float(message['ts']):
+                        if now_timestamp - 600 > float(message['ts']):
                             self.send_message(channel_id, str(message['ts']))
                             response = self.clients.delete_message(
                                 channel_id, message['ts']
