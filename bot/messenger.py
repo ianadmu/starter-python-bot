@@ -32,23 +32,26 @@ class Messenger(object):
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
 
-    def go_through_history(self, channel_id, now_timestamp):
+    def erase_history(self, channel_id, now_timestamp, msg):
         try:
-            response = self.clients.get_message_history(channel_id, 10)
+            flag = re.compile('zac|erase| ')
+            tokens = re.split(flag, msg.lower())
+            delete_num = int(tokens[0])
+            response = self.clients.get_message_history(channel_id, delete_num)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message['user'])
                     ):
-                        if float(now_timestamp) - 600 > float(message['ts']):
+                        # if float(now_timestamp) - 600 > float(message['ts']):
                             # self.send_message(channel_id, str(message))
-                            response = self.clients.delete_message(
-                                channel_id, message['ts']
-                            )
-                            if 'ok' not in response:
-                                response = str(response)
-                                self.clients.send_message('zac-testing', response)
+                        response = self.clients.delete_message(
+                            channel_id, message['ts']
+                        )
+                        if 'ok' not in response:
+                            response = str(response)
+                            self.clients.send_message('zac-testing', response)
 
 
         except Exception:

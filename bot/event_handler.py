@@ -181,7 +181,9 @@ class RtmEventHandler(object):
             if (re.search(' ?zac', lower_txt) or
                     self.clients.is_bot_mention(msg_txt)):
                 if 'erase' in lower_txt:
-                    self.msg_writer.go_through_history(channel, event['ts'])
+                    self.msg_writer.erase_history(
+                        channel, event['ts'], msg_txt
+                    )
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel)
                 if 'joke' in lower_txt:
