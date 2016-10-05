@@ -54,7 +54,7 @@ class Messenger(object):
                             if count >= delete_num:
                                 break
             if count < delete_num:
-                msg = ("Could only erase " + str(count) + "messages since I "
+                msg = ("Erased " + str(count) + " messages: I "
                        "can only see the 100 most recent messages")
                 self.send_message(channel_id, msg)
         except Exception:
