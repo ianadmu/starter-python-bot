@@ -38,9 +38,7 @@ class TimeTriggeredEventManager(object):
 
     def clean_history(self, channel_id, msg):
         try:
-            now_timestamp = (
-                datetime.utcnow() - timedelta(hours=HR_DIF_DST)
-            ).total_seconds()
+            now_timestamp = float(datetime.utcnow() - timedelta(hours=HR_DIF_DST))
             response = self.clients.get_message_history(channel_id)
             if 'messages' in response:
                 for message in response['messages']:
