@@ -14,7 +14,7 @@ from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from equation_manager import EquationManager
-from common import ResourceManager
+from common import ResourceManager, DONT_DELETE
 
 logger = logging.getLogger(__name__)
 
@@ -32,25 +32,35 @@ class Messenger(object):
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
 
-    def go_through_history(self, channel_id, now_timestamp):
+    def erase_history(self, channel_id, now_timestamp, msg):
         try:
-            response = self.clients.get_message_history(channel_id, 20)
+            tokens = re.findall('[0-9]+', msg)
+            delete_num = int(tokens[0])
+            count = 0
+            response = self.clients.get_message_history(channel_id)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message['user'])
+                        and not re.search(DONT_DELETE, message['text'].lower())
                     ):
-                        if float(now_timestamp) - 600 > float(message['ts']):
-                            # self.send_message(channel_id, str(message))
-                            self.clients.delete_message(
-                                channel_id, message['ts']
-                            )
-
+                        response = self.clients.delete_message(
+                            channel_id, message['ts']
+                        )
+                        if 'ok' not in response:
+                            self.send_message('zac-testing', str(response))
+                        else:
+                            count += 1
+                            if count >= delete_num:
+                                break
+            if count < delete_num:
+                msg = ("Erased " + str(count) + " messages: I "
+                       "can only see the 100 most recent messages")
+                self.send_message(channel_id, msg)
         except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(err_msg)
+            msg = "Correct usage is `zac erase <num>`"
+            self.send_message(channel_id, msg)
             pass
 
     def __del__(self):
@@ -63,6 +73,10 @@ class Messenger(object):
     def __exit__(self, exception_type, exception_value, traceback):
         self.send_message('zac-testing', '__exit__')
 
+    def send_slow_message_as_other(self, channel_id, msg, username, emoji):
+        self.clients.send_user_typing_pause(channel_id)
+        self.send_message_as_other(channel_id, msg, username, emoji)
+
     def send_message_as_other(self, channel_id, msg, username, emoji):
         msg = msg.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
@@ -74,21 +88,16 @@ class Messenger(object):
         )
 
     def send_message(self, channel_id, msg):
-        try:
-            msg = msg.replace('&', "&amp;")
-            # msg = msg.replace('<', "&lt;")
-            # msg = msg.replace('>', "&gt;")
-            # msg = msg.decode("utf8", "ignore")
+        msg = msg.replace('&', "&amp;")
+        # msg = msg.replace('<', "&lt;")
+        # msg = msg.replace('>', "&gt;")
+        # msg = msg.decode("utf8", "ignore")
 
-            response = self.clients.send_message(channel_id, msg)
-            # make sure the message gets sent to zac-testing at least
-            if 'error' in response:
-                self.clients.send_message('zac-testing', msg)
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error(err_msg)
-            pass
+        response = self.clients.send_message(channel_id, msg)
+        # make sure the message gets sent to zac-testing at least
+        if 'error' in response:
+            response = str(response) + "\nOriginal message:\n" + msg
+            self.clients.send_message('zac-testing', response)
 
     def send_slow_message_then_update(
         self, channel_id, msg, updated_msg, reaction=None

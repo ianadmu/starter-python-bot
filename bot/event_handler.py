@@ -9,6 +9,7 @@ from user_manager import UserManager
 from game_manager import GameManager
 from rude_manager import RudeManager
 from markov import Markov
+from common import contains_user_tag
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,6 @@ class RtmEventHandler(object):
 
         self.lotrMarkov = Markov(2, msg_writer)
         self.lotrMarkov.add_file('hpOne.txt')
-        self.lotrMarkov.add_file('random_comments.txt')
         self.lotrMarkov.add_file('lotrOne.txt')
         self.lotrMarkov.add_file('memoriesOfIce.txt')
 
@@ -54,18 +54,14 @@ class RtmEventHandler(object):
             self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
-            self.msg_writer.write_help_message(event['channel'])
+            self.msg_writer.write_help_message(event['channel']['id'])
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
         elif event_type == "reaction_added":
-            response_master_response = self.response_master.get_emoji_response(
-                event["reaction"]
-            )
-            if response_master_response and "channel" in event["item"]:
-                self.msg_writer.write_slow(
-                    event["item"]['channel'], response_master_response
-                )
+            if "channel" in event["item"]:
+                self.response_master.get_emoji_response(
+                    event["item"]["channel"], event["reaction"])
         else:
             pass
 
@@ -76,20 +72,12 @@ class RtmEventHandler(object):
         emoji_pattern = re.compile(":.*:")
 
         tokens = message.split()
-        if len(tokens) < 2 or self.contains_user_tag(message):
+        if len(tokens) < 2 or contains_user_tag(message):
             return False
         for token in tokens:
             if not (token.isupper() or emoji_pattern.match(token)):
                 return False
         return True
-
-    def contains_user_tag(self, message):
-        tag_pattern = re.compile("<@.*")
-        tokens = message.split()
-        for token in tokens:
-            if tag_pattern.match(token):
-                return True
-        return False
 
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
@@ -114,7 +102,9 @@ class RtmEventHandler(object):
                 self.msg_writer.write_spelling_mistake(
                     event['channel'], event['message']['ts']
                 )
-            elif event['subtype'] == 'channel_join':
+            elif (event['subtype'] == 'channel_join' and
+                    not self.clients.is_message_from_me(event['user'])
+                  ):
                 self.msg_writer.write_joined_channel(
                     event['channel'], event['user']
                 )
@@ -135,7 +125,7 @@ class RtmEventHandler(object):
             lower_txt = msg_txt.lower()
 
             # Add message to markov chain unless it contains a user tag
-            if not self.contains_user_tag(msg_txt):
+            if not contains_user_tag(msg_txt):
                 self.markov_chain.add_single_line(msg_txt)
             self.rude_manager.run(channel, user)
             self.response_master.give_message(channel, msg_txt, user)
@@ -166,8 +156,6 @@ class RtmEventHandler(object):
                 self.msg_writer.write_cast_pokemon(channel, lower_txt)
             if re.search('weather', lower_txt):
                 self.msg_writer.write_weather(channel)
-            if re.search('good night', lower_txt):
-                    self.msg_writer.write_good_night(channel, user)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel, msg_txt)
             if re.search('encourage me', lower_txt):
@@ -183,8 +171,12 @@ class RtmEventHandler(object):
             # Respond to message text with `zac` included
             if (re.search(' ?zac', lower_txt) or
                     self.clients.is_bot_mention(msg_txt)):
-                if 'clean history' in lower_txt:
-                    self.msg_writer.go_through_history(channel, event['ts'])
+                if 'erase' in lower_txt:
+                    self.msg_writer.erase_history(
+                        channel, event['ts'], msg_txt
+                    )
+                if re.search('night', lower_txt):
+                    self.msg_writer.write_good_night(channel, user)
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel)
                 if 'joke' in lower_txt:

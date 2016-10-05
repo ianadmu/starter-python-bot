@@ -68,17 +68,25 @@ class SlackClients(object):
             ts=timestamp
         )
 
-    def get_message_history(self, channel_id, count):
-        return self.rtm.api_call(
+    def get_message_history(self, channel_id, count=None):
+        response = self.rtm.api_call(
             'channels.history', token=str(self.token), channel=channel_id,
             count=count
         )
+        if 'error' in response:
+            error_msg = "`get_message_history` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def delete_message(self, channel_id, timestamp):
-        return self.rtm.api_call(
+        response = self.rtm.api_call(
             'chat.delete', token=str(self.token), channel=channel_id,
             as_user=True, ts=timestamp
         )
+        if 'error' in response:
+            error_msg = "`delete_message` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def send_attachment(self, channel_id, txt, attachment):
         # this does not return the response object that rtm does
