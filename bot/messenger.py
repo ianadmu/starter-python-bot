@@ -48,13 +48,15 @@ class Messenger(object):
                             channel_id, message['ts']
                         )
                         if 'ok' not in response:
-                            response = str(response)
-                            self.send_message('zac-testing', response)
+                            self.send_message('zac-testing', str(response))
                         else:
                             count += 1
-                            if count > delete_num:
+                            if count >= delete_num:
                                 break
-
+            if count < delete_num:
+                msg = ("Could only erase " + str(count) + "messages since I "
+                       "can only see the 100 most recent messages")
+                self.send_message(channel_id, msg)
         except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
