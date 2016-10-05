@@ -48,13 +48,12 @@ class RtmEventHandler(object):
         if event_type == 'error':
             # error
             self.msg_writer.write_error(json.dumps(event), event['channel'])
-        elif event_type == 'channel_joined':
-            # you joined a channel
-            self.msg_writer.send_message('zac-testing', str(event))
-            self.msg_writer.write_help_message(event['channel'])
         elif event_type == 'message':
             # message was sent to channel
             self._handle_message(event)
+        elif event_type == 'channel_joined':
+            # you joined a channel
+            self.msg_writer.write_help_message(event['channel']['id'])
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
@@ -110,7 +109,9 @@ class RtmEventHandler(object):
                 self.msg_writer.write_spelling_mistake(
                     event['channel'], event['message']['ts']
                 )
-            elif event['subtype'] == 'channel_join':
+            elif (event['subtype'] == 'channel_join' and
+                    not self.clients.is_message_from_me(event['user'])
+                  ):
                 self.msg_writer.write_joined_channel(
                     event['channel'], event['user']
                 )
