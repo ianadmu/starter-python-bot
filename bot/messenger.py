@@ -34,7 +34,7 @@ class Messenger(object):
 
     def erase_history(self, channel_id, now_timestamp, msg):
         try:
-            flag = re.compile('zac|erase| ')
+            flag = re.compile('zac|erase|\s+')
             tokens = re.split(flag, msg.lower())
             delete_num = int(tokens[0])
             response = self.clients.get_message_history(channel_id, delete_num)
