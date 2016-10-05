@@ -36,6 +36,7 @@ class Messenger(object):
         try:
             flag = re.compile('zac|erase|\s+')
             tokens = re.split(flag, msg.lower())
+            self.send_message(channel_id, str(tokens))
             delete_num = int(tokens[0])
             response = self.clients.get_message_history(channel_id, delete_num)
             if 'messages' in response:
