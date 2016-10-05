@@ -41,7 +41,9 @@ class TimeTriggeredEventManager(object):
         channel_id = 'zac-testing'
         try:
             now_timestamp = float(time.time())
+            self.msg_writer.send_message(channel_id, str(now_timestamp))
             response = self.clients.get_message_history(channel_id, 20)
+            self.msg_writer.send_message(channel_id, str(response))
             if 'messages' in response:
                 for message in response['messages']:
                     if (
