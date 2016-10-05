@@ -52,12 +52,12 @@ class TimeTriggeredEventManager(object):
                     self.clients.is_message_from_me(message['user'])
                 ):
                     # delete everything older than 3 days old
-                    if now_timestamp - (60*60*60*24*3) > float(message['ts']):
+                    if now_timestamp - (60*60*24*3) > float(message['ts']):
                         self.clients.delete_message(channel, message['ts'])
                         count += 1
                     # delete items older than a day old
                     # unless they are weather posts or startup logs
-                    elif now_timestamp - (60*60*60*24) > float(message['ts']):
+                    elif now_timestamp - (60*60*24) > float(message['ts']):
                         msg = message['text'].lower()
                         if not re.search(DONT_DELETE, msg):
                             self.clients.delete_message(channel, message['ts'])
@@ -72,7 +72,7 @@ class TimeTriggeredEventManager(object):
         if 'messages' in response:
             for message in response['messages']:
                 if (
-                    'user' in message and 'ts' in message and
+                    'user' in message and 'ts' in message and not
                     self.clients.is_message_from_me(message['user'])
                     and not contains_user_tag(message['text'])
                 ):
