@@ -38,7 +38,7 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def clean_history(self):
-        channel_id = 'zac-testing'
+        channel_id = '#zac-testing'
         try:
             now_timestamp = float(time.time())
             self.msg_writer.send_message(channel_id, str(now_timestamp))
