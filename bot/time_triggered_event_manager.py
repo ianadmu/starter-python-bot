@@ -54,9 +54,6 @@ class TimeTriggeredEventManager(object):
                             response = self.clients.delete_message(
                                 channel_id, message['ts']
                             )
-                            if 'ok' not in response:
-                                response = str(response)
-                                self.msg_writer.send_message('zac-testing', response)
 
         except Exception:
             err_msg = traceback.format_exc()

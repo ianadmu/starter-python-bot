@@ -69,16 +69,22 @@ class SlackClients(object):
         )
 
     def get_message_history(self, channel_id, count=None):
-        return self.rtm.api_call(
+        response = self.rtm.api_call(
             'channels.history', token=str(self.token), channel=channel_id,
             count=count
         )
+        if 'ok' not in response:
+            self.msg_writer.send_message('zac-testing', str(response))
+        return response
 
     def delete_message(self, channel_id, timestamp):
-        return self.rtm.api_call(
+        response = self.rtm.api_call(
             'chat.delete', token=str(self.token), channel=channel_id,
             as_user=True, ts=timestamp
         )
+        if 'ok' not in response:
+            self.msg_writer.send_message('zac-testing', str(response))
+        return response
 
     def send_attachment(self, channel_id, txt, attachment):
         # this does not return the response object that rtm does
