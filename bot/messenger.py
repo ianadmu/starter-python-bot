@@ -43,7 +43,7 @@ class Messenger(object):
                     if (
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message['user'])
-                        and not re.search(DONT_DELETE, message['text'])
+                        and not re.search(DONT_DELETE, message['text'].lower())
                     ):
                         response = self.clients.delete_message(
                             channel_id, message['ts']
@@ -59,9 +59,8 @@ class Messenger(object):
                        "can only see the 100 most recent messages")
                 self.send_message(channel_id, msg)
         except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error(err_msg)
+            msg = "Correct usage is `zac erase <num>`"
+            self.send_message(channel_id, msg)
             pass
 
     def __del__(self):
