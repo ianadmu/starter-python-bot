@@ -51,13 +51,12 @@ class Messenger(object):
                         )
                         if 'ok' not in response:
                             response = str(response)
-                            self.clients.send_message('zac-testing', response)
-
+                            self.send_message('zac-testing', response)
 
         except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(err_msg)
+            self.write_error(err_msg)
             pass
 
     def __del__(self):
