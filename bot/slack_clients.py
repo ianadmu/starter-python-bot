@@ -95,9 +95,7 @@ class SlackClients(object):
         return response
 
     def test_auth(self):
-        response = self.rtm.api_call(
-            'auth.test', token=str(self.token)
-        )
+        response = self.rtm.server.login_data['self']
         error_msg = "`test_auth` error:\n" + str(response)
         self.msg_writer.write_error(error_msg)
         return response
