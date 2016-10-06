@@ -89,9 +89,9 @@ class SlackClients(object):
             'chat.delete', token=str(self.token), channel=channel_id,
             as_user=True, ts=timestamp
         )
-        if 'error' in response:
-            error_msg = "`delete_message` error:\n" + str(response)
-            self.msg_writer.write_error(error_msg)
+        # if 'error' in response:
+        error_msg = "`delete_message` error:\n" + str(response)
+        self.msg_writer.write_error(error_msg)
         return response
 
     def send_attachment(self, channel_id, txt, attachment):
