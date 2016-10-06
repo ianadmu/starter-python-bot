@@ -48,12 +48,9 @@ class Messenger(object):
                         response = self.clients.delete_message(
                             channel_id, message['ts']
                         )
-                        if 'ok' not in response:
-                            self.send_message('zac-testing', str(response))
-                        else:
-                            count += 1
-                            if count >= delete_num:
-                                break
+                        count += 1
+                        if count >= delete_num:
+                            break
             if count < delete_num:
                 msg = ("Erased " + str(count) + " messages: I "
                        "can only see the 100 most recent messages")

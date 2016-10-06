@@ -34,7 +34,7 @@ class SlackClients(object):
             is_from_me = True
         elif 'subtype' in message and message['subtype'] == "bot_message":
             is_from_me = True
-        if 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
+        elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
             is_from_me = True
         return is_from_me
 
