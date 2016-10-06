@@ -37,7 +37,7 @@ class Messenger(object):
             tokens = re.findall('[0-9]+', msg)
             delete_num = int(tokens[0])
             count = 0
-            response = self.clients.get_message_history(channel_id, 3)
+            response = self.clients.get_message_history(channel_id)
             if 'messages' in response:
                 for message in response['messages']:
                     if (
