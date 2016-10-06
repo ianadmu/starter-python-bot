@@ -40,6 +40,7 @@ class Messenger(object):
             response = self.clients.get_message_history(channel_id, 3)
             if 'messages' in response:
                 for message in response['messages']:
+                    self.clients.test_auth()
                     if (
                         'user' in message and 'ts' in message and
                         self.clients.is_message_from_me(message)

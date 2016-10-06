@@ -89,8 +89,16 @@ class SlackClients(object):
             'chat.delete', token=str(self.token), channel=channel_id,
             as_user=True, ts=timestamp
         )
-        # if 'error' in response:
-        error_msg = "`delete_message` error:\n" + str(response)
+        if 'error' in response:
+            error_msg = "`delete_message` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
+
+    def test_auth(self):
+        response = self.rtm.api_call(
+            'auth.test', token=str(self.token)
+        )
+        error_msg = "`test_auth` error:\n" + str(response)
         self.msg_writer.write_error(error_msg)
         return response
 
