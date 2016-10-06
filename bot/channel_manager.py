@@ -31,3 +31,7 @@ class ChannelManager:
         if name in self.channel_ids:
             return self.channel_ids[name]
         return None
+
+    def get_all_channel_ids(self):
+        # return a copy of all channel ids
+        return list(self.channel_ids.values())

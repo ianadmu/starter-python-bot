@@ -27,8 +27,16 @@ class SlackClients(object):
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
 
-    def is_message_from_me(self, user):
-        return user == self.rtm.server.login_data['self']['id']
+    def is_message_from_me(self, message):
+        is_from_me = False
+        me = self.bot_user_id()
+        if 'user' in message and message['user'] == me:
+            is_from_me = True
+        elif 'subtype' in message and message['subtype'] == "bot_message":
+            is_from_me = True
+        elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
+            is_from_me = True
+        return is_from_me
 
     def is_bot_mention(self, message):
         bot_user_name = self.rtm.server.login_data['self']['id']

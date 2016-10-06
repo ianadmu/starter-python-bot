@@ -5,7 +5,7 @@ import traceback
 import re
 
 from channel_manager import ChannelManager
-from common import ResourceManager, contains_user_tag, DONT_DELETE
+from common import ResourceManager, contains_user_tag, DONT_DELETE, is_loud
 from datetime import datetime, timedelta
 import time
 
@@ -33,6 +33,7 @@ class TimeTriggeredEventManager(object):
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
         self.add_markovs()
+        self.add_louds()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -49,7 +50,7 @@ class TimeTriggeredEventManager(object):
             for message in response['messages']:
                 if (
                     'user' in message and 'ts' in message and
-                    self.clients.is_message_from_me(message['user'])
+                    self.clients.is_message_from_me(message)
                 ):
                     # delete everything older than 3 days old
                     if now_timestamp - (60*60*24*3) > float(message['ts']):
@@ -66,19 +67,39 @@ class TimeTriggeredEventManager(object):
         self.send_message('zac-testing', result)
 
     def add_markovs(self):
-        channel = self.channel_manager.get_channel_id('random')
+        testing_channel = self.channel_manager.get_channel_id('zac-testing')
         count = 0
-        response = self.clients.get_message_history(channel)
-        if 'messages' in response:
-            for message in response['messages']:
-                if (
-                    'user' in message and 'ts' in message and not
-                    self.clients.is_message_from_me(message['user'])
-                    and not contains_user_tag(message['text'])
-                ):
-                    self.markov_chain.add_single_line(message['text'])
-                    count += 1
+        for channel_id in self.channel_manager.get_all_channel_ids():
+            if channel_id != testing_channel:
+                response = self.clients.get_message_history(channel_id)
+                if 'messages' in response:
+                    for message in response['messages']:
+                        if (
+                            'user' in message and 'ts' in message and not
+                            self.clients.is_message_from_me(message)
+                            and not contains_user_tag(message['text'])
+                        ):
+                            self.markov_chain.add_single_line(message['text'])
+                            count += 1
         result = "Added " + str(count) + " messages to markov"
+        self.send_message('zac-testing', result)
+
+    def add_louds(self):
+        testing_channel = self.channel_manager.get_channel_id('zac-testing')
+        count = 0
+        for channel_id in self.channel_manager.get_all_channel_ids():
+            if channel_id != testing_channel:
+                response = self.clients.get_message_history(channel_id)
+                if 'messages' in response:
+                    for message in response['messages']:
+                        if (
+                            'user' in message and 'ts' in message and not
+                            self.clients.is_message_from_me(message)
+                            and is_loud(message['text'])
+                        ):
+                            self.msg_writer.write_loud(message['text'])
+                            count += 1
+        result = "Added " + str(count) + " loud messages"
         self.send_message('zac-testing', result)
 
     def trigger_morning(self):
