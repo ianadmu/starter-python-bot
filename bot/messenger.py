@@ -42,7 +42,9 @@ class Messenger(object):
                 for message in response['messages']:
                     if (
                         'user' in message and 'ts' in message and
-                        self.clients.is_message_from_me(message['user'])
+                        self.clients.is_message_from_me(
+                            message['user'], message['text']
+                        )
                         and not re.search(DONT_DELETE, message['text'].lower())
                     ):
                         response = self.clients.delete_message(
