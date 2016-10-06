@@ -14,7 +14,7 @@ from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from equation_manager import EquationManager
-from common import ResourceManager, DONT_DELETE
+from common import ResourceManager, DONT_DELETE, is_zac_mention
 
 logger = logging.getLogger(__name__)
 
@@ -320,11 +320,12 @@ class Messenger(object):
         response = weather_manager.getCurrentWeather()
         self.write_slow(channel_id, response)
 
-    def write_loud(self, channel_id, orig_msg):
-        zac_mentioned = re.search(' ?zac', orig_msg.lower())
-        if not zac_mentioned:
+    def write_loud(self, orig_msg):
+        if not is_zac_mention(orig_msg):
             self.loud_manager.write_loud_to_file(orig_msg)
-        if zac_mentioned or random.random() < 0.25:
+
+    def respond_loud(self, channel_id, orig_msg):
+        if is_zac_mention(orig_msg) or random.random() < 0.25:
             self.send_message(channel_id, self.loud_manager.get_random_loud())
 
     def write_hogwarts_house(self, channel_id, user_id, msg):

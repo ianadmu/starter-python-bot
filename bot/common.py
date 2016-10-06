@@ -6,6 +6,22 @@ import re
 DONT_DELETE = 'i came back to life on|winnipeg is currently|added|erased'
 
 
+def is_zac_mention(message):
+    return re.search(' ?zac', message.lower())
+
+
+def is_loud(message):
+    emoji_pattern = re.compile(":.*:")
+
+    tokens = message.split()
+    if len(tokens) < 2 or contains_user_tag(message):
+        return False
+    for token in tokens:
+        if not (token.isupper() or emoji_pattern.match(token)):
+            return False
+    return True
+
+
 def contains_user_tag(message):
     tag_pattern = re.compile("<@.*")
     tokens = message.split()

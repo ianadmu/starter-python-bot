@@ -9,7 +9,7 @@ from user_manager import UserManager
 from game_manager import GameManager
 from rude_manager import RudeManager
 from markov import Markov
-from common import contains_user_tag
+from common import contains_user_tag, is_loud, is_zac_mention
 
 logger = logging.getLogger(__name__)
 
@@ -67,17 +67,6 @@ class RtmEventHandler(object):
 
     def _is_edited_with_star(self, message):
         return "*" in re.sub(self.bold_pattern, '', message)
-
-    def is_loud(self, message):
-        emoji_pattern = re.compile(":.*:")
-
-        tokens = message.split()
-        if len(tokens) < 2 or contains_user_tag(message):
-            return False
-        for token in tokens:
-            if not (token.isupper() or emoji_pattern.match(token)):
-                return False
-        return True
 
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
@@ -148,8 +137,9 @@ class RtmEventHandler(object):
                 self.user_manager.print_all_users(self.msg_writer)
 
             # Respond to message text
-            if self.is_loud(msg_txt):
-                self.msg_writer.write_loud(channel, msg_txt)
+            if is_loud(msg_txt):
+                self.msg_writer.write_loud(msg_txt)
+                self.msg_writer.respond_loud(channel, msg_txt)
             if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel, event['ts'])
             if re.search('i choose you', lower_txt):
@@ -169,8 +159,7 @@ class RtmEventHandler(object):
                 )
 
             # Respond to message text with `zac` included
-            if (re.search(' ?zac', lower_txt) or
-                    self.clients.is_bot_mention(msg_txt)):
+            if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
                 if 'erase' in lower_txt:
                     self.msg_writer.erase_history(
                         channel, event['ts'], msg_txt
@@ -189,7 +178,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_pokemon_guessed_response(
                         channel, user, msg_txt
                     )
-                if re.search('attachment|beep boop', lower_txt):
+                if re.search('attachment|beep boop link', lower_txt):
                     self.msg_writer.demo_attachment(channel)
                 if 'sad' in lower_txt:
                     self.msg_writer.write_sad(channel)
@@ -215,7 +204,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_flip(channel)
                 if re.search('sup son', lower_txt):
                     self.msg_writer.write_sup_son(channel)
-                if lower_txt.count("zac") >= 3:
+                if lower_txt == "zac":
                     self.msg_writer.write_prompt(channel)
                 else:
                     pass
