@@ -40,16 +40,9 @@ class Messenger(object):
             response = self.clients.get_message_history(channel_id, 2)
             if 'messages' in response:
                 for message in response['messages']:
-                    self.send_message('zac-testing', str(self.clients.bot_user_id()))
-                    if 'user' in message:
-                        self.send_message('zac-testing', message['user'])
-                    if 'bot_id' in message:
-                        self.send_message('zac-testing', message['bot_id'])
                     if (
                         'user' in message and 'ts' in message and
-                        self.clients.is_message_from_me(
-                            message['user'], message['text']
-                        )
+                        self.clients.is_message_from_me(message)
                         and not re.search(DONT_DELETE, message['text'].lower())
                     ):
                         response = self.clients.delete_message(

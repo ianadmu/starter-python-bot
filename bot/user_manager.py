@@ -14,7 +14,9 @@ class UserManager:
 
     def print_all_users(self, msg_writer):
         for name in self.user_ids:
-            msg_writer.write_error(name + ": " + self.user_ids[name])
+            msg_writer.send_message(
+                'zac-testing', name + ": " + self.user_ids[name]
+            )
 
     def get_user_by_id(self, user_id):
         if user_id in self.user_names:

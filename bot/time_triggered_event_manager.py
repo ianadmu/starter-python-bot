@@ -50,9 +50,7 @@ class TimeTriggeredEventManager(object):
             for message in response['messages']:
                 if (
                     'user' in message and 'ts' in message and
-                    self.clients.is_message_from_me(
-                        message['user'], message['text']
-                    )
+                    self.clients.is_message_from_me(message)
                 ):
                     # delete everything older than 3 days old
                     if now_timestamp - (60*60*24*3) > float(message['ts']):
@@ -78,7 +76,7 @@ class TimeTriggeredEventManager(object):
                     for message in response['messages']:
                         if (
                             'user' in message and 'ts' in message and not
-                            self.clients.is_message_from_me(message['user'])
+                            self.clients.is_message_from_me(message)
                             and not contains_user_tag(message['text'])
                         ):
                             self.markov_chain.add_single_line(message['text'])
@@ -96,7 +94,7 @@ class TimeTriggeredEventManager(object):
                     for message in response['messages']:
                         if (
                             'user' in message and 'ts' in message and not
-                            self.clients.is_message_from_me(message['user'])
+                            self.clients.is_message_from_me(message)
                             and is_loud(message['text'])
                         ):
                             self.msg_writer.write_loud(message['text'])

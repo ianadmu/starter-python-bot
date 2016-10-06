@@ -80,7 +80,7 @@ class RtmEventHandler(object):
                     user2 = event["message"]["edited"]["user"]
 
                     # Dont allow zac to spam his own message edits
-                    if self.clients.is_message_from_me(user1):
+                    if self.clients.is_message_from_me(event['message']):
                         return False
                     return user1 == user2
         return False
@@ -92,7 +92,7 @@ class RtmEventHandler(object):
                     event['channel'], event['message']['ts']
                 )
             elif (event['subtype'] == 'channel_join' and
-                    not self.clients.is_message_from_me(event['user'])
+                    not self.clients.is_message_from_me(event)
                   ):
                 self.msg_writer.write_joined_channel(
                     event['channel'], event['user']
@@ -103,9 +103,7 @@ class RtmEventHandler(object):
                 self.msg_writer.write_left_channel(event['channel'])
 
         # Filter out messages from the bot itself
-        if ('user' in event and
-                not self.clients.is_message_from_me(event['user'])):
-
+        if 'user' in event and not self.clients.is_message_from_me(event):
             # Do admin
             msg_txt = event['text']
             channel = event['channel']
