@@ -31,7 +31,7 @@ class SlackClients(object):
         me = self.bot_user_id()
         if user == me:
             return True
-        if 'bot_id' in message:
+        if message is not None and 'bot_id' in message:
             return message['bot_id'] == me
 
     def is_bot_mention(self, message):

@@ -50,7 +50,9 @@ class TimeTriggeredEventManager(object):
             for message in response['messages']:
                 if (
                     'user' in message and 'ts' in message and
-                    self.clients.is_message_from_me(message['user'])
+                    self.clients.is_message_from_me(
+                        message['user'], message['text']
+                    )
                 ):
                     # delete everything older than 3 days old
                     if now_timestamp - (60*60*24*3) > float(message['ts']):
