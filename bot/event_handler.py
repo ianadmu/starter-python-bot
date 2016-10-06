@@ -8,6 +8,7 @@ from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
 from game_manager import GameManager
 from rude_manager import RudeManager
+from channel_manager import ChannelManager
 from markov import Markov
 from common import contains_user_tag, is_loud, is_zac_mention
 
@@ -31,6 +32,7 @@ class RtmEventHandler(object):
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
+        self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
 
@@ -117,7 +119,10 @@ class RtmEventHandler(object):
             self.rude_manager.run(channel, user)
             self.response_master.give_message(channel, msg_txt, user)
 
-            if channel == 'C244LFHS7' or lower_txt == "markov":
+            if (
+                channel == self.channel_manager.get_channel_by_name('markov')
+                or lower_txt == "markov"
+            ):
                 try:
                     self.msg_writer.send_message(channel, str(self.lotrMarkov))
                 except Exception:
