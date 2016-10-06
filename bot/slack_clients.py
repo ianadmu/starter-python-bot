@@ -32,7 +32,9 @@ class SlackClients(object):
         me = self.bot_user_id()
         if 'user' in message and message['user'] == me:
             is_from_me = True
-        # if 'bot_id' in message and message['bot_id'] == me:
+        elif 'subtype' in message and message['subtype'] == "bot_message":
+            is_from_me = True
+        # if 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
         #     is_from_me = True
         return is_from_me
 
@@ -92,12 +94,6 @@ class SlackClients(object):
         if 'error' in response:
             error_msg = "`delete_message` error:\n" + str(response)
             self.msg_writer.write_error(error_msg)
-        return response
-
-    def test_auth(self):
-        response = self.rtm.server.login_data['self']
-        error_msg = "`test_auth` error:\n" + str(response)
-        self.msg_writer.write_error(error_msg)
         return response
 
     def send_attachment(self, channel_id, txt, attachment):
