@@ -66,18 +66,20 @@ class TimeTriggeredEventManager(object):
         self.send_message('zac-testing', result)
 
     def add_markovs(self):
-        channel = self.channel_manager.get_channel_id('random')
+        testing_channel = self.channel_manager.get_channel_id('zac-testing')
         count = 0
-        response = self.clients.get_message_history(channel)
-        if 'messages' in response:
-            for message in response['messages']:
-                if (
-                    'user' in message and 'ts' in message and not
-                    self.clients.is_message_from_me(message['user'])
-                    and not contains_user_tag(message['text'])
-                ):
-                    self.markov_chain.add_single_line(message['text'])
-                    count += 1
+        for channel_id in self.channel_manager.get_all_channel_ids():
+            if channel_id != testing_channel:
+                response = self.clients.get_message_history(channel_id)
+                if 'messages' in response:
+                    for message in response['messages']:
+                        if (
+                            'user' in message and 'ts' in message and not
+                            self.clients.is_message_from_me(message['user'])
+                            and not contains_user_tag(message['text'])
+                        ):
+                            self.markov_chain.add_single_line(message['text'])
+                            count += 1
         result = "Added " + str(count) + " messages to markov"
         self.send_message('zac-testing', result)
 
