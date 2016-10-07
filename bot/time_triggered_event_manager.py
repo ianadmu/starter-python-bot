@@ -30,7 +30,6 @@ class TimeTriggeredEventManager(object):
         self.markov_chain = markov_chain
         self.channel_manager = ChannelManager(clients)
         self.drunk_manager = ResourceManager('drunk_comments.txt')
-        self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
         self.add_mini_persistance()
 
@@ -134,39 +133,22 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random(self):
-        txt = self.random_manager.get_response()
-        if random.random() <= 0.45:
-            txt = str(self.markov_chain)
-        self.send_message('random', txt)
-        self.trigger_method_log('random')
-
-    def check_trigger_random(self, hour, minute):
-        should_fire_hr = (self.last_random_hour +
-                          int(self.random_interval_minutes/MIN_PER_HOUR) +
-                          int((
-                            self.last_random_minutes +
-                            self.random_interval_minutes % MIN_PER_HOUR
-                           ) / MIN_PER_HOUR)) % HR_PER_DAY
-        should_fire_min = (
-            self.last_random_minutes + self.random_interval_minutes %
-            MIN_PER_HOUR
-        ) % MIN_PER_HOUR
-        if (self.random_hasnt_fired or
-                (hour == should_fire_hr and minute == should_fire_min)):
-            max_minutes_between_random_events = 600  # 10 hours
-            new_random_minutes = int(
-                random.random() * max_minutes_between_random_events
-            ) + 1
-            if (hour >= 14 and hour < 18 and
-                    self.random_hasnt_fired is False):
-                self.trigger_random()
-            self.last_random_hour = hour
-            self.last_random_minutes = minute
-            self.random_interval_minutes = new_random_minutes
-            if self.random_hasnt_fired:
-                # self.clients.upload_file_to_slack() #test file upload
-                # self.clients.get_file_info()
-                self.random_hasnt_fired = False
+        if random.random() < 0.50:
+            channel_id = self.channel_manager.get_channel_id('zac-testing')  # change
+            now_timestamp = float(time.time())
+            response = self.clients.get_message_history(channel_id, 1)
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and 'ts' in message and not
+                        self.clients.is_message_from_me(message)
+                        and not contains_user_tag(message['text'])
+                        and 'markov' not in message['text']
+                    ):
+                        if now_timestamp - (60*4) < float(message['ts']):
+                            txt = str(self.markov_chain)
+                            self.send_message('zac-testing', txt)  # change
+            self.trigger_method_log('random')
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']
@@ -223,7 +205,7 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
             # will post a ping every minute to testing channel
-            self.check_trigger_random(hour, minute)
+            self.trigger_random(hour, minute)
             if hour == 1 and minute == 0:
                 self.clean_history()
             if hour % 3 == 0 and minute == 0:
