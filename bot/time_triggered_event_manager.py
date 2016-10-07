@@ -165,7 +165,7 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_random_phrase(self):
-        if random.random() < 0.01:
+        if random.random() < 0.005:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message('random', txt)
@@ -219,7 +219,6 @@ class TimeTriggeredEventManager(object):
                 self.trigger_weather()
             if minute == 15:
                 self.trigger_markov()
-
             if hour >= 9 and hour <= 16:
                 self.trigger_random_markov()
             if (day != 'Saturday' and day != 'Sunday'):
