@@ -233,7 +233,7 @@ class TimeTriggeredEventManager(object):
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if hour >= 15 and hour <= 18:
+                if hour >= 17 and hour <= 18:
                     self.trigger_random_phrase()
 
 
