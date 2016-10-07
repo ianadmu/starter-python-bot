@@ -128,7 +128,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random_markov(self):
-        if random.random() < 0.05:
+        if random.random() < 0.15:
             channel_id = self.channel_manager.get_channel_id('random')
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
@@ -143,7 +143,7 @@ class TimeTriggeredEventManager(object):
                         # Post only 3 - 5 minutes after latest message
                         if (
                             now_timestamp - (60*5) < float(message['ts']) and
-                            now_timestamp - (60*1) > float(message['ts'])
+                            now_timestamp - (60*2) > float(message['ts'])
                         ):
                             txt = str(self.markov_chain)
                             self.send_message('random', txt)  # change
@@ -157,7 +157,7 @@ class TimeTriggeredEventManager(object):
         self.send_message('random', txt)
 
     def trigger_random_phrase(self):
-        if random.random() < 0.03:
+        if random.random() < 0.01:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message('random', txt)
@@ -225,7 +225,7 @@ class TimeTriggeredEventManager(object):
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if hour >= 16 and hour <= 19:
+                if hour >= 15 and hour <= 18:
                     self.trigger_random_phrase()
 
 
