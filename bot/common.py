@@ -3,7 +3,9 @@ import os.path
 import re
 
 
-DONT_DELETE = 'i came back to life on|winnipeg is currently|added|erased'
+DONT_DELETE = (
+    "i came back to life on|winnipeg is currently|loud messages|erased"
+)
 
 
 def is_zac_mention(message):

@@ -128,7 +128,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random_markov(self):
-        if random.random() < 0.10:
+        if random.random() < 0.025:
             channel_id = self.channel_manager.get_channel_id('random')
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
@@ -140,7 +140,11 @@ class TimeTriggeredEventManager(object):
                         and not contains_user_tag(message['text'])
                         and 'markov' not in message['text']
                     ):
-                        if now_timestamp - (60*3) < float(message['ts']):
+                        # Post only 3 - 5 minutes after latest message
+                        if (
+                            now_timestamp - (60*5) < float(message['ts']) and
+                            now_timestamp - (60*3) > float(message['ts'])
+                        ):
                             txt = str(self.markov_chain)
                             self.send_message('random', txt)  # change
                             self.trigger_method_log('random markov')
