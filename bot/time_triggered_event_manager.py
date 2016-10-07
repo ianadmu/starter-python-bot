@@ -47,7 +47,7 @@ class TimeTriggeredEventManager(object):
         if 'messages' in response:
             for message in response['messages']:
                 if (
-                    'user' in message and 'ts' in message and
+                    'ts' in message and
                     self.clients.is_message_from_me(message)
                 ):
                     # delete everything older than 3 days old
@@ -76,7 +76,7 @@ class TimeTriggeredEventManager(object):
 
                         # Add markovs
                         if (
-                            'user' in message and 'ts' in message and not
+                            'ts' in message and not
                             self.clients.is_message_from_me(message)
                             and not contains_user_tag(message['text'])
                             and 'markov' not in message['text']
