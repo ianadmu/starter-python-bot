@@ -132,7 +132,7 @@ class TimeTriggeredEventManager(object):
                ':')
         self.send_message(TESTING_CHANNEL, msg)
 
-    def trigger_random(self):
+    def trigger_random_markov(self):
         if random.random() < 0.50:
             # Change
             channel_id = self.channel_manager.get_channel_id('zac-testing')
@@ -209,7 +209,7 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
             # will post a ping every minute to testing channel
-            self.trigger_random(hour, minute)
+            self.trigger_random_markov()
             if hour == 1 and minute == 0:
                 self.clean_history()
             if hour % 3 == 0 and minute == 0:
