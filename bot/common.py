@@ -24,9 +24,10 @@ def is_loud(message):
 
 def contains_user_tag(message):
     tag_pattern = re.compile("<@.*")
+    channel_pattern = re.compile("<!.*")
     tokens = message.split()
     for token in tokens:
-        if tag_pattern.match(token):
+        if tag_pattern.match(token) or channel_pattern.match(token):
             return True
     return False
 

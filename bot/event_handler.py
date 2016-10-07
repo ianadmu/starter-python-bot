@@ -114,7 +114,7 @@ class RtmEventHandler(object):
             lower_txt = msg_txt.lower()
 
             # Add message to markov chain unless it contains a user tag
-            if not contains_user_tag(msg_txt):
+            if not contains_user_tag(msg_txt) and 'markov' not in lower_txt:
                 self.markov_chain.add_single_line(msg_txt)
             self.rude_manager.run(channel, user)
             self.response_master.give_message(channel, msg_txt, user)
@@ -123,13 +123,7 @@ class RtmEventHandler(object):
                 channel == self.channel_manager.get_channel_by_name('markov')
                 or lower_txt == "markov"
             ):
-                try:
-                    self.msg_writer.send_message(channel, str(self.lotrMarkov))
-                except Exception:
-                    err_msg = traceback.format_exc()
-                    logging.error('Unexpected error: {}'.format(err_msg))
-                    self.msg_writer.write_error(err_msg)
-                    pass
+                self.msg_writer.send_message(channel, str(self.lotrMarkov))
 
             # Return channel and user information
             if lower_txt == "channelinfo":

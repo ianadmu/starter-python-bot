@@ -32,8 +32,7 @@ class TimeTriggeredEventManager(object):
         self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
-        self.add_markovs()
-        self.add_louds()
+        self.add_mini_persistance()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -66,40 +65,39 @@ class TimeTriggeredEventManager(object):
         result = "Erased " + str(count) + " messages"
         self.send_message('zac-testing', result)
 
-    def add_markovs(self):
+    def add_mini_persistance(self):
         testing_channel = self.channel_manager.get_channel_id('zac-testing')
-        count = 0
+        count_markov = 0
+        count_louds = 0
         for channel_id in self.channel_manager.get_all_channel_ids():
             if channel_id != testing_channel:
                 response = self.clients.get_message_history(channel_id)
                 if 'messages' in response:
                     for message in response['messages']:
+
+                        # Add markovs
                         if (
                             'user' in message and 'ts' in message and not
                             self.clients.is_message_from_me(message)
                             and not contains_user_tag(message['text'])
+                            and 'markov' not in message['text']
                         ):
                             self.markov_chain.add_single_line(message['text'])
-                            count += 1
-        result = "Added " + str(count) + " messages to markov"
-        self.send_message('zac-testing', result)
+                            count_markov += 1
 
-    def add_louds(self):
-        testing_channel = self.channel_manager.get_channel_id('zac-testing')
-        count = 0
-        for channel_id in self.channel_manager.get_all_channel_ids():
-            if channel_id != testing_channel:
-                response = self.clients.get_message_history(channel_id)
-                if 'messages' in response:
-                    for message in response['messages']:
+                        # Add louds
                         if (
                             'user' in message and 'ts' in message and not
                             self.clients.is_message_from_me(message)
                             and is_loud(message['text'])
                         ):
                             self.msg_writer.write_loud(message['text'])
-                            count += 1
-        result = "Added " + str(count) + " loud messages"
+                            count_louds += 1
+
+        result = (
+            "Added " + str(count_markov) + " messages to markov\n"
+            "Added " + str(count_louds) + " loud messages"
+        )
         self.send_message('zac-testing', result)
 
     def trigger_morning(self):

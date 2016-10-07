@@ -33,8 +33,10 @@ class SlackClients(object):
         if 'user' in message and message['user'] == me:
             is_from_me = True
         elif 'subtype' in message and message['subtype'] == "bot_message":
+            self.msg_writer.write_error("bot message subtype " + str(message))
             is_from_me = True
         elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
+            self.msg_writer.write_error("bot user id " + str(message))
             is_from_me = True
         return is_from_me
 
