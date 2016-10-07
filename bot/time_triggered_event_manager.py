@@ -145,9 +145,17 @@ class TimeTriggeredEventManager(object):
                             now_timestamp - (60*5) < float(message['ts']) and
                             now_timestamp - (60*2) > float(message['ts'])
                         ):
-                            txt = str(self.markov_chain)
-                            self.send_message('random', txt)  # change
-                            self.trigger_method_log('random markov')
+                            try:
+                                txt = str(self.markov_chain)
+                                self.send_message('random', txt)
+                            except Exception:
+                                err_msg = traceback.format_exc()
+                                logging.error(
+                                    'Unexpected error: {}'.format(err_msg)
+                                )
+                                self.msg_writer.write_error(err_msg)
+                                pass
+            self.trigger_method_log('random markov')
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']
