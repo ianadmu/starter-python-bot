@@ -22,11 +22,6 @@ class TimeTriggeredEventManager(object):
     def __init__(self, clients, msg_writer, markov_chain):
         self.clients = clients
         self.msg_writer = msg_writer
-        self.last_random_hour = 0
-        self.last_random_minutes = 0
-        self.random_interval_minutes = 0
-        self.random_hasnt_fired = True
-        self.is_just_starting_up = True
         self.markov_chain = markov_chain
         self.channel_manager = ChannelManager(clients)
         self.random_manager = ResourceManager('random_comments.txt')
