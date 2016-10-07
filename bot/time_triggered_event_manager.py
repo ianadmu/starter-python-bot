@@ -22,18 +22,11 @@ class TimeTriggeredEventManager(object):
     def __init__(self, clients, msg_writer, markov_chain):
         self.clients = clients
         self.msg_writer = msg_writer
-        self.last_random_hour = 0
-        self.last_random_minutes = 0
-        self.random_interval_minutes = 0
-        self.random_hasnt_fired = True
-        self.is_just_starting_up = True
         self.markov_chain = markov_chain
         self.channel_manager = ChannelManager(clients)
-        self.drunk_manager = ResourceManager('drunk_comments.txt')
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
-        self.add_markovs()
-        self.add_louds()
+        self.add_mini_persistance()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -49,7 +42,7 @@ class TimeTriggeredEventManager(object):
         if 'messages' in response:
             for message in response['messages']:
                 if (
-                    'user' in message and 'ts' in message and
+                    'ts' in message and
                     self.clients.is_message_from_me(message)
                 ):
                     # delete everything older than 3 days old
@@ -66,40 +59,39 @@ class TimeTriggeredEventManager(object):
         result = "Erased " + str(count) + " messages"
         self.send_message('zac-testing', result)
 
-    def add_markovs(self):
+    def add_mini_persistance(self):
         testing_channel = self.channel_manager.get_channel_id('zac-testing')
-        count = 0
+        count_markov = 0
+        count_louds = 0
         for channel_id in self.channel_manager.get_all_channel_ids():
             if channel_id != testing_channel:
                 response = self.clients.get_message_history(channel_id)
                 if 'messages' in response:
                     for message in response['messages']:
+
+                        # Add markovs
                         if (
-                            'user' in message and 'ts' in message and not
+                            'ts' in message and not
                             self.clients.is_message_from_me(message)
                             and not contains_user_tag(message['text'])
+                            and 'markov' not in message['text']
                         ):
                             self.markov_chain.add_single_line(message['text'])
-                            count += 1
-        result = "Added " + str(count) + " messages to markov"
-        self.send_message('zac-testing', result)
+                            count_markov += 1
 
-    def add_louds(self):
-        testing_channel = self.channel_manager.get_channel_id('zac-testing')
-        count = 0
-        for channel_id in self.channel_manager.get_all_channel_ids():
-            if channel_id != testing_channel:
-                response = self.clients.get_message_history(channel_id)
-                if 'messages' in response:
-                    for message in response['messages']:
+                        # Add louds
                         if (
                             'user' in message and 'ts' in message and not
                             self.clients.is_message_from_me(message)
                             and is_loud(message['text'])
                         ):
                             self.msg_writer.write_loud(message['text'])
-                            count += 1
-        result = "Added " + str(count) + " loud messages"
+                            count_louds += 1
+
+        result = (
+            "Added " + str(count_markov) + " messages to markov\n"
+            "Added " + str(count_louds) + " loud messages"
+        )
         self.send_message('zac-testing', result)
 
     def trigger_morning(self):
@@ -135,40 +127,23 @@ class TimeTriggeredEventManager(object):
                ':')
         self.send_message(TESTING_CHANNEL, msg)
 
-    def trigger_random(self):
-        txt = self.random_manager.get_response()
-        if random.random() <= 0.45:
-            txt = str(self.markov_chain)
-        self.send_message('random', txt)
-        self.trigger_method_log('random')
-
-    def check_trigger_random(self, hour, minute):
-        should_fire_hr = (self.last_random_hour +
-                          int(self.random_interval_minutes/MIN_PER_HOUR) +
-                          int((
-                            self.last_random_minutes +
-                            self.random_interval_minutes % MIN_PER_HOUR
-                           ) / MIN_PER_HOUR)) % HR_PER_DAY
-        should_fire_min = (
-            self.last_random_minutes + self.random_interval_minutes %
-            MIN_PER_HOUR
-        ) % MIN_PER_HOUR
-        if (self.random_hasnt_fired or
-                (hour == should_fire_hr and minute == should_fire_min)):
-            max_minutes_between_random_events = 600  # 10 hours
-            new_random_minutes = int(
-                random.random() * max_minutes_between_random_events
-            ) + 1
-            if (hour >= 14 and hour < 18 and
-                    self.random_hasnt_fired is False):
-                self.trigger_random()
-            self.last_random_hour = hour
-            self.last_random_minutes = minute
-            self.random_interval_minutes = new_random_minutes
-            if self.random_hasnt_fired:
-                # self.clients.upload_file_to_slack() #test file upload
-                # self.clients.get_file_info()
-                self.random_hasnt_fired = False
+    def trigger_random_markov(self):
+        if random.random() < 0.10:
+            channel_id = self.channel_manager.get_channel_id('random')
+            now_timestamp = float(time.time())
+            response = self.clients.get_message_history(channel_id, 1)
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and 'ts' in message and not
+                        self.clients.is_message_from_me(message)
+                        and not contains_user_tag(message['text'])
+                        and 'markov' not in message['text']
+                    ):
+                        if now_timestamp - (60*3) < float(message['ts']):
+                            txt = str(self.markov_chain)
+                            self.send_message('random', txt)  # change
+                            self.trigger_method_log('random markov')
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']
@@ -177,10 +152,12 @@ class TimeTriggeredEventManager(object):
         txt = '<!{}> {}'.format(random.choice(tags), msg)
         self.send_message('random', txt)
 
-    def trigger_drunk_phrase(self):
-        drunk_comment = self.drunk_manager.get_response()
-        txt = '{} :{}:'.format(drunk_comment, self.get_emoji())
-        self.send_message('random', txt)
+    def trigger_random_phrase(self):
+        if random.random() < 0.03:
+            comment = self.random_manager.get_response()
+            txt = '{} :{}:'.format(comment, self.get_emoji())
+            self.send_message('random', txt)
+            self.trigger_method_log('wine club')
 
     def trigger_weather(self):
         response = weather_manager.getCurrentWeather()
@@ -224,14 +201,15 @@ class TimeTriggeredEventManager(object):
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
-            # will post a ping every minute to testing channel
-            self.check_trigger_random(hour, minute)
             if hour == 1 and minute == 0:
                 self.clean_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
             if minute == 15:
                 self.trigger_markov()
+
+            if hour >= 9 and hour <= 16:
+                self.trigger_random_markov()
             if (day != 'Saturday' and day != 'Sunday'):
                 if hour == 8 and minute == 45:
                     self.trigger_morning()
@@ -243,11 +221,8 @@ class TimeTriggeredEventManager(object):
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if ((hour == 16 and minute == 35) or
-                        (hour == 17 and minute == 0) or
-                        (hour == 17 and minute == 30) or
-                        (hour == 18 and minute == 0)):
-                    self.trigger_drunk_phrase()
+                if hour >= 16 and hour <= 19:
+                    self.trigger_random_phrase()
 
 
 def _get_datetime():
