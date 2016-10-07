@@ -133,12 +133,10 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random_markov(self):
-        if random.random() < 0.50:
-            # Change
-            channel_id = self.channel_manager.get_channel_id('zac-testing')
+        if random.random() < 0.10:
+            channel_id = self.channel_manager.get_channel_id('random')
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
-            self.send_message('zac-testing', str(response))
             if 'messages' in response:
                 for message in response['messages']:
                     if (
@@ -147,10 +145,10 @@ class TimeTriggeredEventManager(object):
                         and not contains_user_tag(message['text'])
                         and 'markov' not in message['text']
                     ):
-                        if now_timestamp - (60*4) < float(message['ts']):
+                        if now_timestamp - (60*3) < float(message['ts']):
                             txt = str(self.markov_chain)
-                            self.send_message('zac-testing', txt)  # change
-            self.trigger_method_log('random')
+                            self.send_message('random', txt)  # change
+                            self.trigger_method_log('random markov')
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']
@@ -208,14 +206,15 @@ class TimeTriggeredEventManager(object):
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
-            # will post a ping every minute to testing channel
-            self.trigger_random_markov()
             if hour == 1 and minute == 0:
                 self.clean_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
             if minute == 15:
                 self.trigger_markov()
+
+            if hour >= 9 and hour <= 16:
+                self.trigger_random_markov()
             if (day != 'Saturday' and day != 'Sunday'):
                 if hour == 8 and minute == 45:
                     self.trigger_morning()
