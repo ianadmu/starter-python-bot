@@ -60,7 +60,7 @@ class TimeTriggeredEventManager(object):
         self.send_message('zac-testing', result)
 
     def add_mini_persistance(self):
-        testing_channel = self.channel_manager.get_channel_id('zac-testing')
+        testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         count_markov = 0
         count_louds = 0
         for channel_id in self.channel_manager.get_all_channel_ids():
@@ -92,7 +92,7 @@ class TimeTriggeredEventManager(object):
             "Added " + str(count_markov) + " messages to markov\n"
             "Added " + str(count_louds) + " loud messages"
         )
-        self.send_message('zac-testing', result)
+        self.send_message(TESTING_CHANNEL, result)
 
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
@@ -128,7 +128,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(TESTING_CHANNEL, msg)
 
     def trigger_random_markov(self):
-        if random.random() < 0.025:
+        if random.random() < 0.10:
             channel_id = self.channel_manager.get_channel_id('random')
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
