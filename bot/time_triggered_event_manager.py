@@ -29,7 +29,7 @@ class TimeTriggeredEventManager(object):
         self.is_just_starting_up = True
         self.markov_chain = markov_chain
         self.channel_manager = ChannelManager(clients)
-        self.drunk_manager = ResourceManager('drunk_comments.txt')
+        self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
         self.add_mini_persistance()
 
@@ -134,9 +134,11 @@ class TimeTriggeredEventManager(object):
 
     def trigger_random(self):
         if random.random() < 0.50:
-            channel_id = self.channel_manager.get_channel_id('zac-testing')  # change
+            # Change
+            channel_id = self.channel_manager.get_channel_id('zac-testing')
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
+            self.send_message('zac-testing', str(response))
             if 'messages' in response:
                 for message in response['messages']:
                     if (
@@ -157,10 +159,12 @@ class TimeTriggeredEventManager(object):
         txt = '<!{}> {}'.format(random.choice(tags), msg)
         self.send_message('random', txt)
 
-    def trigger_drunk_phrase(self):
-        drunk_comment = self.drunk_manager.get_response()
-        txt = '{} :{}:'.format(drunk_comment, self.get_emoji())
-        self.send_message('random', txt)
+    def trigger_random_phrase(self):
+        if random.random() < 0.03:
+            comment = self.random_manager.get_response()
+            txt = '{} :{}:'.format(comment, self.get_emoji())
+            self.send_message('random', txt)
+            self.trigger_method_log('wine club')
 
     def trigger_weather(self):
         response = weather_manager.getCurrentWeather()
@@ -223,11 +227,8 @@ class TimeTriggeredEventManager(object):
             if day == 'Friday':
                 if hour == 16 and minute == 30:
                     self.trigger_wine_club()
-                if ((hour == 16 and minute == 35) or
-                        (hour == 17 and minute == 0) or
-                        (hour == 17 and minute == 30) or
-                        (hour == 18 and minute == 0)):
-                    self.trigger_drunk_phrase()
+                if hour >= 16 and hour <= 19:
+                    self.trigger_random_phrase()
 
 
 def _get_datetime():
