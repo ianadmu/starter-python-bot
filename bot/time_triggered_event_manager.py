@@ -45,8 +45,8 @@ class TimeTriggeredEventManager(object):
                     'ts' in message and
                     self.clients.is_message_from_me(message)
                 ):
-                    # delete everything older than 3 days old
-                    if now_timestamp - (60*60*24*3) > float(message['ts']):
+                    # delete everything older than 2 days old
+                    if now_timestamp - (60*60*24*2) > float(message['ts']):
                         self.clients.delete_message(channel, message['ts'])
                         count += 1
                     # delete items older than a day old
