@@ -64,32 +64,38 @@ class TimeTriggeredEventManager(object):
         self.send_message('zac-testing', result)
 
     def process_recent_messages(self):
-        testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
-        count_markov = 0
-        count_louds = 0
-        for channel_id in self.channel_manager.get_all_channel_ids():
-            if channel_id != testing_channel:
-                response = self.clients.get_message_history(channel_id)
-                if 'messages' in response:
-                    for message in response['messages']:
-                        if not self.clients.is_message_from_me(message):
-                            msg_text = message['text']
+        try:
+            testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
+            count_markov = 0
+            count_louds = 0
+            for channel_id in self.channel_manager.get_all_channel_ids():
+                if channel_id != testing_channel:
+                    response = self.clients.get_message_history(channel_id)
+                    if 'messages' in response:
+                        for message in response['messages']:
+                            if not self.clients.is_message_from_me(message):
+                                msg_text = message['text']
 
-                            # Add markovs
-                            if should_add_markov(message):
-                                self.markov_chain.add_single_line(msg_text)
-                                count_markov += 1
+                                # Add markovs
+                                if should_add_markov(message):
+                                    self.markov_chain.add_single_line(msg_text)
+                                    count_markov += 1
 
-                            # Add louds
-                            if is_loud(message):
-                                self.msg_writer.write_loud(msg_text)
-                                count_louds += 1
+                                # Add louds
+                                if is_loud(message):
+                                    self.msg_writer.write_loud(msg_text)
+                                    count_louds += 1
 
-        result = (
-            "Added " + str(count_markov) + " messages to markov\n"
-            "Added " + str(count_louds) + " loud messages"
-        )
-        self.send_message(TESTING_CHANNEL, result)
+            result = (
+                "Added " + str(count_markov) + " messages to markov\n"
+                "Added " + str(count_louds) + " loud messages"
+            )
+            self.send_message(TESTING_CHANNEL, result)
+        except Exception:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
+            pass
 
     def trigger_random_markov(self):
         if random.random() < 0.15:
