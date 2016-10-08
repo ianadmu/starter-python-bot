@@ -7,7 +7,7 @@ import re
 from channel_manager import ChannelManager
 from common import (
     ResourceManager, contains_tag, DONT_DELETE,
-    is_loud, TESTING_CHANNEL, should_add_markov
+    should_add_loud, TESTING_CHANNEL, should_add_markov
 )
 from datetime import datetime, timedelta
 import time
@@ -82,7 +82,7 @@ class TimeTriggeredEventManager(object):
                                     count_markov += 1
 
                                 # Add louds
-                                if is_loud(message):
+                                if should_add_loud(message):
                                     self.msg_writer.write_loud(msg_text)
                                     count_louds += 1
 

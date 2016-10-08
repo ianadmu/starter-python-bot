@@ -36,13 +36,13 @@ def should_add_loud(message):
     if (
         'user' in message and
         not contains_tag(msg_text) and
-        is_loud(msg_text)
+        _is_loud(msg_text)
     ):
         return True
     return False
 
 
-def is_loud(msg_text):
+def _is_loud(msg_text):
     emoji_pattern = re.compile(":.*:")
 
     tokens = msg_text.split()
