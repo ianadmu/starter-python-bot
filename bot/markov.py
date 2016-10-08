@@ -104,7 +104,10 @@ class Markov:
     def __str__(self):
         try:
             result = self.go_go_markov_chain()
-            result = result[0].upper() + result[1:]
+            try:
+                result = result[0].upper() + result[1:]
+            except:
+                pass
             return result.encode('ascii', 'ignore')
         except:
             err_msg = traceback.format_exc()
