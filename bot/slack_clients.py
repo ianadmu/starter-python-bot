@@ -34,11 +34,6 @@ class SlackClients(object):
             return True
         return False
 
-    def is_bot_message(self, message):
-        if 'subtype' in message and message['subtype'] == "bot_message":
-            return True
-        return False
-
     def is_bot_mention(self, message):
         bot_user_name = self.rtm.server.login_data['self']['id']
         if re.search("@{}".format(bot_user_name), message):
@@ -104,7 +99,11 @@ class SlackClients(object):
         )
 
     def get_users(self):
-        return self.rtm.api_call('users.list', token=str(self.token))
+        response = self.rtm.api_call('users.list', token=str(self.token))
+        if 'error' in response:
+            error_msg = "`get_users` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def get_channels(self):
         return self.rtm.api_call('channels.list', token=str(self.token))

@@ -5,7 +5,10 @@ import traceback
 import re
 
 from channel_manager import ChannelManager
-from common import ResourceManager, contains_user_tag, DONT_DELETE, is_loud
+from common import (
+    ResourceManager, contains_tag, DONT_DELETE,
+    is_loud, TESTING_CHANNEL, should_add_markov
+)
 from datetime import datetime, timedelta
 import time
 
@@ -13,8 +16,6 @@ HR_DIF_DST = 5  # for Winnipeg
 HR_DIF_NO_DST = 6  # for Winnipeg
 MIN_PER_HOUR = 60
 HR_PER_DAY = 24
-
-TESTING_CHANNEL = 'zac-testing'
 
 
 class TimeTriggeredEventManager(object):
@@ -26,7 +27,7 @@ class TimeTriggeredEventManager(object):
         self.channel_manager = ChannelManager(clients)
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
-        self.add_mini_persistance()
+        self.process_recent_messages()
 
     def send_message(self, channel, msg_txt):
         self.msg_writer.send_message(channel, msg_txt)
@@ -42,24 +43,27 @@ class TimeTriggeredEventManager(object):
         if 'messages' in response:
             for message in response['messages']:
                 if (
-                    'ts' in message and
+                    'ts' in message and 'pinned_to' not in message and
                     self.clients.is_message_from_me(message)
                 ):
-                    # delete everything older than 2 days old
-                    if now_timestamp - (60*60*24*2) > float(message['ts']):
+                    # Delete everything older than 2 days old
+                    # Delete items older than a day old
+                    # Unless they are weather posts or startup logs
+                    if (
+                        (now_timestamp - (60*60*24*2)) > float(message['ts'])
+                        or (
+                            (now_timestamp - (60*60*24)) > float(message['ts'])
+                            and not re.search(
+                                DONT_DELETE, message['text'].lower()
+                            )
+                        )
+                    ):
                         self.clients.delete_message(channel, message['ts'])
                         count += 1
-                    # delete items older than a day old
-                    # unless they are weather posts or startup logs
-                    elif now_timestamp - (60*60*24) > float(message['ts']):
-                        msg = message['text'].lower()
-                        if not re.search(DONT_DELETE, msg):
-                            self.clients.delete_message(channel, message['ts'])
-                            count += 1
         result = "Erased " + str(count) + " messages"
         self.send_message('zac-testing', result)
 
-    def add_mini_persistance(self):
+    def process_recent_messages(self):
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         count_markov = 0
         count_louds = 0
@@ -68,31 +72,54 @@ class TimeTriggeredEventManager(object):
                 response = self.clients.get_message_history(channel_id)
                 if 'messages' in response:
                     for message in response['messages']:
+                        if not self.clients.is_message_from_me(message):
+                            msg_text = message['text']
 
-                        # Add markovs
-                        if (
-                            'ts' in message and not
-                            self.clients.is_message_from_me(message)
-                            and not contains_user_tag(message['text'])
-                            and 'markov' not in message['text']
-                        ):
-                            self.markov_chain.add_single_line(message['text'])
-                            count_markov += 1
+                            # Add markovs
+                            if should_add_markov(message):
+                                self.markov_chain.add_single_line(msg_text)
+                                count_markov += 1
 
-                        # Add louds
-                        if (
-                            'user' in message and 'ts' in message and not
-                            self.clients.is_message_from_me(message)
-                            and is_loud(message['text'])
-                        ):
-                            self.msg_writer.write_loud(message['text'])
-                            count_louds += 1
+                            # Add louds
+                            if is_loud(message):
+                                self.msg_writer.write_loud(msg_text)
+                                count_louds += 1
 
         result = (
             "Added " + str(count_markov) + " messages to markov\n"
             "Added " + str(count_louds) + " loud messages"
         )
         self.send_message(TESTING_CHANNEL, result)
+
+    def trigger_random_markov(self):
+        if random.random() < 0.15:
+            channel_id = self.channel_manager.get_channel_id('random')
+            now_timestamp = float(time.time())
+            response = self.clients.get_message_history(channel_id, 1)
+            if 'messages' in response:
+                for message in response['messages']:
+                    if (
+                        'user' in message and 'ts' in message and not
+                        self.clients.is_message_from_me(message)
+                        and not contains_tag(message['text'])
+                        and 'markov' not in message['text']
+                    ):
+                        # Post only 3 - 5 minutes after latest message
+                        if (
+                            now_timestamp - (60*5) <= float(message['ts']) and
+                            now_timestamp - (60*2) >= float(message['ts'])
+                        ):
+                            try:
+                                txt = str(self.markov_chain)
+                                self.send_message('random', txt)
+                                self.trigger_method_log('random markov')
+                            except Exception:
+                                err_msg = traceback.format_exc()
+                                logging.error(
+                                    'Unexpected error: {}'.format(err_msg)
+                                )
+                                self.msg_writer.write_error(err_msg)
+                                pass
 
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
@@ -126,36 +153,6 @@ class TimeTriggeredEventManager(object):
                str(minute) + ':' + str(second) + ' :' + str(self.get_emoji()) +
                ':')
         self.send_message(TESTING_CHANNEL, msg)
-
-    def trigger_random_markov(self):
-        if random.random() < 0.15:
-            channel_id = self.channel_manager.get_channel_id('random')
-            now_timestamp = float(time.time())
-            response = self.clients.get_message_history(channel_id, 1)
-            if 'messages' in response:
-                for message in response['messages']:
-                    if (
-                        'user' in message and 'ts' in message and not
-                        self.clients.is_message_from_me(message)
-                        and not contains_user_tag(message['text'])
-                        and 'markov' not in message['text']
-                    ):
-                        # Post only 3 - 5 minutes after latest message
-                        if (
-                            now_timestamp - (60*5) < float(message['ts']) and
-                            now_timestamp - (60*2) > float(message['ts'])
-                        ):
-                            try:
-                                txt = str(self.markov_chain)
-                                self.send_message('random', txt)
-                            except Exception:
-                                err_msg = traceback.format_exc()
-                                logging.error(
-                                    'Unexpected error: {}'.format(err_msg)
-                                )
-                                self.msg_writer.write_error(err_msg)
-                                pass
-            self.trigger_method_log('random markov')
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']

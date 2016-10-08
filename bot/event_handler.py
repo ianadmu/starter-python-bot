@@ -1,7 +1,6 @@
 import json
 import logging
 import re
-import traceback
 
 from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
@@ -10,7 +9,9 @@ from game_manager import GameManager
 from rude_manager import RudeManager
 from channel_manager import ChannelManager
 from markov import Markov
-from common import contains_user_tag, is_loud, is_zac_mention
+from common import (
+    is_zac_mention, should_add_markov, should_add_loud, is_bot_message,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -35,24 +36,20 @@ class RtmEventHandler(object):
         self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
-
         self.lotrMarkov = Markov(2, msg_writer)
         self.lotrMarkov.add_file('hpOne.txt')
         self.lotrMarkov.add_file('lotrOne.txt')
         self.lotrMarkov.add_file('memoriesOfIce.txt')
 
     def handle(self, event):
-
         if 'type' in event:
             self._handle_by_type(event['type'], event)
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
         if event_type == 'error':
-            # error
             self.msg_writer.write_error(json.dumps(event), event['channel'])
         elif event_type == 'message':
-            # message was sent to channel
             self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
@@ -60,30 +57,33 @@ class RtmEventHandler(object):
         elif event_type == 'group_joined':
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
-        elif event_type == "reaction_added":
-            if "channel" in event["item"]:
+        elif event_type == 'reaction_added':
+            if 'channel' in event['item']:
                 self.response_master.get_emoji_response(
-                    event["item"]["channel"], event["reaction"])
+                    event['item']['channel'], event['reaction'])
         else:
             pass
 
     def _is_edited_with_star(self, message):
-        return "*" in re.sub(self.bold_pattern, '', message)
+        return '*' in re.sub(self.bold_pattern, '', message)
 
     def _is_edited_by_user(self, event):
         if 'subtype' in event:
             if event['subtype'] == 'message_changed':
-                if ("message" in event and "user" in event["message"] and
-                        "edited" in event["message"] and
-                        "user" in event["message"]["edited"] and
-                        ("subtype" not in event["message"] or
-                            event["message"]["subtype"] != "bot_message")):
-                    user1 = event["message"]["user"]
-                    user2 = event["message"]["edited"]["user"]
+                if 'message' in event:
+                    event_msg = event['message']
 
                     # Dont allow zac to spam his own message edits
-                    if self.clients.is_message_from_me(event['message']):
+                    if self.clients.is_message_from_me(event_msg):
                         return False
+
+                    if (
+                        'user' in event_msg and 'edited' in event_msg and
+                        'user' in event_msg['edited'] and
+                        not is_bot_message(event_msg['edited'])
+                    ):
+                        user1 = event_msg['user']
+                        user2 = event_msg['edited']['user']
                     return user1 == user2
         return False
 
@@ -93,9 +93,10 @@ class RtmEventHandler(object):
                 self.msg_writer.write_spelling_mistake(
                     event['channel'], event['message']['ts']
                 )
-            elif (event['subtype'] == 'channel_join' and
-                    not self.clients.is_message_from_me(event)
-                  ):
+            elif (
+                event['subtype'] == 'channel_join' and
+                not self.clients.is_message_from_me(event)
+            ):
                 self.msg_writer.write_joined_channel(
                     event['channel'], event['user']
                 )
@@ -113,32 +114,35 @@ class RtmEventHandler(object):
             user_name = self.user_manager.get_user_by_id(user)
             lower_txt = msg_txt.lower()
 
-            # Add message to markov chain unless it contains a user tag
-            if not contains_user_tag(msg_txt) and 'markov' not in lower_txt:
+            # Markov chain addition and response
+            if should_add_markov(event):
                 self.markov_chain.add_single_line(msg_txt)
-            self.rude_manager.run(channel, user)
-            self.response_master.give_message(channel, msg_txt, user)
-
             if (
                 channel == self.channel_manager.get_channel_by_name('markov')
-                or lower_txt == "markov"
+                or lower_txt == 'markov'
             ):
                 self.msg_writer.send_message(channel, str(self.lotrMarkov))
 
-            # Return channel and user information
-            if lower_txt == "channelinfo":
-                self.msg_writer.send_message(channel, channel)
-            if lower_txt == "userinfo":
-                self.msg_writer.send_message(channel, user)
-            if lower_txt == "allusersinfo":
-                self.user_manager.print_all_users(self.msg_writer)
+            # Respond to messages handled by rude_manager and response_manager
+            self.rude_manager.run(channel, user)
+            self.response_master.give_message(channel, msg_txt, user)
 
-            # Respond to message text
-            if is_loud(msg_txt):
+            # Return channel and user information
+            if lower_txt == 'channelinfo':
+                self.msg_writer.send_message(channel, channel)
+            if lower_txt == 'userinfo':
+                self.msg_writer.send_message(channel, user)
+            if lower_txt == 'allusersinfo':
+                self.user_manager.print_all_users(channel)
+
+            # Loud addition and response
+            if should_add_loud(event):
                 self.msg_writer.write_loud(msg_txt)
                 self.msg_writer.respond_loud(channel, msg_txt)
             if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel, event['ts'])
+
+            # Respond to message text
             if re.search('i choose you', lower_txt):
                 self.msg_writer.write_cast_pokemon(channel, lower_txt)
             if re.search('weather', lower_txt):
