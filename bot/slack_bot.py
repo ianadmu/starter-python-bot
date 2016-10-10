@@ -77,19 +77,12 @@ class SlackBot(object):
 
                 self._auto_ping(time_event_handler)
                 time.sleep(.1)
-            del msg_writer
         else:
             logger.error(
                 'Failed to connect to RTM client with token: {}'.format(
                     self.clients.token
                 )
             )
-
-    def __del__(self, exception_type, exception_value, traceback):
-        self.clients.send_message('zac-testing', 'del slackbot')
-
-    def __exit__(self, exception_type, exception_value, traceback):
-        self.clients.send_message('zac-testing', 'exit slackbot')
 
     def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds

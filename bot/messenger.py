@@ -14,7 +14,9 @@ from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from equation_manager import EquationManager
-from common import ResourceManager, DONT_DELETE, is_zac_mention
+from common import (
+    ResourceManager, DONT_DELETE, is_zac_mention, TESTING_CHANNEL,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +43,7 @@ class Messenger(object):
             if 'messages' in response:
                 for message in response['messages']:
                     if (
-                        'ts' in message and
+                        'ts' in message and 'pinned_to' not in message and
                         self.clients.is_message_from_me(message)
                         and not re.search(DONT_DELETE, message['text'].lower())
                     ):
@@ -54,10 +56,10 @@ class Messenger(object):
             if count < delete_num:
                 msg = ("Erased " + str(count) + " messages: I "
                        "can only see the 100 most recent messages")
-                self.send_message(channel_id, msg)
+                self.send_message(msg, channel_id)
         except Exception:
             msg = "Correct usage is `zac erase <num>`"
-            self.send_message(channel_id, msg)
+            self.send_message(msg, channel_id)
             pass
 
     def __del__(self):
@@ -65,10 +67,7 @@ class Messenger(object):
                         "I'm dying again :sob:",
                         "Have you gotten tired of this face :zacefron: ?"]
         txt = random.choice(closing_msgs)
-        self.send_message('zac-testing', txt)
-
-    def __exit__(self, exception_type, exception_value, traceback):
-        self.send_message('zac-testing', '__exit__')
+        self.send_message(txt)
 
     def send_slow_message_as_other(self, channel_id, msg, username, emoji):
         self.clients.send_user_typing_pause(channel_id)
@@ -84,39 +83,40 @@ class Messenger(object):
             channel_id, msg, username, emoji
         )
 
-    def send_message(self, channel_id, msg):
-        msg = msg.replace('&', "&amp;")
+    def write_slow(self, msg_text, channel=None):
+        return self.send_message(msg_text, channel, slow=True)
+
+    def send_message(
+        self, msg_text, channel=None, slow=False, react_emoji=None
+    ):
+        msg_text = msg_text.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
         # msg = msg.decode("utf8", "ignore")
+        if channel is None:
+            channel = TESTING_CHANNEL
+        if slow is True:
+            self.clients.send_user_typing_pause(channel)
+        response = self.clients.send_message(msg_text, channel)
+        if 'ok' in response and react_emoji is not None:
+            self.send_reaction(react_emoji, channel, response['ts'])
+        return response
 
-        response = self.clients.send_message(channel_id, msg)
-        # make sure the message gets sent to zac-testing at least
-        if 'error' in response:
-            response = str(response) + "\nOriginal message:\n" + msg
-            self.clients.send_message('zac-testing', response)
-
-    def send_slow_message_then_update(
-        self, channel_id, msg, updated_msg, reaction=None
+    def update_message(
+        self, updated_msg_text, ts, channel=None, slow=False, react_emoji=None
     ):
-        try:
-            self.clients.send_user_typing_pause(channel_id)
-            msg = msg.replace('&', "&amp;")
-            response = self.clients.send_message(channel_id, msg)
-            self.clients.send_user_typing_pause(channel_id)
-            if 'ok' in response:
-                ts = response['ts']
-                response = self.clients.update_message(
-                    channel_id, ts, updated_msg
-                )
-                if 'ok' in response and reaction is not None:
-                    ts2 = response['ts']
-                    self.send_reaction(reaction, channel_id, ts2)
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error(err_msg)
-            pass
+        updated_msg_text = updated_msg_text.replace('&', "&amp;")
+
+        if channel is None:
+            channel = TESTING_CHANNEL
+        if slow is True:
+            self.clients.send_user_typing_pause(channel)
+        response = self.clients.update_message(
+            updated_msg_text, channel, ts
+        )
+        if 'ok' in response and react_emoji is not None:
+            self.send_reaction(react_emoji, channel, response['ts'])
+        return response
 
     def send_attachment(self, channel_id, txt, attachment):
         try:
@@ -127,21 +127,10 @@ class Messenger(object):
             self.write_error(err_msg)
             pass
 
-    def write_channel_id(self, channel_id):
-        self.send_message(
-            'zac-testing', self.channel_manager.get_channel_id(channel_id)
-        )
-
     def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
                "very well:\n>```{}```").format(err_msg)
-        if channel_id is None:
-            channel_id = 'zac-testing'
-        self.send_message(channel_id, txt)
-
-    def write_slow(self, channel_id, msg):
-        self.clients.send_user_typing_pause(channel_id)
-        self.send_message(channel_id, msg)
+        self.send_message(txt, channel_id)
 
     def send_reaction(self, emoji_name, channel_id, timestamp):
         self.clients.send_reaction(emoji_name, channel_id, timestamp)
@@ -149,26 +138,22 @@ class Messenger(object):
     def get_emoji(self):
         return self.clients.get_random_emoji()
 
-    def write_closing(self):
-        self.send_message('zac-testing', "I'm closing, ~byeeee~!!!!!")
-
     def write_message_deleted(self, channel_id):
-        # Dont post is messages were deleted inside of #zac-testing
+        # Dont post if messages were deleted inside of #zac-testing
         if channel_id != self.channel_manager.get_channel_id('zac-testing'):
             txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
                    "<#{}>").format(channel_id)
-            self.send_message('zac-testing', txt)
+            self.send_message(txt)
 
     def write_left_channel(self, channel_id):
-        txt = '...well THAT was something'
-        self.send_message(channel_id, txt)
+        self.send_message('...well THAT was something', channel_id)
 
     def write_joined_channel(self, channel_id, user_id):
         if channel_id == self.channel_manager.get_channel_id('zac-testing'):
             txt = ("Hey <@{}>! Welcome to the Testing (aka the Weather) "
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
-            self.write_slow(channel_id, txt)
+            self.write_slow(txt, channel_id)
             self.write_xkcd(channel_id, "15")
         else:
             self.write_greeting(channel_id, user_id)
@@ -221,7 +206,7 @@ class Messenger(object):
             txt += help_txt[val]
             txt += '\n'
 
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_french(self, channel_id, msg):
         msg = msg.lower()
@@ -231,12 +216,12 @@ class Messenger(object):
         tokens = msg.split()
         response = ' '.join(tokens)
         txt = '_le {}_'.format(response)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_greeting(self, channel_id, user_id):
         greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
         txt = '{}, <@{}>!'.format(random.choice(greetings), user_id)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_good_night(self, channel_id, user_id):
         nights = [
@@ -247,7 +232,7 @@ class Messenger(object):
             'May your dreams be filled with my beautiful face :zacefron:'
         ]
         txt = '{}, <@{}>!'.format(random.choice(nights), user_id)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_spelling_mistake(self, channel_id, timestamp):
         emoji_name = "spelft_it_wronbg_again_i_see"
@@ -257,46 +242,46 @@ class Messenger(object):
         bot_uid = self.clients.bot_user_id()
         txt = ("I'm sorry, I didn't quite understand... Can I help you? "
                "(e.g. `<@" + bot_uid + "> help`)")
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_joke(self, channel_id):
         question = "Why did the python cross the road?"
-        self.write_slow(channel_id, question)
+        self.write_slow(question, channel_id)
         answer = "To eat the chicken on the other side! :laughing:"
-        self.write_slow(channel_id, answer)
+        self.write_slow(answer, channel_id)
 
     def write_encouragement(self, channel_id, user_id):
         txt = 'Get your shit together <@{0}>'.format(user_id)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_cast_pokemon(self, channel_id, msg):
         pkmn = pokemon_i_choose_you(msg)
         if pkmn is None:
-            pkmn = 'Your pokemon escaped! :O'
-        self.send_message(channel_id, pkmn)
+            pkmn = 'Pokemon escaped! :O'
+        self.send_message(pkmn, channel_id)
 
     def write_whos_that_pokemon(self, channel_id):
         txt = self.whos_that_pokemon_manager.whos_that_pkmn()
-        self.send_message(channel_id, txt)
+        self.send_message(txt, channel_id)
 
     def write_pokemon_guessed_response(self, channel_id, user_id, msg):
         result = self.whos_that_pokemon_manager.check_response(user_id, msg)
         if result is not None:
-            self.send_message(channel_id, result)
+            self.send_message(result, channel_id)
 
     def write_sad(self, channel_id):
-        txt = "This always cracks me up. :wink:"
-        self.write_slow(channel_id, txt)
+        txt = "I'm crying into my tea. :joy:"
         attachment = {
+            "pretext": "This always cracks me up. :wink:",
             "title": "/giphy bloopin",
             "title_link": ("http://giphy.com/gifs/friday-rebecca-black-hurrr-"
                            "13FsSYo3fzfT2g"),
+            "text": txt,
+            "fallback": txt,
             "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
             "color": "#7CD197",
         }
-        self.send_attachment(channel_id, "", attachment)
-        txt = "I'm crying into my tea. :joy:"
-        self.write_slow(channel_id, txt)
+        self.send_attachment(channel_id, txt, attachment)
 
     def demo_attachment(self, channel_id):
         txt = ("Beep Beep Boop is a ridiculously simple hosting platform for "
@@ -314,8 +299,7 @@ class Messenger(object):
         self.send_attachment(channel_id, txt, attachment)
 
     def write_weather(self, channel_id):
-        response = weather_manager.getCurrentWeather()
-        self.write_slow(channel_id, response)
+        self.write_slow(weather_manager.getCurrentWeather(), channel_id)
 
     def write_loud(self, orig_msg):
         if not is_zac_mention(orig_msg):
@@ -323,48 +307,45 @@ class Messenger(object):
 
     def respond_loud(self, channel_id, orig_msg):
         if is_zac_mention(orig_msg) or random.random() < 0.25:
-            self.send_message(channel_id, self.loud_manager.get_random_loud())
+            self.send_message(self.loud_manager.get_random_loud(), channel_id)
 
     def write_hogwarts_house(self, channel_id, user_id, msg):
         response = self.hogwarts_house_sorter.sort_into_house(msg)
-        txt = '<@{}>: {}'.format(user_id, response)
-        self.write_slow(channel_id, txt)
+        self.write_slow('<@{}>: {}'.format(user_id, response), channel_id)
 
     def write_explanation(self, channel_id):
-        self.write_slow(channel_id, self.explanation_manager.get_response())
+        self.write_slow(self.explanation_manager.get_response(), channel_id)
 
     def write_sass(self, channel_id, msg):
-        txt = self.sass_manager.get_sass(msg)
-        self.write_slow(channel_id, txt)
+        self.write_slow(self.sass_manager.get_sass(msg), channel_id)
 
     def write_solution(self, channel_id, msg):
-        self.write_slow(channel_id, self.equation_manager.solve(msg))
+        self.write_slow(self.equation_manager.solve(msg), channel_id)
 
     def write_sweetpotato_me(self, channel_id, user_id):
         txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_draw_me(self, channel_id):
-        txt = self.drawing_manager.get_response()
-        self.write_slow(channel_id, txt)
+        self.write_slow(self.drawing_manager.get_response(), channel_id)
 
     def write_forever(self, channel_id):
-        part1 = self.forever_manager.get_response()
-        updated = '~{}~'.format(part1.strip())
-        self.send_slow_message_then_update(
-            channel_id, part1, updated, 'trollface'
+        original_msg = self.forever_manager.get_response()
+        response = self.write_slow(original_msg)
+        new_msg = '~{}~ Just kidding! :laughing:'.format(original_msg.strip())
+        self.update_message(
+            new_msg, response['ts'], channel_id, slow=True,
+            react_emoji='trollface'
         )
-        part2 = '{}'.format('Just kidding! :laughing:')
-        self.send_message(channel_id, part2)
 
     def write_flip(self, channel_id):
-        self.send_message(channel_id, u"(╯°□°）╯︵ ┻━┻")
+        self.send_message(u"(╯°□°）╯︵ ┻━┻", channel_id)
 
     def write_unflip(self, channel_id):
-        self.send_message(channel_id, u"┬─┬ノ( º _ ºノ)")
+        self.send_message(u"┬─┬ノ( º _ ºノ)", channel_id)
 
     def write_sup_son(self, channel_id):
-        self.send_message(channel_id, u"¯\_(ツ)_/¯")
+        self.send_message(u"¯\_(ツ)_/¯", channel_id)
 
     def write_riri_me(self, channel_id, msg):
         riri_flag = re.compile('riri[a-z]* ')
@@ -375,11 +356,11 @@ class Messenger(object):
         else:
             target = "WHY WOULD YOU JUST TYPE RIRI?\n"
         txt = ' '.join(target for num in range(5))
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
     def write_xkcd(self, channel_id, msg):
         txt = xkcd_manager.getImageLocation(msg)
-        self.write_slow(channel_id, txt)
+        self.write_slow(txt, channel_id)
 
 
 def pokemon_i_choose_you(msg):

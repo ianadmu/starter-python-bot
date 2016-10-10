@@ -102,9 +102,15 @@ class Markov:
         return " ".join(result)
 
     def __str__(self):
-        result = self.go_go_markov_chain()
-        try: 
-            result = result[0].upper() + result[1:]
+        try:
+            result = self.go_go_markov_chain()
+            try:
+                result = result[0].upper() + result[1:]
+            except:
+                pass
+            return result.encode('ascii', 'ignore')
         except:
+            err_msg = traceback.format_exc()
+            logging.error('Unexpected error: {}'.format(err_msg))
+            self.msg_writer.write_error(err_msg)
             pass
-        return result.encode('ascii', 'ignore')

@@ -9,6 +9,8 @@ from slacker import Slacker
 from slackclient import SlackClient
 from messenger import Messenger
 
+from common import TESTING_CHANNEL
+
 logger = logging.getLogger(__name__)
 
 
@@ -31,11 +33,6 @@ class SlackClients(object):
         if 'user' in message and message['user'] == self.bot_user_id():
             return True
         elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
-            return True
-        return False
-
-    def is_bot_message(self, message):
-        if 'subtype' in message and message['subtype'] == "bot_message":
             return True
         return False
 
@@ -64,18 +61,30 @@ class SlackClients(object):
             icon_emoji=emoji
         )
 
-    def send_message(self, channel_id, msg):
-        return self.rtm.api_call(
-            'chat.postMessage', token=str(self.token), channel=channel_id,
-            text=msg, as_user=True, link_names=1, unfurl_links=True
+    def send_message(self, msg_text, channel):
+        response = self.rtm.api_call(
+            'chat.postMessage', token=str(self.token), channel=channel,
+            text=msg_text, as_user=True, link_names=1, unfurl_links=True
         )
+        # Make sure the message gets sent to zac-testing at least
+        if 'error' in response:
+            response = str(response) + "\nOriginal message:\n" + msg_text
+            self.send_message(response, TESTING_CHANNEL)
+        return response
 
-    def update_message(self, channel_id, timestamp, updated_msg):
-        return self.rtm.api_call(
-            'chat.update', token=str(self.token), channel=channel_id,
-            text=updated_msg, as_user=True, link_names=1, unfurl_links=True,
-            ts=timestamp
+    def update_message(self, updated_msg_text, channel, timestamp):
+        response = self.rtm.api_call(
+            'chat.update', token=str(self.token), channel=channel,
+            text=updated_msg_text, as_user=True, link_names=1,
+            unfurl_links=True, ts=timestamp
         )
+        # Make sure the message gets sent to zac-testing at least
+        if 'error' in response:
+            response = (
+                str(response) + "\nOriginal message:\n" + updated_msg_text
+            )
+            self.send_message(response, TESTING_CHANNEL)
+        return response
 
     def get_message_history(self, channel_id, count=None):
         response = self.rtm.api_call(
@@ -104,7 +113,11 @@ class SlackClients(object):
         )
 
     def get_users(self):
-        return self.rtm.api_call('users.list', token=str(self.token))
+        response = self.rtm.api_call('users.list', token=str(self.token))
+        if 'error' in response:
+            error_msg = "`get_users` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def get_channels(self):
         return self.rtm.api_call('channels.list', token=str(self.token))
@@ -115,11 +128,15 @@ class SlackClients(object):
     def get_ims(self):
         return self.rtm.api_call('im.list', token=str(self.token))
 
-    def send_reaction(self, emoji_name, channel_id, timestamp):
-        return self.rtm.api_call(
+    def send_reaction(self, emoji_name, channel, timestamp):
+        response = self.rtm.api_call(
             "reactions.add", token=str(self.token), name=emoji_name,
-            channel=channel_id, timestamp=timestamp
+            channel=channel, timestamp=timestamp
         )
+        if 'error' in response:
+            error_msg = "`send_reaction` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def upload_file_to_slack(self, filepath, filename, channel):
         my_file = os.path.join(filepath, filename)

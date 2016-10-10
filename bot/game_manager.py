@@ -20,7 +20,7 @@ class GameManager:
         # game should be initialized here
         key = self._make_key(players, channel, game_name)
         self.games[key] = Game(game, players)
-        self.msg_writer.send_message(channel, str(game))
+        self.msg_writer.send_message(str(game), channel)
 
     def process_message(
         self, players, channel, game_name, message, current_player
@@ -31,8 +31,8 @@ class GameManager:
         if key in self.games:
             game = self.games[key]
             result = game.process_command(message, current_player)
-            self.msg_writer.send_message(channel, result)
+            self.msg_writer.send_message(result, channel)
         else:
             error_msg = ("There is currently no game that can be selected "
                          "with the information provided\n")
-            self.msg_writer.send_message(channel, error_msg)
+            self.msg_writer.send_message(error_msg, channel)
