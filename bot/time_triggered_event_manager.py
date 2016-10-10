@@ -36,10 +36,16 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def clean_history(self):
-        channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
+        testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
+        for channel_id in self.channel_manager.get_all_channel_ids():
+            self.erase_channel_messages(channel_id)
+            # Clean up zac-testing spam
+            self.erase_channel_messages(testing_channel)
+
+    def erase_channel_messages(self, channel_id):
         count = 0
         now_timestamp = float(time.time())
-        response = self.clients.get_message_history(channel)
+        response = self.clients.get_message_history(channel_id)
         if 'messages' in response:
             for message in response['messages']:
                 if (
@@ -58,9 +64,11 @@ class TimeTriggeredEventManager(object):
                             )
                         )
                     ):
-                        self.clients.delete_message(channel, message['ts'])
+                        self.clients.delete_message(channel_id, message['ts'])
                         count += 1
-        result = "Erased " + str(count) + " messages"
+        result = 'Erased {} messages  from <#{}>'.format(
+            str(count), str(channel_id)
+        )
         self.send_message(result)
 
     def process_recent_messages(self):

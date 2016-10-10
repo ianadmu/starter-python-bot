@@ -69,9 +69,6 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message(txt)
 
-    def __exit__(self, exception_type, exception_value, traceback):
-        self.send_message('__exit__')
-
     def send_slow_message_as_other(self, channel_id, msg, username, emoji):
         self.clients.send_user_typing_pause(channel_id)
         self.send_message_as_other(channel_id, msg, username, emoji)
@@ -141,11 +138,8 @@ class Messenger(object):
     def get_emoji(self):
         return self.clients.get_random_emoji()
 
-    def write_closing(self):
-        self.send_message("I'm closing, ~byeeee~!!!!!")
-
     def write_message_deleted(self, channel_id):
-        # Dont post is messages were deleted inside of #zac-testing
+        # Dont post if messages were deleted inside of #zac-testing
         if channel_id != self.channel_manager.get_channel_id('zac-testing'):
             txt = ("I SAW THAT! _Someone_ deleted a message from channel: "
                    "<#{}>").format(channel_id)
