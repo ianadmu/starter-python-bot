@@ -210,7 +210,7 @@ class TimeTriggeredEventManager(object):
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
-            if hour == 1 and minute == 0:
+            if (hour == 1 or hour == 2) and minute == 0:
                 self.clean_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
