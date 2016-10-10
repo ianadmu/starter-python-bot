@@ -180,7 +180,7 @@ class Response_master:
                     channel, message, sender, ':' + sender + ':'
                 )
             else:
-                self.msg_writer.write_slow(channel, message)
+                self.msg_writer.write_slow(message, channel)
 
     def get_formatting(self, event):
         try:

@@ -12,7 +12,7 @@ class UserManager:
     def print_all_users(self, channel):
         for name in self.user_ids:
             self.msg_writer.send_message(
-                channel, name + ": " + self.user_ids[name]
+                name + ": " + self.user_ids[name], channel
             )
 
     def get_user_by_id(self, user_id):

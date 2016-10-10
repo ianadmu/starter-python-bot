@@ -29,14 +29,14 @@ class TimeTriggeredEventManager(object):
         self.trigger_startup_log()
         self.process_recent_messages()
 
-    def send_message(self, channel, msg_txt):
-        self.msg_writer.send_message(channel, msg_txt)
+    def send_message(self, msg_txt, channel=None):
+        self.msg_writer.send_message(msg_txt, channel)
 
     def get_emoji(self):
         return self.clients.get_random_emoji()
 
     def clean_history(self):
-        channel = self.channel_manager.get_channel_id('zac-testing')
+        channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         count = 0
         now_timestamp = float(time.time())
         response = self.clients.get_message_history(channel)
@@ -61,41 +61,35 @@ class TimeTriggeredEventManager(object):
                         self.clients.delete_message(channel, message['ts'])
                         count += 1
         result = "Erased " + str(count) + " messages"
-        self.send_message('zac-testing', result)
+        self.send_message(result)
 
     def process_recent_messages(self):
-        try:
-            testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
-            count_markov = 0
-            count_louds = 0
-            for channel_id in self.channel_manager.get_all_channel_ids():
-                if channel_id != testing_channel:
-                    response = self.clients.get_message_history(channel_id)
-                    if 'messages' in response:
-                        for message in response['messages']:
-                            if not self.clients.is_message_from_me(message):
-                                msg_text = message['text']
+        testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
+        count_markov = 0
+        count_louds = 0
+        for channel_id in self.channel_manager.get_all_channel_ids():
+            if channel_id != testing_channel:
+                response = self.clients.get_message_history(channel_id)
+                if 'messages' in response:
+                    for message in response['messages']:
+                        if not self.clients.is_message_from_me(message):
+                            msg_text = message['text']
 
-                                # Add markovs
-                                if should_add_markov(message):
-                                    self.markov_chain.add_single_line(msg_text)
-                                    count_markov += 1
+                            # Add markovs
+                            if should_add_markov(message):
+                                self.markov_chain.add_single_line(msg_text)
+                                count_markov += 1
 
-                                # Add louds
-                                if should_add_loud(message):
-                                    self.msg_writer.write_loud(msg_text)
-                                    count_louds += 1
+                            # Add louds
+                            if should_add_loud(message):
+                                self.msg_writer.write_loud(msg_text)
+                                count_louds += 1
 
-            result = (
-                "Added " + str(count_markov) + " messages to markov\n"
-                "Added " + str(count_louds) + " loud messages"
-            )
-            self.send_message(TESTING_CHANNEL, result)
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(err_msg)
-            pass
+        result = (
+            "Added " + str(count_markov) + " messages to markov\n"
+            "Added " + str(count_louds) + " loud messages"
+        )
+        self.send_message(result)
 
     def trigger_random_markov(self):
         if random.random() < 0.15:
@@ -117,7 +111,7 @@ class TimeTriggeredEventManager(object):
                         ):
                             try:
                                 txt = str(self.markov_chain)
-                                self.send_message('random', txt)
+                                self.send_message(txt, 'random')
                                 self.trigger_method_log('random markov')
                             except Exception:
                                 err_msg = traceback.format_exc()
@@ -133,11 +127,11 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.send_message('random', txt)
+        self.send_message(txt, 'random')
 
     def trigger_markov(self):
         try:
-            self.msg_writer.send_message('markov', str(self.markov_chain))
+            self.msg_writer.send_message(str(self.markov_chain), 'markov')
         except Exception:
             err_msg = traceback.format_exc()
             logging.error('Unexpected error: {}'.format(err_msg))
@@ -147,36 +141,36 @@ class TimeTriggeredEventManager(object):
     def trigger_ping(self, day, hour, minute, second):
         msg = ('Ping on ' + day + ' ' + str(hour) + ':' + str(minute) +
                ':' + str(second) + ' :' + str(self.get_emoji()) + ':')
-        self.send_message(TESTING_CHANNEL, msg)
+        self.send_message(msg)
 
     def trigger_method_log(self, method_name):
         msg = 'Event: {}'.format(method_name)
-        self.send_message(TESTING_CHANNEL, msg)
+        self.send_message(msg)
 
     def trigger_startup_log(self):
         day, hour, minute, second = _get_datetime()
         msg = ('I came back to life on ' + day + ' ' + str(hour) + ':' +
                str(minute) + ':' + str(second) + ' :' + str(self.get_emoji()) +
                ':')
-        self.send_message(TESTING_CHANNEL, msg)
+        self.send_message(msg)
 
     def trigger_wine_club(self):
         tags = ['channel', 'here']
         msg = ("WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: "
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
-        self.send_message('random', txt)
+        self.send_message(txt, 'random')
 
     def trigger_random_phrase(self):
         if random.random() < 0.005:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
-            self.send_message('random', txt)
+            self.send_message(txt, 'random')
             self.trigger_method_log('wine club')
 
     def trigger_weather(self):
         response = weather_manager.getCurrentWeather()
-        self.send_message(TESTING_CHANNEL, response)
+        self.send_message(response)
 
     def trigger_945(self):
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~',
@@ -187,7 +181,7 @@ class TimeTriggeredEventManager(object):
                     ':eggplant: 945.', '945 :coffee:', '_le 945_',
                     '_le fast 945_']
         txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
-        self.send_message('random', txt)
+        self.send_message(txt, 'random')
 
     def trigger_mochaccino(self):
         msgs = ['The mochaccino tastes _amazing_ this morning!',
@@ -207,7 +201,7 @@ class TimeTriggeredEventManager(object):
                 'Who\'s ready for a nice cup o\' mochaccino?',
                 '_le mochaccino_']
         txt = '{} :coffee:'.format(random.choice(msgs))
-        self.send_message('random', txt)
+        self.send_message(txt, 'random')
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()

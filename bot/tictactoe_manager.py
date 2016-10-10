@@ -29,7 +29,7 @@ class TicTacToeManager:
         players.add(user)
         if len(players) > 2:
             self.msg_writer.send_message(
-                channel, "You may not have more than two players currently"
+                "You may not have more than two players currently", channel
             )
             return
         tokens = message.split()
@@ -58,7 +58,7 @@ class TicTacToeManager:
             self.game_manager.add_game(
                 game, players, channel, TicTacToeManager.name
             )
-            self.msg_writer.send_message(channel, game.starting_message())
+            self.msg_writer.send_message(game.starting_message(), channel)
         else:
             self.game_manager.process_message(
                 players, channel, TicTacToeManager.name, move, user

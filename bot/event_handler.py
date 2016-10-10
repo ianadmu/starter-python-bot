@@ -121,7 +121,7 @@ class RtmEventHandler(object):
                 channel == self.channel_manager.get_channel_by_name('markov')
                 or lower_txt == 'markov'
             ):
-                self.msg_writer.send_message(channel, str(self.lotrMarkov))
+                self.msg_writer.send_message(str(self.lotrMarkov), channel)
 
             # Respond to messages handled by rude_manager and response_manager
             self.rude_manager.run(channel, user)
@@ -131,14 +131,14 @@ class RtmEventHandler(object):
             if lower_txt == 'channelinfo':
                 self.msg_writer.send_message(channel, channel)
             if lower_txt == 'userinfo':
-                self.msg_writer.send_message(channel, user)
+                self.msg_writer.send_message(user, channel)
             if lower_txt == 'allusersinfo':
                 self.user_manager.print_all_users(channel)
 
             # Loud addition and response
             if should_add_loud(event):
                 self.msg_writer.write_loud(msg_txt)
-                self.msg_writer.respond_loud(channel, msg_txt)
+                self.msg_writer.respond_loud(msg_txt, channel)
             if self._is_edited_with_star(msg_txt):
                 self.msg_writer.write_spelling_mistake(channel, event['ts'])
 
@@ -154,7 +154,7 @@ class RtmEventHandler(object):
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel, requestedComic)
-            if 'tictactoe' in lower_txt or 'ttt' in lower_txt:
+            if 'tictactoe' in lower_txt or lower_txt.startswith('ttt'):
                 self.tictactoe_manager.get_message(
                     channel, lower_txt, user_name
                 )

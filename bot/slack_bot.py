@@ -86,10 +86,10 @@ class SlackBot(object):
             )
 
     def __del__(self, exception_type, exception_value, traceback):
-        self.clients.send_message('zac-testing', 'del slackbot')
+        self.clients.send_message('del slackbot', 'zac-testing')
 
     def __exit__(self, exception_type, exception_value, traceback):
-        self.clients.send_message('zac-testing', 'exit slackbot')
+        self.clients.send_message('exit slackbot', 'zac-testing')
 
     def _auto_ping(self, time_event_handler):
         # hard code the interval to 10 seconds
