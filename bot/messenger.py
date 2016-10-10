@@ -341,7 +341,7 @@ class Messenger(object):
         new_msg = '~{}~ Just kidding! :laughing:'.format(original_msg.strip())
         self.update_message(
             new_msg, response['ts'], channel_id, slow=True,
-            react_emoji='tollface'
+            react_emoji='trollface'
         )
 
     def write_flip(self, channel_id):
