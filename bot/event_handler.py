@@ -111,7 +111,12 @@ class RtmEventHandler(object):
             msg_txt = event['text']
             channel_id = event['channel']
             user_id = event['user']
-            ts = event['ts']  # message timestamp
+
+            # Get message timestamp (for reactions -> get the original msg ts)
+            ts = event['ts']
+            if event['type'] == 'reaction_added' and 'item' in event:
+                ts = event['item']['ts']
+
             user_name = self.user_manager.get_user_by_id(user_id)
             lower_txt = msg_txt.lower()
 

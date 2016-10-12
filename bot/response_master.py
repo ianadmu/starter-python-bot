@@ -47,11 +47,6 @@ class Response:
         is_named = False
         lower_msg = message.lower()
 
-        # React to trigger message
-        if len(self.reactions) > 0:
-            reaction_emoji = random.choice(self.reactions)
-            self.msg_writer.send_reaction(reaction_emoji, channel_id, ts)
-
         for phrase in self.phrases:
             if lower_msg.startswith(phrase) or (" " + phrase) in lower_msg:
                 has_trigger = True
@@ -70,6 +65,13 @@ class Response:
 
         result = ""
         if has_trigger and (not self.named or is_named) and self.rateLimit():
+
+            # React to trigger message if appropriate
+            if len(self.reactions) > 0:
+                reaction_emoji = random.choice(self.reactions)
+                self.msg_writer.send_reaction(reaction_emoji, channel_id, ts)
+
+            # Get response to trigger message
             result = self.hash(message) if self.use_hash else self.random()
 
         return self.replace_variables(result, user_id)
