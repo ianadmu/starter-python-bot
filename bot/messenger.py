@@ -305,7 +305,7 @@ class Messenger(object):
         if not is_zac_mention(orig_msg):
             self.loud_manager.write_loud_to_file(orig_msg)
 
-    def respond_loud(self, channel_id, orig_msg):
+    def respond_loud(self, orig_msg, channel_id):
         if is_zac_mention(orig_msg) or random.random() < 0.25:
             self.send_message(self.loud_manager.get_random_loud(), channel_id)
 
