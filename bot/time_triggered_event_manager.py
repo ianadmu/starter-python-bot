@@ -35,16 +35,28 @@ class TimeTriggeredEventManager(object):
     def get_emoji(self):
         return self.clients.get_random_emoji()
 
-    def clean_history(self):
+    def clean_channels_history(self):
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         for channel_id in self.channel_manager.get_all_channel_ids():
-            self.erase_channel_messages(channel_id)
-            # Clean up zac-testing spam
-            self.erase_channel_messages(testing_channel)
+            if channel_id != testing_channel:
+                self._erase_channel_messages(channel_id, log_days=3)
 
-    def erase_channel_messages(self, channel_id):
+    def clean_testing_channel_history(self):
+        testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
+        total_count = 0
+        for num in range(10):
+            count = self._erase_channel_messages(testing_channel, log_days=2)
+            total_count += count
+            if count == 0:
+                break
+        result = 'Erased {} total messages from <#{}>'.format(
+            str(total_count), str(testing_channel)
+        )
+        self.send_message(result)
+
+    def _erase_channel_messages(self, channel_id, log_days=None):
         count = 0
-        now_timestamp = float(time.time())
+        now_ts = float(time.time())
         response = self.clients.get_message_history(channel_id)
         if 'messages' in response:
             for message in response['messages']:
@@ -52,13 +64,13 @@ class TimeTriggeredEventManager(object):
                     'ts' in message and 'pinned_to' not in message and
                     self.clients.is_message_from_me(message)
                 ):
-                    # Delete everything older than 2 days old
+                    # Delete everything older than `log_days` old
                     # Delete items older than a day old
                     # Unless they are weather posts or startup logs
                     if (
-                        (now_timestamp - (60*60*24*2)) > float(message['ts'])
+                        (now_ts - (60*60*24*log_days)) > float(message['ts'])
                         or (
-                            (now_timestamp - (60*60*24)) > float(message['ts'])
+                            (now_ts - (60*60*24)) > float(message['ts'])
                             and not re.search(
                                 DONT_DELETE, message['text'].lower()
                             )
@@ -66,10 +78,11 @@ class TimeTriggeredEventManager(object):
                     ):
                         self.clients.delete_message(channel_id, message['ts'])
                         count += 1
-        result = 'Erased {} messages  from <#{}>'.format(
+        result = 'Erased {} messages from <#{}>'.format(
             str(count), str(channel_id)
         )
         self.send_message(result)
+        return count
 
     def process_recent_messages(self):
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
@@ -218,8 +231,11 @@ class TimeTriggeredEventManager(object):
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
-            if (hour == 1 or hour == 2) and minute == 0:
-                self.clean_history()
+            if hour == 1:
+                if minute == 0:
+                    self.clean_channels_history()
+                if minute == 15:
+                    self.clean_testing_channel_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
             if minute == 15:

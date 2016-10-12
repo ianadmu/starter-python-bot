@@ -4,7 +4,7 @@
 				"Words": ["shit", "fuck", "piss", "cunt", "cocksucker", "motherfucker", "tits", "fart", "turd", "shitstain", "twat", "horseshit"],
 				"Emoji": ["middle_finger", "reversed_hand_with_middle_finger_extended"]
 			},
-			"Responses": ["Do you kiss your mother with that mouth?"]
+			"Reactions": ["speak_no_evil", "nsfw"]
 		},
 
 		{
@@ -57,7 +57,7 @@
 			"Triggers": {
 				"Words": [
 					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin", "roofie",
-					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile"
+					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile", "kkk"
 				],
 				"Phrases": ["air strike", "nuclear meltdown", "coup d'etat"]
 			},
@@ -114,8 +114,8 @@
 				"Words": ["_dying_"],
 				"Emoji": ["joy"]
 			},
-			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
-			"Sender": "nicole"
+			"Reactions": ["joy", "kieratoast"],
+			"RateLimiter": 0
 		},
 
 		{
@@ -139,7 +139,9 @@
 			"Triggers": {
 				"Phrases": ["just do it"]
 			},
-			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"]
+			"Reactions": ["just_do_it"],
+			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"],
+			"Sender": "just_do_it"
 		},
 
 		{
@@ -238,13 +240,6 @@
 
 		{
 			"Triggers": {
-				"Words": ["kkk"]
-			},
-			"Responses": ["Holy shit calm down."]
-		},
-
-		{
-			"Triggers": {
 				"Words": ["random"]
 			},
 			"Responses": ["3"],
@@ -284,7 +279,8 @@
 		            ":tropical_fish:", ":fish:", ":blowfish:", ":sheep:", ":pig2:",
 		            ":rat:", ":rooster:", ":mushroom:", ":green_apple:", ":poop:"
 				]
-			}
+			},
+			"RateLimiter": 0
 		},
 
 		{

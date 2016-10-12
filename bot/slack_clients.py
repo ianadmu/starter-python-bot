@@ -106,7 +106,7 @@ class SlackClients(object):
             self.msg_writer.write_error(error_msg)
         return response
 
-    def send_attachment(self, channel_id, txt, attachment):
+    def send_attachment(self, txt, channel_id, attachment):
         # this does not return the response object that rtm does
         return self.web.chat.post_message(
             channel_id, txt, attachments=[attachment], as_user='true'
@@ -120,7 +120,13 @@ class SlackClients(object):
         return response
 
     def get_channels(self):
-        return self.rtm.api_call('channels.list', token=str(self.token))
+        response = self.rtm.api_call(
+            'channels.list', token=str(self.token), exclude_archived=1,
+        )
+        if 'error' in response:
+            error_msg = "`get_channels` error:\n" + str(response)
+            self.msg_writer.write_error(error_msg)
+        return response
 
     def get_groups(self):
         return self.rtm.api_call('groups.list', token=str(self.token))

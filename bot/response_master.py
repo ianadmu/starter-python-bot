@@ -10,17 +10,18 @@ class Response:
     names = ["zac", "qbot"]
 
     def __init__(
-        self, phrases, words, emoji, responses,
+        self, phrases, words, emoji, responses, reactions,
         use_hash, named, start, end, sender, rateLimiter, msg_writer
     ):
         self.phrases = phrases
         self.words = words
+        self.emoji = emoji
         self.responses = responses
+        self.reactions = reactions
         self.use_hash = use_hash
         self.named = named
         self.start = start
         self.end = end
-        self.emoji = emoji
         self.sender = sender
         self.lastTimeResponded = datetime.datetime(1995, 1, 9)
         self.rateLimiter = rateLimiter
@@ -36,17 +37,19 @@ class Response:
             self.lastTimeResponded = datetime.datetime.today()
         return allowedResponse
 
-    def get_emoji_response(self, reaction):
+    def get_reaction_response(self, reaction, channel_id, ts):
         if reaction in self.emoji and self.rateLimit():
+            self._react_to_message(channel_id, ts)
             return self.random()
         return ""
 
-    def get_response(self, message, tokens, user):
+    def get_response(self, message, tokens, channel_id, user_id, ts):
         has_trigger = False
         is_named = False
-        lower = message.lower()
+        lower_msg = message.lower()
+
         for phrase in self.phrases:
-            if lower.startswith(phrase) or (" " + phrase) in lower:
+            if lower_msg.startswith(phrase) or (" " + phrase) in lower_msg:
                 has_trigger = True
                 continue
 
@@ -58,35 +61,50 @@ class Response:
                         continue
 
         for name in Response.names:
-            if name in lower:
+            if name in lower_msg:
                 is_named = True
 
-        result = ""
-
         if has_trigger and (not self.named or is_named) and self.rateLimit():
-            if self.use_hash:
-                result = self.hash(message)
-            else:
-                result = self.random()
-        result = result.replace("user_id", "<@" + user + ">")
-        if "random_emoji" in result:
-            result = result.replace(
+            self._react_to_message(channel_id, ts)
+
+            # Get written response to trigger message
+            result = self.hash(message) if self.use_hash else self.random()
+            return self._replace_variables(result, user_id)
+        return ""
+
+    def _react_to_message(self, channel_id, ts):
+        # React to trigger message if appropriate
+        if len(self.reactions) > 0:
+            reaction_emoji = random.choice(self.reactions)
+            self.msg_writer.send_reaction(reaction_emoji, channel_id, ts)
+
+    def _replace_variables(self, response_msg, user_id):
+        if "user_id" in response_msg:
+            response_msg.replace("user_id", "<@" + user_id + ">")
+        if "random_emoji" in response_msg:
+            response_msg = response_msg.replace(
                 "random_emoji", ":" + self.msg_writer.get_emoji() + ":"
             )
-        return result
+        return response_msg
 
     def hash(self, text):
         hashValue = 11
         for character in text:
             hashValue *= 47
             hashValue += ord(character)
-        return (
-            self.start + self.responses[hashValue % len(self.responses)] +
-            self.end
-        )
+        if len(self.responses) > 0:
+            return (
+                self.start + self.responses[hashValue % len(self.responses)] +
+                self.end
+            )
+        else:
+            return ""
 
     def random(self):
-        return self.start + random.choice(self.responses) + self.end
+        if len(self.responses) > 0:
+            return self.start + random.choice(self.responses) + self.end
+        else:
+            return ""
 
 
 class Response_master:
@@ -118,7 +136,6 @@ class Response_master:
                 phrases = []
                 words = []
                 emoji = []
-                responses = []
                 if "Words" in event["Triggers"]:
                     for w in event["Triggers"]["Words"]:
                         words.append(w)
@@ -129,6 +146,12 @@ class Response_master:
                     for e in event["Triggers"]["Emoji"]:
                         emoji.append(e)
 
+                reactions = []
+                if "Reactions" in event:
+                    for reaction_emoji in event["Reactions"]:
+                        reactions.append(reaction_emoji)
+
+                responses = []
                 if "Formatting" in event:
                     responses = self.get_formatting(event["Formatting"])
 
@@ -137,41 +160,45 @@ class Response_master:
                         responses.append(r)
                 self.events.append(
                     Response(
-                        phrases, words, emoji, responses,
+                        phrases, words, emoji, responses, reactions,
                         use_hash, named, start, end, sender, rateLimiter,
-                        msg_writer
+                        msg_writer,
                     )
                 )
         except:
             msg_writer.write_error("Error loading JSON file")
             self.events = []
 
-    def get_emoji_response(self, channel, response):
+    def process_reaction(self, response, channel_id, ts):
         combined_responses = ""
         sender = None
         for event in self.events:
-            current_response = event.get_emoji_response(response)
+            current_response = event.get_reaction_response(
+                response, channel_id, ts
+            )
             if current_response != "":
                 current_response += '\n'
                 if event.sender:
                     sender = event.sender
             combined_responses += current_response
 
-        self.send_message(channel, combined_responses, sender)
+        self.send_message(channel_id, combined_responses, sender)
 
-    def give_message(self, channel, message, user):
+    def process_message(self, msg_text, channel_id, user_id, ts):
         combined_responses = ""
-        tokens = re.split(self.string_split, message.lower())
+        tokens = re.split(self.string_split, msg_text.lower())
         sender = None
         for event in self.events:
-            current_response = event.get_response(message, tokens, user)
+            current_response = event.get_response(
+                msg_text, tokens, channel_id, user_id, ts
+            )
             if current_response != "":
                 current_response += '\n'
                 if event.sender:
                     sender = event.sender
             combined_responses += current_response
 
-        self.send_message(channel, combined_responses, sender)
+        self.send_message(channel_id, combined_responses, sender)
 
     def send_message(self, channel, message, sender):
         if message:
@@ -202,7 +229,7 @@ class Response_master:
                                 for num in range(len(event[item])):
                                     temp_list.append(
                                         response_list[index].replace(
-                                            "{" + item + "}", event[item][num]  # noqa
+                                            "{" + item + "}", event[item][num]
                                         )
                                     )
                     else:
