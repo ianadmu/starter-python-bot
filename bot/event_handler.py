@@ -59,8 +59,10 @@ class RtmEventHandler(object):
             self.msg_writer.write_help_message(event['channel'])
         elif event_type == 'reaction_added':
             if 'channel' in event['item']:
-                self.response_master.get_emoji_response(
-                    event['item']['channel'], event['reaction'])
+                msg = event['item']
+                self.response_master.process_reaction(
+                    event['reaction'], msg['channel'], msg['ts']
+                )
         else:
             pass
 
@@ -107,19 +109,11 @@ class RtmEventHandler(object):
 
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event):
-            # Do admin
+
             msg_txt = event['text']
             channel_id = event['channel']
             user_id = event['user']
-
-            # Get message timestamp (for reactions -> get the original msg ts)
             ts = event['ts']
-            if (
-                event['type'] == 'reaction_added' and 'item' in event
-                and 'ts' in event['item']
-            ):
-                ts = event['item']['ts']
-                self.msg_writer.send_message(str(ts))
 
             user_name = self.user_manager.get_user_by_id(user_id)
             lower_txt = msg_txt.lower()
