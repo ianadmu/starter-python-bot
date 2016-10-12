@@ -139,7 +139,9 @@
 			"Triggers": {
 				"Phrases": ["just do it"]
 			},
+			"Reactions": ["just_do_it"],
 			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"]
+			"Sender": "just_do_it"
 		},
 
 		{
