@@ -7,6 +7,8 @@ DONT_DELETE = (
     "i came back to life on|winnipeg is currently|loud messages|erased"
 )
 
+TEAM_MATES = "nicole|jill|kiera|ian|garrett|malcolm|gurritt|kieratoast"
+
 TESTING_CHANNEL = 'zac-testing'
 
 
@@ -24,8 +26,9 @@ def should_add_markov(message):
     msg_text = message['text']
     if (
         'attachments' not in message and
-        'markov' not in msg_text.lower() and
-        not contains_tag(msg_text)
+        'markov' not in msg_text.lower()
+        and not re.search(TEAM_MATES, msg_text.lower())
+        and not contains_tag(msg_text)
     ):
         return True
     return False

@@ -15,7 +15,8 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 from sass_manager import SassManager
 from equation_manager import EquationManager
 from common import (
-    ResourceManager, DONT_DELETE, is_zac_mention, TESTING_CHANNEL,
+    ResourceManager, is_zac_mention,
+    TESTING_CHANNEL, TEAM_MATES, DONT_DELETE,
 )
 
 logger = logging.getLogger(__name__)
@@ -364,9 +365,8 @@ class Messenger(object):
 
 
 def pokemon_i_choose_you(msg):
-    teammates = ["kiera", "nicole", "jill", "malcolm", "ian"]
     target = msg.split()[0]
-    if target in teammates:
+    if target in TEAM_MATES:
         return "Go! {}!\n:{}:".format(target.title(), target)
     elif target.lower() == "sleep":
         return "Go! {}!\n:{}:".format(target.title(), 'bed')
