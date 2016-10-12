@@ -114,7 +114,10 @@ class RtmEventHandler(object):
 
             # Get message timestamp (for reactions -> get the original msg ts)
             ts = event['ts']
-            if event['type'] == 'reaction_added' and 'item' in event:
+            if (
+                event['type'] == 'reaction_added' and 'item' in event
+                and 'ts' in event['item']
+            ):
                 ts = event['item']['ts']
                 self.msg_writer.send_message(str(ts))
 
