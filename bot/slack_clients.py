@@ -106,7 +106,7 @@ class SlackClients(object):
             self.msg_writer.write_error(error_msg)
         return response
 
-    def send_attachment(self, channel_id, txt, attachment):
+    def send_attachment(self, txt, channel_id, attachment):
         # this does not return the response object that rtm does
         return self.web.chat.post_message(
             channel_id, txt, attachments=[attachment], as_user='true'

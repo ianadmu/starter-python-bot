@@ -119,14 +119,8 @@ class Messenger(object):
             self.send_reaction(react_emoji, channel, response['ts'])
         return response
 
-    def send_attachment(self, channel_id, txt, attachment):
-        try:
-            self.clients.send_attachment(channel_id, txt, attachment)
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.write_error(err_msg)
-            pass
+    def send_attachment(self, txt, channel_id, attachment):
+        self.clients.send_attachment(txt, channel_id, attachment)
 
     def write_error(self, err_msg, channel_id=None):
         txt = (":face_with_head_bandage: my maker didn't handle this error "
@@ -282,7 +276,7 @@ class Messenger(object):
             "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
             "color": "#7CD197",
         }
-        self.send_attachment(channel_id, txt, attachment)
+        self.send_attachment(txt, channel_id, attachment)
 
     def demo_attachment(self, channel_id):
         txt = ("Beep Beep Boop is a ridiculously simple hosting platform for "
@@ -297,7 +291,7 @@ class Messenger(object):
                           "bot-1.22f6fb.png"),
             "color": "#7CD197",
         }
-        self.send_attachment(channel_id, txt, attachment)
+        self.send_attachment(txt, channel_id, attachment)
 
     def write_weather(self, channel_id):
         self.write_slow(weather_manager.getCurrentWeather(), channel_id)

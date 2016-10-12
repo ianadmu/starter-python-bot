@@ -114,9 +114,8 @@
 				"Words": ["_dying_"],
 				"Emoji": ["joy"]
 			},
-			"Reactions": ["joy"],
-			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
-			"Sender": "nicole"
+			"Reactions": ["joy", "kieratoast"],
+			"RateLimiter": 0
 		},
 
 		{

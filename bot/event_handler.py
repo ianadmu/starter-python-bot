@@ -116,6 +116,7 @@ class RtmEventHandler(object):
             ts = event['ts']
             if event['type'] == 'reaction_added' and 'item' in event:
                 ts = event['item']['ts']
+                self.send_message(str(ts))
 
             user_name = self.user_manager.get_user_by_id(user_id)
             lower_txt = msg_txt.lower()
