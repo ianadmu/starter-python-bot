@@ -285,7 +285,7 @@
 		            ":tropical_fish:", ":fish:", ":blowfish:", ":sheep:", ":pig2:",
 		            ":rat:", ":rooster:", ":mushroom:", ":green_apple:", ":poop:"
 				]
-			}
+			},
 			"RateLimiter": 0
 		},
 

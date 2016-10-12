@@ -217,7 +217,7 @@ class Response_master:
                                 for num in range(len(event[item])):
                                     temp_list.append(
                                         response_list[index].replace(
-                                            "{" + item + "}", event[item][num]  # noqa
+                                            "{" + item + "}", event[item][num]
                                         )
                                     )
                     else:
