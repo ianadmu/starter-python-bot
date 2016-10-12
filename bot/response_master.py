@@ -53,6 +53,7 @@ class Response:
                 has_trigger = True
                 continue
 
+        self.msg_writer.send_message(tokens)
         if not has_trigger:
             for word in self.words:
                 for token in tokens:
