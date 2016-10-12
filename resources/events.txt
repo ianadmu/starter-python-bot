@@ -57,7 +57,7 @@
 			"Triggers": {
 				"Words": [
 					"bomb", "knife", "explosive device", "blow up", "terrorism", "assassin", "roofie",
-					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile"
+					"poison", "anthrax", "hijack", "overthrow", "airstrike", "nuke", "missile", "kkk"
 				],
 				"Phrases": ["air strike", "nuclear meltdown", "coup d'etat"]
 			},
@@ -236,13 +236,6 @@
 			"Named": true,
 			"Responses": ["1", "2", "3", "4", "5", "6"],
 			"Sender": "slot_machine"
-		},
-
-		{
-			"Triggers": {
-				"Words": ["kkk"]
-			},
-			"Responses": ["Holy shit calm down."]
 		},
 
 		{
