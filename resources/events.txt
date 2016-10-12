@@ -114,6 +114,7 @@
 				"Words": ["_dying_"],
 				"Emoji": ["joy"]
 			},
+			"Reactions": ["joy"],
 			"Responses": [":joy: _CRYING INTO MY TEA_ :joy:"],
 			"Sender": "nicole"
 		},
@@ -285,6 +286,7 @@
 		            ":rat:", ":rooster:", ":mushroom:", ":green_apple:", ":poop:"
 				]
 			}
+			"RateLimiter": 0
 		},
 
 		{
