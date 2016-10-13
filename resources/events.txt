@@ -28,7 +28,7 @@
 				"Phrases": ["turn up the heat"]
 			},
 			"Reactions": [
-				"wind_blowing_face", "snowman", snowman_without_snow", snow_cloud", "snowflake", "fire"
+				"wind_blowing_face", "snowman", "snowman_without_snow", "snow_cloud", "snowflake", "fire"
 			]
 		},
 
@@ -38,13 +38,13 @@
 				"Phrases": ["not feeling good", "under the weather"]
 			},
 			"Reactions": [
-				"ambulance", "pill", "face_with_head_bandage", face_with_thermometer", "mask"
+				"ambulance", "pill", "face_with_head_bandage", "face_with_thermometer", "mask"
 			]
 		},
 
 		{
 			"Triggers": {
-				"Words": ["hair", "haircut"],
+				"Words": ["hair", "haircut"]
 			},
 			"Reactions": [
 				"haircut", "person_with_blond_hair"
