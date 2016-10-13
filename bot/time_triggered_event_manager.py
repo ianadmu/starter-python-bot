@@ -67,12 +67,19 @@ class TimeTriggeredEventManager(object):
                     # Delete everything older than `log_days` old
                     # Delete items older than a day old
                     # Unless they are weather posts or startup logs
+                    # Always delete the message deletions messages
                     if (
                         (now_ts - (60*60*24*log_days)) > float(message['ts'])
                         or (
                             (now_ts - (60*60*24)) > float(message['ts'])
                             and not re.search(
                                 DONT_DELETE, message['text'].lower()
+                            )
+                            or (
+                                re.search(
+                                    "I SAW THAT! _Someone_ deleted a message",
+                                    message['text'].lower()
+                                )
                             )
                         )
                     ):

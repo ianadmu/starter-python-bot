@@ -24,6 +24,44 @@
 
 		{
 			"Triggers": {
+				"Words": ["cold", "freezing", "snow"],
+				"Phrases": ["turn up the heat"]
+			},
+			"Reactions": [
+				"wind_blowing_face", "snowman", snowman_without_snow", snow_cloud", "snowflake", "fire"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["sick"],
+				"Phrases": ["not feeling good", "under the weather"]
+			},
+			"Reactions": [
+				"ambulance", "pill", "face_with_head_bandage", face_with_thermometer", "mask"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["hair", "haircut"],
+			},
+			"Reactions": [
+				"haircut", "person_with_blond_hair"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["money", "dollar", "bills", "dolla"]
+			},
+			"Reactions": [
+				"money_mouth_face", "heavy_dollar_sign", "moneybag", "dollar", "money_with_wings"
+			]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["toast"]
 			},
 			"Responses": ["Never Forget :kieratoast:"],

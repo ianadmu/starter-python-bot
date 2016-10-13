@@ -5,7 +5,6 @@ import random
 import re
 import xkcd_manager
 import weather_manager
-import traceback
 import requests
 
 from channel_manager import ChannelManager

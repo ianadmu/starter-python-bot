@@ -89,7 +89,7 @@ class RtmEventHandler(object):
                     ):
                         user1 = event_msg['user']
                         user2 = event_msg['edited']['user']
-                    return user1 == user2
+                        return user1 == user2
         return False
 
     def _handle_message(self, event):
