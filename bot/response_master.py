@@ -80,7 +80,9 @@ class Response:
 
     def _replace_variables(self, response_msg, user_id):
         if "user_id" in response_msg:
-            response_msg.replace("user_id", "<@" + user_id + ">")
+            response_msg = response_msg.replace(
+                'user_id', '<@{}>'.format(user_id)
+            )
         if "random_emoji" in response_msg:
             response_msg = response_msg.replace(
                 "random_emoji", ":" + self.msg_writer.get_emoji() + ":"
