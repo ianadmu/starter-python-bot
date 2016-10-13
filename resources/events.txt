@@ -24,6 +24,44 @@
 
 		{
 			"Triggers": {
+				"Words": ["cold", "freezing", "snow"],
+				"Phrases": ["turn up the heat"]
+			},
+			"Reactions": [
+				"wind_blowing_face", "snowman", "snowman_without_snow", "snow_cloud", "snowflake", "fire"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["sick"],
+				"Phrases": ["not feeling good", "under the weather"]
+			},
+			"Reactions": [
+				"ambulance", "pill", "face_with_head_bandage", "face_with_thermometer", "mask"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["hair", "haircut"]
+			},
+			"Reactions": [
+				"haircut", "person_with_blond_hair"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["money", "dollar", "bills", "dolla"]
+			},
+			"Reactions": [
+				"money_mouth_face", "heavy_dollar_sign", "moneybag", "dollar", "money_with_wings"
+			]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["toast"]
 			},
 			"Responses": ["Never Forget :kieratoast:"],
@@ -137,9 +175,15 @@
 
 		{
 			"Triggers": {
-				"Phrases": ["just do it"]
+				"Phrases": ["do it"]
 			},
-			"Reactions": ["just_do_it"],
+			"Reactions": ["just_do_it"]
+		},
+
+		{
+			"Triggers": {
+				"Phrases": ["just do it video"]
+			},
 			"Responses": ["https://www.youtube.com/watch?v=ZXsQAXx_ao0"],
 			"Sender": "just_do_it"
 		},
@@ -198,7 +242,7 @@
 			"Formatting" : {
 				"Format": "{Thanks} user_id!",
 				"Thanks": [
-					"No problem mon", "Please don't use Comic Sans; this isn't a lemonade stand", 
+					"No problem mon",
 					"Why, you're welcome my friend", "Don't mention it", "You're welcome", "It was a pleasure", 
 					"It was my pleasure", "No sweat", "Anytime", "_Le gratitude_ pleases me. :heart: Thank you", 
 					"No worries", "No, thank you"]
@@ -209,15 +253,46 @@
 			"Triggers": {
 				"Words": ["morning"]
 			},
-			"Named": true,
-			"Formatting" : {
-				"Format" : "{Mornings} user_id!",
-				"Mornings" :  [
-					"Good morning", "Morning", "Guten Morgen", "Bonjour", "Ohayou", "Good morning to you", 
-					"Aloha", "Konnichiwashington", "Buenos dias", ":sunny: Good morning"
-				]
+			"Reactions": [
+				"sunglasses", "city_sunrise", "sunrise_over_mountains", "sunrise", "partly_sunny_rain", 
+				"barely_sunny", "partly_sunny", "mostly_sunny", "sunny", "sun_with_face", "sunflower", "dark_sunglasses", "sunflower"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["night"]
 			},
-			"Sender": "sunglasses"
+			"Reactions": [
+				"stars", "bed", "city_sunset", "bridge_at_night", "night_with_stars", "sweet_potato"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Emoji": ["sweet_potato"]
+			},
+			"Reactions": [
+				"sweet_potato"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Emoji": ["ninja", "stalker", "ninja_cat"]
+			},
+			"Reactions": [
+				"ninja", "stalker", "ninja_cat"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Words": ["tired", "sleepy", "sleep", "rest"]
+			},
+			"Reactions": [
+				"bed", "sleeping_accommodation", "zzz", "sleeping", "sleepy", "tired_face", "sweet_potato"
+			]
 		},
 
 		{
@@ -302,6 +377,9 @@
 			"Triggers": {
 				"Phrases": ["marry me"]
 			},
+			"Reactions": [
+				"wedding", "bride_with_veil", "ring"
+			],
 			"Named": true,
 			"Responses": [
 	            "OKAY! :ring:", "Ummm, how 'bout no.",

@@ -89,7 +89,7 @@ class RtmEventHandler(object):
                     ):
                         user1 = event_msg['user']
                         user2 = event_msg['edited']['user']
-                    return user1 == user2
+                        return user1 == user2
         return False
 
     def _handle_message(self, event):
@@ -174,8 +174,6 @@ class RtmEventHandler(object):
                     self.msg_writer.erase_history(
                         channel_id, ts, msg_txt
                     )
-                if re.search('night', lower_txt):
-                    self.msg_writer.write_good_night(channel_id, user_id)
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel_id)
                 if 'joke' in lower_txt:
