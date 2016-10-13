@@ -270,6 +270,24 @@
 
 		{
 			"Triggers": {
+				"Emoji": ["sweet_potato"]
+			},
+			"Reactions": [
+				"sweet_potato"
+			]
+		},
+
+		{
+			"Triggers": {
+				"Emoji": ["ninja", "stalker", "ninja_cat"]
+			},
+			"Reactions": [
+				"ninja", "stalker", "ninja_cat"
+			]
+		},
+
+		{
+			"Triggers": {
 				"Words": ["tired", "sleepy", "sleep", "rest"]
 			},
 			"Reactions": [

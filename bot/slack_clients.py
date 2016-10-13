@@ -139,7 +139,7 @@ class SlackClients(object):
             "reactions.add", token=str(self.token), name=emoji_name,
             channel=channel, timestamp=timestamp
         )
-        if 'error' in response:
+        if 'error' in response and response['error'] != 'already_reacted':
             error_msg = "`send_reaction` error:\n" + str(response)
             self.msg_writer.write_error(error_msg)
         return response
