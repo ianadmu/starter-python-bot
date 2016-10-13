@@ -174,8 +174,6 @@ class RtmEventHandler(object):
                     self.msg_writer.erase_history(
                         channel_id, ts, msg_txt
                     )
-                if re.search('night', lower_txt):
-                    self.msg_writer.write_good_night(channel_id, user_id)
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel_id)
                 if 'joke' in lower_txt:

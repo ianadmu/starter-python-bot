@@ -155,7 +155,8 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.send_message(txt, 'random')
+        self.send_message_as_other('random', txt, 'sunglasses', 'sunglasses')
+        # self.send_message(txt, 'random')
 
     def trigger_markov(self):
         try:

@@ -217,17 +217,6 @@ class Messenger(object):
         txt = '{}, <@{}>!'.format(random.choice(greetings), user_id)
         self.write_slow(txt, channel_id)
 
-    def write_good_night(self, channel_id, user_id):
-        nights = [
-            'Goodnight', ':crescent_moon: Good night',
-            'Goodnight, my dear', 'Sweet dreams',
-            'Don\'t let the bed bugs bite', 'Pleasant dreams',
-            'Sleep well', 'Until tomorrow then',
-            'May your dreams be filled with my beautiful face :zacefron:'
-        ]
-        txt = '{}, <@{}>!'.format(random.choice(nights), user_id)
-        self.write_slow(txt, channel_id)
-
     def write_spelling_mistake(self, channel_id, timestamp):
         emoji_name = "spelft_it_wronbg_again_i_see"
         self.send_reaction(emoji_name, channel_id, timestamp)
