@@ -155,7 +155,7 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.send_message_as_other('random', txt, 'sunglasses', 'sunglasses')
+        self.send_message_as_other('random', txt, 'sunglasses', ':sunglasses:')
         # self.send_message(txt, 'random')
 
     def trigger_markov(self):
@@ -240,9 +240,9 @@ class TimeTriggeredEventManager(object):
         if(second >= 5 and second <= 15):
             # self.trigger_ping(day, hour, minute, second)
             if hour == 1:
-                if minute == 0:
-                    self.clean_channels_history()
                 if minute == 15:
+                    self.clean_channels_history()
+                if minute == 0 or minute == 30 or minute == 45:
                     self.clean_testing_channel_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
