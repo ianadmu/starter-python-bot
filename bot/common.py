@@ -12,7 +12,7 @@ TEAM_MATES = "nicole|jill|kiera|ian|garrett|malcolm|gurritt|kieratoast"
 TESTING_CHANNEL = 'zac-testing'
 
 
-def is_zac_mention(msg_text):
+def is_zac_mention(msg_text):  # DEBUG COMMENT
     return re.search(' ?zac', msg_text.lower())
 
 
