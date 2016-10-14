@@ -25,8 +25,8 @@ def is_bot_message(message):
 def should_add_markov(message):
     msg_text = message['text']
     if (
-        'attachments' not in message and
-        'markov' not in msg_text.lower()
+        'attachments' not in message
+        and not re.search('markov|zac', msg_text.lower())
         and not re.search(TEAM_MATES, msg_text.lower())
         and not contains_tag(msg_text)
     ):
