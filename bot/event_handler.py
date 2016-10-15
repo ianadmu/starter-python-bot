@@ -156,12 +156,13 @@ class RtmEventHandler(object):
                 self.msg_writer.write_weather(channel_id)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
-            if re.search('encourage', lower_txt):
-                self.msg_writer.write_encouragement(msg_txt, channel_id)
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel_id, requestedComic)
-            if 'tictactoe' in lower_txt or lower_txt.startswith('ttt'):
+            if (
+                'tictactoe' in lower_txt or ' ttt' in lower_txt or
+                lower_txt.startswith('ttt')
+            ):
                 self.tictactoe_manager.get_message(
                     channel_id, lower_txt, user_name
                 )
@@ -186,12 +187,14 @@ class RtmEventHandler(object):
                     )
                 if re.search('attachment|beep boop link', lower_txt):
                     self.msg_writer.demo_attachment(channel_id)
-                if 'sad' in lower_txt:
+                if 'sad ' in lower_txt:
                     self.msg_writer.write_sad(channel_id)
                 if 'sort me' in lower_txt:
                     self.msg_writer.write_hogwarts_house(
                         channel_id, user_id,  msg_txt
                     )
+                if re.search('encourage ', lower_txt):
+                    self.msg_writer.write_encouragement(msg_txt, channel_id)
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:

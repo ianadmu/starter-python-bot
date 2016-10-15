@@ -73,6 +73,12 @@ class ResourceManager(object):
     def get_response(self):
         return random.choice(self.responses)
 
+    def get_all(self):
+        return ' \n'.join(line for line in self.responses)
+
+    def get_count(self):
+        return len(self.responses)
+
 
 """Methods that should only be used from this file"""
 
