@@ -19,7 +19,7 @@ from common import (
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
-ZAC_FLAG = re.compile(' ?zac[a-z]*')
+ENCOURAGE_FLAG = re.compile('( ?zac)?encourage me[a-z]*')
 
 logger = logging.getLogger(__name__)
 
