@@ -155,7 +155,9 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.send_message_as_other('random', txt, 'sunglasses', ':sunglasses:')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'sunglasses', ':sunglasses:'
+        )
         # self.send_message(txt, 'random')
 
     def trigger_markov(self):
@@ -191,7 +193,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(txt, 'random')
 
     def trigger_random_phrase(self):
-        if random.random() < 0.005:
+        if random.random() < 0.03:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message(txt, 'random')
@@ -251,15 +253,15 @@ class TimeTriggeredEventManager(object):
             if hour >= 9 and hour <= 16:
                 self.trigger_random_markov()
             if (day != 'Saturday' and day != 'Sunday'):
-                if hour == 8 and minute == 45:
-                    self.trigger_morning()
+                # if hour == 8 and minute == 45:
+                self.trigger_morning()
                 if hour == 9:
                     if minute == 45:
                         self.trigger_945()
                     elif minute == 0:
                         self.trigger_mochaccino()
             if day == 'Friday':
-                if hour == 16 and minute == 30:
+                if hour == 16 and minute == 45:
                     self.trigger_wine_club()
                 if hour >= 17 and hour <= 18:
                     self.trigger_random_phrase()
