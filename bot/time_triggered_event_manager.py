@@ -190,6 +190,9 @@ class TimeTriggeredEventManager(object):
         msg = ("WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: "
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'Zac Efron', ':wine_glass:'
+        )
         self.send_message(txt, 'random')
 
     def trigger_random_phrase(self):
@@ -212,7 +215,10 @@ class TimeTriggeredEventManager(object):
                     ':eggplant: 945.', '945 :coffee:', '_le 945_',
                     '_le fast 945_']
         txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
-        self.send_message(txt, 'random')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'zacefron', ':zacefron:'
+        )
+        # self.send_message(txt, 'random')
 
     def trigger_mochaccino(self):
         msgs = ['The mochaccino tastes _amazing_ this morning!',
@@ -232,7 +238,10 @@ class TimeTriggeredEventManager(object):
                 'Who\'s ready for a nice cup o\' mochaccino?',
                 '_le mochaccino_']
         txt = '{} :coffee:'.format(random.choice(msgs))
-        self.send_message(txt, 'random')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'coffee', ':coffee:'
+        )
+        # self.send_message(txt, 'random')
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()
