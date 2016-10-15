@@ -78,7 +78,7 @@ class TimeTriggeredEventManager(object):
                             or (
                                 re.search(
                                     "I SAW THAT! _Someone_ deleted a message",
-                                    message['text'].lower()
+                                    message['text']
                                 )
                             )
                         )
