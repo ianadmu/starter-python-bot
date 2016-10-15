@@ -37,6 +37,7 @@ class Messenger(object):
         self.explanation_manager = ResourceManager('explanations.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
+        self.help_manager = ResourceManager('help_text.txt')
         self.channel_manager = ChannelManager(slack_clients)
         self.sassMarkov = Markov(3, self, ['insults.txt'])
 
@@ -159,53 +160,10 @@ class Messenger(object):
             self.write_greeting(channel_id, user_id)
 
     def write_help_message(self, channel_id):
-        help_txt = [
-            "_Hint: sometimes you need to say my name for me to respond!_",
-            "> `Hi` - I'll greet back, i don't bite. :wave:",
-            "> `Joke` - I'll tell you one of my finest jokes :laughing:",
-            "> `Weather` - Let me tell you the weather in Winnipeg. :rainbow:",
-            "> `I'm sad` - Maybe I can cheer you up. :wink:",
-            "> `Sort me` - I'll sort you into a Hogwarts house!",
-            ("> `Apologize` - Sometimes I make mistakes. Tell me when I do so "
-                "I can apologize. :bow:"),
-            "> `Thanks!` - I also like to be appreciated :innocent:",
-            "> `Solve <equation>` - Math sucks. I can help! :nerd_face:",
-            ("> `Sass <name>` - I'll be sure to sass <name> until the sun "
-                "burns out. :smiling_imp:"),
-            ">`Riri` - WORK WORK WORK WORK WORK",
-            ("> `Good morning` - I shall wish you a very good morning as "
-                "well! :sunny:"),
-            "> `Good night` - I'll say good night! :crescent_moon:",
-            "> `Who's that pokemon?` - Are you a pokemon master? :slowpoke:",
-            "> `Explain | Why` - I'll explain what's going on :reginageorge:",
-            ("> `French <phrase>` - I know flawless French! I'll translate "
-                "for you :bombardier:"),
-            "> `Marry me` - ...Are you going to propose to me?? _Le gasp_ ",
-            "> `I love you` - ...Do you really!? :heart:",
-            "> `Sweetpotato me` - Sometimes you just need a :sweet_potato:",
-            "> `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:",
-            "> `:joy:` - Sometimes it's hard for me to control my laughter!",
-            ("> `Wiener` - You wanna know who is a wiener? I'll tell you "
-                ":eggplant:"),
-            "> `Draw me` - I am _le best artist_ :art:",
-            ("> `<pokemon> I choose you!` - Are you going to be the very "
-                "best? :yourturn:"),
-            "> `Encourage me` - Let me help you get back on track. :grinning:",
-            "> `Feed me` - Have some food courtesy of moi :banana:",
-            "> `Fuck this` - Don't worry I got just the video. :+1:",
-            "> `Just Do it` - Need some motivation? :just_do_it:",
-            "> `Markov` - I like to mix things up a bit too :lips:",
-            "> `Coo` - Want a pigeon sound? Pigeon Mode is for you! :parrot:",
-            ("> `XKCD` - Want an XKCD comic? Type it's number, or get the "
-                "latest one"),
-            "> `TicTacToe` - Want to play TicTacToe? See also `TicTacToe help`"
-        ]
+        help_txt = self.help_manager.get_all()
+        count = self.help_manager.get_count()
         txt = ("I'm Zac Efron.  I'll *_respond_* to the following {0} "
-               "commands:\n").format(len(help_txt)-1)
-        for val in range(len(help_txt)):
-            txt += help_txt[val]
-            txt += '\n'
-
+               "commands:\n{}").format(count-1, help_txt)
         self.write_slow(txt, channel_id)
 
     def write_french(self, msg_text, channel_id):
@@ -239,7 +197,7 @@ class Messenger(object):
             "Do you just think about youself", "You're the best",
         ]
         target = get_target(ENCOURAGE_FLAG, msg_text)
-        txt = '{} {0}'.format(random.choice(encouragements), target)
+        txt = '{} {}'.format(random.choice(encouragements), target)
         self.write_slow(txt, channel_id)
 
     def write_cast_pokemon(self, channel_id, msg):
