@@ -56,9 +56,9 @@ def contains_tag(msg_text):
     return False
 
 
-def get_target(self, flag, msg_txt):
+def get_target(flag, msg_txt):
         token = re.split(flag, msg_txt.lower())
-        target = self._format_target(token[1])
+        target = _format_target(token[1])
         return target
 
 
@@ -87,7 +87,7 @@ def _is_loud(msg_text):
     return True
 
 
-def _format_target(self, target):
+def _format_target(target):
         if target == 'me':
             return 'you'
         elif target == 'yourself':
