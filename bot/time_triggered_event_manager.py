@@ -155,7 +155,9 @@ class TimeTriggeredEventManager(object):
                      "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.send_message_as_other('random', txt, 'sunglasses', ':sunglasses:')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'sunglasses', ':sunglasses:'
+        )
         # self.send_message(txt, 'random')
 
     def trigger_markov(self):
@@ -188,10 +190,13 @@ class TimeTriggeredEventManager(object):
         msg = ("WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: "
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'Zac Efron', ':wine_glass:'
+        )
         self.send_message(txt, 'random')
 
     def trigger_random_phrase(self):
-        if random.random() < 0.005:
+        if random.random() < 0.03:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message(txt, 'random')
@@ -210,7 +215,10 @@ class TimeTriggeredEventManager(object):
                     ':eggplant: 945.', '945 :coffee:', '_le 945_',
                     '_le fast 945_']
         txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
-        self.send_message(txt, 'random')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'zacefron', ':zacefron:'
+        )
+        # self.send_message(txt, 'random')
 
     def trigger_mochaccino(self):
         msgs = ['The mochaccino tastes _amazing_ this morning!',
@@ -230,7 +238,10 @@ class TimeTriggeredEventManager(object):
                 'Who\'s ready for a nice cup o\' mochaccino?',
                 '_le mochaccino_']
         txt = '{} :coffee:'.format(random.choice(msgs))
-        self.send_message(txt, 'random')
+        self.msg_writer.send_message_as_other(
+            'random', txt, 'coffee', ':coffee:'
+        )
+        # self.send_message(txt, 'random')
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()
@@ -259,7 +270,7 @@ class TimeTriggeredEventManager(object):
                     elif minute == 0:
                         self.trigger_mochaccino()
             if day == 'Friday':
-                if hour == 16 and minute == 30:
+                if hour == 16 and minute == 45:
                     self.trigger_wine_club()
                 if hour >= 17 and hour <= 18:
                     self.trigger_random_phrase()

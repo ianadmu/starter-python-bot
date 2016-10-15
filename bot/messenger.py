@@ -11,12 +11,18 @@ from channel_manager import ChannelManager
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
-from sass_manager import SassManager
+from markov import Markov
 from equation_manager import EquationManager
 from common import (
-    ResourceManager, is_zac_mention,
+    ResourceManager, is_zac_mention, get_target,
     TESTING_CHANNEL, TEAM_MATES, DONT_DELETE,
 )
+
+SASS_FLAG = re.compile('sass[a-z]* ')
+ENCOURAGE_FLAG = re.compile('encourage[a-z]* ')
+FRENCH_FLAG = re.compile('french[a-z]* ')
+SWEETPOTATO_FLAG = re.compile('sweet ?potato[a-z]* ')
+RIRI_FLAG = re.compile('riri[a-z]* ')
 
 logger = logging.getLogger(__name__)
 
@@ -27,12 +33,12 @@ class Messenger(object):
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.hogwarts_house_sorter = HogwartsHouseSorter()
-        self.sass_manager = SassManager(self)
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
+        self.sassMarkov = Markov(3, self, ['insults.txt'])
 
     def erase_history(self, channel_id, now_timestamp, msg):
         try:
@@ -202,15 +208,9 @@ class Messenger(object):
 
         self.write_slow(txt, channel_id)
 
-    def write_french(self, channel_id, msg):
-        msg = msg.lower()
-        msg = msg.replace('zac', '')
-        msg = msg.replace('french', '')
-        msg = msg.replace('_', '')
-        tokens = msg.split()
-        response = ' '.join(tokens)
-        txt = '_le {}_'.format(response)
-        self.write_slow(txt, channel_id)
+    def write_french(self, msg_text, channel_id):
+        target = get_target(FRENCH_FLAG, msg_text).replace('_', '')
+        self.write_slow('_le {}_'.format(target), channel_id)
 
     def write_greeting(self, channel_id, user_id):
         greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
@@ -233,8 +233,13 @@ class Messenger(object):
         answer = "To eat the chicken on the other side! :laughing:"
         self.write_slow(answer, channel_id)
 
-    def write_encouragement(self, channel_id, user_id):
-        txt = 'Get your shit together <@{0}>'.format(user_id)
+    def write_encouragement(self, msg_text, channel_id):
+        encouragements = [
+            "Get your shit together", "You can do it", "I'm here for you",
+            "Do you just think about youself", "You're the best",
+        ]
+        target = get_target(ENCOURAGE_FLAG, msg_text)
+        txt = '{} {0}'.format(random.choice(encouragements), target)
         self.write_slow(txt, channel_id)
 
     def write_cast_pokemon(self, channel_id, msg):
@@ -299,14 +304,17 @@ class Messenger(object):
     def write_explanation(self, channel_id):
         self.write_slow(self.explanation_manager.get_response(), channel_id)
 
-    def write_sass(self, channel_id, msg):
-        self.write_slow(self.sass_manager.get_sass(msg), channel_id)
+    def write_sass(self, msg_txt, channel_id):
+        target = get_target(SASS_FLAG, msg_txt)
+        sass = 'Hey, {}! {}'.format(target, str(self.sassMarkov))
+        self.write_slow(sass, channel_id)
 
     def write_solution(self, channel_id, msg):
         self.write_slow(self.equation_manager.solve(msg), channel_id)
 
-    def write_sweetpotato_me(self, channel_id, user_id):
-        txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
+    def write_sweetpotato_me(self, msg_text, channel_id):
+        target = get_target(SWEETPOTATO_FLAG, msg_text)
+        txt = 'Here, {}! :sweet_potato:'.format(target)
         self.write_slow(txt, channel_id)
 
     def write_draw_me(self, channel_id):
@@ -330,15 +338,12 @@ class Messenger(object):
     def write_sup_son(self, channel_id):
         self.send_message(u"¯\_(ツ)_/¯", channel_id)
 
-    def write_riri_me(self, channel_id, msg):
-        riri_flag = re.compile('riri[a-z]* ')
-        token = re.split(riri_flag, msg.lower())
-        if len(token) > 1:
-            target = token[1]
-            target = target.upper()
+    def write_riri_me(self, msg_text, channel_id):
+        target = get_target(RIRI_FLAG, msg_text).upper()
+        if target != "":
+            txt = ' '.join(target for num in range(5))
         else:
-            target = "WHY WOULD YOU JUST TYPE RIRI?\n"
-        txt = ' '.join(target for num in range(5))
+            txt = "WHY WOULD YOU JUST TYPE RIRI?\n"
         self.write_slow(txt, channel_id)
 
     def write_xkcd(self, channel_id, msg):

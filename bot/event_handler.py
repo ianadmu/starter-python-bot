@@ -36,10 +36,8 @@ class RtmEventHandler(object):
         self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
-        self.lotrMarkov = Markov(2, msg_writer)
-        self.lotrMarkov.add_file('hpOne.txt')
-        self.lotrMarkov.add_file('lotrOne.txt')
-        self.lotrMarkov.add_file('memoriesOfIce.txt')
+        markov_files = ['hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt']
+        self.lotrMarkov = Markov(2, msg_writer, markov_files)
 
     def handle(self, event):
         if 'type' in event:
@@ -157,9 +155,9 @@ class RtmEventHandler(object):
             if re.search('weather', lower_txt):
                 self.msg_writer.write_weather(channel_id)
             if re.search('riri', lower_txt):
-                self.msg_writer.write_riri_me(channel_id, msg_txt)
-            if re.search('encourage me', lower_txt):
-                self.msg_writer.write_encouragement(channel_id, user_id)
+                self.msg_writer.write_riri_me(msg_txt, channel_id)
+            if re.search('encourage', lower_txt):
+                self.msg_writer.write_encouragement(msg_txt, channel_id)
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel_id, requestedComic)
@@ -179,7 +177,7 @@ class RtmEventHandler(object):
                 if 'joke' in lower_txt:
                     self.msg_writer.write_joke(channel_id)
                 if 'french' in lower_txt:
-                    self.msg_writer.write_french(channel_id, msg_txt)
+                    self.msg_writer.write_french(msg_txt, channel_id)
                 if re.search('who\'?s that pokemon', msg_txt):
                     self.msg_writer.write_whos_that_pokemon(channel_id)
                 if re.search(' ?zac it\'?s', lower_txt):
@@ -195,13 +193,13 @@ class RtmEventHandler(object):
                         channel_id, user_id,  msg_txt
                     )
                 if 'sass ' in lower_txt:
-                    self.msg_writer.write_sass(channel_id, msg_txt)
+                    self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:
                     self.msg_writer.write_solution(channel_id, msg_txt)
                 if re.search('explain|why', lower_txt):
                     self.msg_writer.write_explanation(channel_id)
-                if re.search('sweetpotato me|sweet potato me', lower_txt):
-                    self.msg_writer.write_sweetpotato_me(channel_id, user_id)
+                if re.search('sweetpotato|sweet potato', lower_txt):
+                    self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
                 if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel_id)
                 if re.search('love|forever|relationship', lower_txt):
