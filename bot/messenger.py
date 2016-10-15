@@ -19,6 +19,8 @@ from common import (
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
+ZAC_FLAG = re.compile(' ?zac[a-z]*')
+
 logger = logging.getLogger(__name__)
 
 
@@ -236,7 +238,8 @@ class Messenger(object):
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
-        txt = 'Get your shit together <@{0}>'.format(get_target(msg_text))
+        target = get_target(ZAC_FLAG, msg_text)
+        txt = 'Get your shit together {0}'.format(target)
         self.write_slow(txt, channel_id)
 
     def write_cast_pokemon(self, channel_id, msg):
