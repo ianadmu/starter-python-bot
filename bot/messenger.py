@@ -162,8 +162,9 @@ class Messenger(object):
     def write_help_message(self, channel_id):
         help_txt = self.help_manager.get_all()
         count = self.help_manager.get_count()
-        txt = ("I'm Zac Efron.  I'll *_respond_* to the following {0} "
-               "commands:\n{}").format(count-1, help_txt)
+        txt = (
+            "I'm Zac.  I'll *_respond_* to the following {} commands:\n{}"
+        ).format(count-1, help_txt)
         self.write_slow(txt, channel_id)
 
     def write_french(self, msg_text, channel_id):

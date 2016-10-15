@@ -8,18 +8,18 @@ _Hint: sometimes you need to say my name for me to respond!_
 > `Thanks!` - I also like to be appreciated :innocent:
 > `Solve <equation>` - Math sucks. I can help! :nerd_face:
 > `Sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:
-> `Riri` - WORK WORK WORK WORK WORK",
+> `Riri <work>` - WORK WORK WORK WORK WORK",
 > `Who's that pokemon?` - Are you a pokemon master? :slowpoke:
 > `Explain | Why` - I'll explain what's going on :reginageorge:
 > `French <phrase>` - I know flawless French and I'll translate! :bombardier:
 > `Marry me` - ...Are you going to propose to me?? _Le gasp_ 
 > `I love you` - ...Do you really!? :heart:
-> `Sweetpotato <0>` - Sometimes you just need a :sweet_potato:
+> `Sweetpotato <name>` - Sometimes you just need a :sweet_potato:
 > `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:
 > `Wiener` - You wanna know who is a wiener? I'll tell you :eggplant:"
 > `Draw me` - I am _le best artist_ :art:
 > `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:"
-> `Encourage <0>` - Let me help <0> get back on track. :grinning:
+> `Encourage <name>` - Let me help <name> get back on track. :grinning:
 > `Feed me` - Have some food courtesy of moi :banana:
 > `Fuck this` - Don't worry I got just the video. :+1:
 > `Just Do it Video` - Need some motivation? :just_do_it:
