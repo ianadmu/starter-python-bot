@@ -9,6 +9,9 @@ DONT_DELETE = (
 
 TEAM_MATES = "nicole|jill|kiera|ian|garrett|malcolm|gurritt|kieratoast"
 
+USER_TAG = re.compile("<@.*")
+CHANNEL_TAG = re.compile("<!.*")
+
 TESTING_CHANNEL = 'zac-testing'
 
 
@@ -45,6 +48,33 @@ def should_add_loud(message):
     return False
 
 
+def contains_tag(msg_text):
+    tokens = msg_text.split()
+    for token in tokens:
+        if USER_TAG.match(token) or CHANNEL_TAG.match(token):
+            return True
+    return False
+
+
+def get_target(self, flag, msg_txt):
+        token = re.split(flag, msg_txt.lower())
+        target = self._format_target(token[1])
+        return target
+
+
+class ResourceManager(object):
+
+    def __init__(self, file_name):
+        with open(os.path.join('./resources', file_name), 'r') as f:
+            self.responses = f.read().splitlines()
+
+    def get_response(self):
+        return random.choice(self.responses)
+
+
+"""Methods that should only be used from this file"""
+
+
 def _is_loud(msg_text):
     emoji_pattern = re.compile(":.*:")
 
@@ -57,21 +87,12 @@ def _is_loud(msg_text):
     return True
 
 
-def contains_tag(msg_text):
-    user_tag_pattern = re.compile("<@.*")
-    channel_tag_pattern = re.compile("<!.*")
-    tokens = msg_text.split()
-    for token in tokens:
-        if user_tag_pattern.match(token) or channel_tag_pattern.match(token):
-            return True
-    return False
-
-
-class ResourceManager(object):
-
-    def __init__(self, file_name):
-        with open(os.path.join('./resources', file_name), 'r') as f:
-            self.responses = f.read().splitlines()
-
-    def get_response(self):
-        return random.choice(self.responses)
+def _format_target(self, target):
+        if target == 'me':
+            return 'you'
+        elif target == 'yourself':
+            return 'Zac Efron'
+        elif '<@' in target:
+            return target.upper()
+        else:
+            return target.title()

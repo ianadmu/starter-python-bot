@@ -159,7 +159,7 @@ class RtmEventHandler(object):
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(channel_id, msg_txt)
             if re.search('encourage me', lower_txt):
-                self.msg_writer.write_encouragement(channel_id, user_id)
+                self.msg_writer.write_encouragement(msg_txt, channel_id)
             if 'xkcd' in lower_txt:
                 requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
                 self.msg_writer.write_xkcd(channel_id, requestedComic)
