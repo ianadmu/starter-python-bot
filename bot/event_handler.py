@@ -157,7 +157,7 @@ class RtmEventHandler(object):
             if re.search('weather', lower_txt):
                 self.msg_writer.write_weather(channel_id)
             if re.search('riri', lower_txt):
-                self.msg_writer.write_riri_me(channel_id, msg_txt)
+                self.msg_writer.write_riri_me(msg_txt, channel_id)
             if re.search('encourage', lower_txt):
                 self.msg_writer.write_encouragement(msg_txt, channel_id)
             if 'xkcd' in lower_txt:

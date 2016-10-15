@@ -22,6 +22,7 @@ SASS_FLAG = re.compile('sass[a-z]* ')
 ENCOURAGE_FLAG = re.compile('encourage[a-z]* ')
 FRENCH_FLAG = re.compile('french[a-z]* ')
 SWEETPOTATO_FLAG = re.compile('sweet ?potato[a-z]* ')
+RIRI_FLAG = re.compile('riri[a-z]* ')
 
 logger = logging.getLogger(__name__)
 
@@ -338,15 +339,12 @@ class Messenger(object):
     def write_sup_son(self, channel_id):
         self.send_message(u"¯\_(ツ)_/¯", channel_id)
 
-    def write_riri_me(self, channel_id, msg):
-        riri_flag = re.compile('riri[a-z]* ')
-        token = re.split(riri_flag, msg.lower())
-        if len(token) > 1:
-            target = token[1]
-            target = target.upper()
+    def write_riri_me(self, msg_text, channel_id):
+        target = get_target(RIRI_FLAG, msg_text)
+        if target != "":
+            txt = ' '.join(target for num in range(5))
         else:
-            target = "WHY WOULD YOU JUST TYPE RIRI?\n"
-        txt = ' '.join(target for num in range(5))
+            txt = "WHY WOULD YOU JUST TYPE RIRI?\n"
         self.write_slow(txt, channel_id)
 
     def write_xkcd(self, channel_id, msg):

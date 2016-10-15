@@ -15,7 +15,7 @@ CHANNEL_TAG = re.compile("<!.*")
 TESTING_CHANNEL = 'zac-testing'
 
 
-def is_zac_mention(msg_text):  # DEBUG COMMENT
+def is_zac_mention(msg_text):
     return re.search(' ?zac', msg_text.lower())
 
 
@@ -57,9 +57,11 @@ def contains_tag(msg_text):
 
 
 def get_target(flag, msg_txt):
-        token = re.split(flag, msg_txt.lower())
+    token = re.split(flag, msg_txt.lower())
+    target = ""
+    if len(token) > 1:
         target = _format_target(token[1])
-        return target
+    return target
 
 
 class ResourceManager(object):
@@ -90,8 +92,8 @@ def _is_loud(msg_text):
 def _format_target(target):
         if target == 'me':
             return 'you'
-        elif target == 'yourself':
-            return 'Zac Efron'
+        elif target == 'yourself' or is_zac_mention(target):
+            return 'me'
         elif '<@' in target:
             return target.upper()
         else:
