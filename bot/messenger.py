@@ -340,7 +340,7 @@ class Messenger(object):
         self.send_message(u"¯\_(ツ)_/¯", channel_id)
 
     def write_riri_me(self, msg_text, channel_id):
-        target = get_target(RIRI_FLAG, msg_text)
+        target = get_target(RIRI_FLAG, msg_text).upper()
         if target != "":
             txt = ' '.join(target for num in range(5))
         else:
