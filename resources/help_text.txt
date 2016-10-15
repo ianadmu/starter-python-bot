@@ -10,7 +10,7 @@ _Hint: sometimes you need to say my name for me to respond!_
 > `Sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:
 > `Riri <work>` - WORK WORK WORK WORK WORK",
 > `Who's that pokemon?` - Are you a pokemon master? :slowpoke:
-> `Explain | Why` - I'll explain what's going on :reginageorge:
+> `Explain/Why` - I'll explain what's going on :reginageorge:
 > `French <phrase>` - I know flawless French and I'll translate! :bombardier:
 > `Marry me` - ...Are you going to propose to me?? _Le gasp_ 
 > `I love you` - ...Do you really!? :heart:
