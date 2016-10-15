@@ -36,7 +36,7 @@ class RtmEventHandler(object):
         self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
-        markov_files = list('hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt')
+        markov_files = ['hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt']
         self.lotrMarkov = Markov(2, msg_writer, markov_files)
 
     def handle(self, event):

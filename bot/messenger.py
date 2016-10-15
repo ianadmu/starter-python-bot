@@ -38,7 +38,7 @@ class Messenger(object):
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.channel_manager = ChannelManager(slack_clients)
-        self.sassMarkov = Markov(3, self, list('insults.txt'))
+        self.sassMarkov = Markov(3, self, ['insults.txt'])
 
     def erase_history(self, channel_id, now_timestamp, msg):
         try:
