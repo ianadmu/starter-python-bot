@@ -200,8 +200,8 @@ class RtmEventHandler(object):
                     self.msg_writer.write_solution(channel_id, msg_txt)
                 if re.search('explain|why', lower_txt):
                     self.msg_writer.write_explanation(channel_id)
-                if re.search('sweetpotato me|sweet potato me', lower_txt):
-                    self.msg_writer.write_sweetpotato_me(channel_id, user_id)
+                if re.search('sweetpotato|sweet potato', lower_txt):
+                    self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
                 if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel_id)
                 if re.search('love|forever|relationship', lower_txt):

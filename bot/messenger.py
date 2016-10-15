@@ -21,6 +21,7 @@ from common import (
 SASS_FLAG = re.compile('sass[a-z]* ')
 ENCOURAGE_FLAG = re.compile('encourage[a-z]* ')
 FRENCH_FLAG = re.compile('french[a-z]* ')
+SWEETPOTATO_FLAG = re.compile('sweet ?potato[a-z]* ')
 
 logger = logging.getLogger(__name__)
 
@@ -233,8 +234,12 @@ class Messenger(object):
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
+        encouragements = [
+            "Get your shit together", "You can do it", "I'm here for you",
+            "Do you just think about youself", "You're the best",
+        ]
         target = get_target(ENCOURAGE_FLAG, msg_text)
-        txt = 'Get your shit together {0}'.format(target)
+        txt = '{} {0}'.format(random.choice(encouragements), target)
         self.write_slow(txt, channel_id)
 
     def write_cast_pokemon(self, channel_id, msg):
@@ -307,8 +312,9 @@ class Messenger(object):
     def write_solution(self, channel_id, msg):
         self.write_slow(self.equation_manager.solve(msg), channel_id)
 
-    def write_sweetpotato_me(self, channel_id, user_id):
-        txt = 'Here, <@{}>! :sweet_potato:'.format(user_id)
+    def write_sweetpotato_me(self, msg_text, channel_id):
+        target = get_target(SWEETPOTATO_FLAG, msg_text)
+        txt = 'Here, <@{}>! :sweet_potato:'.format(target)
         self.write_slow(txt, channel_id)
 
     def write_draw_me(self, channel_id):
