@@ -22,11 +22,17 @@ class Markov:
     phrase_to_remove = re.compile("BOOK .* ")
     quotes_on_the_outside_of_words = ("' | '|(?<!.)'")
 
-    def __init__(self, length, msg_writer):
+    def __init__(self, length, msg_writer, file_list=None):
         self.msg_writer = msg_writer
         self.length = length
         self.processing_string = ""
         self.chain = defaultdict(list)
+
+        if file_list is not None and len(file_list) > 0:
+            for file_name in file_list:
+                self.add_file(file_name)
+        else:
+            self.add_single_line("This is the default phrase.")
 
     def add_file(self, file_name):
         try:
