@@ -19,7 +19,8 @@ from common import (
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
-ENCOURAGE_FLAG = re.compile('encourage[a-z]*')
+ENCOURAGE_FLAG = re.compile('encourage[a-z]* ')
+FRENCH_FLAG = re.compile('french[a-z]* ')
 
 logger = logging.getLogger(__name__)
 
@@ -206,15 +207,9 @@ class Messenger(object):
 
         self.write_slow(txt, channel_id)
 
-    def write_french(self, channel_id, msg):
-        msg = msg.lower()
-        msg = msg.replace('zac', '')
-        msg = msg.replace('french', '')
-        msg = msg.replace('_', '')
-        tokens = msg.split()
-        response = ' '.join(tokens)
-        txt = '_le {}_'.format(response)
-        self.write_slow(txt, channel_id)
+    def write_french(self, msg_text, channel_id):
+        target = get_target(FRENCH_FLAG, msg_text).replace('_', '')
+        self.write_slow('_le {}_'.format(target), channel_id)
 
     def write_greeting(self, channel_id, user_id):
         greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
@@ -304,7 +299,7 @@ class Messenger(object):
     def write_explanation(self, channel_id):
         self.write_slow(self.explanation_manager.get_response(), channel_id)
 
-    def write_sass(self, channel_id, msg_txt):
+    def write_sass(self, msg_txt, channel_id):
         target = get_target(SASS_FLAG, msg_txt)
         sass = 'Hey, {}! {}'.format(target, str(self.sassMarkov))
         self.write_slow(sass, channel_id)
