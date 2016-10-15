@@ -19,7 +19,7 @@ from common import (
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
-ENCOURAGE_FLAG = re.compile('( ?zac)?encourage me[a-z]*')
+ENCOURAGE_FLAG = re.compile('encourage[a-z]*')
 
 logger = logging.getLogger(__name__)
 
@@ -238,7 +238,7 @@ class Messenger(object):
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
-        target = get_target(ZAC_FLAG, msg_text)
+        target = get_target(ENCOURAGE_FLAG, msg_text)
         txt = 'Get your shit together {0}'.format(target)
         self.write_slow(txt, channel_id)
 
