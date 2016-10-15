@@ -314,7 +314,7 @@ class Messenger(object):
 
     def write_sweetpotato_me(self, msg_text, channel_id):
         target = get_target(SWEETPOTATO_FLAG, msg_text)
-        txt = 'Here, <@{}>! :sweet_potato:'.format(target)
+        txt = 'Here, {}! :sweet_potato:'.format(target)
         self.write_slow(txt, channel_id)
 
     def write_draw_me(self, channel_id):
