@@ -7,3 +7,7 @@ bot/setup_rude_manager.py
 bot/rudemodule.c
 
 *.pyc
+
+bot/.DS_Store
+
+.DS_Store

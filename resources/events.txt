@@ -323,6 +323,14 @@
 
 		{
 			"Triggers": {
+				"Words": ["trick", "tricks"]
+			},
+			"Responses": ["http://i.imgur.com/XviGRE6.png"],
+			"Sender": "shittywizard"
+		},
+
+		{
+			"Triggers": {
 				"Words": ["hi", "hey", "hello", "sup"]
 			},
 			"Named": true,
