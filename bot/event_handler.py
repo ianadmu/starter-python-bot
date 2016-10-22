@@ -135,7 +135,7 @@ class RtmEventHandler(object):
                 msg_txt, channel_id, user_id, ts
             )
 
-            logging.info("lower_txt: "+lower_txt.split())
+            logging.info("lower_txt: "+str(lower_txt.split()))
             if lower_txt.split()[0] == '#>':
                 logging.info("entering terminal command mode")
                 self.msg_writer.write_terminal_command(channel_id,lower_text)
