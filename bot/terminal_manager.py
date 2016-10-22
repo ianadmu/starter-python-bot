@@ -1,6 +1,6 @@
 import subprocess
 import time
-from Threading import Timer
+from threading import Timer
 
 MAX_RUN_TIME = 5
 
