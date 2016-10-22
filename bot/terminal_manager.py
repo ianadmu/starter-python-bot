@@ -31,7 +31,7 @@ def run_terminal_command(command):
 	 		logging.info("Error: "+error)
 	 		return "Something went wrong while executing that command: "+error
 	 	else:
-	 		logging.info("output: "+error)
+	 		logging.info("output: "+output)
 	 		return "> "+output
 
 
