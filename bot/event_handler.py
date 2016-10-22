@@ -110,6 +110,7 @@ class RtmEventHandler(object):
 
         # Filter out messages from the bot itself
         if 'user' in event and not self.clients.is_message_from_me(event):
+            logger.debug("Handling event")
 
             msg_txt = event['text']
             channel_id = event['channel']
@@ -135,6 +136,7 @@ class RtmEventHandler(object):
             )
 
             if lower_txt.split()[0] == '#>':
+                logger.debug("entering terminal command mode")
                 self.msg_writer.write_terminal_command(channel_id,lower_text)
             else:
                 # Return channel and user information
