@@ -310,8 +310,8 @@ class Messenger(object):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(txt, channel_id)
 
-    def write_terminal_command(channel_id,text):
-        logger.debug("In Messenger for terminal_manager")
+    def write_terminal_command(self,channel_id,text):
+        logger.info("In Messenger for terminal_manager")
         self.send_message(terminal_manager.run_terminal_command(text), channel_id)
 
 def pokemon_i_choose_you(msg):
