@@ -25,7 +25,7 @@ def run_terminal_command(command):
 		output, error = process.communicate()
 		control_vars["command_completed"] = True
 
-		if process_killed:
+		if control_vars["process_killed"]:
 			return "I took to long to run a command!"
 	 	elif error:
 	 		logging.info("Error: "+error)
@@ -38,6 +38,7 @@ def run_terminal_command(command):
 	def _dead_man_swicth():
 		if not control_vars["command_completed"]:
 			if control_vars["process"]:
+				control_vars["process_killed"] = True
 				control_vars["process"].kill()	
 
 	control_vars["dead_man_swicth_timer"] = Timer(MAX_RUN_TIME, _dead_man_swicth)
