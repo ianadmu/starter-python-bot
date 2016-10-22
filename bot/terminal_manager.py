@@ -40,6 +40,6 @@ def run_terminal_command(command):
 			if control_vars["process"]:
 				control_vars["process"].kill()	
 
-	control_vars["dead_man_swicth_timer"] = Timer(MAX_RUN_TIME, terminal_manager._dead_man_swicth)
+	control_vars["dead_man_swicth_timer"] = Timer(MAX_RUN_TIME, _dead_man_swicth)
 	logging.info("starting terminal command")
-	return terminal_manager._run_command_wrapper()
+	return _run_command_wrapper()
