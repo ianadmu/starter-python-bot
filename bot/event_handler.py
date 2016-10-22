@@ -134,7 +134,7 @@ class RtmEventHandler(object):
                 msg_txt, channel_id, user_id, ts
             )
 
-            if lower_text.split()[0] == '#>':
+            if lower_txt.split()[0] == '#>':
                 self.msg_writer.write_terminal_command(channel_id,lower_text)
             else:
                 # Return channel and user information

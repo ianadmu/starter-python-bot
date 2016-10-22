@@ -5,6 +5,7 @@ import random
 import re
 import xkcd_manager
 import weather_manager
+import terminal_manager
 import requests
 
 from channel_manager import ChannelManager
@@ -309,6 +310,8 @@ class Messenger(object):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(txt, channel_id)
 
+    def write_terminal_command(channel_id,text):
+        self.send_message(terminal_manager.run_terminal_command(text), channel_id)
 
 def pokemon_i_choose_you(msg):
     target = msg.split()[0]
