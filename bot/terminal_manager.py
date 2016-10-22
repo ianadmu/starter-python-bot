@@ -25,7 +25,8 @@ def run_terminal_command(command):
 	 	elif error:
 	 		return "Something went wrong while executing that command: "+error
 	 	else:
-	 		return output
+
+	 		return "> "+output
 
 
 	def _dead_man_swicth():
