@@ -6,11 +6,11 @@ MAX_RUN_TIME = 5
 
 def run_terminal_command(command):
 	control_vars = {
-		"command_tokens" = command.split()[1:],
-		"command_completed" = False,
-		"process" = None,
-		"process_killed" = False,
-		"dead_man_swicth_timer" = None
+		"command_tokens" : command.split()[1:],
+		"command_completed" : False,
+		"process" : None,
+		"process_killed" : False,
+		"dead_man_swicth_timer" : None
 	}
 
 	def _run_command_wrapper():
