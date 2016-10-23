@@ -82,13 +82,13 @@ class Messenger(object):
         self.send_message_as_other(msg_text, channel, username, emoji)
 
     def send_message_as_other(self, msg_text, channel, username, emoji):
-        msg = msg_text.replace('&', "&amp;")
+        msg_text = msg_text.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
         # msg = msg.decode("utf8", "ignore")
 
         return self.clients.send_message_as_other(
-            msg_text, channel, msg, username, emoji
+            msg_text, channel, username, emoji
         )
 
     def write_slow(self, msg_text, channel=None):
