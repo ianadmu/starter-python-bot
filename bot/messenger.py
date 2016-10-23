@@ -188,9 +188,7 @@ class Messenger(object):
         self.write_slow(txt, channel_id)
 
     def write_joke(self, channel_id):
-        question = "Why did the python cross the road?"
-        self.write_slow(question, channel_id)
-        answer = "To eat the chicken on the other side! :laughing:"
+        answer = "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das Oder die Flipperwaldt gersput!"
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
