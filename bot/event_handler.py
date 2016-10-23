@@ -160,14 +160,13 @@ class RtmEventHandler(object):
 
             # Respond to message text
             if re.search('i choose you', lower_txt):
-                self.msg_writer.write_cast_pokemon(channel_id, lower_txt)
+                self.msg_writer.write_cast_pokemon(lower_txt, channel_id)
             if re.search('weather', lower_txt):
                 self.msg_writer.write_weather(channel_id)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
             if 'xkcd' in lower_txt:
-                requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
-                self.msg_writer.write_xkcd(channel_id, requestedComic)
+                self.msg_writer.write_xkcd(lower_txt, channel_id)
             if (
                 'tictactoe' in lower_txt or ' ttt' in lower_txt or
                 lower_txt.startswith('ttt')
@@ -180,7 +179,7 @@ class RtmEventHandler(object):
             if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
                 if re.search('erase|delete', lower_txt):
                     self.msg_writer.erase_history(
-                        channel_id, ts, msg_txt
+                        msg_txt, channel_id, ts
                     )
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel_id)
@@ -192,7 +191,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_whos_that_pokemon(channel_id)
                 if re.search(' ?zac it\'?s', lower_txt):
                     self.msg_writer.write_pokemon_guessed_response(
-                        channel_id, user_id, msg_txt
+                        msg_txt, channel_id, user_id, msg_txt
                     )
                 if re.search('attachment|beep boop link', lower_txt):
                     self.msg_writer.demo_attachment(channel_id)
@@ -200,14 +199,14 @@ class RtmEventHandler(object):
                     self.msg_writer.write_sad(channel_id)
                 if 'sort me' in lower_txt:
                     self.msg_writer.write_hogwarts_house(
-                        channel_id, user_id,  msg_txt
+                        msg_txt, channel_id, user_id
                     )
                 if re.search('encourage ', lower_txt):
                     self.msg_writer.write_encouragement(msg_txt, channel_id)
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:
-                    self.msg_writer.write_solution(channel_id, msg_txt)
+                    self.msg_writer.write_solution(msg_txt, channel_id)
                 if re.search('explain|why', lower_txt):
                     self.msg_writer.write_explanation(channel_id)
                 if re.search('sweetpotato|sweet potato', lower_txt):

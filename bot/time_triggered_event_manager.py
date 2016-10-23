@@ -162,7 +162,7 @@ class TimeTriggeredEventManager(object):
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
         self.msg_writer.send_message_as_other(
-            'random', txt, 'zac', ':sunglasses:'
+            txt, 'random', 'zac', ':sunglasses:'
         )
         # self.send_message(txt, 'random')
 
@@ -197,7 +197,7 @@ class TimeTriggeredEventManager(object):
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
         self.msg_writer.send_message_as_other(
-            'random', txt, 'zac', ':wine_glass:'
+            txt, 'random', 'zac', ':wine_glass:'
         )
 
     def trigger_random_phrase(self):
@@ -221,7 +221,7 @@ class TimeTriggeredEventManager(object):
                     '_le fast 945_']
         txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
         self.msg_writer.send_message_as_other(
-            'random', txt, 'zac', ':zacefron:'
+            txt, 'random', 'zac', ':zacefron:'
         )
         # self.send_message(txt, 'random')
 
@@ -244,9 +244,8 @@ class TimeTriggeredEventManager(object):
                 '_le mochaccino_']
         txt = '{} :coffee:'.format(random.choice(msgs))
         self.msg_writer.send_message_as_other(
-            'random', txt, 'zac', ':coffee:'
+            txt, 'random', 'zac', ':coffee:'
         )
-        # self.send_message(txt, 'random')
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()

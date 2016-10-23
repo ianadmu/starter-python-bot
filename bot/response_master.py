@@ -206,7 +206,7 @@ class Response_master:
         if message:
             if sender:
                 self.msg_writer.send_slow_message_as_other(
-                    channel, message, sender, ':' + sender + ':'
+                    message, channel, sender, ':' + sender + ':'
                 )
             else:
                 self.msg_writer.write_slow(message, channel)

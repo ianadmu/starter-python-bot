@@ -54,12 +54,17 @@ class SlackClients(object):
         emojis = response['emoji'].items()
         return emojis[int(random.random()*len(emojis))][0]
 
-    def send_message_as_other(self, channel_id, msg, name, emoji):
-        return self.rtm.api_call(
+    def send_message_as_other(self, msg_text, channel_id, username, emoji):
+        response = self.rtm.api_call(
             'chat.postMessage', token=str(self.token), channel=channel_id,
-            text=msg, link_names=1, username=name, unfurl_links=True,
+            text=msg_text, link_names=1, username=username, unfurl_links=True,
             icon_emoji=emoji
         )
+        # Make sure the message gets sent to zac-testing at least
+        if 'error' in response:
+            response = str(response) + "\nOriginal message:\n" + msg_text
+            self.send_message(response, TESTING_CHANNEL)
+        return response
 
     def send_message(self, msg_text, channel):
         response = self.rtm.api_call(
