@@ -240,12 +240,12 @@
 			},
 			"Named": true,
 			"Formatting" : {
-				"Format": "{Thanks} user_id!",
+				"Format": "{Thanks}",
 				"Thanks": [
 					"No problem mon",
 					"Why, you're welcome my friend", "Don't mention it", "You're welcome", "It was a pleasure", 
-					"It was my pleasure", "No sweat", "Anytime", "_Le gratitude_ pleases me. :heart: Thank you", 
-					"No worries", "No, thank you"]
+					"It was my pleasure", "No sweat", "Anytime", "_Le gratitude_ pleases me. :heart:", 
+					"No worries", "No no no, thank _you_"]
 			}
 		},
 
@@ -317,8 +317,7 @@
 			"Triggers": {
 				"Words": ["random"]
 			},
-			"Responses": ["3"],
-			"Sender": "slot_machine"
+			"Reactions": ["three"]
 		},
 
 		{
