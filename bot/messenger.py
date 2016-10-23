@@ -280,7 +280,7 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         original_msg = self.forever_manager.get_response()
-        response = self.write_slow(original_msg)
+        response = self.write_slow(original_msg, channel_id)
         new_msg = '~{}~ Just kidding! :laughing:'.format(original_msg.strip())
         self.update_message(
             new_msg, response['ts'], channel_id, slow=True,
