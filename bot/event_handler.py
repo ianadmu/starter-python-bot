@@ -135,91 +135,94 @@ class RtmEventHandler(object):
                 msg_txt, channel_id, user_id, ts
             )
 
+            # Command line
             logging.info("lower_txt: "+str(lower_txt.split()))
-            if lower_txt.split()[0] == '#>' or lower_txt.split()[0] == u'#&gt;':
+            token = lower_txt.split()[0]
+            if token == '#>' or token == u'#&gt;':
                 logging.info("entering terminal command mode")
-                self.msg_writer.write_terminal_command(channel_id,lower_txt)
-            else:
-                # Return channel and user information
-                if lower_txt == 'channelinfo':
-                    self.msg_writer.send_message(channel_id, channel_id)
-                if lower_txt == 'userinfo':
-                    self.msg_writer.send_message(user_id, channel_id)
-                if lower_txt == 'allusersinfo':
-                    self.user_manager.print_all_users(channel_id)
+                self.msg_writer.write_terminal_command(channel_id, lower_txt)
+                return 0  # Do not continue execution
 
-                # Loud addition and response
-                if should_add_loud(event):
-                    self.msg_writer.write_loud(msg_txt)
-                    self.msg_writer.respond_loud(msg_txt, channel_id)
-                if self._is_edited_with_star(msg_txt):
-                    self.msg_writer.write_spelling_mistake(channel_id, ts)
+            # Return channel and user information
+            if lower_txt == 'channelinfo':
+                self.msg_writer.send_message(channel_id, channel_id)
+            if lower_txt == 'userinfo':
+                self.msg_writer.send_message(user_id, channel_id)
+            if lower_txt == 'allusersinfo':
+                self.user_manager.print_all_users(channel_id)
 
-                # Respond to message text
-                if re.search('i choose you', lower_txt):
-                    self.msg_writer.write_cast_pokemon(channel_id, lower_txt)
-                if re.search('weather', lower_txt):
-                    self.msg_writer.write_weather(channel_id)
-                if re.search('riri', lower_txt):
-                    self.msg_writer.write_riri_me(msg_txt, channel_id)
-                if 'xkcd' in lower_txt:
-                    requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
-                    self.msg_writer.write_xkcd(channel_id, requestedComic)
-                if (
-                    'tictactoe' in lower_txt or ' ttt' in lower_txt or
-                    lower_txt.startswith('ttt')
-                ):
-                    self.tictactoe_manager.get_message(
-                        channel_id, lower_txt, user_name
+            # Loud addition and response
+            if should_add_loud(event):
+                self.msg_writer.write_loud(msg_txt)
+                self.msg_writer.respond_loud(msg_txt, channel_id)
+            if self._is_edited_with_star(msg_txt):
+                self.msg_writer.write_spelling_mistake(channel_id, ts)
+
+            # Respond to message text
+            if re.search('i choose you', lower_txt):
+                self.msg_writer.write_cast_pokemon(channel_id, lower_txt)
+            if re.search('weather', lower_txt):
+                self.msg_writer.write_weather(channel_id)
+            if re.search('riri', lower_txt):
+                self.msg_writer.write_riri_me(msg_txt, channel_id)
+            if 'xkcd' in lower_txt:
+                requestedComic = lower_txt[lower_txt.find('xkcd') + 4:]
+                self.msg_writer.write_xkcd(channel_id, requestedComic)
+            if (
+                'tictactoe' in lower_txt or ' ttt' in lower_txt or
+                lower_txt.startswith('ttt')
+            ):
+                self.tictactoe_manager.get_message(
+                    channel_id, lower_txt, user_name
+                )
+
+            # Respond to message text with `zac` included
+            if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
+                if re.search('erase|delete', lower_txt):
+                    self.msg_writer.erase_history(
+                        channel_id, ts, msg_txt
                     )
-
-                # Respond to message text with `zac` included
-                if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
-                    if 'erase' in lower_txt:
-                        self.msg_writer.erase_history(
-                            channel_id, ts, msg_txt
-                        )
-                    if 'help' in lower_txt:
-                        self.msg_writer.write_help_message(channel_id)
-                    if 'joke' in lower_txt:
-                        self.msg_writer.write_joke(channel_id)
-                    if 'french' in lower_txt:
-                        self.msg_writer.write_french(msg_txt, channel_id)
-                    if re.search('who\'?s that pokemon', msg_txt):
-                        self.msg_writer.write_whos_that_pokemon(channel_id)
-                    if re.search(' ?zac it\'?s', lower_txt):
-                        self.msg_writer.write_pokemon_guessed_response(
-                            channel_id, user_id, msg_txt
-                        )
-                    if re.search('attachment|beep boop link', lower_txt):
-                        self.msg_writer.demo_attachment(channel_id)
-                    if 'sad ' in lower_txt:
-                        self.msg_writer.write_sad(channel_id)
-                    if 'sort me' in lower_txt:
-                        self.msg_writer.write_hogwarts_house(
-                            channel_id, user_id,  msg_txt
-                        )
-                    if re.search('encourage ', lower_txt):
-                        self.msg_writer.write_encouragement(msg_txt, channel_id)
-                    if 'sass ' in lower_txt:
-                        self.msg_writer.write_sass(msg_txt, channel_id)
-                    if 'solve' in lower_txt:
-                        self.msg_writer.write_solution(channel_id, msg_txt)
-                    if re.search('explain|why', lower_txt):
-                        self.msg_writer.write_explanation(channel_id)
-                    if re.search('sweetpotato|sweet potato', lower_txt):
-                        self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
-                    if re.search('draw me', lower_txt):
-                        self.msg_writer.write_draw_me(channel_id)
-                    if re.search('love|forever|relationship', lower_txt):
-                        self.msg_writer.write_forever(channel_id)
-                    if re.search('unflip', lower_txt):
-                        self.msg_writer.write_unflip(channel_id)
-                    elif re.search('flip|rageflip', lower_txt):
-                        self.msg_writer.write_flip(channel_id)
-                    if re.search('sup son', lower_txt):
-                        self.msg_writer.write_sup_son(channel_id)
-                    if lower_txt == "zac":
-                        self.msg_writer.write_prompt(channel_id)
-                    else:
-                        pass
+                if 'help' in lower_txt:
+                    self.msg_writer.write_help_message(channel_id)
+                if 'joke' in lower_txt:
+                    self.msg_writer.write_joke(channel_id)
+                if 'french' in lower_txt:
+                    self.msg_writer.write_french(msg_txt, channel_id)
+                if re.search('who\'?s that pokemon', msg_txt):
+                    self.msg_writer.write_whos_that_pokemon(channel_id)
+                if re.search(' ?zac it\'?s', lower_txt):
+                    self.msg_writer.write_pokemon_guessed_response(
+                        channel_id, user_id, msg_txt
+                    )
+                if re.search('attachment|beep boop link', lower_txt):
+                    self.msg_writer.demo_attachment(channel_id)
+                if 'sad ' in lower_txt:
+                    self.msg_writer.write_sad(channel_id)
+                if 'sort me' in lower_txt:
+                    self.msg_writer.write_hogwarts_house(
+                        channel_id, user_id,  msg_txt
+                    )
+                if re.search('encourage ', lower_txt):
+                    self.msg_writer.write_encouragement(msg_txt, channel_id)
+                if 'sass ' in lower_txt:
+                    self.msg_writer.write_sass(msg_txt, channel_id)
+                if 'solve' in lower_txt:
+                    self.msg_writer.write_solution(channel_id, msg_txt)
+                if re.search('explain|why', lower_txt):
+                    self.msg_writer.write_explanation(channel_id)
+                if re.search('sweetpotato|sweet potato', lower_txt):
+                    self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
+                if re.search('draw me', lower_txt):
+                    self.msg_writer.write_draw_me(channel_id)
+                if re.search('love|forever|relationship', lower_txt):
+                    self.msg_writer.write_forever(channel_id)
+                if re.search('unflip', lower_txt):
+                    self.msg_writer.write_unflip(channel_id)
+                elif re.search('flip|rageflip', lower_txt):
+                    self.msg_writer.write_flip(channel_id)
+                if re.search('sup son', lower_txt):
+                    self.msg_writer.write_sup_son(channel_id)
+                if lower_txt == "zac":
+                    self.msg_writer.write_prompt(channel_id)
+                else:
+                    pass
