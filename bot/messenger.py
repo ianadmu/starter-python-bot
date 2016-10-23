@@ -308,13 +308,15 @@ class Messenger(object):
         txt = xkcd_manager.getImageLocation(msg)
         self.write_slow(txt, channel_id)
 
-    def write_terminal_command(self,channel_id,text):
+    def write_terminal_command(self, msg_text, channel_id):
         logger.info("In Messenger for terminal_manager")
-        self.send_message(terminal_manager.run_terminal_command(text), channel_id)
+        response = terminal_manager.run_terminal_command(msg_text)
+        self.send_message(response, channel_id)
+
 
 def pokemon_i_choose_you(msg):
     target = msg.split()[0]
-    if target in TEAM_MATES:
+    if re.search(TEAM_MATES, target.lower()):
         return "Go! {}!\n:{}:".format(target.title(), target)
     elif target.lower() == "sleep":
         return "Go! {}!\n:{}:".format(target.title(), 'bed')

@@ -140,7 +140,7 @@ class RtmEventHandler(object):
             token = lower_txt.split()[0]
             if token == '#>' or token == u'#&gt;':
                 logging.info("entering terminal command mode")
-                self.msg_writer.write_terminal_command(channel_id, lower_txt)
+                self.msg_writer.write_terminal_command(lower_txt, channel_id)
                 return 0  # Do not continue execution
 
             # Return channel and user information
