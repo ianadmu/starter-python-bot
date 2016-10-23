@@ -36,10 +36,20 @@ class TimeTriggeredEventManager(object):
         return self.clients.get_random_emoji()
 
     def clean_channels_history(self):
+        result = 'Erased messages: '
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         for channel_id in self.channel_manager.get_all_channel_ids():
             if channel_id != testing_channel:
-                self._erase_channel_messages(channel_id, log_days=3)
+                count = self._erase_channel_messages(channel_id, log_days=3)
+                if count != 0:
+                    result += '<#{}> ({}), '.format(
+                        str(channel_id), str(count)
+                    )
+        if result.endswith(', '):
+            result = result[:-2]
+        else:
+            result = 'No messages erased during general clean up'
+        self.send_message(result)
 
     def clean_testing_channel_history(self):
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
@@ -49,8 +59,8 @@ class TimeTriggeredEventManager(object):
             total_count += count
             if count == 0:
                 break
-        result = 'Erased {} total messages from <#{}>'.format(
-            str(total_count), str(testing_channel)
+        result = 'Erased {} total messages from <#{}> in {} passes'.format(
+            str(total_count), str(testing_channel), str(num)
         )
         self.send_message(result)
 
@@ -85,10 +95,6 @@ class TimeTriggeredEventManager(object):
                     ):
                         self.clients.delete_message(channel_id, message['ts'])
                         count += 1
-        result = 'Erased {} messages from <#{}>'.format(
-            str(count), str(channel_id)
-        )
-        self.send_message(result)
         return count
 
     def process_recent_messages(self):
@@ -253,7 +259,7 @@ class TimeTriggeredEventManager(object):
             if hour == 1:
                 if minute == 15:
                     self.clean_channels_history()
-                if minute == 0 or minute == 30 or minute == 45:
+                if minute == 0 or minute == 30:
                     self.clean_testing_channel_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
