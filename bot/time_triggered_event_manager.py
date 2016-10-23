@@ -120,8 +120,8 @@ class TimeTriggeredEventManager(object):
                                 count_louds += 1
 
         result = (
-            "Added " + str(count_markov) + " messages to markov\n"
-            "Added " + str(count_louds) + " loud messages"
+            "Added " + str(count_markov) + " messages to markov "
+            "and " + str(count_louds) + " loud messages"
         )
         self.send_message(result)
 
@@ -162,7 +162,7 @@ class TimeTriggeredEventManager(object):
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
         self.msg_writer.send_message_as_other(
-            'random', txt, 'sunglasses', ':sunglasses:'
+            'random', txt, 'zac', ':sunglasses:'
         )
         # self.send_message(txt, 'random')
 
@@ -197,9 +197,8 @@ class TimeTriggeredEventManager(object):
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
         self.msg_writer.send_message_as_other(
-            'random', txt, 'Zac Efron', ':wine_glass:'
+            'random', txt, 'zac', ':wine_glass:'
         )
-        self.send_message(txt, 'random')
 
     def trigger_random_phrase(self):
         if random.random() < 0.03:
@@ -222,7 +221,7 @@ class TimeTriggeredEventManager(object):
                     '_le fast 945_']
         txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
         self.msg_writer.send_message_as_other(
-            'random', txt, 'zacefron', ':zacefron:'
+            'random', txt, 'zac', ':zacefron:'
         )
         # self.send_message(txt, 'random')
 
@@ -245,7 +244,7 @@ class TimeTriggeredEventManager(object):
                 '_le mochaccino_']
         txt = '{} :coffee:'.format(random.choice(msgs))
         self.msg_writer.send_message_as_other(
-            'random', txt, 'coffee', ':coffee:'
+            'random', txt, 'zac', ':coffee:'
         )
         # self.send_message(txt, 'random')
 
