@@ -5,6 +5,7 @@ import random
 import re
 import xkcd_manager
 import weather_manager
+import terminal_manager
 import requests
 
 from channel_manager import ChannelManager
@@ -41,9 +42,9 @@ class Messenger(object):
         self.channel_manager = ChannelManager(slack_clients)
         self.sassMarkov = Markov(3, self, ['insults.txt'])
 
-    def erase_history(self, channel_id, now_timestamp, msg):
+    def erase_history(self, msg_text, channel_id, now_timestamp):
         try:
-            tokens = re.findall('[0-9]+', msg)
+            tokens = re.findall('[0-9]+', msg_text)
             delete_num = int(tokens[0])
             count = 0
             response = self.clients.get_message_history(channel_id)
@@ -76,18 +77,18 @@ class Messenger(object):
         txt = random.choice(closing_msgs)
         self.send_message(txt)
 
-    def send_slow_message_as_other(self, channel_id, msg, username, emoji):
-        self.clients.send_user_typing_pause(channel_id)
-        self.send_message_as_other(channel_id, msg, username, emoji)
+    def send_slow_message_as_other(self, msg_text, channel, username, emoji):
+        self.clients.send_user_typing_pause(channel)
+        self.send_message_as_other(msg_text, channel, username, emoji)
 
-    def send_message_as_other(self, channel_id, msg, username, emoji):
-        msg = msg.replace('&', "&amp;")
+    def send_message_as_other(self, msg_text, channel, username, emoji):
+        msg_text = msg_text.replace('&', "&amp;")
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
         # msg = msg.decode("utf8", "ignore")
 
         return self.clients.send_message_as_other(
-            channel_id, msg, username, emoji
+            msg_text, channel, username, emoji
         )
 
     def write_slow(self, msg_text, channel=None):
@@ -100,6 +101,7 @@ class Messenger(object):
         # msg = msg.replace('<', "&lt;")
         # msg = msg.replace('>', "&gt;")
         # msg = msg.decode("utf8", "ignore")
+
         if channel is None:
             channel = TESTING_CHANNEL
         if slow is True:
@@ -187,9 +189,10 @@ class Messenger(object):
         self.write_slow(txt, channel_id)
 
     def write_joke(self, channel_id):
-        question = "Why did the python cross the road?"
-        self.write_slow(question, channel_id)
-        answer = "To eat the chicken on the other side! :laughing:"
+        answer = (
+            "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
+            "Oder die Flipperwaldt gersput!"
+        )
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
@@ -201,20 +204,19 @@ class Messenger(object):
         txt = '{} {}'.format(random.choice(encouragements), target)
         self.write_slow(txt, channel_id)
 
-    def write_cast_pokemon(self, channel_id, msg):
-        pkmn = pokemon_i_choose_you(msg)
-        if pkmn is None:
-            pkmn = 'Pokemon escaped! :O'
-        self.send_message(pkmn, channel_id)
+    def write_cast_pokemon(self, lower_msg_text, channel_id):
+        pkmn = pokemon_i_choose_you(lower_msg_text)
+        if pkmn is not None:
+            self.send_message(pkmn, channel_id)
 
     def write_whos_that_pokemon(self, channel_id):
         txt = self.whos_that_pokemon_manager.whos_that_pkmn()
         self.send_message(txt, channel_id)
 
-    def write_pokemon_guessed_response(self, channel_id, user_id, msg):
-        result = self.whos_that_pokemon_manager.check_response(user_id, msg)
-        if result is not None:
-            self.send_message(result, channel_id)
+    def write_pokemon_guessed_response(self, msg_text, channel_id, user_id):
+        text = self.whos_that_pokemon_manager.check_response(user_id, msg_text)
+        if text is not None:
+            self.send_message(text, channel_id)
 
     def write_sad(self, channel_id):
         txt = "I'm crying into my tea. :joy:"
@@ -256,8 +258,8 @@ class Messenger(object):
         if is_zac_mention(orig_msg) or random.random() < 0.25:
             self.send_message(self.loud_manager.get_random_loud(), channel_id)
 
-    def write_hogwarts_house(self, channel_id, user_id, msg):
-        response = self.hogwarts_house_sorter.sort_into_house(msg)
+    def write_hogwarts_house(self, msg_text, channel_id, user_id):
+        response = self.hogwarts_house_sorter.sort_into_house(msg_text)
         self.write_slow('<@{}>: {}'.format(user_id, response), channel_id)
 
     def write_explanation(self, channel_id):
@@ -268,8 +270,8 @@ class Messenger(object):
         sass = 'Hey, {}! {}'.format(target, str(self.sassMarkov))
         self.write_slow(sass, channel_id)
 
-    def write_solution(self, channel_id, msg):
-        self.write_slow(self.equation_manager.solve(msg), channel_id)
+    def write_solution(self, msg_text, channel_id):
+        self.write_slow(self.equation_manager.solve(msg_text), channel_id)
 
     def write_sweetpotato_me(self, msg_text, channel_id):
         target = get_target(SWEETPOTATO_FLAG, msg_text)
@@ -281,7 +283,7 @@ class Messenger(object):
 
     def write_forever(self, channel_id):
         original_msg = self.forever_manager.get_response()
-        response = self.write_slow(original_msg)
+        response = self.write_slow(original_msg, channel_id)
         new_msg = '~{}~ Just kidding! :laughing:'.format(original_msg.strip())
         self.update_message(
             new_msg, response['ts'], channel_id, slow=True,
@@ -305,14 +307,20 @@ class Messenger(object):
             txt = "WHY WOULD YOU JUST TYPE RIRI?\n"
         self.write_slow(txt, channel_id)
 
-    def write_xkcd(self, channel_id, msg):
-        txt = xkcd_manager.getImageLocation(msg)
+    def write_xkcd(self, lower_msg_text, channel_id):
+        requestedComic = lower_msg_text[lower_msg_text.find('xkcd') + 4:]
+        txt = xkcd_manager.getImageLocation(requestedComic)
         self.write_slow(txt, channel_id)
 
+    def write_terminal_command(self, lower_msg_text, channel_id):
+        logger.info("In Messenger for terminal_manager")
+        response = terminal_manager.run_terminal_command(lower_msg_text)
+        self.send_message(response, channel_id)
 
-def pokemon_i_choose_you(msg):
-    target = msg.split()[0]
-    if target in TEAM_MATES:
+
+def pokemon_i_choose_you(lower_msg_text):
+    target = lower_msg_text.split()[0]
+    if re.search(TEAM_MATES, target.lower()):
         return "Go! {}!\n:{}:".format(target.title(), target)
     elif target.lower() == "sleep":
         return "Go! {}!\n:{}:".format(target.title(), 'bed')
