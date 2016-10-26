@@ -26,7 +26,11 @@ class SlackClients(object):
 
         self.msg_writer = Messenger(self)
 
+        # Set up bot_id
         self.bot_id = None
+        self.send_message_as_other(
+            'Initializing bot_id', TESTING_CHANNEL, 'zac', ':zacefron:'
+        )
 
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
