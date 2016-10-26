@@ -40,6 +40,8 @@ class SlackClients(object):
             )
         ):
             return True
+        # elif 'bot_id' in message:
+            # self.msg_writer.send_message(message['bot_id'])
         return False
 
     def is_bot_mention(self, message):
@@ -69,7 +71,7 @@ class SlackClients(object):
         # Make sure the message gets sent to zac-testing at least
         if 'error' in response:
             response = str(response) + "\nOriginal message:\n" + msg_text
-            self.send_message(response, TESTING_CHANNEL)
+        self.send_message(response, TESTING_CHANNEL)
         return response
 
     def send_message(self, msg_text, channel):
