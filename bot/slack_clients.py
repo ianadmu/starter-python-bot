@@ -71,14 +71,14 @@ class SlackClients(object):
         )
 
         # Make sure the message gets sent to zac-testing at least
-        if 'error' in response:
+        if 'error' in str(response):
             response = str(response) + "\nOriginal message:\n" + msg_text
             self.send_message(response, TESTING_CHANNEL)
-        elif 'bot_id' in response and self.bot_id is None:
+        elif 'bot_id' in str(response) and self.bot_id is None:
             self.bot_id = response[u'bot_id']
             msg_text = 'Initialized bot_id: ' + self.bot_id
             self.send_message(msg_text, TESTING_CHANNEL)
-        self.send_message(response, TESTING_CHANNEL)
+        self.send_message(str(response), TESTING_CHANNEL)
         return response
 
     def send_message(self, msg_text, channel):
