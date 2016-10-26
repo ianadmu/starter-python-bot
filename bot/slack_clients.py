@@ -8,6 +8,7 @@ import os.path
 from slacker import Slacker
 from slackclient import SlackClient
 from messenger import Messenger
+from channel_manager import ChannelManager
 
 from common import TESTING_CHANNEL
 
@@ -25,6 +26,7 @@ class SlackClients(object):
         self.rtm = SlackClient(token)
 
         self.msg_writer = Messenger(self)
+        self.channel_manager = ChannelManager(self)
 
         # Set up bot_id
         self.bot_id = None
@@ -83,7 +85,9 @@ class SlackClients(object):
             if 'bot_id' in message:
                 self.bot_id = message['bot_id']
                 self.msg_writer.erase_history(
-                    'zac erase 1', TESTING_CHANNEL, float(time.time())
+                    'zac erase 1',
+                    self.channel_manager.get_channel_id(TESTING_CHANNEL),
+                    float(time.time())
                 )
                 msg_text = 'Initialized bot_id: ' + self.bot_id
                 self.send_message(msg_text, TESTING_CHANNEL)
