@@ -43,4 +43,4 @@ class HogwartsHouseSorter(object):
         if house != "":
             description = self.get_house_description(house)
             return "You have been sorted into: " + house + "!\n" + description
-        return "Sorry you seem to be a muggle in disguise"
+        return "Sorry, you seem to be a muggle in disguise"
