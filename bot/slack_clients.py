@@ -75,7 +75,8 @@ class SlackClients(object):
             response = str(response) + "\nOriginal message:\n" + msg_text
             self.send_message(response, TESTING_CHANNEL)
         elif 'bot_id' in str(response) and self.bot_id is None:
-            self.bot_id = response[u'bot_id']
+            self.send_message(str(response), TESTING_CHANNEL)
+            self.bot_id = response['bot_id']
             msg_text = 'Initialized bot_id: ' + self.bot_id
             self.send_message(msg_text, TESTING_CHANNEL)
         self.send_message(str(response), TESTING_CHANNEL)
