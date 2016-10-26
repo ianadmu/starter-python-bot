@@ -26,6 +26,8 @@ class SlackClients(object):
 
         self.msg_writer = Messenger(self)
 
+        self.bot_id = None
+
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
 
@@ -33,15 +35,14 @@ class SlackClients(object):
         if 'user' in message and message['user'] == self.bot_user_id():
             return True
         elif (
-            'bot_id' in message and
+            'bot_id' in message and self.bot_id is not None and
             (
-                message['bot_id'] == 'B1S057DV0' or
-                message['bot_id'] == 'B281H28AX'
+                message['bot_id'] == 'B1S057DV0'
+                # message['bot_id'] == 'B1S057DV0' or
+                # message['bot_id'] == 'B15JNU2AU'
             )
         ):
             return True
-        # elif 'bot_id' in message:
-            # self.msg_writer.send_message(message['bot_id'])
         return False
 
     def is_bot_mention(self, message):
@@ -71,7 +72,11 @@ class SlackClients(object):
         # Make sure the message gets sent to zac-testing at least
         if 'error' in response:
             response = str(response) + "\nOriginal message:\n" + msg_text
-        self.send_message(str(response), TESTING_CHANNEL)
+            self.send_message(response, TESTING_CHANNEL)
+        elif 'bot_id' in response and self.bot_id is None:
+            self.bot_id = response['bot_id']
+            msg_text = 'Initialized bot_id: ' + self.bot_id
+            self.send_message(msg_text, TESTING_CHANNEL)
         return response
 
     def send_message(self, msg_text, channel):
