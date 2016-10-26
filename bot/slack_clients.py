@@ -8,6 +8,7 @@ import os.path
 from slacker import Slacker
 from slackclient import SlackClient
 from messenger import Messenger
+from channel_manager import ChannelManager
 
 from common import TESTING_CHANNEL
 
@@ -25,8 +26,27 @@ class SlackClients(object):
         self.rtm = SlackClient(token)
 
         self.msg_writer = Messenger(self)
+        self.channel_manager = ChannelManager(self)
 
+        # Set up bot_id
         self.bot_id = None
+        self.startUp()
+
+    def startUp(self):
+        response = self.send_message_as_other(
+            'Initializing bot_id...', TESTING_CHANNEL, 'zac', ':zacefron:'
+        )
+        if self.bot_id is None and 'message' in response:
+            message = response['message']
+            if 'bot_id' in message:
+                self.bot_id = message['bot_id']
+                self.msg_writer.erase_history(
+                    'zac erase 1',
+                    self.channel_manager.get_channel_id(TESTING_CHANNEL),
+                    float(time.time())
+                )
+                # msg_text = 'Initialized bot_id: ' + self.bot_id
+                # self.send_message(msg_text, TESTING_CHANNEL)
 
     def bot_user_id(self):
         return self.rtm.server.login_data['self']['id']
@@ -74,12 +94,6 @@ class SlackClients(object):
         if 'error' in response:
             response = str(response) + "\nOriginal message:\n" + msg_text
             self.send_message(response, TESTING_CHANNEL)
-        elif self.bot_id is None and 'message' in response:
-            message = response['message']
-            if 'bot_id' in message:
-                self.bot_id = message['bot_id']
-                msg_text = 'Initialized bot_id: ' + self.bot_id
-                self.send_message(msg_text, TESTING_CHANNEL)
         return response
 
     def send_message(self, msg_text, channel):
