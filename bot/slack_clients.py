@@ -37,7 +37,7 @@ class SlackClients(object):
         elif (
             'bot_id' in message and self.bot_id is not None and
             (
-                message['bot_id'] == 'B1S057DV0'
+                message['bot_id'] == self.bot_id
                 # message['bot_id'] == 'B1S057DV0' or
                 # message['bot_id'] == 'B15JNU2AU'
             )
