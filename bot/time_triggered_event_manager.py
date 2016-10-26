@@ -158,7 +158,7 @@ class TimeTriggeredEventManager(object):
     def trigger_morning(self):
         responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
                      "Ohayou", "Good morning to you", "Aloha",
-                     "Konnichiwashington", "Buenos dias", "GLUTEN MORNING"
+                     "Konnichiwashington", "Buenos dias", "GLUTEN MORNING",
                      ":sunny: Good morning", "Where have you been. MORNING"]
         txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
         self.msg_writer.send_message_as_other(

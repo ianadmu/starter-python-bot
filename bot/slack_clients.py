@@ -32,8 +32,9 @@ class SlackClients(object):
     def is_message_from_me(self, message):
         if 'user' in message and message['user'] == self.bot_user_id():
             return True
-        elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
-            return True
+        elif 'bot_id' in message:  # and message['bot_id'] == 'B1S057DV0':
+            self.msg_writer.send_message(message['bot_id'])
+            # return True
         return False
 
     def is_bot_mention(self, message):
