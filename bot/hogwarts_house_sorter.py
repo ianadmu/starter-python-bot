@@ -30,7 +30,7 @@ class HogwartsHouseSorter(object):
                     options.append(house)
             if len(options) == 0:
                 options = list(HOUSES)
-            return random.choise(options)
+            return random.choice(options)
 
     def get_house_description(self, house):
         tree = ET.parse(os.path.join('./resources', 'house_descriptions.xml'))
