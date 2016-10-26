@@ -29,7 +29,7 @@ class SlackClients(object):
         # Set up bot_id
         self.bot_id = None
         self.send_message_as_other(
-            'Initializing bot_id', TESTING_CHANNEL, 'zac', ':zacefron:'
+            '', TESTING_CHANNEL, 'zac', ':zacefron:'
         )
 
     def bot_user_id(self):
