@@ -32,7 +32,13 @@ class SlackClients(object):
     def is_message_from_me(self, message):
         if 'user' in message and message['user'] == self.bot_user_id():
             return True
-        elif 'bot_id' in message and message['bot_id'] == 'B1S057DV0':
+        elif (
+            'bot_id' in message and
+            (
+                message['bot_id'] == 'B1S057DV0' or
+                message['bot_id'] == 'B281H28AX'
+            )
+        ):
             return True
         return False
 
