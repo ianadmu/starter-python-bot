@@ -79,6 +79,7 @@ class SlackClients(object):
             self.bot_id = response['bot_id']
             msg_text = 'Initialized bot_id: ' + self.bot_id
             self.send_message(msg_text, TESTING_CHANNEL)
+        self.send_message(response, TESTING_CHANNEL)
         return response
 
     def send_message(self, msg_text, channel):
