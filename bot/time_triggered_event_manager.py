@@ -109,6 +109,10 @@ class TimeTriggeredEventManager(object):
                         if not self.clients.is_message_from_me(message):
                             msg_text = message['text']
 
+                            # temporary debug statement
+                            if channel_id == self.channel_manager.get_channel_id('newspeepscanmute'):
+                                self.send_message(message)
+
                             # Add markovs
                             if should_add_markov(message):
                                 self.markov_chain.add_single_line(msg_text)
@@ -201,7 +205,7 @@ class TimeTriggeredEventManager(object):
         )
 
     def trigger_random_phrase(self):
-        if random.random() < 0.03:
+        if random.random() < 0.02:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message(txt, 'random')
