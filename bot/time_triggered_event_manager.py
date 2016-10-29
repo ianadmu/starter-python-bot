@@ -109,7 +109,7 @@ class TimeTriggeredEventManager(object):
                         if not self.clients.is_message_from_me(message):
                             msg_text = message['text']
 
-                            self.send_message(self.channel_manager.get_all_channel_names())
+                            self.send_message(str(self.channel_manager.get_all_channel_names()))
                             # temporary debug statement
                             try:
                                 if channel_id == self.channel_manager.get_channel_id('newspeepscanmute'):
