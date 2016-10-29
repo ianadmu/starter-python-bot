@@ -114,7 +114,8 @@ class TimeTriggeredEventManager(object):
                             try:
                                 if channel_id == self.channel_manager.get_channel_id('newspeepscanmute'):
                                     self.send_message(str(message))
-                            except:
+                            except Exception as e:
+                                self.send_message(str(e))
                                 pass
 
                             # Add markovs
