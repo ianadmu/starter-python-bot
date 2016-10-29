@@ -113,7 +113,7 @@ class TimeTriggeredEventManager(object):
                             # temporary debug statement
                             try:
                                 if channel_id == self.channel_manager.get_channel_id('newspeepscanmute'):
-                                    self.send_message(message)
+                                    self.send_message(str(message))
                             except:
                                 pass
 
