@@ -107,17 +107,20 @@ class TimeTriggeredEventManager(object):
                 if 'messages' in response:
                     for message in response['messages']:
                         if not self.clients.is_message_from_me(message):
-                            msg_text = message['text']
+                            if 'text' in message:
+                                msg_text = message['text']
 
-                            # Add markovs
-                            if should_add_markov(message):
-                                self.markov_chain.add_single_line(msg_text)
-                                count_markov += 1
+                                # Add markovs
+                                if should_add_markov(message):
+                                    self.markov_chain.add_single_line(msg_text)
+                                    count_markov += 1
 
-                            # Add louds
-                            if should_add_loud(message):
-                                self.msg_writer.write_loud(msg_text)
-                                count_louds += 1
+                                # Add louds
+                                if should_add_loud(message):
+                                    self.msg_writer.write_loud(msg_text)
+                                    count_louds += 1
+                            else:
+                                self.send_message(str(message))
 
         result = (
             "Added " + str(count_markov) + " messages to markov "
