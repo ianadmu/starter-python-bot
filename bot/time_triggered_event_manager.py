@@ -55,7 +55,7 @@ class TimeTriggeredEventManager(object):
         testing_channel = self.channel_manager.get_channel_id(TESTING_CHANNEL)
         total_count = 0
         for num in range(10):
-            count = self._erase_channel_messages(testing_channel, log_days=2)
+            count = self._erase_channel_messages(testing_channel, log_days=1)
             total_count += count
             if count == 0:
                 break
@@ -64,7 +64,7 @@ class TimeTriggeredEventManager(object):
         )
         self.send_message(result)
 
-    def _erase_channel_messages(self, channel_id, log_days=None):
+    def _erase_channel_messages(self, channel_id, log_days=0):
         count = 0
         now_ts = float(time.time())
         response = self.clients.get_message_history(channel_id)
@@ -119,9 +119,6 @@ class TimeTriggeredEventManager(object):
                                 if should_add_loud(message):
                                     self.msg_writer.write_loud(msg_text)
                                     count_louds += 1
-                            else:
-                                self.send_message(str(message))
-
         result = (
             "Added " + str(count_markov) + " messages to markov "
             "and " + str(count_louds) + " loud messages"
