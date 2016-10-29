@@ -113,13 +113,6 @@ class TimeTriggeredEventManager(object):
                             if should_add_markov(message):
                                 self.markov_chain.add_single_line(msg_text)
                                 count_markov += 1
-                                try:
-                                    if channel_id == self.channel_manager.get_channel_id('newspeepscanmute'):
-                                        self.send_message(str(message))
-                                except Exception as e:
-                                    self.send_message(str(e))
-                                    pass
-
 
                             # Add louds
                             if should_add_loud(message):
