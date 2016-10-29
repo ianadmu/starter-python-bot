@@ -27,7 +27,7 @@ def is_bot_message(message):
 
 def should_add_markov(message):
     msg_text = message['text']
-    if 'subtype' in message and message['subtype'] == 'bot_message':
+    if is_bot_message(message):
         return False
     if (
         'attachments' not in message
