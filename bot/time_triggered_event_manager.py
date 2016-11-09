@@ -281,7 +281,7 @@ class TimeTriggeredEventManager(object):
 
 
 def _get_datetime():
-    curr_datetime = datetime.utcnow() - timedelta(hours=HR_DIF_DST)
+    curr_datetime = datetime.utcnow() - timedelta(hours=HR_DIF_NO_DST)
     day = curr_datetime.strftime('%A')
     hour = int(curr_datetime.strftime('%H'))
     minute = int(curr_datetime.strftime('%M'))
