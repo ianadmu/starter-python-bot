@@ -211,6 +211,12 @@ class TimeTriggeredEventManager(object):
         response = weather_manager.getCurrentWeather()
         self.send_message(response)
 
+    def trigger_tuesday(self):
+        txt = "DON'T FORGET IT'S TUESDAY _ALLL_ DAY TODAY"
+        self.msg_writer.send_message_as_other(
+            txt, 'random', 'zac', ':rolled_up_newspaper:'
+        )
+
     def trigger_945(self):
         kip_msgs = ['@945', '945!', '#945', ':paw_prints: 945!', '~945~',
                     ':horse: 945! giddyup', '945! :heart:',
@@ -278,6 +284,9 @@ class TimeTriggeredEventManager(object):
                     self.trigger_wine_club()
                 if hour >= 17 and hour <= 18:
                     self.trigger_random_phrase()
+            if day == 'Tuesday':
+                if hour == 14 and minute == 7:
+                    self.trigger_tuesday()
 
 
 def _get_datetime():

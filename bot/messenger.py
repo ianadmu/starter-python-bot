@@ -12,7 +12,6 @@ from channel_manager import ChannelManager
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
 from hogwarts_house_sorter import HogwartsHouseSorter
-from markov import Markov
 from equation_manager import EquationManager
 from common import (
     ResourceManager, is_zac_mention, get_target,
@@ -39,8 +38,8 @@ class Messenger(object):
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.help_manager = ResourceManager('help_text.txt')
+        self.sass_manager = ResourceManager('insults.txt')
         self.channel_manager = ChannelManager(slack_clients)
-        self.sassMarkov = Markov(3, self, ['insults.txt'])
 
     def erase_history(self, msg_text, channel_id, now_timestamp):
         try:
@@ -198,7 +197,7 @@ class Messenger(object):
     def write_encouragement(self, msg_text, channel_id):
         encouragements = [
             "Get your shit together", "You can do it", "I'm here for you",
-            "Do you just think about youself", "You're the best",
+            "Do you just think about yourself", "You're the best",
         ]
         target = get_target(ENCOURAGE_FLAG, msg_text)
         txt = '{} {}'.format(random.choice(encouragements), target)
@@ -267,7 +266,7 @@ class Messenger(object):
 
     def write_sass(self, msg_txt, channel_id):
         target = get_target(SASS_FLAG, msg_txt)
-        sass = 'Hey, {}! {}'.format(target, str(self.sassMarkov))
+        sass = 'Hey, {}! {}'.format(target, self.sass_manager.get_response())
         self.write_slow(sass, channel_id)
 
     def write_solution(self, msg_text, channel_id):

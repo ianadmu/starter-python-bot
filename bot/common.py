@@ -101,7 +101,7 @@ def _format_target(target):
         if target == 'me':
             return 'you'
         elif target == 'yourself' or is_zac_mention(target):
-            return 'me'
+            return 'Zac Efron'
         elif '<@' in target:
             return target.upper()
         else:
