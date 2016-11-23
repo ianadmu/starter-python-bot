@@ -38,7 +38,7 @@ class Messenger(object):
         self.drawing_manager = ResourceManager('draw_me.txt')
         self.forever_manager = ResourceManager('forever.txt')
         self.help_manager = ResourceManager('help_text.txt')
-        self.sass_manager = ResourceManager('insults.txt')
+        self.sass_manager = ResourceManager('sass.txt')
         self.channel_manager = ChannelManager(slack_clients)
 
     def erase_history(self, msg_text, channel_id, now_timestamp):
