@@ -196,7 +196,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_whos_that_pokemon(channel_id)
                 if re.search(' ?zac it\'?s', lower_txt):
                     self.msg_writer.write_pokemon_guessed_response(
-                        msg_txt, channel_id, user_id, msg_txt
+                        msg_txt, channel_id, user_id
                     )
                 if re.search('attachment|beep boop link', lower_txt):
                     self.msg_writer.demo_attachment(channel_id)
