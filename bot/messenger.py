@@ -157,7 +157,7 @@ class Messenger(object):
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
             self.write_slow(txt, channel_id)
-            self.write_xkcd(channel_id, "15")
+            self.write_xkcd("15", channel_id)
         else:
             self.write_greeting(channel_id, user_id)
 
@@ -317,7 +317,7 @@ class Messenger(object):
         response = terminal_manager.run_terminal_command(lower_msg_text)
         self.send_message(response, channel_id)
 
-    def google_me(self, msg_text, channel_id):
+    def google(self, msg_text, channel_id):
         try:
             tokens = re.split(GOOGLE_FLAG, msg_text)
             query = ""

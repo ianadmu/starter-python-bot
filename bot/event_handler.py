@@ -230,6 +230,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_prompt(channel_id)
                 # The word google must be specified in lower case
                 if 'google' in msg_txt:
-                    self.msg_writer.google_me(msg_txt, channel_id)
+                    self.msg_writer.google(msg_txt, channel_id)
                 else:
                     pass
