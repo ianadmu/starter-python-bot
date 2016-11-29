@@ -23,6 +23,7 @@ ENCOURAGE_FLAG = re.compile('encourage[a-z]* ')
 FRENCH_FLAG = re.compile('french[a-z]* ')
 SWEETPOTATO_FLAG = re.compile('sweet ?potato[a-z]* ')
 RIRI_FLAG = re.compile('riri[a-z]* ')
+GOOGLE_FLAG = re.compile('google[a-z]*')
 
 logger = logging.getLogger(__name__)
 
@@ -315,6 +316,29 @@ class Messenger(object):
         logger.info("In Messenger for terminal_manager")
         response = terminal_manager.run_terminal_command(lower_msg_text)
         self.send_message(response, channel_id)
+
+    def google_me(self, msg_text, channel_id):
+        try:
+            tokens = re.split(GOOGLE_FLAG, msg_text)
+            query = ""
+            for num in range(len(tokens)):
+                if num > 0:
+                    query += "+" + tokens[num].strip()
+            if len(query) > 1:
+                query = query[1:]
+
+            url = (
+                "https://www.googleapis.com/customsearch/v1?key=AIzaSyDs8-"
+                "StJem2hqcu2L-J4PceBPVx5Jk6txk&cx=004179257401026011423:y4"
+                "vp3hnjgvo&q="
+            ) + query
+
+            response = requests.get(url).json()
+            result = response['items'][0]['link']
+
+            self.send_message(result, channel_id)
+        except Exception as e:
+            self.write_error(str(e))
 
 
 def pokemon_i_choose_you(lower_msg_text):
