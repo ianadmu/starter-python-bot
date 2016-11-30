@@ -91,6 +91,9 @@ class LinkManager(object):
     def add_link(self, link_text):
         with open(self.filename, 'a') as f:
             f.write(link_text.replace("\n", " ")+"\n")
+        with open(self.filename, 'r') as f:
+            num_lines = sum(1 for line in f)
+        return num_lines
 
     def get_link(self):
         link = None

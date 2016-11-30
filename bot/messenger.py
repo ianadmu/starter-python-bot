@@ -343,8 +343,11 @@ class Messenger(object):
 
     def link_945(self, msg_text, channel_id):
         my_link = msg_text.partition("zac link ")[2]
-        self.news_links.add_link(my_link)
-        self.send_message("Added " + my_link, channel_id)
+        rank = self.news_links.add_link(my_link)
+        result = 'Added {} to the news reel. It\'s rank is #{}'.format(
+            my_link, rank
+        )
+        self.send_message(result, channel_id)
 
 
 def pokemon_i_choose_you(lower_msg_text):
