@@ -4,7 +4,7 @@ import re
 
 
 DONT_DELETE = (
-    "i came back to life on|winnipeg is currently|loud messages|erased"
+    "i came back to life on|winnipeg is currently|loud messages|erased|news: "
 )
 
 TEAM_MATES = "nicole|jill|kiera|ian|garrett|malcolm|gurritt|kieratoast"
@@ -82,6 +82,32 @@ class ResourceManager(object):
         return len(self.responses)
 
 
+class LinkManager(object):
+
+    def __init__(self):
+        curr_dir = os.path.dirname(os.path.abspath(__file__))
+        self.filename = os.path.join(curr_dir, '../../links.txt')
+
+    def add_link(self, link_text):
+        with open(self.filename, 'a') as f:
+            f.write(link_text.replace("\n", " ")+"\n")
+        with open(self.filename, 'r') as f:
+            num_lines = sum(1 for line in f)
+        return num_lines
+
+    def get_link(self):
+        link = None
+        if not os.path.exists(self.filename):
+            open(self.filename, 'w').close()
+        else:
+            with open(self.filename, 'r') as f:
+                link = f.readline()
+                remaining_file = f.read()
+            with open(self.filename, 'w') as f:
+                f.write(remaining_file)
+        return link
+
+
 """Methods that should only be used from this file"""
 
 
@@ -98,11 +124,11 @@ def _is_loud(msg_text):
 
 
 def _format_target(target):
-        if target == 'me':
-            return 'you'
-        elif target == 'yourself' or is_zac_mention(target):
-            return 'Zac Efron'
-        elif '<@' in target:
-            return target.upper()
-        else:
-            return target.title()
+    if target == 'me':
+        return 'you'
+    elif target == 'yourself' or is_zac_mention(target):
+        return 'Zac Efron'
+    elif '<@' in target:
+        return target.upper()
+    else:
+        return target.title()

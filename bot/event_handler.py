@@ -229,7 +229,9 @@ class RtmEventHandler(object):
                 if lower_txt == "zac":
                     self.msg_writer.write_prompt(channel_id)
                 # The word google must be specified in lower case
-                if 'google' in msg_txt:
+                if 'zac google ' in msg_txt:
                     self.msg_writer.google(msg_txt, channel_id)
+                if 'zac link ' in lower_txt:
+                    self.msg_writer.link_945(msg_txt, channel_id)
                 else:
                     pass
