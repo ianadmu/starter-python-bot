@@ -7,7 +7,7 @@ import re
 from channel_manager import ChannelManager
 from common import (
     ResourceManager, contains_tag, DONT_DELETE,
-    should_add_loud, TESTING_CHANNEL, should_add_markov
+    should_add_loud, TESTING_CHANNEL, should_add_markov, LinkManager,
 )
 from datetime import datetime, timedelta
 import time
@@ -28,6 +28,7 @@ class TimeTriggeredEventManager(object):
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
         self.process_recent_messages()
+        self.news_links = LinkManager()
 
     def send_message(self, msg_txt, channel=None):
         self.msg_writer.send_message(msg_txt, channel)
