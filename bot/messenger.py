@@ -15,7 +15,7 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 from equation_manager import EquationManager
 from common import (
     ResourceManager, is_zac_mention, get_target,
-    TESTING_CHANNEL, TEAM_MATES, DONT_DELETE,
+    TESTING_CHANNEL, TEAM_MATES, DONT_DELETE, LinkManager,
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
@@ -41,6 +41,7 @@ class Messenger(object):
         self.help_manager = ResourceManager('help_text.txt')
         self.sass_manager = ResourceManager('sass.txt')
         self.channel_manager = ChannelManager(slack_clients)
+        self.news_links = LinkManager()
 
     def erase_history(self, msg_text, channel_id, now_timestamp):
         try:
@@ -339,6 +340,11 @@ class Messenger(object):
             self.send_message(result, channel_id)
         except Exception as e:
             self.write_error(str(e))
+
+    def link_945(self, msg_text, channel_id):
+        my_link = msg_text.partition("zac link ")[2]
+        self.news_links.add_link(my_link)
+        self.send_message("Added " + my_link, channel_id)
 
 
 def pokemon_i_choose_you(lower_msg_text):
