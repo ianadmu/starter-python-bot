@@ -4,7 +4,7 @@ import re
 
 
 DONT_DELETE = (
-    "i came back to life on|winnipeg is currently|loud messages|erased"
+    "i came back to life on|winnipeg is currently|loud messages|erased|news: "
 )
 
 TEAM_MATES = "nicole|jill|kiera|ian|garrett|malcolm|gurritt|kieratoast"

@@ -234,7 +234,7 @@ class TimeTriggeredEventManager(object):
     def post_news(self):
         link = self.news_links.get_link()
         if link is not None and link != "":
-            self.send_message(link, TESTING_CHANNEL)
+            self.send_message("News: " + link, TESTING_CHANNEL)
 
     def trigger_mochaccino(self):
         msgs = ['The mochaccino tastes _amazing_ this morning!',
@@ -264,7 +264,6 @@ class TimeTriggeredEventManager(object):
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            self.post_news()
             # self.trigger_ping(day, hour, minute, second)
             if hour == 1:
                 if minute == 15:
@@ -283,6 +282,7 @@ class TimeTriggeredEventManager(object):
                 if hour == 9:
                     if minute == 45:
                         self.trigger_945()
+                        self.post_news()
                     elif minute == 0:
                         self.trigger_mochaccino()
             if day == 'Friday':
