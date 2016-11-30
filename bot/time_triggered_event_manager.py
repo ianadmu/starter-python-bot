@@ -233,7 +233,7 @@ class TimeTriggeredEventManager(object):
 
     def post_news(self):
         link = self.news_links.get_link()
-        if link is not None:
+        if link is not None and link != "":
             self.send_message(link, TESTING_CHANNEL)
 
     def trigger_mochaccino(self):
