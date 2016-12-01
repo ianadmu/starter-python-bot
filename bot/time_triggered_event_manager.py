@@ -221,8 +221,8 @@ class TimeTriggeredEventManager(object):
     def trigger_945(self):
         kip_msgs = [
             '@945', '945!', '#945', ':paw_prints: 945!', '~945~',
-            ':horse: 945! giddyup', '945! :heart:',
-            '945! :sweet_potato:', '945!........', '945 time',
+            ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:',
+            '945!........', '945 time',
             '945 quickie', '945 o\'clock',
             '945! :sheep: :panda_face: :slowpoke:', '945! :boom:',
             ':eggplant: 945.', '945 :coffee:', '_le 945_',
