@@ -240,7 +240,7 @@ class TimeTriggeredEventManager(object):
             if user_name is None or user_name == "":
                 user_name = 'zacefron'
             self.msg_writer.send_message_as_other(
-                txt, TESTING_CHANNEL, user_name, ':{}:'.format(user_name)
+                txt, 'random', user_name, ':{}:'.format(user_name)
             )
 
     def trigger_mochaccino(self):
