@@ -92,11 +92,11 @@ class RtmEventHandler(object):
 
     def _handle_message(self, event):
         if 'subtype' in event:
-            if self._is_edited_by_user(event):
-                self.msg_writer.write_spelling_mistake(
-                    event['channel'], event['message']['ts']
-                )
-            elif (
+            # if self._is_edited_by_user(event):
+            #     self.msg_writer.write_spelling_mistake(
+            #         event['channel'], event['message']['ts']
+            #     )
+            if (
                 event['subtype'] == 'channel_join' and
                 not self.clients.is_message_from_me(event)
             ):
@@ -231,7 +231,8 @@ class RtmEventHandler(object):
                 # The word google must be specified in lower case
                 if 'zac google ' in msg_txt:
                     self.msg_writer.google(msg_txt, channel_id)
-                if 'zac link ' in lower_txt:
-                    self.msg_writer.link_945(msg_txt, channel_id)
+                if msg_txt.startswith('zac add news '):
+                    user_name = self.user_manager.get_user_by_id(user_id)
+                    self.msg_writer.link_945(msg_txt, channel_id, user_name)
                 else:
                     pass
