@@ -101,18 +101,15 @@ class NewsManager(object):
         if not os.path.exists(self.filename):
             open(self.filename, 'w').close()
         else:
-            try:
-                with open(self.filename, 'r') as f:
-                    tokens = f.readline().partition(":")
-                    user_name = tokens[0]
-                    news = tokens[2]
+            with open(self.filename, 'r') as f:
+                tokens = f.readline().partition(":")
+                user_name = tokens[0]
+                news = tokens[2]
 
-                    # Strip first line from file
-                    remaining_file = f.read()
-                with open(self.filename, 'w') as f:
-                    f.write(remaining_file)
-            except Exception as e:
-                news = str(e)
+                # Strip first line from file
+                remaining_file = f.read()
+            with open(self.filename, 'w') as f:
+                f.write(remaining_file)
         return news, user_name
 
 
