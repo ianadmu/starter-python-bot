@@ -86,7 +86,7 @@ class NewsManager(object):
 
     def __init__(self):
         curr_dir = os.path.dirname(os.path.abspath(__file__))
-        self.filename = os.path.join(curr_dir, '../../../news.txt')
+        self.filename = os.path.join(curr_dir, '../../../../news.txt')
 
     def add_news(self, news_text, user_name):
         with open(self.filename, 'a') as f:
