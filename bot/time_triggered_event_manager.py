@@ -7,7 +7,7 @@ import re
 from channel_manager import ChannelManager
 from common import (
     ResourceManager, contains_tag, DONT_DELETE,
-    should_add_loud, TESTING_CHANNEL, should_add_markov, LinkManager,
+    should_add_loud, TESTING_CHANNEL, should_add_markov, NewsManager,
 )
 from datetime import datetime, timedelta
 import time
@@ -28,7 +28,7 @@ class TimeTriggeredEventManager(object):
         self.random_manager = ResourceManager('random_comments.txt')
         self.trigger_startup_log()
         self.process_recent_messages()
-        self.news_links = LinkManager()
+        self.news_links = NewsManager()
 
     def send_message(self, msg_txt, channel=None):
         self.msg_writer.send_message(msg_txt, channel)
@@ -232,9 +232,14 @@ class TimeTriggeredEventManager(object):
         )
 
     def post_news(self):
-        link = self.news_links.get_link()
+        link, user_name = self.news_links.get_news()
         if link is not None and link != "":
-            self.send_message("News: " + link, TESTING_CHANNEL)
+            txt = "News: " + link
+            if user_name is None or user_name == "":
+                user_name = 'zacefron'
+            self.msg_writer.send_message_as_other(
+                txt, 'random', 'user_name', ':{}:'.format(user_name)
+            )
 
     def trigger_mochaccino(self):
         msgs = ['The mochaccino tastes _amazing_ this morning!',
@@ -264,6 +269,7 @@ class TimeTriggeredEventManager(object):
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
+            self.post_news()
             # self.trigger_ping(day, hour, minute, second)
             if hour == 1:
                 if minute == 15:

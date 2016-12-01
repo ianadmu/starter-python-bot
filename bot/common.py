@@ -82,30 +82,38 @@ class ResourceManager(object):
         return len(self.responses)
 
 
-class LinkManager(object):
+class NewsManager(object):
 
     def __init__(self):
         curr_dir = os.path.dirname(os.path.abspath(__file__))
         self.filename = os.path.join(curr_dir, '../../links.txt')
 
-    def add_link(self, link_text):
+    def add_news(self, news_text, user_name):
         with open(self.filename, 'a') as f:
-            f.write(link_text.replace("\n", " ")+"\n")
+            f.write(user_name + ":" + news_text.replace("\n", " ")+"\n")
         with open(self.filename, 'r') as f:
             num_lines = sum(1 for line in f)
         return num_lines
 
-    def get_link(self):
-        link = None
+    def get_news(self):
+        news = None
+        user_name = None
         if not os.path.exists(self.filename):
             open(self.filename, 'w').close()
         else:
-            with open(self.filename, 'r') as f:
-                link = f.readline()
-                remaining_file = f.read()
-            with open(self.filename, 'w') as f:
-                f.write(remaining_file)
-        return link
+            try:
+                with open(self.filename, 'r') as f:
+                    tokens = f.readline().partition(":")
+                    user_name = tokens[0]
+                    news = tokens[2]
+
+                    # Strip first line from file
+                    remaining_file = f.read()
+                with open(self.filename, 'w') as f:
+                    f.write(remaining_file)
+            except Exception as e:
+                news = str(e)
+        return news, user_name
 
 
 """Methods that should only be used from this file"""
