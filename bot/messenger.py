@@ -344,7 +344,7 @@ class Messenger(object):
     def link_945(self, msg_text, channel_id, user_name):
         my_news = msg_text.partition("zac add news ")[2]
         rank = self.news_links.add_news(my_news, user_name)
-        result = 'Added {} from user {} to the news. It\'s rank is #{}'.format(
+        result = 'Added <{}> from `{}` to the news. It\'s rank is #{}'.format(
             my_news, user_name, rank
         )
         self.send_message(result, channel_id)
