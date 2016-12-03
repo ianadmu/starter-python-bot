@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def run_terminal_command(command):
 	control_vars = {
-		"command_tokens" : command.split()[1:],
+		"command_tokens" : command.split()[1:].replace("&gt;",">"),
 		"command_completed" : False,
 		"process" : None,
 		"process_killed" : False,
