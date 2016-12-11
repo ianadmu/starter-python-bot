@@ -7,7 +7,7 @@ from io import StringIO
 
 import config_manager
 
-BACKUP_INTERVAL = 5 # backup every 10 mins
+BACKUP_INTERVAL = 10 * 60 # backup every 10 mins
 DATA_LOAD_INTERVAL = 10
 
 class PersistanceManager(object):
