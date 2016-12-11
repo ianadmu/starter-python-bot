@@ -4,6 +4,7 @@ from persistance_manager import PersistanceManager
 
 class LoudManager(object):
     def __init__(self):
+    	self.a = 2
         # self.loud_file = open(os.path.join('./resources', 'louds.txt'), 'a+')
         # self.persistance_manager  = PersistanceManager("/louds.txt", seed_file="../resources/seed_louds.txt")
 
