@@ -8,6 +8,7 @@ class LoudManager(object):
         # self.persistance_manager  = PersistanceManager("/louds.txt", seed_file="../resources/seed_louds.txt")
 
     def write_loud_to_file(self, loudMessage):
+    	print loudMessage
         # loudMessage = loudMessage.encode("utf8")
         # self.persistance_manager.append_to_data(loudMessage.replace("\n", " ")+"\n")
 
