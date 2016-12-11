@@ -27,8 +27,9 @@ def _check_for_config():
 		Timer(CHECK_INTERVAL,_check_for_config).start()
 
 def _load_config():
-	global config
+	global config, config_loaded
 
 	with open(CONFIG_FILE_PATH) as config_file:
 		config = json.loads(config_file.readline());
+		config_loaded = True
 		print str(config)

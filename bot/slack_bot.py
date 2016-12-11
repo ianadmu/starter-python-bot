@@ -7,6 +7,7 @@ from messenger import Messenger
 from event_handler import RtmEventHandler
 from time_triggered_event_manager import TimeTriggeredEventManager
 from markov import Markov
+import config_loader
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +57,8 @@ class SlackBot(object):
 
             # Random markov here
             markov_chain = Markov(3, msg_writer)
+
+            config_manager.start_config_loader()
 
             event_handler = RtmEventHandler(
                 self.clients, msg_writer, markov_chain
