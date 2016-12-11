@@ -19,7 +19,7 @@ def start_config_loader():
 
 
 def _check_for_config():
-	print "checking for config"
+	#print "checking for config"
 	if not config_loaded and os.path.isfile(CONFIG_FILE_PATH):
 		print "loading config"
 		_load_config()
