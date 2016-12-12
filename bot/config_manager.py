@@ -19,7 +19,7 @@ def start_config_loader():
 
 
 def _check_for_config():
-	#print "checking for config"
+	print "checking "+CONFIG_FILE_PATH
 	if not config_loaded and os.path.isfile(CONFIG_FILE_PATH):
 		print "loading config"
 		_load_config()
@@ -30,6 +30,7 @@ def _load_config():
 	global config, config_loaded
 
 	with open(CONFIG_FILE_PATH) as config_file:
+		pring "jhadfjk"
 		config = json.loads(config_file.readline());
 		config_loaded = True
 		print str(config)

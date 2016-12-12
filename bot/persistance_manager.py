@@ -64,9 +64,10 @@ class PersistanceManager(object):
 			finally:
 				self.data_lock.release()
 				if self._data is None:
+					print "Stuff not loaded"
 					self._start_load_data_worker()
 				else:
-					self.append_to_data("\nTEST,TEST,TEST")
+					print "stuff loaded"
 					self._sched_backup()
 		else:
 			self._start_load_data_worker()
