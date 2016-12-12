@@ -10,7 +10,13 @@ logger = logging.getLogger(__name__)
 def run_terminal_command(command):
 	logging.info("whats goin in")
 	logging.info(command)
+	thing = command.split()
+	logging.info(thing)
+	thing = command.split()[1:]
+	logging.info(thing)
 	thing = command.split()[1:].replace("&gt;",">")
+	logging.info(thing)
+	thing = command.split()[1:].replace("#&gt;",">")
 	logging.info(thing)
 	control_vars = {
 		"command_tokens" : thing,
