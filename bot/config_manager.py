@@ -30,7 +30,7 @@ def _load_config():
 	global config, config_loaded
 
 	with open(CONFIG_FILE_PATH) as config_file:
-		pring "jhadfjk"
+		print "jhadfjk"
 		config = json.loads(config_file.readline());
 		config_loaded = True
 		print str(config)
