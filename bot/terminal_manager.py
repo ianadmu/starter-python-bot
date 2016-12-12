@@ -8,8 +8,12 @@ MAX_RUN_TIME = 5
 logger = logging.getLogger(__name__)
 
 def run_terminal_command(command):
+	logging.info("whats goin in")
+	logging.info(command)
+	thing = command.split()[1:].replace("&gt;",">")
+	logging.info(thing)
 	control_vars = {
-		"command_tokens" : command.split()[1:].replace("&gt;",">"),
+		"command_tokens" : thing,
 		"command_completed" : False,
 		"process" : None,
 		"process_killed" : False,
