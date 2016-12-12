@@ -316,6 +316,7 @@ class Messenger(object):
     def write_terminal_command(self, lower_msg_text, channel_id):
         logger.info("In Messenger for terminal_manager")
         response = terminal_manager.run_terminal_command(lower_msg_text)
+        logger.info("response: "+response)
         self.send_message(response, channel_id)
 
     def google(self, msg_text, channel_id):
