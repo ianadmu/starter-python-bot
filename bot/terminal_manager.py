@@ -8,7 +8,7 @@ MAX_RUN_TIME = 5
 logger = logging.getLogger(__name__)
 
 def run_terminal_command(command):
-	command_array = command.replace("#&gt;",">").split()[1:]
+	command_array = command.replace("&gt;",">").split()[1:]
 
 	control_vars = {
 		"command_tokens" : command_array,
