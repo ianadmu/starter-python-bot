@@ -8,8 +8,10 @@ MAX_RUN_TIME = 5
 logger = logging.getLogger(__name__)
 
 def run_terminal_command(command):
+	command_array = command.replace("&gt;",">").split()[1:]
+
 	control_vars = {
-		"command_tokens" : command.split()[1:],
+		"command_tokens" : command_array,
 		"command_completed" : False,
 		"process" : None,
 		"process_killed" : False,
@@ -17,8 +19,6 @@ def run_terminal_command(command):
 	}
 
 	def _run_command_wrapper():
-		logging.info("Starting wrapper")
-		logging.info(control_vars["command_tokens"])
 		process = subprocess.Popen(control_vars["command_tokens"], stdout=subprocess.PIPE)
 		control_vars["process"] = process
 		control_vars["dead_man_swicth_timer"].start()
@@ -42,5 +42,4 @@ def run_terminal_command(command):
 				control_vars["process"].kill()	
 
 	control_vars["dead_man_swicth_timer"] = Timer(MAX_RUN_TIME, _dead_man_swicth)
-	logging.info("starting terminal command")
 	return _run_command_wrapper()

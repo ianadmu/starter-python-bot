@@ -160,8 +160,8 @@ class RtmEventHandler(object):
             if should_add_loud(event):
                 self.msg_writer.write_loud(msg_txt)
                 self.msg_writer.respond_loud(msg_txt, channel_id)
-            if self._is_edited_with_star(msg_txt):
-                self.msg_writer.write_spelling_mistake(channel_id, ts)
+            # if self._is_edited_with_star(msg_txt):
+            #     self.msg_writer.write_spelling_mistake(channel_id, ts)
 
             # Respond to message text
             if re.search('i choose you', lower_txt):

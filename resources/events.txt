@@ -288,7 +288,7 @@
 
 		{
 			"Triggers": {
-				"Words": ["tired", "sleepy", "sleep", "rest"]
+				"Words": ["tired", "sleepy", "sleep", "bed"]
 			},
 			"Reactions": [
 				"bed", "sleeping_accommodation", "zzz", "sleeping", "sleepy", "tired_face", "sweet_potato"
