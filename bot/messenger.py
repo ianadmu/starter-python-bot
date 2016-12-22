@@ -53,8 +53,8 @@ class Messenger(object):
                 for message in response['messages']:
                     if (
                         'ts' in message and 'pinned_to' not in message and
-                        self.clients.is_message_from_me(message)
-                        and not re.search(DONT_DELETE, message['text'].lower())
+                        self.clients.is_message_from_me(message) and
+                        not re.search(DONT_DELETE, message['text'].lower())
                     ):
                         response = self.clients.delete_message(
                             channel_id, message['ts']
@@ -168,7 +168,12 @@ class Messenger(object):
         txt = (
             "I'm Zac.  I'll *_respond_* to the following {} commands:\n{}"
         ).format(count-1, help_txt)
-        self.write_slow(txt, channel_id)
+        info_text = (
+            "Hi, I'm Zac Efron. You can find out more information about me "
+            "in #zac-testing. Merci :zac-efron:"
+        )
+        self.write_slow(info_text, channel_id)
+        self.write_slow(txt, 'zac-testing')
 
     def write_french(self, msg_text, channel_id):
         target = get_target(FRENCH_FLAG, msg_text).replace('_', '')
