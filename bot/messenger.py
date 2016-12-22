@@ -170,7 +170,7 @@ class Messenger(object):
         ).format(count-1, help_txt)
         info_text = (
             "Hi, I'm Zac Efron. You can find out more information about me "
-            "in #zac-testing. Merci :zac-efron:"
+            "in #zac-testing. Merci :zacefron:"
         )
         self.write_slow(info_text, channel_id)
         self.write_slow(txt, 'zac-testing')
