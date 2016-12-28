@@ -70,6 +70,7 @@ class PersistanceManager(object):
 					self._start_load_data_worker()
 				else:
 					logging.info("stuff loaded")
+					logging.info(self._data)
 					self._sched_backup()
 		else:
 			self._start_load_data_worker()
