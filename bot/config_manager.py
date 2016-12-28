@@ -6,7 +6,7 @@ import json
 from threading import Timer
 
 CONFIG_FILE_NAME = "config.json"
-CONFIG_FILE_PATH = os.path.join("..","resources",CONFIG_FILE_NAME)
+CONFIG_FILE_PATH = os.path.join("resources",CONFIG_FILE_NAME)
 CHECK_INTERVAL = 5
 
 
