@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 def run_terminal_command(command):
 	logging.info("GOT COMMAND")
 	logging.info(command)
-	command_array = command.replace("&gt;",">").split()[1:]
+	command_array = [str(s) for s in command.replace("&gt;",">").split()[1:]]
 	logging.info(command_array)
 
 	control_vars = {
