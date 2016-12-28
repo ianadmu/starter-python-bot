@@ -23,11 +23,12 @@ def _check_for_config():
 def _load_config():
 	global config, config_loaded
 
+	logging.info("Opening config")
 	with open(CONFIG_FILE_PATH) as config_file:
 		config = json.loads(config_file.readline());
 		config_loaded = True
-		print "Loaded config"
-		print str(config)
+		logging.info("Loaded config")
+		logging.info(str(config))
 
 
 def start_config_loader():
