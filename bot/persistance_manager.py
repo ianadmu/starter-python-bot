@@ -46,6 +46,7 @@ class PersistanceManager(object):
 		Timer(DATA_LOAD_INTERVAL,self._load_data).start() 
 
 	def _load_data(self):
+		print "Loading data"
 		if config_manager.config_loaded and config_manager.config["dropbox_access_token"]:
 			self.dropbox_client = dropbox.client.DropboxClient(config_manager.config["dropbox_access_token"])
 			self.data_lock.acquire()
@@ -75,7 +76,6 @@ class PersistanceManager(object):
 	def _sched_backup(self):
 		Timer(BACKUP_INTERVAL,self._run_backup).start() 
 
-	#this wont work at all, we need to save the file and then put it using a lock
 	def _run_backup(self):
 		print "Starting backup"
 		if self.dropbox_client and self.has_changed: 
