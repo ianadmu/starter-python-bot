@@ -14,7 +14,7 @@ class LoudManager(object):
 
 
     def get_random_loud(self):
-        louds = self.persistance_manager.get_data().split()
+        louds = self.persistance_manager.get_data().split("\n")
         if louds == None:
         	return ""
 
