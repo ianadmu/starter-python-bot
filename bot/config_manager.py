@@ -16,6 +16,10 @@ config = None
 
 def _check_for_config():
 	logging.info("checking "+CONFIG_FILE_PATH)
+	logging.info("Current path: "+os.getcwd())
+	logging.info(config_loaded)
+	logging.info(os.path.isfile(CONFIG_FILE_PATH))
+
 	if not config_loaded and os.path.isfile(CONFIG_FILE_PATH):
 		logging.info("loading config")
 		_load_config()
