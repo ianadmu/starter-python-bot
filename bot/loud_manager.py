@@ -14,8 +14,10 @@ class LoudManager(object):
 
 
     def get_random_loud(self):
-        louds = self.persistance_manager.get_data().split("\n")
+        louds = self.persistance_manager.get_data()
+
         if louds == None:
         	return ""
-
+        else:
+            louds = louds.split("\n")
         return random.choice(louds)

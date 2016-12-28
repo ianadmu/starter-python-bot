@@ -38,6 +38,7 @@ class PersistanceManager(object):
 	def append_to_data(self, s):
 		if self._data is not None:
 			self.data_lock.acquire()
+			logger.info("ADDED to louds "+s)
 			self._data += s
 			self.data_lock.release()
 			self.has_changed = True
@@ -48,8 +49,7 @@ class PersistanceManager(object):
 		Timer(DATA_LOAD_INTERVAL,self._load_data).start() 
 
 	def _load_data(self):
-		logging.info("Loading data")
-		if config_manager.config_loaded and config_manager.config["dropbox_access_token"]:
+		if config_manager.config_loaded and config_manager.config["dropbox_access_token"] and self._data is None:
 			self.dropbox_client = dropbox.client.DropboxClient(config_manager.config["dropbox_access_token"])
 			self.data_lock.acquire()
 			try:
