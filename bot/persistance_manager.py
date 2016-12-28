@@ -32,6 +32,7 @@ class PersistanceManager(object):
 
 			return return_data
 		else:
+			logging.info("THRE WAS NOTHINGGG :O")
 			return None
 
 	def append_to_data(self, s):
@@ -70,7 +71,6 @@ class PersistanceManager(object):
 					self._start_load_data_worker()
 				else:
 					logging.info("stuff loaded")
-					logging.info(self._data)
 					self._sched_backup()
 		else:
 			self._start_load_data_worker()

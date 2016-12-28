@@ -1,3 +1,4 @@
+import logging
 import random
 import os.path
 from persistance_manager import PersistanceManager 
@@ -13,7 +14,7 @@ class LoudManager(object):
 
 
     def get_random_loud(self):
-        louds = self.persistance_manager.get_data()
+        louds = self.persistance_manager.get_data().split()
         if louds == None:
         	return ""
 
