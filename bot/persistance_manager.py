@@ -1,6 +1,7 @@
 #The persistance manager retrieves data from dropbox, and stores a copy in memory. The local copy can be interacted with, and updates will be sent to storage in regular intervals
 # do not interact with _data directly! it is a shared resource, and should be inrfaced with using get_data() and update_data()
 
+import logging
 import dropbox
 from threading import Timer, Lock
 from io import StringIO
@@ -31,6 +32,7 @@ class PersistanceManager(object):
 
 			return return_data
 		else:
+			logging.info("THRE WAS NOTHINGGG :O")
 			return None
 
 	def append_to_data(self, s):
@@ -46,6 +48,7 @@ class PersistanceManager(object):
 		Timer(DATA_LOAD_INTERVAL,self._load_data).start() 
 
 	def _load_data(self):
+		logging.info("Loading data")
 		if config_manager.config_loaded and config_manager.config["dropbox_access_token"]:
 			self.dropbox_client = dropbox.client.DropboxClient(config_manager.config["dropbox_access_token"])
 			self.data_lock.acquire()
@@ -64,10 +67,10 @@ class PersistanceManager(object):
 			finally:
 				self.data_lock.release()
 				if self._data is None:
-					print "Stuff not loaded"
+					logging.info("Stuff not loaded")
 					self._start_load_data_worker()
 				else:
-					print "stuff loaded"
+					logging.info("stuff loaded")
 					self._sched_backup()
 		else:
 			self._start_load_data_worker()
@@ -75,16 +78,17 @@ class PersistanceManager(object):
 	def _sched_backup(self):
 		Timer(BACKUP_INTERVAL,self._run_backup).start() 
 
-	#this wont work at all, we need to save the file and then put it using a lock
 	def _run_backup(self):
-		print "Starting backup"
+		logging.info("Starting backup")
+		logging.info(self.dropbox_client)
+		logging.info(self.has_changed)
 		if self.dropbox_client and self.has_changed: 
 			self.data_lock.acquire()
 			stringFile = StringIO(unicode("".join(i for i in self._data if ord(i)<128), "utf-8"))
 			self.dropbox_client.put_file(self.file_name, stringFile, True)
 			self.has_changed = False
 			self.data_lock.release()
-		print "done backup"
+		logging.info("done backup")
 
 		self._sched_backup()
 
