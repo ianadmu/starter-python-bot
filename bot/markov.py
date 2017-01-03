@@ -107,7 +107,7 @@ class Markov:
             key_queue.append(output)
         return " ".join(result)
 
-    def __unicode__(self):
+    def __str__(self):
         try:
             result = self.go_go_markov_chain()
             try:
