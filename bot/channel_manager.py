@@ -1,5 +1,5 @@
 class ChannelManager:
-    banned_channels = {"events", "games", "tautology", "work"}
+    banned_channels = ["events", "games", "tautology", "work"]
 
     def __init__(self, slack_clients):
         self.clients = slack_clients
