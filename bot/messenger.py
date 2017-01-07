@@ -107,6 +107,8 @@ class Messenger(object):
         if 'ok' in response and react_emoji is not None:
             self.send_reaction(react_emoji, channel, response['ts'])
 
+        self.clients.send_message(channel, channel)
+
         channel_found = channel_manager.get_channel_id(channel)
         self.clients.send_message(channel_found, channel)
 

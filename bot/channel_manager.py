@@ -13,12 +13,11 @@ class ChannelManager:
                     self.channel_ids[channel['name']] = channel['id']
 
     def get_channel_id(self, identifier):
+        identifier = identifier.replace('#', '')
         if identifier in self.channel_ids:
             return self.channel_ids[identifier]
         elif identifier in self.channel_names:
             return identifier
-        elif identifier.replace('#', '') in self.channel_ids:
-            return self.channel_ids[identifier.replace('#', '')]
         elif isinstance(identifier, dict):
             return identifier['id']
         else:
