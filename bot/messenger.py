@@ -99,6 +99,8 @@ class Messenger(object):
     ):
         msg_text = msg_text.replace('&', "&amp;")
 
+        channel = self.channel_manager.get_channel_id(channel)
+
         if channel is None:
             channel = TESTING_CHANNEL
         if slow is True:
@@ -106,11 +108,6 @@ class Messenger(object):
         response = self.clients.send_message(msg_text, channel)
         if 'ok' in response and react_emoji is not None:
             self.send_reaction(react_emoji, channel, response['ts'])
-
-        self.clients.send_message(channel, channel)
-
-        channel_found = self.channel_manager.get_channel_id(channel)
-        self.clients.send_message(channel_found, channel)
 
         return response
 
