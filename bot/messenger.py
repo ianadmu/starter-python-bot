@@ -79,11 +79,13 @@ class Messenger(object):
         self.send_message(txt)
 
     def send_slow_message_as_other(self, msg_text, channel, username, emoji):
-        self.clients.send_user_typing_pause(channel)
-        self.send_message_as_other(msg_text, channel, username, emoji)
+        self.send_message_as_other(msg_text, channel, username, emoji, slow=True)
 
-    def send_message_as_other(self, msg_text, channel, username, emoji):
+    def send_message_as_other(self, msg_text, channel, username, emoji, slow=False):
         msg_text = msg_text.replace('&', "&amp;")
+        channel = channel_manager.get_channel_id(channel)
+        if (slow):
+            self.clients.send_user_typing_pause(channel)
 
         return self.clients.send_message_as_other(
             msg_text, channel, username, emoji
@@ -96,6 +98,8 @@ class Messenger(object):
         self, msg_text, channel=None, slow=False, react_emoji=None
     ):
         msg_text = msg_text.replace('&', "&amp;")
+
+        channel = channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
@@ -110,6 +114,8 @@ class Messenger(object):
         self, updated_msg_text, ts, channel=None, slow=False, react_emoji=None
     ):
         updated_msg_text = updated_msg_text.replace('&', "&amp;")
+
+        channel = channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
