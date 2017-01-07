@@ -1,7 +1,7 @@
 class ChannelManager:
     banned_channels = ["events", "games", "tautology", "work"]
 
-    def __init__(self, slack_clients, user_manager):
+    def __init__(self, slack_clients):
         self.clients = slack_clients
         channels = self.clients.get_channels()
         groups = self.clients.get_groups()
@@ -21,8 +21,8 @@ class ChannelManager:
 
         if ims['ok']:
             for im in ims['ims']:
-                self.channel_names[im['id']] = user_manager.get_user_by_id(im['user'])
-                self.channel_names[user_manager.get_user_by_id(im['user'])] = im['id']
+                self.channel_names[im['id']] = im['user']
+                self.channel_names[im['name']] = im['id']
 
     def get_channel_id(self, identifier):
         identifier = identifier.replace('#', '')
