@@ -153,7 +153,7 @@ class RtmEventHandler(object):
             if lower_txt == 'channelinfo':
                 self.msg_writer.send_message(channel_id, channel_id)
             if lower_txt == 'channelname':
-                self.msg_writer.send_message(channel_manager.get_channel_by_id(channel_id), channel_id)
+                self.msg_writer.send_message(self.channel_manager.get_channel_by_id(channel_id), channel_id)
             if lower_txt == 'userinfo':
                 self.msg_writer.send_message(user_id, channel_id)
             if lower_txt == 'allusersinfo':
