@@ -99,7 +99,7 @@ class Messenger(object):
     ):
         msg_text = msg_text.replace('&', "&amp;")
 
-        channel = self.channel_manager.get_channel_id(channel)
+        #channel = self.channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
