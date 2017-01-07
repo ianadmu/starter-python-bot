@@ -1,0 +1,65 @@
+There are conceptually five sections that behaviour belongs in Zacc
+
+Main - the app.py file that functions as a main method and deals with being hosted on a beep boop server
+Contol - The central control files, all other sections communicate with the Contol level and only the Contol level. Persistence and connection retries belongs here.
+	(Think of this as like Zacc's OS)
+Slack API - The center for making api calls to slack. No logic happens here, and this is the only place where the token is used.
+Managers - These are a central source of user information and channel information. These get updated as necessary.
+Masters - These are the files that contain information on Zacc's functions, like responding to queues, or timed events.
+	(How this section is organized is outside the scope of this section)
+
+Note some fucntionality will need to be refactored, but these files loosely belong in the following catergories
+
+Main:
+	app.py
+	config_manager.py (This might belong in Contol, I don't know what it does)
+
+Control:
+	common.py
+	konstants.py *does not exist yet, but should
+	messanger.py
+	persistance_manager.py
+	slack_bot.py
+
+Slack API:
+	slack_clients.py
+
+Managers:
+	channel_manager.py
+	user_manager.py
+
+Masters: #These should be renamed to master as appropriate
+	emoji_master.py
+	equation_manager.py
+	game_manager.py
+	hogwarts_house_sorter.py
+	loud_manager.py
+	markov.py
+	response_manager.py
+	rude_manager.py
+	terminal_manager.py
+	tictactoe.py
+	tictactoe_manager.py
+	time_triggered_event_manager.py
+	weather_manager.py
+	whos_that_pokemon_manager.py
+	xkcd_manager.py
+
+What is this even?	
+	test.py
+	__init__.py
+	temp_file
+
+
+
+Masters section:
+	This section will licekly have a lot of variaty of what is happening inside of it
+	Some guidlines that should be followed
+
+	1.A class with a suffix of master should only be created once, and in the Control scope
+	2.Using folders is encouraged
+	3.For content that can change without requiring code changes a resouce file should be used for easy editing
+	4.If a master crashes it should be logged, and not cause Zacc to die
+		A. This should be implemented with a common parent class that handles running with a few variations on run and accept input so that each master doesn't need the same code bits
+
+--Garrett
