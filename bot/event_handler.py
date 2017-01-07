@@ -34,7 +34,7 @@ class RtmEventHandler(object):
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
-        self.channel_manager = ChannelManager(slack_clients)
+        self.channel_manager = ChannelManager(slack_clients, self.user_manager)
 
         self.markov_chain = markov_chain
         markov_files = ['hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt']
