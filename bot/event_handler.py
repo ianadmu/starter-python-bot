@@ -34,7 +34,7 @@ class RtmEventHandler(object):
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.rude_manager = RudeManager(self.msg_writer)
-        self.channel_manager = ChannelManager(slack_clients)
+        self.channel_manager = ChannelManager(slack_clients, self.user_manager)
 
         self.markov_chain = markov_chain
         markov_files = ['hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt']
@@ -152,12 +152,16 @@ class RtmEventHandler(object):
             # Return channel and user information
             if lower_txt == 'channelinfo':
                 self.msg_writer.send_message(channel_id, channel_id)
-            if lower_txt == 'channelname':
+            elif lower_txt == 'channelname':
                 self.msg_writer.send_message(self.channel_manager.get_channel_by_id(channel_id), channel_id)
-            if lower_txt == 'userinfo':
+            elif lower_txt == 'userinfo':
                 self.msg_writer.send_message(user_id, channel_id)
-            if lower_txt == 'allusersinfo':
+            elif lower_txt == 'allusersinfo':
                 self.user_manager.print_all_users(channel_id)
+            elif lower_txt == 'allchannelinfo':
+                self.msg_writer.send_message(self.channel_manager.get_all_channel_ids(), channel_id)
+            elif lower_txt == 'allchannelname':
+                self.msg_writer.send_message(self.channel_manager.get_all_channel_names(), channel_id)
 
             # Loud addition and response
             if should_add_loud(event):
