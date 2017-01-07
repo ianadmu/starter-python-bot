@@ -99,16 +99,17 @@ class Messenger(object):
     ):
         msg_text = msg_text.replace('&', "&amp;")
 
-        channel_found = channel_manager.get_channel_id(channel)
-
         if channel is None:
             channel = TESTING_CHANNEL
         if slow is True:
             self.clients.send_user_typing_pause(channel)
         response = self.clients.send_message(msg_text, channel)
-        response = self.clients.send_message(channel_found, channel)
         if 'ok' in response and react_emoji is not None:
             self.send_reaction(react_emoji, channel, response['ts'])
+
+        channel_found = channel_manager.get_channel_id(channel)
+        self.clients.send_message(channel_found, channel)
+
         return response
 
     def update_message(
