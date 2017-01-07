@@ -22,7 +22,7 @@ class ChannelManager:
         if ims['ok']:
             for im in ims['ims']:
                 self.channel_names[im['id']] = im['user']
-                self.channel_names[im['name']] = im['id']
+                self.channel_names[im['user']] = im['id']
 
     def get_channel_id(self, identifier):
         identifier = identifier.replace('#', '')
