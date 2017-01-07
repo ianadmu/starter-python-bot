@@ -159,9 +159,9 @@ class RtmEventHandler(object):
             elif lower_txt == 'allusersinfo':
                 self.user_manager.print_all_users(channel_id)
             elif lower_txt == 'allchannelinfo':
-                self.msg_writer.send_message(self.channel_manager.get_all_channel_ids(), channel_id)
+                self.msg_writer.send_message(str(self.channel_manager.get_all_channel_ids()), channel_id)
             elif lower_txt == 'allchannelname':
-                self.msg_writer.send_message(self.channel_manager.get_all_channel_names(), channel_id)
+                self.msg_writer.send_message(str(self.channel_manager.get_all_channel_names()), channel_id)
 
             # Loud addition and response
             if should_add_loud(event):
