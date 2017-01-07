@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 class RtmEventHandler(object):
 
     bold_pattern = re.compile(
-        "(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))"
+        "(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))"#btw this doesn't work exactly properly
+        #if you want to fix it, don't use a regex
     )
 
     def __init__(self, slack_clients, msg_writer, markov_chain):
