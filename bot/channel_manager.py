@@ -18,11 +18,11 @@ class ChannelManager:
             for group in groups['groups']:
                 self.channel_names[group['id']] = group['name']
                 self.channel_names[group['name']] = group['id']
-                
+
         if ims['ok']:
             for im in ims['ims']:
-                self.channel_names[im['id']] = im['name']
-                self.channel_names[im['name']] = im['id']
+                self.channel_names[im['id']] = im['user']
+                self.channel_names[im['user']] = im['id']
 
     def get_channel_id(self, identifier):
         identifier = identifier.replace('#', '')
