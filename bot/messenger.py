@@ -83,7 +83,7 @@ class Messenger(object):
 
     def send_message_as_other(self, msg_text, channel, username, emoji, slow=False):
         msg_text = msg_text.replace('&', "&amp;")
-        channel = channel_manager.get_channel_id(channel)
+        channel = self.channel_manager.get_channel_id(channel)
         if (slow):
             self.clients.send_user_typing_pause(channel)
 
@@ -109,7 +109,7 @@ class Messenger(object):
 
         self.clients.send_message(channel, channel)
 
-        channel_found = channel_manager.get_channel_id(channel)
+        channel_found = self.channel_manager.get_channel_id(channel)
         self.clients.send_message(channel_found, channel)
 
         return response
@@ -119,7 +119,7 @@ class Messenger(object):
     ):
         updated_msg_text = updated_msg_text.replace('&', "&amp;")
 
-        channel = channel_manager.get_channel_id(channel)
+        channel = self.channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
