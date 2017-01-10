@@ -7,6 +7,7 @@ import xkcd_manager
 import weather_manager
 import terminal_manager
 import requests
+from hackernews import HackerNews
 
 from channel_manager import ChannelManager
 from loud_manager import LoudManager
@@ -354,6 +355,17 @@ class Messenger(object):
         )
         self.send_message(result, channel_id)
 
+    def write_lmao(self, channel_id):
+        self.send_message(channel_id, "lmao")
+
+    def write_hal(self, channel_id, user_id):
+        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(user_id)
+        self.send_message(channel_id, reply)
+
+    def write_hackernews(self, channel_id):
+        article = get_hackernews_article()
+        self.send_message(channel_id, article)
+
 
 def pokemon_i_choose_you(lower_msg_text):
     target = lower_msg_text.split()[0]
@@ -375,3 +387,14 @@ def pokemon_i_choose_you(lower_msg_text):
                     target.title(), pokemon['sprites']['front_default']
                 )
                 return result
+
+def get_hackernews_article():
+    hn_wrapped = HackerNews()
+    index = random.choice(hn_wrapper.top_stories())
+    story = hn_wrapper.get_item(index)
+
+    result = story.title
+    if story.url != None:
+        result += "\n" + story.url
+
+    return result

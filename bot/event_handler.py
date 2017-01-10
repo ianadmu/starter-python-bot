@@ -186,6 +186,8 @@ class RtmEventHandler(object):
                 self.tictactoe_manager.get_message(
                     channel_id, lower_txt, user_name
                 )
+            if lower_text == 'ayy':
+                self.msg_writer.write_lmao(channel)
 
             # Respond to message text with `zac` included
             if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
@@ -241,5 +243,10 @@ class RtmEventHandler(object):
                 if msg_txt.startswith('zac add news '):
                     user_name = self.user_manager.get_user_by_id(user_id)
                     self.msg_writer.link_945(msg_txt, channel_id, user_name)
+                    self.msg_writer.write_prompt(channel)
+                if 'open the pod bay doors' in lower_txt:
+                    self.msg_writer.write_hal(channel, user)
+                if 'hackernews' in lower_text:
+                    self.msg_write.write_hackernews(channel)
                 else:
                     pass
