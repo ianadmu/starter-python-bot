@@ -162,6 +162,8 @@ class RtmEventHandler(object):
                 self.msg_writer.send_message(str(self.channel_manager.get_all_channel_ids()), channel_id)
             elif lower_txt == 'allchannelname':
                 self.msg_writer.send_message(str(self.channel_manager.get_all_channel_names()), channel_id)
+            elif lower_txt == 'ayy':
+                self.msg_writer.write_lmao(channel)
 
             # Loud addition and response
             if should_add_loud(event):
@@ -186,8 +188,6 @@ class RtmEventHandler(object):
                 self.tictactoe_manager.get_message(
                     channel_id, lower_txt, user_name
                 )
-            if lower_text == 'ayy':
-                self.msg_writer.write_lmao(channel)
 
             # Respond to message text with `zac` included
             if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
@@ -225,7 +225,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_explanation(channel_id)
                 if re.search('sweetpotato|sweet potato', lower_txt):
                     self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
-                if re.search('draw me', lower_txt):
+                if re.search('draw me', ldower_txt):
                     self.msg_writer.write_draw_me(channel_id)
                 if re.search('love|forever|relationship', lower_txt):
                     self.msg_writer.write_forever(channel_id)
@@ -244,9 +244,9 @@ class RtmEventHandler(object):
                     user_name = self.user_manager.get_user_by_id(user_id)
                     self.msg_writer.link_945(msg_txt, channel_id, user_name)
                     self.msg_writer.write_prompt(channel)
-                if 'open the pod bay doors' in lower_txt:
+                if re.search('open the pod bay doors', lower_txt):
                     self.msg_writer.write_hal(channel, user)
-                if 'hackernews' in lower_text:
+                if re.search('hackernews', lower_text):
                     self.msg_write.write_hackernews(channel)
                 else:
                     pass
