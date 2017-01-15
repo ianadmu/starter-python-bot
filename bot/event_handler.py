@@ -243,7 +243,7 @@ class RtmEventHandler(object):
                 if msg_txt.startswith('zac add news '):
                     user_name = self.user_manager.get_user_by_id(user_id)
                     self.msg_writer.link_945(msg_txt, channel_id, user_name)
-                    self.msg_writer.write_prompt(channel)
+                    self.msg_writer.write_prompt(channel_id)
                 if re.search('open the pod bay doors', lower_txt):
                     self.msg_writer.write_hal(channel_id, user_name)
                 if re.search('hackernews', lower_txt):
