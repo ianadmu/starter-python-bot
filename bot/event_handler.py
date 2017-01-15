@@ -225,7 +225,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_explanation(channel_id)
                 if re.search('sweetpotato|sweet potato', lower_txt):
                     self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
-                if re.search('draw me', ldower_txt):
+                if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel_id)
                 if re.search('love|forever|relationship', lower_txt):
                     self.msg_writer.write_forever(channel_id)
