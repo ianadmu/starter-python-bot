@@ -358,8 +358,8 @@ class Messenger(object):
     def write_lmao(self, channel_id):
         self.send_message("lmao", channel_id)
 
-    def write_hal(self, channel_id, user_id):
-        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(user_id)
+    def write_hal(self, channel_id, user_name):
+        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(user_name)
         self.send_message(reply, channel_id)
 
     def write_hackernews(self, channel_id):

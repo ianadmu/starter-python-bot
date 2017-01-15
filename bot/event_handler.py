@@ -163,7 +163,7 @@ class RtmEventHandler(object):
             elif lower_txt == 'allchannelname':
                 self.msg_writer.send_message(str(self.channel_manager.get_all_channel_names()), channel_id)
             elif lower_txt == 'ayy':
-                self.msg_writer.write_lmao(channel)
+                self.msg_writer.write_lmao(channel_id)
 
             # Loud addition and response
             if should_add_loud(event):
@@ -245,8 +245,8 @@ class RtmEventHandler(object):
                     self.msg_writer.link_945(msg_txt, channel_id, user_name)
                     self.msg_writer.write_prompt(channel)
                 if re.search('open the pod bay doors', lower_txt):
-                    self.msg_writer.write_hal(channel, user)
+                    self.msg_writer.write_hal(channel_id, user_name)
                 if re.search('hackernews', lower_txt):
-                    self.msg_write.write_hackernews(channel)
+                    self.msg_writer.write_hackernews(channel_id)
                 else:
                     pass
