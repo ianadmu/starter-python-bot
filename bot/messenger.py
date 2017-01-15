@@ -389,7 +389,7 @@ def pokemon_i_choose_you(lower_msg_text):
                 return result
 
 def get_hackernews_article():
-    hn_wrapped = HackerNews()
+    hn_wrapper = HackerNews()
     index = random.choice(hn_wrapper.top_stories())
     story = hn_wrapper.get_item(index)
 
