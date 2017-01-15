@@ -246,7 +246,7 @@ class RtmEventHandler(object):
                     self.msg_writer.write_prompt(channel)
                 if re.search('open the pod bay doors', lower_txt):
                     self.msg_writer.write_hal(channel, user)
-                if re.search('hackernews', lower_text):
+                if re.search('hackernews', lower_txt):
                     self.msg_write.write_hackernews(channel)
                 else:
                     pass
