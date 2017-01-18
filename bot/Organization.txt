@@ -12,14 +12,15 @@ Note some fucntionality will need to be refactored, but these files loosely belo
 
 Main:
 	app.py
-	config_manager.py (This might belong in Contol, I don't know what it does)
+	config_manager.py (This might belong in Control, I don't know what it does)  # Malcolm ?
 
 Control:
 	common.py
-	konstants.py *does not exist yet, but should
-	messanger.py
+	constants.py *does not exist yet, but should
+	messenger.py
 	persistance_manager.py
 	slack_bot.py
+	event_handler.py
 
 Slack API:
 	slack_clients.py
@@ -29,13 +30,14 @@ Managers:
 	user_manager.py
 
 Masters: #These should be renamed to master as appropriate
+	# Nicole here: I also think these need to be organized further (subcategorized), see further comments
 	emoji_master.py
 	equation_manager.py
 	game_manager.py
 	hogwarts_house_sorter.py
 	loud_manager.py
 	markov.py
-	response_manager.py
+	response_master.py
 	rude_manager.py
 	terminal_manager.py
 	tictactoe.py
@@ -46,20 +48,33 @@ Masters: #These should be renamed to master as appropriate
 	xkcd_manager.py
 
 What is this even?	
-	test.py
-	__init__.py
-	temp_file
+	test.py   # Nicole here: I think Malcolm might be using this for persistance testing ?
+	__init__.py  # Nicole here: I think python folders have an __init__.py by default
+	# Further reading here: http://stackoverflow.com/questions/448271/what-is-init-py-for
+	temp_file  # Nicole here: deleted this, but think Malcolm might have been using it for persistance too
 
 
 
 Masters section:
-	This section will licekly have a lot of variaty of what is happening inside of it
-	Some guidlines that should be followed
+	This section will likely have a lot of variety of what is happening inside of it
+	Some guidelines that should be followed
 
 	1.A class with a suffix of master should only be created once, and in the Control scope
 	2.Using folders is encouraged
 	3.For content that can change without requiring code changes a resouce file should be used for easy editing
 	4.If a master crashes it should be logged, and not cause Zacc to die
 		A. This should be implemented with a common parent class that handles running with a few variations on run and accept input so that each master doesn't need the same code bits
+
+	# Nicole here (again, and with comments): 
+	# I think the masters need to be further differianted with at least the 2 following categories:
+	# 	1. The masters that actually cause messages to be posted to slack (for example those that call 
+	#      self.send_message()) such as response_master and time_triggered_event_manager 
+	# 	2. The masters that just return a string or something of the sort which `Control` then uses to post to slack
+	# I think we have 3 choices in regards to this:
+	# 	a. we differentiate these 2 kinds by them having a different super class (if necessary) or just call one
+	#      group master and the other group something else
+	# 	b. move the first kind to be a part of the `Control` group too or
+	# 	c. we modify the first kind to only return input which a `Control` class is then in charge of posting to slack
+
 
 --Garrett
