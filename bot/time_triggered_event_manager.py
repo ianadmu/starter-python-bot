@@ -253,16 +253,19 @@ class TimeTriggeredEventManager(object):
             msg, 'random', 'zac', ':{}:'.format(random.choice(emojis))
         )
 
-    def post_news(self):
+    def post_news(self, iteration):
         link, user_name = self.news_links.get_news()
         if link is not None and link != "":
+            if iteration == 0:
+                self.trigger_945()
+            iteration += 1
             txt = "News: " + link
             if user_name is None or user_name == "":
                 user_name = 'zacefron'
             self.msg_writer.send_message_as_other(
                 txt, 'random', user_name, ':{}:'.format(user_name)
             )
-            self.post_news()
+            self.post_news(iteration)
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()
@@ -285,8 +288,7 @@ class TimeTriggeredEventManager(object):
             if (day != 'Saturday' and day != 'Sunday'):
                 if hour == 9:
                     if minute == 45:
-                        self.trigger_945()
-                        self.post_news()
+                        self.post_news(0)
             if day == 'Friday':
                 if hour == 16 and minute == 45:
                     self.trigger_wine_club()
