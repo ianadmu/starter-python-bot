@@ -68,7 +68,7 @@ class SlackBot(object):
                 self.clients, msg_writer, markov_chain
             )
 
-            os.chmod('./scripts/make_config.sh',0755)
+            os.chmod('./scripts/make_config.sh', 0755)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():

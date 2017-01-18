@@ -7,6 +7,7 @@ import xkcd_manager
 import weather_manager
 import terminal_manager
 import requests
+from hackernews import HackerNews
 
 from channel_manager import ChannelManager
 from loud_manager import LoudManager
@@ -79,14 +80,17 @@ class Messenger(object):
         self.send_message(txt)
 
     def send_slow_message_as_other(self, msg_text, channel, username, emoji):
-        self.clients.send_user_typing_pause(channel)
-        self.send_message_as_other(msg_text, channel, username, emoji)
+        self.send_message_as_other(
+            msg_text, channel, username, emoji, slow=True
+        )
 
-    def send_message_as_other(self, msg_text, channel, username, emoji):
+    def send_message_as_other(
+        self, msg_text, channel, username, emoji, slow=False
+    ):
         msg_text = msg_text.replace('&', "&amp;")
-        # msg = msg.replace('<', "&lt;")
-        # msg = msg.replace('>', "&gt;")
-        # msg = msg.decode("utf8", "ignore")
+        channel = self.channel_manager.get_channel_id(channel)
+        if (slow):
+            self.clients.send_user_typing_pause(channel)
 
         return self.clients.send_message_as_other(
             msg_text, channel, username, emoji
@@ -99,9 +103,8 @@ class Messenger(object):
         self, msg_text, channel=None, slow=False, react_emoji=None
     ):
         msg_text = msg_text.replace('&', "&amp;")
-        # msg = msg.replace('<', "&lt;")
-        # msg = msg.replace('>', "&gt;")
-        # msg = msg.decode("utf8", "ignore")
+
+        # channel = self.channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
@@ -110,12 +113,15 @@ class Messenger(object):
         response = self.clients.send_message(msg_text, channel)
         if 'ok' in response and react_emoji is not None:
             self.send_reaction(react_emoji, channel, response['ts'])
+
         return response
 
     def update_message(
         self, updated_msg_text, ts, channel=None, slow=False, react_emoji=None
     ):
         updated_msg_text = updated_msg_text.replace('&', "&amp;")
+
+        channel = self.channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
@@ -195,10 +201,12 @@ class Messenger(object):
         self.write_slow(txt, channel_id)
 
     def write_joke(self, channel_id):
-        answer = (
-            "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
-            "Oder die Flipperwaldt gersput!"
-        )
+        # answer = (
+        #     "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
+        #     "Oder die Flipperwaldt gersput!"
+        # )
+        url = "http://api.icndb.com/jokes/random"
+        answer = requests.get(url).json()['value']['joke']
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
@@ -353,6 +361,17 @@ class Messenger(object):
         )
         self.send_message(result, channel_id)
 
+    def write_lmao(self, channel_id):
+        self.send_message("lmao", channel_id)
+
+    def write_hal(self, channel_id, user_name):
+        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(user_name)
+        self.send_message(reply, channel_id)
+
+    def write_hackernews(self, channel_id):
+        article = get_hackernews_article()
+        self.send_message(article, channel_id)
+
 
 def pokemon_i_choose_you(lower_msg_text):
     target = lower_msg_text.split()[0]
@@ -374,3 +393,14 @@ def pokemon_i_choose_you(lower_msg_text):
                     target.title(), pokemon['sprites']['front_default']
                 )
                 return result
+
+def get_hackernews_article():
+    hn_wrapper = HackerNews()
+    index = random.choice(hn_wrapper.top_stories())
+    story = hn_wrapper.get_item(index)
+
+    result = story.title
+    if story.url != None:
+        result += "\n" + story.url
+
+    return result

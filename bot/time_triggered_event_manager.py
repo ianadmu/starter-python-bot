@@ -135,9 +135,9 @@ class TimeTriggeredEventManager(object):
                 for message in response['messages']:
                     if (
                         'user' in message and 'ts' in message and not
-                        self.clients.is_message_from_me(message)
-                        and not contains_tag(message['text'])
-                        and 'markov' not in message['text']
+                        self.clients.is_message_from_me(message) and
+                        not contains_tag(message['text']) and
+                        'markov' not in message['text']
                     ):
                         # Post only 3 - 5 minutes after latest message
                         if (
@@ -155,17 +155,6 @@ class TimeTriggeredEventManager(object):
                                 )
                                 self.msg_writer.write_error(err_msg)
                                 pass
-
-    def trigger_morning(self):
-        responses = ["Good morning", "Morning", "Guten Morgen", "Bonjour",
-                     "Ohayou", "Good morning to you", "Aloha",
-                     "Konnichiwashington", "Buenos dias", "GLUTEN MORNING",
-                     ":sunny: Good morning", "Where have you been. MORNING"]
-        txt = '{}! :{}:'.format(random.choice(responses), self.get_emoji())
-        self.msg_writer.send_message_as_other(
-            txt, 'random', 'zac', ':sunglasses:'
-        )
-        # self.send_message(txt, 'random')
 
     def trigger_markov(self):
         try:
@@ -193,7 +182,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(msg)
 
     def trigger_wine_club(self):
-        tags = ['channel', 'here']
+        tags = ['here']
         msg = ("WINE CLUB IN THE LOUNGE :wine_glass: :wine_glass: "
                ":wine_glass: :wine_glass: :wine_glass:")
         txt = '<!{}> {}'.format(random.choice(tags), msg)
@@ -202,7 +191,7 @@ class TimeTriggeredEventManager(object):
         )
 
     def trigger_random_phrase(self):
-        if random.random() < 0.02:
+        if random.random() < 0.01:
             comment = self.random_manager.get_response()
             txt = '{} :{}:'.format(comment, self.get_emoji())
             self.send_message(txt, 'random')
@@ -219,6 +208,32 @@ class TimeTriggeredEventManager(object):
         )
 
     def trigger_945(self):
+        emojis = ['sunglasses', 'zacefron', 'coffee']
+        mornings = [
+            "Good morning", "Morning", "Guten Morgen", "Bonjour", "Ohayou",
+            "Good morning to you", "Aloha", "Konnichiwashington",
+            "Buenos dias", "GLUTEN MORNING", ":sunny: Good morning",
+            "Where have you been. MORNING"
+        ]
+        coffee_msgs = [
+            'The mochaccino tastes _amazing_ this morning!',
+            'Eh, mochaccino ain\'t so great today...',
+            'HELP! MOCHACCINO EVERYWHERE!',
+            'The mochaccino machine won\'t stop dripping help I need an adult',
+            'WHAT! wHY is my mochaccino _decaf_??!',
+            'I haven\'t had my mochaccino yet don\'t talk to me',
+            'WHERE\'S MY MUG I NEED MOCHACCINO!!',
+            'Mochaccino mochaccino mochaccino',
+            'Mochaccino is SO GOOD TODAY HOLY HELL',
+            (
+                'Today\'s mochaccino is like an angel pooped out a nice hot '
+                'cup of coffee mmmmm~'
+            ),
+            'Mochaccino status: passable',
+            'MOCHACCINO MOCHACCINO MOCHACCINO!!!',
+            'Who\'s ready for a nice cup o\' mochaccino?',
+            '_le mochaccino_'
+        ]
         kip_msgs = [
             '@945', '945!', '#945', ':paw_prints: 945!', '~945~',
             ':horse: 945! giddyup', '945! :heart:', '945! :sweet_potato:',
@@ -228,43 +243,29 @@ class TimeTriggeredEventManager(object):
             ':eggplant: 945.', '945 :coffee:', '_le 945_',
             '_le fast 945_'
         ]
-        txt = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
+        morning_msg = '{}! :{}:'.format(
+            random.choice(mornings), self.get_emoji()
+        )
+        coffee_msg = '{} :coffee:'.format(random.choice(coffee_msgs))
+        kip_msg = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
+        msg = '{} {} \n{}'.format(morning_msg, coffee_msg, kip_msg)
         self.msg_writer.send_message_as_other(
-            txt, 'random', 'zac', ':zacefron:'
+            msg, 'random', 'zac', ':{}:'.format(random.choice(emojis))
         )
 
-    def post_news(self):
+    def post_news(self, iteration):
         link, user_name = self.news_links.get_news()
         if link is not None and link != "":
+            if iteration == 0:
+                self.trigger_945()
+            iteration += 1
             txt = "News: " + link
             if user_name is None or user_name == "":
                 user_name = 'zacefron'
             self.msg_writer.send_message_as_other(
                 txt, 'random', user_name, ':{}:'.format(user_name)
             )
-            self.post_news()
-
-    def trigger_mochaccino(self):
-        msgs = ['The mochaccino tastes _amazing_ this morning!',
-                'Eh, mochaccino ain\'t so great today...',
-                'HELP! MOCHACCINO EVERYWHERE!',
-                ('The mochaccino machine won\'t stop dripping help I need an '
-                    'adult'),
-                'WHAT! wHY is my mochaccino _decaf_??!',
-                'I haven\'t had my mochaccino yet don\'t talk to me',
-                'WHERE\'S MY MUG I NEED MOCHACCINO!!',
-                'Mochaccino mochaccino mochaccino',
-                'Mochaccino is SO GOOD TODAY HOLY HELL',
-                ('Today\'s mochaccino is like an angel pooped out a nice hot '
-                    'cup of coffee mmmmm~'),
-                'Mochaccino status: passable',
-                'MOCHACCINO MOCHACCINO MOCHACCINO!!!',
-                'Who\'s ready for a nice cup o\' mochaccino?',
-                '_le mochaccino_']
-        txt = '{} :coffee:'.format(random.choice(msgs))
-        self.msg_writer.send_message_as_other(
-            txt, 'random', 'zac', ':coffee:'
-        )
+            self.post_news(iteration)
 
     def trigger_timed_event(self):
         day, hour, minute, second = _get_datetime()
@@ -272,8 +273,6 @@ class TimeTriggeredEventManager(object):
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            # if minute % 10 == 0:
-            #     self.post_news()
             # self.trigger_ping(day, hour, minute, second)
             if hour == 1:
                 if minute == 15:
@@ -287,18 +286,13 @@ class TimeTriggeredEventManager(object):
             if hour >= 9 and hour <= 16:
                 self.trigger_random_markov()
             if (day != 'Saturday' and day != 'Sunday'):
-                if hour == 8 and minute == 45:
-                    self.trigger_morning()
                 if hour == 9:
                     if minute == 45:
-                        self.trigger_945()
-                        self.post_news()
-                    elif minute == 0:
-                        self.trigger_mochaccino()
+                        self.post_news(0)
             if day == 'Friday':
                 if hour == 16 and minute == 45:
                     self.trigger_wine_club()
-                if hour >= 17 and hour <= 18:
+                if hour == 17:
                     self.trigger_random_phrase()
             if day == 'Tuesday':
                 if hour == 14 and minute == 7:

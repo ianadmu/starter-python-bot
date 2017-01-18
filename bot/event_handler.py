@@ -20,6 +20,8 @@ class RtmEventHandler(object):
 
     bold_pattern = re.compile(
         "(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))"
+        # btw this doesn't work exactly properly
+        # if you want to fix it, don't use a regex
     )
 
     def __init__(self, slack_clients, msg_writer, markov_chain):
@@ -56,8 +58,8 @@ class RtmEventHandler(object):
             # you joined a private group
             self.msg_writer.write_help_message(event['channel'])
         elif (
-            event_type == 'reaction_added' and 'user' in event
-            and not self.clients.is_message_from_me(event)
+            event_type == 'reaction_added' and 'user' in event and
+            not self.clients.is_message_from_me(event)
         ):
             if 'channel' in event['item']:
                 msg = event['item']
@@ -124,8 +126,8 @@ class RtmEventHandler(object):
             if should_add_markov(event):
                 self.markov_chain.add_single_line(msg_txt)
             if (
-                channel_id == self.channel_manager.get_channel_id('markov')
-                or lower_txt == 'markov'
+                channel_id == self.channel_manager.get_channel_id('markov') or
+                lower_txt == 'markov'
             ):
                 self.msg_writer.send_message(str(self.lotrMarkov), channel_id)
 
@@ -151,10 +153,27 @@ class RtmEventHandler(object):
             # Return channel and user information
             if lower_txt == 'channelinfo':
                 self.msg_writer.send_message(channel_id, channel_id)
-            if lower_txt == 'userinfo':
+            elif lower_txt == 'channelname':
+                self.msg_writer.send_message(
+                    self.channel_manager.get_channel_by_id(channel_id),
+                    channel_id
+                )
+            elif lower_txt == 'userinfo':
                 self.msg_writer.send_message(user_id, channel_id)
-            if lower_txt == 'allusersinfo':
+            elif lower_txt == 'allusersinfo':
                 self.user_manager.print_all_users(channel_id)
+            elif lower_txt == 'allchannelinfo':
+                self.msg_writer.send_message(
+                    str(self.channel_manager.get_all_channel_ids()),
+                    channel_id
+                )
+            elif lower_txt == 'allchannelname':
+                self.msg_writer.send_message(
+                    str(self.channel_manager.get_all_channel_names()),
+                    channel_id
+                )
+            elif lower_txt == 'ayy':
+                self.msg_writer.write_lmao(channel_id)
 
             # Loud addition and response
             if should_add_loud(event):
@@ -234,5 +253,10 @@ class RtmEventHandler(object):
                 if msg_txt.startswith('zac add news '):
                     user_name = self.user_manager.get_user_by_id(user_id)
                     self.msg_writer.link_945(msg_txt, channel_id, user_name)
+                if re.search('open the pod bay doors', lower_txt):
+                    self.msg_writer.write_hal(channel_id, user_name)
+                if re.search('hackernews', lower_txt):
+                    self.msg_writer.write_hackernews(channel_id)
                 else:
+                    # self.msg_writer.write_prompt(channel_id)
                     pass

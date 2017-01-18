@@ -6,7 +6,7 @@ import json
 from threading import Timer
 
 CONFIG_FILE_NAME = "config.json"
-CONFIG_FILE_PATH = os.path.join("resources",CONFIG_FILE_NAME)
+CONFIG_FILE_PATH = os.path.join("resources", CONFIG_FILE_NAME)
 CHECK_INTERVAL = 5
 
 
@@ -15,22 +15,23 @@ config = None
 
 
 def _check_for_config():
-	if not config_loaded and os.path.isfile(CONFIG_FILE_PATH):
-		_load_config()
-	else:
-		Timer(CHECK_INTERVAL,_check_for_config).start()
+    if not config_loaded and os.path.isfile(CONFIG_FILE_PATH):
+        _load_config()
+    else:
+        Timer(CHECK_INTERVAL, _check_for_config).start()
+
 
 def _load_config():
-	global config, config_loaded
+    global config, config_loaded
 
-	logging.info("Opening config")
-	with open(CONFIG_FILE_PATH) as config_file:
-		config = json.loads(config_file.readline());
-		config_loaded = True
-		logging.info("Loaded config")
-		logging.info(str(config))
+    logging.info("Opening config")
+    with open(CONFIG_FILE_PATH) as config_file:
+        config = json.loads(config_file.readline())
+        config_loaded = True
+        logging.info("Loaded config")
+        logging.info(str(config))
 
 
 def start_config_loader():
-	logging.info("starting cinfig loader")
-	Timer(CHECK_INTERVAL,_check_for_config).start()
+    logging.info("starting cinfig loader")
+    Timer(CHECK_INTERVAL, _check_for_config).start()
