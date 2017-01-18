@@ -103,6 +103,7 @@ class Messenger(object):
         self, msg_text, channel=None, slow=False, react_emoji=None
     ):
         msg_text = msg_text.replace('&', "&amp;")
+        msg_text = msg_text.replace('&quot;', "\"")
 
         # channel = self.channel_manager.get_channel_id(channel)
 
