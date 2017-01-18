@@ -270,8 +270,6 @@ class TimeTriggeredEventManager(object):
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
         if(second >= 5 and second <= 15):
-            # if minute % 10 == 0:
-            #     self.post_news()
             # self.trigger_ping(day, hour, minute, second)
             if hour == 1:
                 if minute == 15:
