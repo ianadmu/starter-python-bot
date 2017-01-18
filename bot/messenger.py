@@ -80,9 +80,13 @@ class Messenger(object):
         self.send_message(txt)
 
     def send_slow_message_as_other(self, msg_text, channel, username, emoji):
-        self.send_message_as_other(msg_text, channel, username, emoji, slow=True)
+        self.send_message_as_other(
+            msg_text, channel, username, emoji, slow=True
+        )
 
-    def send_message_as_other(self, msg_text, channel, username, emoji, slow=False):
+    def send_message_as_other(
+        self, msg_text, channel, username, emoji, slow=False
+    ):
         msg_text = msg_text.replace('&', "&amp;")
         channel = self.channel_manager.get_channel_id(channel)
         if (slow):
@@ -100,7 +104,7 @@ class Messenger(object):
     ):
         msg_text = msg_text.replace('&', "&amp;")
 
-        #channel = self.channel_manager.get_channel_id(channel)
+        # channel = self.channel_manager.get_channel_id(channel)
 
         if channel is None:
             channel = TESTING_CHANNEL
@@ -197,10 +201,12 @@ class Messenger(object):
         self.write_slow(txt, channel_id)
 
     def write_joke(self, channel_id):
-        answer = (
-            "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
-            "Oder die Flipperwaldt gersput!"
-        )
+        # answer = (
+        #     "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
+        #     "Oder die Flipperwaldt gersput!"
+        # )
+        url = "http://api.icndb.com/jokes/random"
+        answer = requests.get(url).json()['value']['joke']
         self.write_slow(answer, channel_id)
 
     def write_encouragement(self, msg_text, channel_id):
