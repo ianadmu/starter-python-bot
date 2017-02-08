@@ -248,7 +248,7 @@ class TimeTriggeredEventManager(object):
         )
         coffee_msg = '{} :coffee:'.format(random.choice(coffee_msgs))
         kip_msg = '{} :{}:'.format(random.choice(kip_msgs), self.get_emoji())
-        msg = '{} {} \n{}'.format(morning_msg, coffee_msg, kip_msg)
+        msg = '{}\n{}'.format(random.choice(morning_msg, coffee_msg), kip_msg)
         self.msg_writer.send_message_as_other(
             msg, 'random', 'zac', ':{}:'.format(random.choice(emojis))
         )
