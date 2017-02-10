@@ -270,7 +270,7 @@ class Messenger(object):
             self.loud_manager.write_loud_to_file(orig_msg)
 
     def respond_loud(self, orig_msg, channel_id):
-        if is_zac_mention(orig_msg) or random.random() < 0.25:
+        if is_zac_mention(orig_msg) or random.random() < 0.8:
             self.send_message(self.loud_manager.get_random_loud(), channel_id)
 
     def write_hogwarts_house(self, msg_text, channel_id, user_id):
@@ -366,7 +366,9 @@ class Messenger(object):
         self.send_message("lmao", channel_id)
 
     def write_hal(self, channel_id, user_name):
-        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(user_name)
+        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(
+            user_name
+        )
         self.send_message(reply, channel_id)
 
     def write_hackernews(self, channel_id):
@@ -395,13 +397,14 @@ def pokemon_i_choose_you(lower_msg_text):
                 )
                 return result
 
+
 def get_hackernews_article():
     hn_wrapper = HackerNews()
     index = random.choice(hn_wrapper.top_stories())
     story = hn_wrapper.get_item(index)
 
     result = story.title
-    if story.url != None:
+    if story.url is not None:
         result += "\n" + story.url
 
     return result
