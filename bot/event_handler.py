@@ -22,6 +22,7 @@ class RtmEventHandler(object):
         "(((?<!.)| )\*(?=\S)(?!\*).+?(?<!\*)(?<=\S)\*( |(?!.)))"
         # btw this doesn't work exactly properly
         # if you want to fix it, don't use a regex
+        # this is a commit to revive zac
     )
 
     def __init__(self, slack_clients, msg_writer, markov_chain):
