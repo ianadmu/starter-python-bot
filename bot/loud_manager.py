@@ -33,7 +33,7 @@ import os.path
 
 class LoudManager(object):
     def __init__(self):
-        self.loud_file = open(os.path.join('../resources', 'louds.txt'), 'a+')
+        self.loud_file = open(os.path.join('./resources', 'louds.txt'), 'a+')
         self.loud_cache = list()
         self.cache_loaded = False
 
