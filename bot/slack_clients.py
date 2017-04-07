@@ -132,14 +132,17 @@ class SlackClients(object):
         return response
 
     def delete_message(self, channel_id, timestamp):
-        response = self.rtm.api_call(
-            'chat.delete', token=str(self.token), channel=channel_id,
-            as_user=True, ts=timestamp
-        )
-        if 'error' in response:
-            error_msg = "`delete_message` error:\n" + str(response)
-            self.msg_writer.write_error(error_msg)
-        return response
+        try:
+            response = self.rtm.api_call(
+                'chat.delete', token=str(self.token), channel=channel_id,
+                as_user=True, ts=timestamp
+            )
+            if 'error' in response:
+                error_msg = "`delete_message` error:\n" + str(response)
+                self.msg_writer.write_error(error_msg)
+            return response
+        except:
+            pass
 
     def send_attachment(self, txt, channel_id, attachment):
         # this does not return the response object that rtm does
