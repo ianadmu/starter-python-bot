@@ -271,7 +271,10 @@ class Messenger(object):
 
     def respond_loud(self, orig_msg, channel_id):
         if is_zac_mention(orig_msg) or random.random() < 0.8:
-            self.send_message(self.loud_manager.get_random_loud(), channel_id)
+            message = self.loud_manager.get_random_loud();
+            
+            if message:
+                self.send_message(self.loud_manager.get_random_loud(), channel_id)
 
     def write_hogwarts_house(self, msg_text, channel_id, user_id):
         response = self.hogwarts_house_sorter.sort_into_house(msg_text)

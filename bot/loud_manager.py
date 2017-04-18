@@ -49,7 +49,7 @@ class LoudManager(object):
         self.loud_cache = list(self.loud_file.readlines())
 
     def get_random_loud(self):
-        if not self.cache_loaded:
+        if not self.cache_loaded or len(self.loud_cache) < 1:
             self.load_loud_cache()
             self.cache_loaded = True
         try:
