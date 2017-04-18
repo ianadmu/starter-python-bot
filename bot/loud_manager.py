@@ -52,4 +52,4 @@ class LoudManager(object):
         if not self.cache_loaded:
             self.load_loud_cache()
             self.cache_loaded = True
-        return random.choice(self.loud_cache)
+        return random.choice(self.loud_cache) if len(self.loud_cache) > 0 else None
