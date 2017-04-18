@@ -54,7 +54,10 @@ class LoudManager(object):
             self.cache_loaded = True
         try:
             random.choice(self.loud_cache)
-        except Exception:
+        except Exception as e:
+            self.loud_file = open(
+                os.path.join('./resources', 'seed_louds.txt'), 'a+'
+            )
             self.load_loud_cache()
             self.cache_loaded = True
-            return None
+            return e
