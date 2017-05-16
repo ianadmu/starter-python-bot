@@ -126,9 +126,9 @@ class TimeTriggeredEventManager(object):
         )
         self.send_message(result)
 
-    def trigger_random_markov(self):
+    def trigger_random_markov(self, channel):
         if random.random() < 0.15:
-            channel_id = self.channel_manager.get_channel_id('random')
+            channel_id = self.channel_manager.get_channel_id(channel)
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
             if 'messages' in response:
@@ -146,7 +146,7 @@ class TimeTriggeredEventManager(object):
                         ):
                             try:
                                 txt = str(self.markov_chain)
-                                self.send_message(txt, 'random')
+                                self.send_message(txt, channel)
                                 self.trigger_method_log('random markov')
                             except Exception:
                                 err_msg = traceback.format_exc()
@@ -284,7 +284,12 @@ class TimeTriggeredEventManager(object):
             if minute == 15:
                 self.trigger_markov()
             if hour >= 9 and hour <= 16:
-                self.trigger_random_markov()
+                self.trigger_random_markov('random')
+                try:
+                    self.trigger_random_markov('work')
+                except Exception as e:
+                    self.msg_writer.write_error(e)
+                    pass
             if (day != 'Saturday' and day != 'Sunday'):
                 if hour == 9:
                     if minute == 45:
