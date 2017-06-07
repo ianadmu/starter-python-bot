@@ -6,7 +6,6 @@ from response_master import Response_master
 from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
 from game_manager import GameManager
-from rude_manager import RudeManager
 from channel_manager import ChannelManager
 from markov import Markov
 from common import (
@@ -35,7 +34,6 @@ class RtmEventHandler(object):
         )
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
-        self.rude_manager = RudeManager(self.msg_writer)
         self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
@@ -132,8 +130,7 @@ class RtmEventHandler(object):
             ):
                 self.msg_writer.send_message(str(self.lotrMarkov), channel_id)
 
-            # Respond to messages handled by rude_manager and response_manager
-            self.rude_manager.run(channel_id, user_id)
+            # Respond to messages handled by response_manager
             self.response_master.process_message(
                 msg_txt, channel_id, user_id, ts
             )
@@ -238,8 +235,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
                 if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel_id)
-                if re.search('love|forever|relationship', lower_txt):
-                    self.msg_writer.write_forever(channel_id)
                 if re.search('unflip', lower_txt):
                     self.msg_writer.write_unflip(channel_id)
                 elif re.search('flip|rageflip', lower_txt):

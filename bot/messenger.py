@@ -38,7 +38,6 @@ class Messenger(object):
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
-        self.forever_manager = ResourceManager('forever.txt')
         self.help_manager = ResourceManager('help_text.txt')
         self.sass_manager = ResourceManager('sass.txt')
         self.channel_manager = ChannelManager(slack_clients)
@@ -298,15 +297,6 @@ class Messenger(object):
 
     def write_draw_me(self, channel_id):
         self.write_slow(self.drawing_manager.get_response(), channel_id)
-
-    def write_forever(self, channel_id):
-        original_msg = self.forever_manager.get_response()
-        response = self.write_slow(original_msg, channel_id)
-        new_msg = '~{}~ Just kidding! :laughing:'.format(original_msg.strip())
-        self.update_message(
-            new_msg, response['ts'], channel_id, slow=True,
-            react_emoji='trollface'
-        )
 
     def write_flip(self, channel_id):
         self.send_message(u"(╯°□°）╯︵ ┻━┻", channel_id)
