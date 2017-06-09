@@ -127,7 +127,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(result)
 
     def trigger_random_markov(self, channel):
-        if random.random() < 0.15:
+        if random.random() < 0.25:
             channel_id = self.channel_manager.get_channel_id(channel)
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
@@ -155,15 +155,6 @@ class TimeTriggeredEventManager(object):
                                 )
                                 self.msg_writer.write_error(err_msg)
                                 pass
-
-    def trigger_markov(self):
-        try:
-            self.msg_writer.send_message(str(self.markov_chain), 'markov')
-        except Exception:
-            err_msg = traceback.format_exc()
-            logging.error('Unexpected error: {}'.format(err_msg))
-            self.msg_writer.write_error(err_msg)
-            pass
 
     def trigger_ping(self, day, hour, minute, second):
         msg = ('Ping on ' + day + ' ' + str(hour) + ':' + str(minute) +
@@ -281,8 +272,6 @@ class TimeTriggeredEventManager(object):
                     self.clean_testing_channel_history()
             if hour % 3 == 0 and minute == 0:
                 self.trigger_weather()
-            if minute == 15:
-                self.trigger_markov()
             if hour >= 9 and hour <= 16:
                 self.trigger_random_markov('random')
                 try:
