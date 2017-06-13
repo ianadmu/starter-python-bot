@@ -235,20 +235,11 @@ class RtmEventHandler(object):
                     self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
                 if re.search('draw me', lower_txt):
                     self.msg_writer.write_draw_me(channel_id)
-                if re.search('unflip', lower_txt):
-                    self.msg_writer.write_unflip(channel_id)
-                elif re.search('flip|rageflip', lower_txt):
-                    self.msg_writer.write_flip(channel_id)
-                if re.search('sup son', lower_txt):
-                    self.msg_writer.write_sup_son(channel_id)
                 if lower_txt == "zac":
                     self.msg_writer.write_prompt(channel_id)
                 # The word google must be specified in lower case
                 if 'zac google ' in msg_txt:
                     self.msg_writer.google(msg_txt, channel_id)
-                if msg_txt.startswith('zac add news '):
-                    user_name = self.user_manager.get_user_by_id(user_id)
-                    self.msg_writer.link_945(msg_txt, channel_id, user_name)
                 if re.search('open the pod bay doors', lower_txt):
                     self.msg_writer.write_hal(channel_id, user_name)
                 if re.search('hackernews', lower_txt):

@@ -16,7 +16,7 @@ from hogwarts_house_sorter import HogwartsHouseSorter
 from equation_manager import EquationManager
 from common import (
     ResourceManager, is_zac_mention, get_target,
-    TESTING_CHANNEL, TEAM_MATES, DONT_DELETE, NewsManager,
+    TESTING_CHANNEL, TEAM_MATES, DONT_DELETE,
 )
 
 SASS_FLAG = re.compile('sass[a-z]* ')
@@ -41,7 +41,6 @@ class Messenger(object):
         self.help_manager = ResourceManager('help_text.txt')
         self.sass_manager = ResourceManager('sass.txt')
         self.channel_manager = ChannelManager(slack_clients)
-        self.news_links = NewsManager()
 
     def erase_history(self, msg_text, channel_id, now_timestamp):
         try:
@@ -298,15 +297,6 @@ class Messenger(object):
     def write_draw_me(self, channel_id):
         self.write_slow(self.drawing_manager.get_response(), channel_id)
 
-    def write_flip(self, channel_id):
-        self.send_message(u"(╯°□°）╯︵ ┻━┻", channel_id)
-
-    def write_unflip(self, channel_id):
-        self.send_message(u"┬─┬ノ( º _ ºノ)", channel_id)
-
-    def write_sup_son(self, channel_id):
-        self.send_message(u"¯\_(ツ)_/¯", channel_id)
-
     def write_riri_me(self, msg_text, channel_id):
         target = get_target(RIRI_FLAG, msg_text).upper()
         if target != "":
@@ -346,14 +336,6 @@ class Messenger(object):
             self.send_message(result, channel_id)
         except Exception as e:
             self.write_error(str(e))
-
-    def link_945(self, msg_text, channel_id, user_name):
-        my_news = msg_text.partition("zac add news ")[2]
-        rank = self.news_links.add_news(my_news, user_name)
-        result = 'Added <{}> from `{}` to the news. It\'s rank is #{}'.format(
-            my_news, user_name, rank
-        )
-        self.send_message(result, channel_id)
 
     def write_lmao(self, channel_id):
         self.send_message("lmao", channel_id)
