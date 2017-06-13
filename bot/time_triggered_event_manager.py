@@ -185,28 +185,24 @@ class TimeTriggeredEventManager(object):
 
         # leaves 10-ish seconds to trigger since method is called every 10-ish
         # seconds and we wantz the if statement to trigger once per min only
-        if(second >= 5 and second <= 15):
-            # self.trigger_ping(day, hour, minute, second)
-            if hour == 1:
-                try:
+        if(second >= 5 and second <= 16):
+            try:
+                # self.trigger_ping(day, hour, minute, second)
+                if hour == 1:
                     if minute == 15:
                         self.clean_channels_history()
                     if minute == 0 or minute == 30:
                         self.clean_testing_channel_history()
-                except Exception as e:
-                    self.msg_writer.write_error(str(e))
-            if hour % 3 == 0 and minute == 0:
-                self.trigger_weather()
-            if hour >= 9 and hour <= 16:
-                self.trigger_random_markov('random')
-                try:
+                if hour % 3 == 0 and minute == 0:
+                    self.trigger_weather()
+                if hour >= 9 and hour <= 16:
+                    self.trigger_random_markov('random')
                     self.trigger_random_markov('work')
-                except Exception as e:
-                    self.msg_writer.write_error(e)
-                    pass
-            if day == 'Tuesday':
-                if hour == 14 and minute == 7:
+                if day == 'Tuesday' and hour == 14 and minute == 43:
                     self.trigger_tuesday()
+            except Exception as e:
+                self.msg_writer.write_error(e)
+
 
 
 def _get_datetime():
