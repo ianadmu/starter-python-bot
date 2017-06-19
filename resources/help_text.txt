@@ -1,8 +1,6 @@
 _Hint: sometimes you need to include my name for me to respond!_
 > `Hi Zac` - I'll greet back, i don't bite. :wave:
-> `Joke` - I'll tell you one of my finest jokes :laughing:
-> `Weather` - Let me tell you the weather in Winnipeg. :rainbow:
-> `Sort me` - I'll sort you into a Hogwarts house!
+> `Zac weather` - Let me tell you the weather in Winnipeg. :rainbow:
 > `Solve <equation>` - Math sucks. I can help! :nerd_face:
 > `Sass <name>` - I'll be sure to sass <name> until the sun burns out. :smiling_imp:
 > `Riri <work>` - WORK WORK WORK WORK WORK",
@@ -12,10 +10,7 @@ _Hint: sometimes you need to include my name for me to respond!_
 > `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:
 > `Draw me` - I am _le best artist. Trust me!_ :art:
 > `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:
-> `Encourage <name>` - Let me help <name> get back on track. :grinning:
 > `Feed me` - Have some food courtesy of moi :banana:
 > `Markov` - I like to mix things up a bit too :lips:
 > `XKCD` - Want an XKCD comic? Type it's number, or get the latest one
-> `TicTacToe` - Want to play TicTacToe? See also `TicTacToe help`
-> `zac google <search term>` - I know the internet very very well! :computer:
-> `zac add news <news>` - What do _you_ want the world to know?
+> `Zac google <search term>` - I know the internet very very well! :computer:

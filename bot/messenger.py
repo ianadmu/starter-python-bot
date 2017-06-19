@@ -7,12 +7,10 @@ import xkcd_manager
 import weather_manager
 import terminal_manager
 import requests
-from hackernews import HackerNews
 
 from channel_manager import ChannelManager
 from loud_manager import LoudManager
 from whos_that_pokemon_manager import WhosThatPokemonManager
-from hogwarts_house_sorter import HogwartsHouseSorter
 from equation_manager import EquationManager
 from common import (
     ResourceManager, is_zac_mention, get_target,
@@ -34,7 +32,6 @@ class Messenger(object):
         self.clients = slack_clients
         self.loud_manager = LoudManager()
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
-        self.hogwarts_house_sorter = HogwartsHouseSorter()
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
         self.drawing_manager = ResourceManager('draw_me.txt')
@@ -199,24 +196,6 @@ class Messenger(object):
                "(e.g. `<@" + bot_uid + "> help`)")
         self.write_slow(txt, channel_id)
 
-    def write_joke(self, channel_id):
-        # answer = (
-        #     "Wenn ist das Nunstück git und Slotermeyer? Ja! Beiherhund das "
-        #     "Oder die Flipperwaldt gersput!"
-        # )
-        url = "http://api.icndb.com/jokes/random"
-        answer = requests.get(url).json()['value']['joke']
-        self.write_slow(answer, channel_id)
-
-    def write_encouragement(self, msg_text, channel_id):
-        encouragements = [
-            "Get your shit together", "You can do it", "I'm here for you",
-            "Do you just think about yourself", "You're the best",
-        ]
-        target = get_target(ENCOURAGE_FLAG, msg_text)
-        txt = '{} {}'.format(random.choice(encouragements), target)
-        self.write_slow(txt, channel_id)
-
     def write_cast_pokemon(self, lower_msg_text, channel_id):
         pkmn = pokemon_i_choose_you(lower_msg_text)
         if pkmn is not None:
@@ -273,10 +252,6 @@ class Messenger(object):
             
             if message:
                 self.send_message(self.loud_manager.get_random_loud(), channel_id)
-
-    def write_hogwarts_house(self, msg_text, channel_id, user_id):
-        response = self.hogwarts_house_sorter.sort_into_house(msg_text)
-        self.write_slow('<@{}>: {}'.format(user_id, response), channel_id)
 
     def write_explanation(self, channel_id):
         self.write_slow(self.explanation_manager.get_response(), channel_id)
@@ -337,19 +312,6 @@ class Messenger(object):
         except Exception as e:
             self.write_error(str(e))
 
-    def write_lmao(self, channel_id):
-        self.send_message("lmao", channel_id)
-
-    def write_hal(self, channel_id, user_name):
-        reply = "I'm sorry <@{}>, I'm afraid I can't do that.".format(
-            user_name
-        )
-        self.send_message(reply, channel_id)
-
-    def write_hackernews(self, channel_id):
-        article = get_hackernews_article()
-        self.send_message(article, channel_id)
-
 
 def pokemon_i_choose_you(lower_msg_text):
     target = lower_msg_text.split()[0]
@@ -372,14 +334,3 @@ def pokemon_i_choose_you(lower_msg_text):
                 )
                 return result
 
-
-def get_hackernews_article():
-    hn_wrapper = HackerNews()
-    index = random.choice(hn_wrapper.top_stories())
-    story = hn_wrapper.get_item(index)
-
-    result = story.title
-    if story.url is not None:
-        result += "\n" + story.url
-
-    return result

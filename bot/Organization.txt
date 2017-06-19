@@ -34,14 +34,11 @@ Masters: #These should be renamed to master as appropriate
 	emoji_master.py
 	equation_manager.py
 	game_manager.py
-	hogwarts_house_sorter.py
 	loud_manager.py
 	markov.py
 	response_master.py
 	rude_manager.py
 	terminal_manager.py
-	tictactoe.py
-	tictactoe_manager.py
 	time_triggered_event_manager.py
 	weather_manager.py
 	whos_that_pokemon_manager.py

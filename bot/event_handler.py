@@ -3,7 +3,6 @@ import logging
 import re
 
 from response_master import Response_master
-from tictactoe_manager import TicTacToeManager
 from user_manager import UserManager
 from game_manager import GameManager
 from channel_manager import ChannelManager
@@ -29,9 +28,6 @@ class RtmEventHandler(object):
         self.msg_writer = msg_writer
         self.game_manager = GameManager(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
-        self.tictactoe_manager = TicTacToeManager(
-            self.msg_writer, self.user_manager, self.game_manager
-        )
         self.response_master = Response_master(self.msg_writer)
         self.user_manager = UserManager(self.clients, self.msg_writer)
         self.channel_manager = ChannelManager(slack_clients)
@@ -170,43 +166,30 @@ class RtmEventHandler(object):
                     str(self.channel_manager.get_all_channel_names()),
                     channel_id
                 )
-            elif lower_txt == 'ayy':
-                self.msg_writer.write_lmao(channel_id)
 
             # Loud addition and response
             if should_add_loud(event):
                 self.msg_writer.write_loud(msg_txt)
                 self.msg_writer.respond_loud(msg_txt, channel_id)
-            # if self._is_edited_with_star(msg_txt):
-            #     self.msg_writer.write_spelling_mistake(channel_id, ts)
 
             # Respond to message text
             if re.search('i choose you', lower_txt):
                 self.msg_writer.write_cast_pokemon(lower_txt, channel_id)
-            if re.search('weather', lower_txt):
-                self.msg_writer.write_weather(channel_id)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
             if 'xkcd' in lower_txt:
                 self.msg_writer.write_xkcd(lower_txt, channel_id)
-            if (
-                'tictactoe' in lower_txt or ' ttt' in lower_txt or
-                lower_txt.startswith('ttt')
-            ):
-                self.tictactoe_manager.get_message(
-                    channel_id, lower_txt, user_name
-                )
 
             # Respond to message text with `zac` included
             if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
+                if re.search('weather', lower_txt):
+                    self.msg_writer.write_weather(channel_id)
                 if re.search('erase|delete', lower_txt):
                     self.msg_writer.erase_history(
                         msg_txt, channel_id, ts
                     )
                 if 'help' in lower_txt:
                     self.msg_writer.write_help_message(channel_id)
-                if 'joke' in lower_txt:
-                    self.msg_writer.write_joke(channel_id)
                 if 'french' in lower_txt:
                     self.msg_writer.write_french(msg_txt, channel_id)
                 if re.search('who\'?s that pokemon', msg_txt):
@@ -219,12 +202,6 @@ class RtmEventHandler(object):
                     self.msg_writer.demo_attachment(channel_id)
                 if 'sad ' in lower_txt:
                     self.msg_writer.write_sad(channel_id)
-                if 'sort me' in lower_txt:
-                    self.msg_writer.write_hogwarts_house(
-                        msg_txt, channel_id, user_id
-                    )
-                if re.search('encourage ', lower_txt):
-                    self.msg_writer.write_encouragement(msg_txt, channel_id)
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:
@@ -240,10 +217,5 @@ class RtmEventHandler(object):
                 # The word google must be specified in lower case
                 if 'zac google ' in msg_txt:
                     self.msg_writer.google(msg_txt, channel_id)
-                if re.search('open the pod bay doors', lower_txt):
-                    self.msg_writer.write_hal(channel_id, user_name)
-                if re.search('hackernews', lower_txt):
-                    self.msg_writer.write_hackernews(channel_id)
                 else:
-                    # self.msg_writer.write_prompt(channel_id)
                     pass
