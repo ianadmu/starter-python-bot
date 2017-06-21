@@ -194,8 +194,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_pokemon_guessed_response(
                         msg_txt, channel_id, user_id
                     )
-                if re.search('attachment|beep boop link', lower_txt):
-                    self.msg_writer.demo_attachment(channel_id)
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:

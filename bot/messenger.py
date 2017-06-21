@@ -207,21 +207,6 @@ class Messenger(object):
         if text is not None:
             self.send_message(text, channel_id)
 
-    def demo_attachment(self, channel_id):
-        txt = ("Beep Beep Boop is a ridiculously simple hosting platform for "
-               "your Slackbots.")
-        attachment = {
-            "pretext": "We bring bots to life. :sunglasses: :thumbsup:",
-            "title": "Host, deploy and share your bot in seconds.",
-            "title_link": "https://beepboophq.com/",
-            "text": txt,
-            "fallback": txt,
-            "image_url": ("https://storage.googleapis.com/beepboophq/_assets/"
-                          "bot-1.22f6fb.png"),
-            "color": "#7CD197",
-        }
-        self.send_attachment(txt, channel_id, attachment)
-
     def write_weather(self, channel_id):
         self.write_slow(weather_manager.getCurrentWeather(), channel_id)
 
