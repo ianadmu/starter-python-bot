@@ -8,9 +8,7 @@ _Hint: sometimes you need to include my name for me to respond!_
 > `French <phrase>` - I know flawless French and I'll translate! :bombardier:
 > `Sweetpotato <name>` - Sometimes you just need a :sweet_potato:
 > `Boyer` - I'll give you one of boyer's wise quotes :nerd_face:
-> `Draw me` - I am _le best artist. Trust me!_ :art:
 > `<pokemon> I choose you!` - Are you going to be the very best? :yourturn:
 > `Feed me` - Have some food courtesy of moi :banana:
 > `Markov` - I like to mix things up a bit too :lips:
-> `XKCD` - Want an XKCD comic? Type it's number, or get the latest one
 > `Zac google <search term>` - I know the internet very very well! :computer:

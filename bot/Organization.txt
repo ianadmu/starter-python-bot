@@ -1,14 +1,14 @@
 There are conceptually five sections that behaviour belongs in Zacc
 
 Main - the app.py file that functions as a main method and deals with being hosted on a beep boop server
-Contol - The central control files, all other sections communicate with the Contol level and only the Contol level. Persistence and connection retries belongs here.
+Control - The central control files, all other sections communicate with the Contol level and only the Contol level. Persistence and connection retries belongs here.
 	(Think of this as like Zacc's OS)
 Slack API - The center for making api calls to slack. No logic happens here, and this is the only place where the token is used.
 Managers - These are a central source of user information and channel information. These get updated as necessary.
 Masters - These are the files that contain information on Zacc's functions, like responding to queues, or timed events.
 	(How this section is organized is outside the scope of this section)
 
-Note some fucntionality will need to be refactored, but these files loosely belong in the following catergories
+Note some functionality will need to be refactored, but these files loosely belong in the following categories
 
 Main:
 	app.py
@@ -42,7 +42,6 @@ Masters: #These should be renamed to master as appropriate
 	time_triggered_event_manager.py
 	weather_manager.py
 	whos_that_pokemon_manager.py
-	xkcd_manager.py
 
 What is this even?	
 	test.py   # Nicole here: I think Malcolm might be using this for persistance testing ?

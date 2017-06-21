@@ -33,8 +33,6 @@ class RtmEventHandler(object):
         self.channel_manager = ChannelManager(slack_clients)
 
         self.markov_chain = markov_chain
-        markov_files = ['hpOne.txt', 'lotrOne.txt', 'memoriesOfIce.txt']
-        self.lotrMarkov = Markov(2, msg_writer, markov_files)
 
     def handle(self, event):
         if 'type' in event:
@@ -124,7 +122,7 @@ class RtmEventHandler(object):
                 channel_id == self.channel_manager.get_channel_id('markov') or
                 lower_txt == 'markov'
             ):
-                self.msg_writer.send_message(str(self.lotrMarkov), channel_id)
+                self.msg_writer.send_message(str(self.markov_chain), channel_id)
 
             # Respond to messages handled by response_manager
             self.response_master.process_message(
@@ -177,8 +175,6 @@ class RtmEventHandler(object):
                 self.msg_writer.write_cast_pokemon(lower_txt, channel_id)
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
-            if 'xkcd' in lower_txt:
-                self.msg_writer.write_xkcd(lower_txt, channel_id)
 
             # Respond to message text with `zac` included
             if is_zac_mention(msg_txt) or self.clients.is_bot_mention(msg_txt):
@@ -200,8 +196,6 @@ class RtmEventHandler(object):
                     )
                 if re.search('attachment|beep boop link', lower_txt):
                     self.msg_writer.demo_attachment(channel_id)
-                if 'sad ' in lower_txt:
-                    self.msg_writer.write_sad(channel_id)
                 if 'sass ' in lower_txt:
                     self.msg_writer.write_sass(msg_txt, channel_id)
                 if 'solve' in lower_txt:
@@ -210,8 +204,6 @@ class RtmEventHandler(object):
                     self.msg_writer.write_explanation(channel_id)
                 if re.search('sweetpotato|sweet potato', lower_txt):
                     self.msg_writer.write_sweetpotato_me(msg_txt, channel_id)
-                if re.search('draw me', lower_txt):
-                    self.msg_writer.write_draw_me(channel_id)
                 if lower_txt == "zac":
                     self.msg_writer.write_prompt(channel_id)
                 # The word google must be specified in lower case

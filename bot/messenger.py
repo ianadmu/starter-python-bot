@@ -3,7 +3,6 @@
 import logging
 import random
 import re
-import xkcd_manager
 import weather_manager
 import terminal_manager
 import requests
@@ -34,7 +33,6 @@ class Messenger(object):
         self.whos_that_pokemon_manager = WhosThatPokemonManager()
         self.equation_manager = EquationManager()
         self.explanation_manager = ResourceManager('explanations.txt')
-        self.drawing_manager = ResourceManager('draw_me.txt')
         self.help_manager = ResourceManager('help_text.txt')
         self.sass_manager = ResourceManager('sass.txt')
         self.channel_manager = ChannelManager(slack_clients)
@@ -160,7 +158,6 @@ class Messenger(object):
                    "channel. Please MUTE this channel or be inundaded with "
                    "notifications!").format(user_id)
             self.write_slow(txt, channel_id)
-            self.write_xkcd("15", channel_id)
         else:
             self.write_greeting(channel_id, user_id)
 
@@ -210,20 +207,6 @@ class Messenger(object):
         if text is not None:
             self.send_message(text, channel_id)
 
-    def write_sad(self, channel_id):
-        txt = "I'm crying into my tea. :joy:"
-        attachment = {
-            "pretext": "This always cracks me up. :wink:",
-            "title": "/giphy bloopin",
-            "title_link": ("http://giphy.com/gifs/friday-rebecca-black-hurrr-"
-                           "13FsSYo3fzfT2g"),
-            "text": txt,
-            "fallback": txt,
-            "image_url": "http://i.giphy.com/13FsSYo3fzfT2g.gif",
-            "color": "#7CD197",
-        }
-        self.send_attachment(txt, channel_id, attachment)
-
     def demo_attachment(self, channel_id):
         txt = ("Beep Beep Boop is a ridiculously simple hosting platform for "
                "your Slackbots.")
@@ -269,20 +252,12 @@ class Messenger(object):
         txt = 'Here, {}! :sweet_potato:'.format(target)
         self.write_slow(txt, channel_id)
 
-    def write_draw_me(self, channel_id):
-        self.write_slow(self.drawing_manager.get_response(), channel_id)
-
     def write_riri_me(self, msg_text, channel_id):
         target = get_target(RIRI_FLAG, msg_text).upper()
         if target != "":
             txt = ' '.join(target for num in range(5))
         else:
             txt = "WHY WOULD YOU JUST TYPE RIRI?\n"
-        self.write_slow(txt, channel_id)
-
-    def write_xkcd(self, lower_msg_text, channel_id):
-        requestedComic = lower_msg_text[lower_msg_text.find('xkcd') + 4:]
-        txt = xkcd_manager.getImageLocation(requestedComic)
         self.write_slow(txt, channel_id)
 
     def write_terminal_command(self, lower_msg_text, channel_id):
