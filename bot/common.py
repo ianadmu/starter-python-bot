@@ -26,7 +26,7 @@ def is_bot_message(message):
 
 
 def should_add_markov(message):
-    user_id = message['user']
+    user_id = message['user'] if 'user' in message else None
     msg_text = message['text']
     if is_bot_message(message) or user_id == "U1LA33VC4":
         return False
