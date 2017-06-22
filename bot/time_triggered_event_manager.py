@@ -125,7 +125,7 @@ class TimeTriggeredEventManager(object):
         self.send_message(result)
 
     def trigger_random_markov(self, channel):
-        if random.random() < 0.15:
+        if random.random() < 0.10:
             channel_id = self.channel_manager.get_channel_id(channel)
             now_timestamp = float(time.time())
             response = self.clients.get_message_history(channel_id, 1)
