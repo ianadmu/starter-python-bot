@@ -26,8 +26,9 @@ def is_bot_message(message):
 
 
 def should_add_markov(message):
+    user_id = message['user']
     msg_text = message['text']
-    if is_bot_message(message):
+    if is_bot_message(message) or user_id == "U1LA33VC4":
         return False
     if (
         'attachments' not in message
