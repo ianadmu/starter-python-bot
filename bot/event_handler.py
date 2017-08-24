@@ -118,10 +118,7 @@ class RtmEventHandler(object):
             # Markov chain addition and response
             if should_add_markov(event):
                 self.markov_chain.add_single_line(msg_txt)
-            if (
-                channel_id == self.channel_manager.get_channel_id('markov') or
-                lower_txt == 'markov'
-            ):
+            if lower_txt == 'markov':
                 self.msg_writer.send_message(str(self.markov_chain), channel_id)
 
             # Respond to messages handled by response_manager
