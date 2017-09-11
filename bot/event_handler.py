@@ -170,6 +170,7 @@ class RtmEventHandler(object):
             # Respond to message text
             if re.search('i choose you', lower_txt):
                 self.msg_writer.write_cast_pokemon(lower_txt, channel_id)
+                
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
 
