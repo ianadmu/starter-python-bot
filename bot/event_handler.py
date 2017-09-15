@@ -161,7 +161,6 @@ class RtmEventHandler(object):
                     str(self.channel_manager.get_all_channel_names()),
                     channel_id
                 )
-
             # Loud addition and response
             if should_add_loud(event):
                 self.msg_writer.write_loud(msg_txt)
@@ -170,7 +169,7 @@ class RtmEventHandler(object):
             # Respond to message text
             if re.search('i choose you', lower_txt):
                 self.msg_writer.write_cast_pokemon(lower_txt, channel_id)
-                
+
             if re.search('riri', lower_txt):
                 self.msg_writer.write_riri_me(msg_txt, channel_id)
 
